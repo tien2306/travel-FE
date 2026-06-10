@@ -1,0 +1,250 @@
+flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  transition: all 0.4s ease;
+  @media (max-width: 992px) {
+    position: static;
+  }
+
+  &__container {
+    width: 100%;
+    padding: 0 3%;
+  }
+
+  // TOPBAR
+  &__topbar {
+    background: #13357b;
+    transition: all 0.3s ease;
+    @media (max-width: 1150px) {
+      display: none !important;
+    }
+  }
+
+  &__row-topbar {
+    padding: 8px 0;
+  }
+  &__socials-col {
+    display: flex;
+    justify-content: flex-start;
+  }
+  &__auth-col {
+    display: flex;
+    justify-content: flex-end;
+  }
+  &__socials {
+    @extend flex;
+    gap: 15px;
+    a {
+      @extend flex;
+      color: #fff;
+      font-weight: 700;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      border: 1px solid #fff;
+      transition: all 0.3s ease;
+      &:hover {
+        background: #fff;
+        color: #13357b;
+      }
+    }
+  }
+  &__auth {
+    @extend flex;
+    gap: 20px;
+  }
+  &__auth-item {
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    @extend flex;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  &__mainbar {
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s ease;
+  }
+
+  &__mainbar-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    transition: all 0.4s ease;
+    width: 100%;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #13357b;
+    flex-shrink: 0; // Không cho phép bóp méo logo khi co thu màn hình
+    a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: inherit;
+    }
+    &-icon {
+      font-size: 32px;
+    }
+    &-text {
+      font-size: 30px;
+      font-weight: 800;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    @media (max-width: 1150px) {
+      display: none !important;
+    }
+  }
+
+  &__nav-link {
+    color: #333333;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 12px 15px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    &:hover {
+      color: #13357b;
+    }
+    &--active {
+      color: #ffffff;
+      background-color: #13357b;
+    }
+    &--dropdown {
+      cursor: pointer;
+    }
+  }
+
+  &__right-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  &__btn-book {
+    background-color: #13357b;
+    border-color: #13357b;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 16px;
+    height: auto;
+    padding: 10px 24px;
+
+    @media (max-width: 1150px) {
+      display: none !important;
+    }
+  }
+
+  &__btn-toggler {
+    display: none !important;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+
+    @media (max-width: 1150px) {
+      display: flex !important;
+    }
+  }
+
+  // MOBILE DRAWER STYLE
+  &__nav-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .header__nav-link {
+      width: 100%;
+      padding: 12px 15px;
+      justify-content: space-between;
+      &--active {
+        color: #ffffff;
+        background-color: #13357b;
+      }
+    }
+  }
+  &__auth-mobile {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    a {
+      color: #333;
+      font-weight: 600;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      &:hover {
+        color: #13357b;
+      }
+    }
+  }
+
+  // STICKY WHEN SCROLL
+  &--sticky {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    .header__topbar {
+      margin-top: -50px;
+      opacity: 0;
+    }
+    .header__mainbar-wrapper {
+      padding: 8px 0;
+    }
+  }
+}
+
+// Antd Dropdown
+.ant-dropdown {
+  .ant-dropdown-menu {
+    border-top: 3px solid #13357b;
+    border-radius: 0 0 4px 4px;
+    min-width: 160px;
+    .ant-dropdown-menu-item {
+      padding: 10px 20px;
+      a {
+        color: #333333;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      &:hover {
+        background-color: #f5f5f5;
+        a {
+          color: #13357b;
+        }
+      }
+    }
+  }
+}
