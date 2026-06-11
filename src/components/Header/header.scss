@@ -160,12 +160,12 @@ flex {
     padding: 10px 24px;
 
     @media (max-width: 1150px) {
-      display: none !important;
+      display: none;
     }
   }
 
   &__btn-toggler {
-    display: none !important;
+    display: none;
     padding: 0;
     width: 40px;
     height: 40px;
@@ -173,7 +173,7 @@ flex {
     justify-content: center;
 
     @media (max-width: 1150px) {
-      display: flex !important;
+      display: flex;
     }
   }
 

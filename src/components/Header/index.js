@@ -22,7 +22,7 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 45) {
+      if (window.scrollY >= 100) {
         setIsSticky(true);
       } else {
         setIsSticky(false);
@@ -128,7 +128,7 @@ const Header = () => {
         placement="right"
         onClose={() => setIsMenuOpen(false)}
         open={isMenuOpen}
-        width={280}
+        size={280}
       >
         <nav className="header__nav-mobile">
           <NavigationMenu setIsMenuOpen={setIsMenuOpen} isMobile={true} />
