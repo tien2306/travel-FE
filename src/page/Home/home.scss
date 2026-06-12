@@ -1,13 +1,8 @@
-.home-content {
-  .hero-carousel {
-    padding: 50px 0;
-  }
-}
-
 .hero-carousel {
   width: 100%;
   position: relative;
   overflow: hidden;
+  padding-top: 50px;
 
   &__item {
     position: relative;
@@ -43,7 +38,7 @@
   &__caption {
     max-width: 900px;
     color: #ffffff;
-    animation: fadeInUp 0.8s ease-in-out; // Hiệu ứng chữ xuất hiện
+    animation: fadeInUp 0.8s ease-in-out;
   }
 
   &__subtitle {
@@ -92,6 +87,18 @@
       color: #13357b !important;
       border-color: #ffffff !important;
     }
+  }
+}
+
+// @media (max-width: 1150px) {
+//   .hero-carousel {
+//     padding-top: 70px;
+//   }
+// }
+
+@media (max-width: 1150px) {
+  .hero-carousel {
+    padding: 0;
   }
 }
 

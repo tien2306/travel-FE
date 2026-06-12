@@ -1,4 +1,4 @@
-flex {
+%flex-center {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,42 +11,87 @@ flex {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 1001;
   transition: all 0.4s ease;
-  @media (max-width: 992px) {
-    position: static;
+  background: transparent;
+
+  // STICKY WHEN SCROLL
+  &--sticky {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background: #fff;
+
+    .header__topbar {
+      margin-top: -50px;
+      opacity: 0;
+    }
+
+    .header__mainbar-wrapper {
+      padding: 8px 0;
+
+      a,
+      span,
+      svg {
+        color: #13357b;
+      }
+      span:hover svg {
+        color: #fff;
+      }
+
+      button a,
+      button span {
+        color: #fff;
+      }
+
+      .header__nav-link {
+        &:hover {
+          color: #fff;
+          background: #13357b;
+        }
+      }
+
+      .header__nav-link--active {
+        color: #fff;
+
+        svg {
+          color: #fff;
+        }
+      }
+    }
   }
 
   &__container {
     width: 100%;
     padding: 0 3%;
+    box-sizing: border-box; // Đảm bảo padding không làm tăng chiều rộng header
   }
 
   // TOPBAR
   &__topbar {
     background: #13357b;
     transition: all 0.3s ease;
-    @media (max-width: 1150px) {
-      display: none !important;
-    }
+    width: 100%;
   }
 
   &__row-topbar {
     padding: 8px 0;
+    width: 100%;
   }
+
   &__socials-col {
     display: flex;
     justify-content: flex-start;
   }
+
   &__auth-col {
     display: flex;
     justify-content: flex-end;
   }
+
   &__socials {
-    @extend flex;
+    @extend %flex-center;
     gap: 15px;
     a {
-      @extend flex;
+      @extend %flex-center;
       color: #fff;
       font-weight: 700;
       width: 35px;
@@ -60,23 +105,26 @@ flex {
       }
     }
   }
+
   &__auth {
-    @extend flex;
+    @extend %flex-center;
     gap: 20px;
   }
+
   &__auth-item {
     color: #fff;
     font-weight: 700;
     font-size: 14px;
-    @extend flex;
+    @extend %flex-center;
     gap: 8px;
     text-decoration: none;
   }
 
+  // MAINBAR
   &__mainbar {
-    background-color: #ffffff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     transition: all 0.4s ease;
+    background: transparent;
+    width: 100%;
   }
 
   &__mainbar-wrapper {
@@ -92,8 +140,8 @@ flex {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #13357b;
-    flex-shrink: 0; // Không cho phép bóp méo logo khi co thu màn hình
+    color: #fff; // Đổi mặc định thành màu trắng để nổi bật trên nền ảnh banner tối
+    flex-shrink: 0;
     a {
       display: flex;
       align-items: center;
@@ -114,14 +162,10 @@ flex {
     display: flex;
     align-items: center;
     gap: 8px;
-
-    @media (max-width: 1150px) {
-      display: none !important;
-    }
   }
 
   &__nav-link {
-    color: #333333;
+    color: #ffffff;
     font-size: 16px;
     font-weight: 600;
     text-decoration: none;
@@ -133,7 +177,8 @@ flex {
     gap: 6px;
     white-space: nowrap;
     &:hover {
-      color: #13357b;
+      color: #fff;
+      background: #13357b;
     }
     &--active {
       color: #ffffff;
@@ -159,8 +204,13 @@ flex {
     height: auto;
     padding: 10px 24px;
 
-    @media (max-width: 1150px) {
-      display: none;
+    &:hover {
+      background-color: #ffffff !important;
+      color: #13357b !important;
+      border-color: #ffffff !important;
+      span {
+        color: #13357b;
+      }
     }
   }
 
@@ -169,12 +219,7 @@ flex {
     padding: 0;
     width: 40px;
     height: 40px;
-    align-items: center;
-    justify-content: center;
-
-    @media (max-width: 1150px) {
-      display: flex;
-    }
+    @extend %flex-center;
   }
 
   // MOBILE DRAWER STYLE
@@ -186,12 +231,14 @@ flex {
       width: 100%;
       padding: 12px 15px;
       justify-content: space-between;
+      color: #333; // Trên mobile menu màu trắng nên chữ phải màu tối
       &--active {
         color: #ffffff;
         background-color: #13357b;
       }
     }
   }
+
   &__auth-mobile {
     margin-top: 20px;
     padding-top: 20px;
@@ -213,15 +260,36 @@ flex {
     }
   }
 
-  // STICKY WHEN SCROLL
-  &--sticky {
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    .header__topbar {
-      margin-top: -50px;
-      opacity: 0;
+  // BREAKPOINTS RESPONSIVE
+  @media (max-width: 1150px) {
+    &__topbar,
+    &__nav,
+    &__btn-book {
+      display: none !important;
     }
-    .header__mainbar-wrapper {
-      padding: 8px 0;
+    &__btn-toggler {
+      display: flex;
+      svg {
+        font-size: 22px;
+        color: #fff;
+      }
+    }
+  }
+
+  @media (max-width: 992px) {
+    position: static;
+    background: #fff; // Lên mobile đổi thành nền trắng
+    .header__logo,
+    .header__nav-link {
+      color: #13357b;
+    }
+
+    &__btn-toggler {
+      display: flex;
+      svg {
+        font-size: 22px;
+        color: #13357b;
+      }
     }
   }
 }

@@ -108,11 +108,7 @@ const Header = () => {
               <Button
                 type="text"
                 className="header__btn-toggler"
-                icon={
-                  <MenuOutlined
-                    style={{ fontSize: "22px", color: "#13357b" }}
-                  />
-                }
+                icon={<MenuOutlined />}
                 onClick={() => setIsMenuOpen(true)}
               />
             </div>
