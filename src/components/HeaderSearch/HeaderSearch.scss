@@ -1,0 +1,178 @@
+$color-blue-main: #0052cc;
+$color-text-dark: #1a202c;
+$color-text-gray: #718096;
+$color-border: #e2e8f0;
+
+.tour-search {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid $color-border;
+  border-radius: 100px;
+  padding: 6px 6px 6px 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+  width: 100%;
+
+  /* 🛠️ THÊM MEDIA QUERIES ĐỂ RESPONSIVE CHO MOBILE 500PX */
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: 20px; /* Đổi bo tròn viên thuốc sang dạng hộp */
+    padding: 16px;
+    gap: 16px;
+  }
+
+  &__section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 2px 16px;
+    border-right: 1px solid #edf2f7;
+
+    &:nth-last-of-type(2) {
+      border-right: none;
+    }
+
+    &--filter {
+      padding-left: 0;
+    }
+
+    /* Trên Mobile thì bỏ vạch ngăn cách dọc đi */
+    @media (max-width: 768px) {
+      border-right: none;
+      padding: 0 0 12px 0;
+      border-bottom: 1px solid #edf2f7; /* Thay bằng vạch ngăn cách ngang nhẹ */
+    }
+  }
+
+  &__icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    background-color: #f0f5ff;
+    border-radius: 50%;
+    color: $color-blue-main;
+    font-size: 16px;
+    margin-right: 10px;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &__label {
+    font-size: 11px;
+    color: $color-text-gray;
+    font-weight: 500;
+    margin-bottom: -1px;
+    padding-left: 11px;
+    @media (max-width: 768px) {
+      padding-left: 0;
+    }
+  }
+
+  .ant-select {
+    width: 100%;
+    .ant-select-selector {
+      padding: 0 11px;
+      height: 26px;
+      background: transparent;
+      @media (max-width: 768px) {
+        padding: 0;
+      }
+      .ant-select-selection-item {
+        font-size: 14px;
+        font-weight: 600;
+        color: $color-text-dark;
+        line-height: 26px;
+      }
+    }
+    .ant-select-arrow {
+      color: #a0aec0;
+      right: 8px;
+    }
+  }
+
+  &__picker {
+    width: 100%;
+    padding: 0 11px;
+    height: 26px;
+    background: transparent;
+    @media (max-width: 768px) {
+      padding: 0;
+    }
+    input {
+      font-size: 14px;
+      font-weight: 600;
+      color: $color-text-dark;
+      cursor: pointer;
+      line-height: 26px;
+    }
+    .ant-picker-suffix {
+      color: #a0aec0;
+    }
+  }
+
+  &__action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* 🛠️ SỬA TẠI ĐÂY: Khống chế không cho khối bọc này co giãn, tạo vùng đệm an toàn */
+    flex: none;
+    width: 140px; /* Đặt chiều rộng cố định vừa khít nút bấm lúc chưa hover */
+    height: 46px;
+    position: relative;
+
+    @media (max-width: 768px) {
+      width: 100%; /* Trên mobile thì để full dòng tự nhiên */
+    }
+  }
+
+  /* 2. NÚT BẤM TÌM KIẾM (CHỈ PHÓNG TO NỘI BỘ NÚT) */
+  &__submit-btn {
+    background-color: $color-blue-main;
+    border: none;
+    border-radius: 100px;
+    height: 46px;
+    width: 100%; /* Ép nút chiếm trọn 140px của khung bọc */
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(0, 82, 204, 0.15);
+
+    /* Cấu hình transition mượt, bắt buộc có will-change để trình duyệt tối ưu phần cứng */
+    transition:
+      transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+      box-shadow 0.3s ease;
+    will-change: transform;
+
+    /* Khi rà chuột vào, chỉ có lớp vỏ nút phóng to ra ngoài, không đẩy khung */
+    &:hover {
+      background-color: #0041a3;
+      transform: scale(1.002); /* Phóng to nút độc lập */
+      box-shadow: 0 8px 20px rgba(0, 82, 204, 0.3);
+    }
+
+    &:active {
+      transform: scale(0.96);
+    }
+  }
+}
+
+.tour-search__dropdown {
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+  .ant-select-item-option-selected {
+    background-color: #e6f7ff;
+    color: $color-blue-main;
+    font-weight: 600;
+  }
+}
