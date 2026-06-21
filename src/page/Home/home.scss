@@ -1,3 +1,4 @@
+// -------------- HeroCarousel ------------------
 .hero-carousel {
   width: 100%;
   position: relative;
@@ -90,19 +91,12 @@
   }
 }
 
-// @media (max-width: 1150px) {
-//   .hero-carousel {
-//     padding-top: 70px;
-//   }
-// }
-
 @media (max-width: 1150px) {
   .hero-carousel {
     padding: 0;
   }
 }
 
-// Tùy biến lại các dấu chấm chuyển slide (dots) mặc định của Ant Design
 .hero-carousel {
   .ant-carousel .slick-dots li button {
     background: #ffffff;
@@ -116,3 +110,5 @@
     width: 24px;
   }
 }
+
+// -------------- End HeroCarousel ------------------

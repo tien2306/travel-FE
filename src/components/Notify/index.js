@@ -10,34 +10,61 @@ import {
   LogoutOutlined,
 } from "@ant-design/icons";
 import "./Notify.scss";
+import { useSelector } from "react-redux";
 
 function Notify(props) {
-  const apiData = [
+  const isLogin = useSelector((state) => state.loginReducer);
+
+  const loggedOutMenu = [
     {
       id: "profile",
-      title: "My Profile",
+      title: "Trang cá nhân",
       icon: <UserOutlined />,
       to: "/profile",
     },
-    { id: "inbox", title: "Inbox", icon: <MessageOutlined />, to: "/inbox" },
+    { id: "inbox", title: "Tin nhắn", icon: <MessageOutlined />, to: "/inbox" },
     {
       id: "noti",
-      title: "Notifications",
+      title: "Thông báo",
       icon: <BellOutlined />,
       to: "/notifications",
     },
     {
       id: "setting",
-      title: "Account Settings",
+      title: "Cài đặt",
       icon: <SettingOutlined />,
       to: "/settings",
     },
-    { id: "logout", title: "Log Out", icon: <LogoutOutlined />, to: "/logout" },
   ];
 
-  // 2. Map data theo đúng chuẩn cấu trúc items của Antd Dropdown
-  const items = apiData.map((item) => ({
+  const loggedInMenu = [
+    {
+      id: "profile",
+      title: "Trang cá nhân",
+      icon: <UserOutlined />,
+      to: "/profile",
+    },
+    { id: "inbox", title: "Tin nhắn", icon: <MessageOutlined />, to: "/inbox" },
+    {
+      id: "noti",
+      title: "Thông báo",
+      icon: <BellOutlined />,
+      to: "/notifications",
+    },
+    {
+      id: "setting",
+      title: "Cài đặt",
+      icon: <SettingOutlined />,
+      to: "/settings",
+    },
+    { id: "logout", title: "Log Out", icon: <LogoutOutlined />, to: "/logout" }, // Sửa id thành "logout"
+  ];
+
+  const currentMenuData = isLogin ? loggedInMenu : loggedOutMenu;
+
+  const items = currentMenuData.map((item) => ({
     key: item.id,
+    // danger: item.id === "logout",
     label: (
       <Link to={item.to} className="user-menu__link">
         <Space size="middle">
@@ -49,9 +76,9 @@ function Notify(props) {
   }));
 
   return (
-    <NavLink>
+    <NavLink to="#">
       <Dropdown menu={{ items }} trigger={["click"]} placement="bottomRight">
-        <div className="user-menu__trigger">
+        <div className="user-menu__trigger" style={{ cursor: "pointer" }}>
           <HomeOutlined className="icons-trigger" />
           <span>My Dashboard</span>
           <DownOutlined className="icons-trigger" />

@@ -15,6 +15,11 @@
   transition: all 0.4s ease;
   background: transparent;
 
+  &__container {
+    width: 100%;
+    padding: 0 3%;
+  }
+
   // STICKY WHEN SCROLL
   &--sticky {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -25,44 +30,59 @@
       opacity: 0;
     }
 
-    .header__mainbar-wrapper {
-      padding: 8px 0;
+    .header {
+      &__mainbar-wrapper {
+        padding: 8px 0;
 
-      a,
-      span,
-      svg {
-        color: #13357b;
-      }
-      span:hover svg {
-        color: #fff;
-      }
-
-      button a,
-      button span {
-        color: #fff;
-      }
-
-      .header__nav-link {
-        &:hover {
+        a,
+        span,
+        svg {
+          color: #13357b;
+        }
+        span:hover svg {
           color: #fff;
-          background: #13357b;
+        }
+
+        button a,
+        button span {
+          color: #fff;
+        }
+
+        .header__nav-link {
+          &:hover {
+            color: #fff;
+            background: #13357b;
+          }
+        }
+
+        .header__nav-link--active {
+          color: #fff;
+
+          svg {
+            color: #fff;
+          }
         }
       }
 
-      .header__nav-link--active {
-        color: #fff;
+      &__btn-book {
+        background-color: #13357b;
+        border-color: #13357b;
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 16px;
+        height: auto;
+        padding: 10px 24px;
 
-        svg {
-          color: #fff;
+        &:hover {
+          background-color: #ffffff !important;
+          color: #13357b !important;
+          border-color: #000000 !important;
+          span {
+            color: #13357b;
+          }
         }
       }
     }
-  }
-
-  &__container {
-    width: 100%;
-    padding: 0 3%;
-    box-sizing: border-box; // Đảm bảo padding không làm tăng chiều rộng header
   }
 
   // TOPBAR
@@ -108,7 +128,7 @@
 
   &__auth {
     @extend %flex-center;
-    gap: 20px;
+    gap: 15px;
   }
 
   &__auth-item {
@@ -231,10 +251,15 @@
       width: 100%;
       padding: 12px 15px;
       justify-content: space-between;
-      color: #333; // Trên mobile menu màu trắng nên chữ phải màu tối
+      color: #333;
       &--active {
         color: #ffffff;
         background-color: #13357b;
+      }
+
+      &:hover {
+        color: #fff;
+        background: #13357b;
       }
     }
   }
@@ -278,7 +303,7 @@
 
   @media (max-width: 992px) {
     position: static;
-    background: #fff; // Lên mobile đổi thành nền trắng
+    background: #fff;
     .header__logo,
     .header__nav-link {
       color: #13357b;

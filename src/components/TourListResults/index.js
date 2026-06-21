@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Select, Card, Tag, Button } from "antd";
 import {
   AppstoreOutlined,
@@ -9,6 +9,7 @@ import {
   SendOutlined,
 } from "@ant-design/icons";
 import "./TourListResults.scss";
+import { getTour } from "../../services/tourService";
 
 export default function TourListResults() {
   const [viewMode, setViewMode] = useState("grid");
@@ -44,6 +45,15 @@ export default function TourListResults() {
       price: "5.390.000",
     },
   ];
+
+  useEffect(() => {
+    const fetchApi = async () => {
+      const res = await getTour();
+      console.log(res);
+    };
+
+    fetchApi();
+  }, []);
 
   return (
     <div className="tour-results">

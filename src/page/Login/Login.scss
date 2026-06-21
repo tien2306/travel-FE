@@ -1,0 +1,123 @@
+$primary-color: #0d6efd;
+$text-dark: #212529;
+$text-muted: #6c757d;
+
+.login-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: no-repeat center center/cover;
+  background-attachment: fixed;
+  padding-top: 100px;
+
+  @media (max-width: 990px) {
+    padding-top: 0;
+  }
+
+  .background-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1;
+  }
+
+  .login-row {
+    position: relative;
+    z-index: 2;
+    min-height: calc(100vh - 100px);
+    padding: 20px 0;
+  }
+
+  .login-card {
+    background: rgba(255, 255, 255, 0.85); // Nền kính mờ đồng bộ trang Register
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 40px 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+
+    h2 {
+      color: $text-dark;
+      font-size: 26px;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      color: $text-muted;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .ant-form-item {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .ant-form-item-label > label {
+      font-weight: 600;
+      color: #333;
+      font-size: 13.5px;
+    }
+
+    .ant-input-affix-wrapper-large {
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      font-size: 14px;
+
+      .forgot-password {
+        color: $primary-color;
+        font-weight: 500;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .btn-login {
+      width: 100%;
+      height: 45px;
+      background-color: $primary-color;
+      border-color: $primary-color;
+      font-weight: 600;
+      font-size: 16px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba($primary-color, 0.3);
+      transition: all 0.3s ease;
+
+      &:hover,
+      &:focus {
+        background-color: #0b5ed7 !important;
+        border-color: #0b5ed7 !important;
+        transform: translateY(-1px);
+      }
+    }
+
+    .register-text {
+      margin-top: 20px;
+      font-size: 14px;
+      color: $text-muted;
+
+      a {
+        color: $primary-color;
+        font-weight: 600;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

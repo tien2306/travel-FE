@@ -1,5 +1,4 @@
 import { Button, Carousel } from "antd";
-import "./home.scss";
 
 import carousel1 from "../../images/carousel-1.jpg";
 import carousel2 from "../../images/carousel-2.jpg";
@@ -34,7 +33,7 @@ function Home() {
   ];
 
   return (
-    <div className="home-content">
+    <div className="home">
       <div className="hero-carousel">
         <Carousel arrows autoplay speed="600">
           {slides.map((slide) => (
@@ -63,40 +62,6 @@ function Home() {
           ))}
         </Carousel>
       </div>
-
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-      <div>page home</div>
-
-      {/* Các phần tiếp theo của trang như About, Services sẽ viết ở dưới này */}
     </div>
   );
 }

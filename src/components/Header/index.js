@@ -12,13 +12,17 @@ import {
   LoginOutlined,
   EnvironmentOutlined,
   MenuOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import NavigationMenu from "../NavigationMenu";
+import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
+  const isLogin = useSelector((state) => state.loginReducer);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,7 +34,7 @@ const Header = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [dispatch]);
 
   return (
     <header className={`header ${isSticky ? "header--sticky" : ""}`}>
@@ -63,14 +67,19 @@ const Header = () => {
             </Col>
             <Col xs={0} lg={8} className="header__auth-col">
               <div className="header__auth">
-                <Link className="header__auth-item" to="register">
-                  <UserOutlined />
-                  <span>Register</span>
-                </Link>
-                <Link className="header__auth-item" to="/login">
-                  <LoginOutlined />
-                  <span>Login</span>
-                </Link>
+                {!isLogin && (
+                  <>
+                    <Link className="header__auth-item" to="register">
+                      <UserOutlined />
+                      <span>Đăng Ký</span>
+                    </Link>
+                    <Link className="header__auth-item" to="login">
+                      <LoginOutlined />
+                      <span>Đăng Nhập</span>
+                    </Link>
+                  </>
+                )}
+
                 <Notify />
               </div>
             </Col>
@@ -86,11 +95,11 @@ const Header = () => {
             <div className="header__logo">
               <Link to="/">
                 <EnvironmentOutlined className="header__logo-icon" />
-                <span className="header__logo-text">Travela</span>
+                <div className="header__logo-text">TravelAWay</div>
               </Link>
             </div>
 
-            {/* Khối Điều hướng Ngang Desktop */}
+            {/* Khối Điều hướng Ngang  */}
             <nav className="header__nav">
               <NavigationMenu isMobile={false} />
             </nav>
@@ -105,6 +114,7 @@ const Header = () => {
               >
                 Book Now
               </Button>
+
               <Button
                 type="text"
                 className="header__btn-toggler"
@@ -129,12 +139,20 @@ const Header = () => {
         <nav className="header__nav-mobile">
           <NavigationMenu setIsMenuOpen={setIsMenuOpen} isMobile={true} />
           <div className="header__auth-mobile">
-            <Link to="register" onClick={() => setIsMenuOpen(false)}>
-              <UserOutlined /> Đăng ký
-            </Link>
-            <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-              <LoginOutlined /> Đăng nhập
-            </Link>
+            {isLogin ? (
+              <Link to="/logout" onClick={() => setIsMenuOpen(false)}>
+                <LogoutOutlined /> Đăng Xuất
+              </Link>
+            ) : (
+              <>
+                <Link to="/register" onClick={() => setIsMenuOpen(false)}>
+                  <UserOutlined /> Đăng Ký
+                </Link>
+                <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+                  <LoginOutlined /> Đăng Nhập
+                </Link>
+              </>
+            )}
           </div>
         </nav>
       </Drawer>

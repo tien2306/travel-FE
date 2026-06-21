@@ -42,6 +42,16 @@ export const routes = [
           },
         ],
       },
+
+      {
+        element: <PrivateRoutes />,
+        children: [
+          // {
+          //   path: "info-user",
+          //   element: <InfoUser />,
+          // },
+        ],
+      },
       {
         path: "login",
         element: <Login />,
@@ -54,16 +64,6 @@ export const routes = [
         path: "register",
         element: <Register />,
       },
-      {
-        element: <PrivateRoutes />,
-        children: [
-          // {
-          //   path: "info-user",
-          //   element: <InfoUser />,
-          // },
-        ],
-      },
-
       {
         path: "*",
         element: <Error404 />,
