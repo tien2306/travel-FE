@@ -1,3 +1,6 @@
+// ============================================================
+// MIXIN DÙNG CHUNG
+// ============================================================
 %flex-center {
   display: flex;
   align-items: center;
@@ -20,7 +23,9 @@
     padding: 0 3%;
   }
 
-  // STICKY WHEN SCROLL
+  // ============================================================
+  // TRẠNG THÁI STICKY (khi cuộn trang)
+  // ============================================================
   &--sticky {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     background: #fff;
@@ -39,7 +44,9 @@
         svg {
           color: #13357b;
         }
-        span:hover svg {
+
+        // Thêm loại trừ nút toggler để lúc scroll hover nút toggler không bị biến thành màu trắng
+        span:not(.header__btn-toggler):hover svg {
           color: #fff;
         }
 
@@ -65,18 +72,19 @@
       }
 
       &__btn-book {
-        background-color: #13357b;
-        border-color: #13357b;
-        color: #ffffff;
+        background: #13357b;
+        border: 1px solid #13357b;
+        color: #ffffff !important;
         font-weight: 600;
         font-size: 16px;
         height: auto;
         padding: 10px 24px;
+        box-sizing: border-box; // đảm bảo border không cộng thêm vào kích thước
 
         &:hover {
-          background-color: #ffffff !important;
+          background: #ffffff !important;
           color: #13357b !important;
-          border-color: #000000 !important;
+          border-color: #13357b !important; // chỉ đổi màu, không đổi độ rộng border
           span {
             color: #13357b;
           }
@@ -85,7 +93,9 @@
     }
   }
 
-  // TOPBAR
+  // ============================================================
+  // TOPBAR (dòng trên cùng: mạng xã hội + đăng nhập/đăng ký)
+  // ============================================================
   &__topbar {
     background: #13357b;
     transition: all 0.3s ease;
@@ -140,7 +150,9 @@
     text-decoration: none;
   }
 
-  // MAINBAR
+  // ============================================================
+  // MAINBAR (logo + menu + nút Book Now + nút mobile)
+  // ============================================================
   &__mainbar {
     transition: all 0.4s ease;
     background: transparent;
@@ -156,11 +168,12 @@
     width: 100%;
   }
 
+  // --- Logo ---
   &__logo {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #fff; // Đổi mặc định thành màu trắng để nổi bật trên nền ảnh banner tối
+    color: #fff;
     flex-shrink: 0;
     a {
       display: flex;
@@ -178,6 +191,7 @@
     }
   }
 
+  // --- Menu điều hướng ngang ---
   &__nav {
     display: flex;
     align-items: center;
@@ -209,6 +223,7 @@
     }
   }
 
+  // --- Khối nút bên phải (Book Now + nút 3 gạch mobile) ---
   &__right-actions {
     display: flex;
     align-items: center;
@@ -217,20 +232,20 @@
 
   &__btn-book {
     background-color: #13357b;
-    border-color: #13357b;
+    border: 1px solid #13357b;
     color: #ffffff;
     font-weight: 600;
     font-size: 16px;
     height: auto;
     padding: 10px 24px;
+    border-radius: 25px;
+    box-sizing: border-box;
+    display: inline-block; // Link không tự có display giống Button của antd
 
     &:hover {
-      background-color: #ffffff !important;
-      color: #13357b !important;
-      border-color: #ffffff !important;
-      span {
-        color: #13357b;
-      }
+      background-color: #ffffff;
+      color: #13357b;
+      border-color: #13357b;
     }
   }
 
@@ -242,7 +257,9 @@
     @extend %flex-center;
   }
 
-  // MOBILE DRAWER STYLE
+  // ============================================================
+  // MOBILE DRAWER (menu trượt khi thu nhỏ màn hình)
+  // ============================================================
   &__nav-mobile {
     display: flex;
     flex-direction: column;
@@ -285,41 +302,67 @@
     }
   }
 
-  // BREAKPOINTS RESPONSIVE
+  // ============================================================
+  // RESPONSIVE BREAKPOINTS
+  // ============================================================
+  // Tìm đúng đoạn này ở gần cuối file SCSS để thay thế:
+  // Thay thế chính xác đoạn @media (max-width: 1150px) cũ bằng đoạn này:
+  // Thay thế chính xác đoạn @media (max-width: 1150px) ở cuối file của bạn:
   @media (max-width: 1150px) {
     &__topbar,
     &__nav,
     &__btn-book {
       display: none !important;
     }
+
     &__btn-toggler {
       display: flex;
+
       svg {
         font-size: 22px;
-        color: #fff;
+        color: #fff; // Chưa scroll mặc định màu trắng
+      }
+
+      // Chưa scroll: hover vào nút vẫn giữ màu trắng
+      &:hover svg {
+        color: #fff !important;
       }
     }
-  }
 
-  @media (max-width: 992px) {
-    position: static;
-    background: #fff;
-    .header__logo,
-    .header__nav-link {
-      color: #13357b;
-    }
+    // Khi ĐÃ scroll (Sticky)
+    &--sticky {
+      .header__btn-toggler {
+        svg {
+          color: #13357b !important; // Cuộn xuống đổi mặc định sang màu xanh
+        }
 
-    &__btn-toggler {
-      display: flex;
-      svg {
-        font-size: 22px;
-        color: #13357b;
+        // Hover vào lúc ĐÃ scroll: Ép icon SVG bắt buộc ăn màu xanh đậm, không cho dòng màu trắng ở trên đè vào
+        &:hover svg {
+          color: #13357b !important;
+        }
       }
     }
   }
 }
 
-// Antd Dropdown
+// ============================================================
+// ANTD DRAWER (menu mobile trượt từ bên phải)
+// ============================================================
+.ant-drawer {
+  z-index: 1100;
+
+  &-mask {
+    z-index: 1100;
+  }
+
+  &-content-wrapper {
+    z-index: 1101;
+  }
+}
+
+// ============================================================
+// ANTD DROPDOWN (menu con của Service/Package/Blog/Pages)
+// ============================================================
 .ant-dropdown {
   .ant-dropdown-menu {
     border-top: 3px solid #13357b;

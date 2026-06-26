@@ -106,14 +106,14 @@ const Header = () => {
 
             {/* Khối Hành động (Nút Book Now + Nút 3 gạch Mobile) */}
             <div className="header__right-actions">
-              <Button
+              <Link
                 type="primary"
                 shape="round"
                 size="large"
                 className="header__btn-book"
               >
                 Book Now
-              </Button>
+              </Link>
 
               <Button
                 type="text"

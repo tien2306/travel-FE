@@ -1,7 +1,6 @@
 import { getCookie } from "../helpers/cookie";
 
-const API_DOMAIN =
-  process.env.REACT_APP_API_URL || "https://api-easytour.onrender.com/api/";
+const API_DOMAIN = process.env.REACT_APP_API_URL;
 
 const getAuthHeaders = () => {
   const token = getCookie("accessToken");

@@ -12,7 +12,6 @@ $color-text-sub: #718096;
     border-radius: 12px;
     margin-bottom: 20px;
 
-    /* 🛠️ THÊM CHO MOBILE: Bẻ thành 2 khối xếp chồng dọc từ trên xuống */
     @media (max-width: 600px) {
       flex-direction: column;
       align-items: flex-start;
@@ -35,7 +34,6 @@ $color-text-sub: #718096;
     align-items: center;
     gap: 12px;
 
-    /* 🛠️ THÊM CHO MOBILE: Cho phần hành động sắp xếp trải đều */
     @media (max-width: 600px) {
       width: 100%;
       justify-content: space-between;
@@ -50,7 +48,7 @@ $color-text-sub: #718096;
   &__sort-select {
     width: 210px;
     @media (max-width: 450px) {
-      width: 160px; /* Thu gọn thêm nếu màn hình điện thoại siêu nhỏ */
+      width: 160px;
     }
   }
 
@@ -76,8 +74,8 @@ $color-text-sub: #718096;
   background: #ffffff;
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px; // Thêm khoảng cách dưới các card chống dính nhau
 
-  /* Cấu hình mặc định cho chế độ Grid (Lưới) */
   .ant-card-body {
     padding: 0;
     display: flex;
@@ -95,29 +93,6 @@ $color-text-sub: #718096;
       width: 100%;
       height: 100%;
       object-fit: cover;
-    }
-  }
-
-  &__badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    border: none;
-    font-weight: 600;
-    padding: 2px 10px;
-    border-radius: 4px;
-
-    &--green {
-      background: #e6f4ea;
-      color: #137333;
-    }
-    &--red {
-      background: #fce8e6;
-      color: #c5221f;
-    }
-    &--purple {
-      background: #f3e8fd;
-      color: #a142f4;
     }
   }
 
@@ -169,35 +144,64 @@ $color-text-sub: #718096;
     display: none;
   }
 
+  // Tìm đến phần &__footer cũ trong file và dán đè đoạn này vào
   &__footer {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     border-top: 1px solid #f0f2f5;
-    padding-top: 12px;
+    padding-top: 14px;
     margin-top: auto;
+    position: relative; // Thêm dòng này để làm gốc định vị cho cái tag dính góc
   }
 
   &__price-label {
+    display: block;
     font-size: 11px;
     color: #a0aec0;
+    margin-bottom: 2px;
   }
 
   &__price-value {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 700;
     color: $color-blue;
+    line-height: 1;
   }
 
-  &__submit-btn {
+  &__more-badge {
+    position: absolute;
+    bottom: -16px;
+    right: -16px;
     background: $color-blue;
-    border-radius: 20px;
-    border: none;
+    color: #ffffff;
+    font-size: 12px;
     font-weight: 600;
-    height: 36px;
+    height: 38px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    // Tạo hình dáng bo cong lượn sóng dính vào góc phải
+    border-top-left-radius: 24px;
+    border-bottom-right-radius: 12px;
+
+    transition:
+      background 0.2s ease,
+      transform 0.2s ease;
 
     &:hover {
-      background-color: #0041a3;
+      background: #0041a3;
+    }
+  }
+
+  /* Tinh chỉnh riêng cho chế độ List Mode nếu padding body của bạn to hơn */
+  &--list-mode {
+    .tour-card__more-badge {
+      bottom: -20px;
+      right: -24px;
+      border-bottom-right-radius: 12px;
     }
   }
 
@@ -205,25 +209,42 @@ $color-text-sub: #718096;
      CẤU TRÚC KHI CHUYỂN SANG CHẾ ĐỘ DANH SÁCH (LIST MODE)
      ======================================================== */
   &--list-mode {
-    /* Ép cấu trúc flex hàng ngang cho thẻ con thực tế của Antd Card */
     .ant-card-body {
       flex-direction: row;
       align-items: stretch;
       width: 100%;
+
+      /* 🛠️ SỬA LỖI 2: Màn hình nhỏ (Dưới 768px) co về dọc thành dạng Grid để không vỡ */
+      @media (max-width: 768px) {
+        flex-direction: column;
+      }
     }
 
     .tour-card__hero {
-      width: 360px;
-      height: 240px;
+      width: 320px;
+      height: 220px;
       flex-shrink: 0;
+
+      @media (max-width: 992px) {
+        width: 260px; // Màn iPad nhỏ bớt chiều rộng ảnh lại
+      }
+
+      @media (max-width: 768px) {
+        width: 100%; // Màn điện thoại ảnh chiếm tràn chiều ngang như mặc định
+        height: 200px;
+      }
     }
 
     .tour-card__body {
-      padding: 24px;
+      padding: 20px 24px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       flex-grow: 1;
+
+      @media (max-width: 768px) {
+        padding: 16px; // Trả padding về mặc định trên điện thoại
+      }
     }
 
     .tour-card__title {
@@ -235,6 +256,10 @@ $color-text-sub: #718096;
       grid-template-columns: repeat(2, 1fr);
       gap: 8px 16px;
       margin-bottom: 12px;
+
+      @media (max-width: 480px) {
+        grid-template-columns: 1fr; // Điện thoại siêu nhỏ thì các icon info xếp hàng dọc đơn
+      }
     }
 
     .tour-card__date-section {
@@ -269,6 +294,11 @@ $color-text-sub: #718096;
       border-top: none;
       padding-top: 0;
       margin-top: auto;
+
+      @media (max-width: 768px) {
+        border-top: 1px solid #f0f2f5;
+        padding-top: 12px;
+      }
     }
   }
 }

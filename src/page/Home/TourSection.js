@@ -1,11 +1,11 @@
 import React from "react";
 import { Row, Col } from "antd";
-import "./SearchTour.scss";
 import SidebarFilter from "../../components/SidebarFilter";
 import HeaderSearch from "../../components/HeaderSearch";
 import TourListResults from "../../components/TourListResults";
+import "./tour.scss";
 
-export default function SearchTour() {
+function TourSection() {
   return (
     <div className="tour-page">
       <div className="tour-page__container">
@@ -29,3 +29,5 @@ export default function SearchTour() {
     </div>
   );
 }
+
+export default TourSection;
