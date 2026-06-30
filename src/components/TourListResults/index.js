@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Select, Spin } from "antd";
 import { AppstoreOutlined, MenuOutlined } from "@ant-design/icons";
 import { getTour } from "../../services/tourService";
@@ -15,6 +15,8 @@ export default function TourListResults() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
   const pageSize = 10;
+
+  const tourListRef = useRef(null);
 
   const fetchApi = async (page) => {
     setLoading(true);
@@ -37,11 +39,13 @@ export default function TourListResults() {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    window.scrollTo({ top: 600, behavior: "smooth" });
+
+    // Thêm dấu hỏi chấm (?) sau tourListRef.current để tránh lỗi crash ứng dụng nếu ref chưa kịp nhận phần tử
+    tourListRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
-    <div className="tour-results">
+    <div ref={tourListRef} className="tour-results">
       {/* TOOLBAR DUY NHẤT CỦA CẢ HỆ THỐNG NẰM Ở ĐÂY */}
       <div className="tour-results__toolbar">
         <div className="tour-results__count">
@@ -74,7 +78,7 @@ export default function TourListResults() {
       {/* HIỂN THỊ NỘI DUNG */}
       {loading ? (
         <div style={{ textAlign: "center", padding: "60px 0" }}>
-          <Spin size="large" tip="Đang tải dữ liệu..." />
+          <Spin size="large" description="Đang tải dữ liệu..." />
         </div>
       ) : viewMode === "grid" ? (
         <TourGrid data={tours} />
