@@ -20,7 +20,7 @@ export default function TourListResults() {
     setLoading(true);
     try {
       const res = await getTour(page);
-      if (res && res.success && res.data?.items) {
+      if (res && res.success && res.data.items) {
         setTours(res.data.items);
         setTotalItems(res.data.pagination.total);
       }
@@ -37,7 +37,7 @@ export default function TourListResults() {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    window.scrollTo({ top: 300, behavior: "smooth" });
+    window.scrollTo({ top: 600, behavior: "smooth" });
   };
 
   return (
