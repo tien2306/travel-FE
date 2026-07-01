@@ -14,7 +14,7 @@ export default function TourListResults() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
-  const pageSize = 10;
+  const [pageSize, setPageSize] = useState(10);
 
   const tourListRef = useRef(null);
 
@@ -25,6 +25,7 @@ export default function TourListResults() {
       if (res && res.success && res.data.items) {
         setTours(res.data.items);
         setTotalItems(res.data.pagination.total);
+        setPageSize(res.data.pagination.limit);
       }
     } catch (error) {
       console.error("Lỗi fetch tours:", error);
