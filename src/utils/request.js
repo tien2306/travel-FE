@@ -7,6 +7,44 @@ const getAuthHeaders = () => {
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
+const parseResponse = async (response) => {
+  const text = await response.text();
+  let data = {};
+
+  try {
+    data = text ? JSON.parse(text) : {};
+  } catch (error) {
+    data = {
+      message: text,
+    };
+  }
+
+  if (!response.ok) {
+    return {
+      success: false,
+      message:
+        data.message ||
+        data.error ||
+        data.errors?.[0]?.message ||
+        data.errors?.[0] ||
+        response.statusText ||
+        "Request failed",
+      data: data.data,
+      status: response.status,
+    };
+  }
+
+  return Object.keys(data).length > 0
+    ? {
+        success: data.success ?? true,
+        ...data,
+      }
+    : {
+        success: true,
+        message: "Success",
+      };
+};
+
 export const get = async (path) => {
   const res = await fetch(API_DOMAIN + path, {
     method: "GET",
@@ -36,15 +74,15 @@ export const del = async (path) => {
   const response = await fetch(API_DOMAIN + path, {
     method: "DELETE",
     headers: {
+      Accept: "application/json",
       ...getAuthHeaders(),
     },
   });
-  const result = await response.json();
-  return result;
+  return parseResponse(response);
 };
 
 export const patch = async (option, path) => {
-  const respone = await fetch(API_DOMAIN + path, {
+  const response = await fetch(API_DOMAIN + path, {
     method: "PATCH",
     headers: {
       Accept: "application/json",
@@ -53,6 +91,5 @@ export const patch = async (option, path) => {
     },
     body: JSON.stringify(option),
   });
-  const result = await respone.json();
-  return result;
+  return parseResponse(response);
 };

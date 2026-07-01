@@ -5,7 +5,7 @@ import "./Login.scss";
 import BG from "../../images/carousel-1.jpg";
 import { login } from "../../services/userService";
 import { setCookie } from "../../helpers/cookie";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { checkLogin } from "../../actions/login";
 import { useDispatch } from "react-redux";
 import { getCookie } from "../../helpers/cookie";
@@ -14,6 +14,7 @@ const Login = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   useEffect(() => {
     const savedEmail = getCookie("remembered_email");
@@ -53,10 +54,17 @@ const Login = () => {
         dispatch(checkLogin(true));
 
         // 4. Điều hướng dựa theo quyền hạn
-        if (userData.role.name === "ADMIN") {
-          navigate("/admin");
+        const redirectPath = location.state?.from?.pathname;
+        const isAdmin = userData.role.name === "ADMIN";
+
+        if (isAdmin) {
+          navigate(redirectPath || "/admin", { replace: true });
         } else {
-          navigate("/");
+          const safeRedirectPath = redirectPath?.startsWith("/admin")
+            ? "/"
+            : redirectPath || "/";
+
+          navigate(safeRedirectPath, { replace: true });
         }
       } else {
         message.error(res.message || "Đăng nhập thất bại!");
