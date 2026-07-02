@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Form, Input, Checkbox, Button, message, Row, Col } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "./Login.scss";
-import BG from "../../images/carousel-1.jpg";
 import { login } from "../../services/userService";
 import { setCookie } from "../../helpers/cookie";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { checkLogin } from "../../actions/login";
 import { useDispatch } from "react-redux";
 import { getCookie } from "../../helpers/cookie";
@@ -15,6 +14,9 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { defaultBgFromApi } = useOutletContext();
+
+  // Xử lí nhớ tài khoản
   useEffect(() => {
     const savedEmail = getCookie("remembered_email");
     if (savedEmail) {
@@ -26,6 +28,7 @@ const Login = () => {
     }
   }, [form]);
 
+  // Xử lí đăng nhập
   const onFinish = async (e) => {
     const { remember, ...account } = e;
     setLoading(true);
@@ -70,16 +73,19 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container" style={{ backgroundImage: `url(${BG})` }}>
+    <div
+      className="login-container"
+      style={{ backgroundImage: `url(${defaultBgFromApi})` }}
+    >
       <div className="background-overlay"></div>
 
-      {/* Sử dụng Row và Col của Antd để responsive ôm sát màn hình */}
       <Row justify="center" align="middle" className="login-row">
         <Col xs={22} sm={16} md={12} lg={10} xl={8}>
           <div className="login-card">
             <h2>Chào Mừng Trở Lại</h2>
             <p className="subtitle">Khám phá thế giới cùng EasyTour</p>
 
+            {/* Form */}
             <Form
               form={form}
               name="login_form"
@@ -88,7 +94,7 @@ const Login = () => {
               requiredMark={false}
               initialValues={{ remember: true }}
             >
-              {/* Thêm chuẩn name="email" và autoComplete="email" */}
+              {/* Tài khoản Email */}
               <Form.Item
                 label="Email"
                 name="email"
@@ -105,7 +111,7 @@ const Login = () => {
                 />
               </Form.Item>
 
-              {/* Thêm chuẩn name="password" và autoComplete="current-password" */}
+              {/* Mật khẩu */}
               <Form.Item
                 label="Mật khẩu"
                 name="password"
@@ -122,6 +128,7 @@ const Login = () => {
                 />
               </Form.Item>
 
+              {/* Ghi nhớ */}
               <div className="form-actions">
                 <Form.Item name="remember" valuePropName="checked" noStyle>
                   <Checkbox>Ghi nhớ tôi</Checkbox>
@@ -131,6 +138,7 @@ const Login = () => {
                 </a>
               </div>
 
+              {/* Button đăng nhập */}
               <Form.Item style={{ marginBottom: 0 }}>
                 <Button
                   type="primary"

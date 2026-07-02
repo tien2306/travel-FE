@@ -10,10 +10,6 @@ $text-muted: #6c757d;
   background-attachment: fixed;
   padding-top: 100px;
 
-  @media (max-width: 990px) {
-    padding-top: 0;
-  }
-
   .background-overlay {
     position: absolute;
     top: 0;
@@ -34,7 +30,7 @@ $text-muted: #6c757d;
   .login-card {
     background: rgba(255, 255, 255, 0.85); // Nền kính mờ đồng bộ trang Register
     backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    // -webkit-backdrop-filter: blur(15px);
     padding: 40px 30px;
     border-radius: 16px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);

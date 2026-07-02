@@ -5,12 +5,13 @@ $text-muted: #6c757d;
 .register-container {
   position: relative;
   width: 100%;
-  min-height: auto;
+  min-height: 100vh;
   background: no-repeat center center/cover;
   background-attachment: fixed;
-  padding-top: 100px; // Đẩy vùng hiển thị xuống dưới Header transparent
-  @media (max-width: 990px) {
-    padding-top: 0;
+  padding-top: 100px;
+
+  @media (max-width: 992px) {
+    padding-top: 80px;
   }
 
   .background-overlay {
@@ -31,19 +32,17 @@ $text-muted: #6c757d;
   }
 
   .register-card {
-    background: rgba(
-      255,
-      255,
-      255,
-      0.85
-    ); // Hiệu ứng kính mờ chuẩn chỉnh giống Login
+    background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    padding: 25px 35px;
+    padding: 30px 25px;
     border-radius: 16px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.25);
+
+    @media (max-width: 576px) {
+      padding: 20px 15px;
+    }
 
     h2 {
       color: $text-dark;

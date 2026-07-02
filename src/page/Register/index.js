@@ -8,16 +8,16 @@ import {
   HomeOutlined,
   IdcardOutlined,
 } from "@ant-design/icons";
-// import { post } from "../../../utils/request";
 import "./Register.scss";
-import BG from "../../images/carousel-1.jpg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { register } from "../../services/userService";
 
 const Register = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const { defaultBgFromApi } = useOutletContext();
 
+  // Xử lí đăng ký
   const onFinish = async (values) => {
     const { confirmPassword, ...account } = values;
 
@@ -41,7 +41,7 @@ const Register = () => {
   return (
     <div
       className="register-container"
-      style={{ backgroundImage: `url(${BG})` }}
+      style={{ backgroundImage: `url(${defaultBgFromApi})` }}
     >
       <div className="background-overlay"></div>
 
@@ -55,13 +55,11 @@ const Register = () => {
             </p>
 
             <Form
-              // form={form}
               name="register_form"
               layout="vertical"
               onFinish={onFinish}
               requiredMark={false}
             >
-              {/* Dùng Row lồng bên trong Form để chia cột cho từng Form.Item */}
               <Row gutter={[20, 0]}>
                 {/* Tên tài khoản */}
                 <Col xs={24} md={12}>
@@ -114,6 +112,7 @@ const Register = () => {
                       prefix={<MailOutlined />}
                       placeholder="abc@gmail.com"
                       size="large"
+                      autoComplete="email"
                     />
                   </Form.Item>
                 </Col>
@@ -173,6 +172,7 @@ const Register = () => {
                       prefix={<LockOutlined />}
                       placeholder="Nhập mật khẩu"
                       size="large"
+                      autoComplete="new-password"
                     />
                   </Form.Item>
                 </Col>
@@ -204,6 +204,7 @@ const Register = () => {
                       prefix={<LockOutlined />}
                       placeholder="Nhập lại mật khẩu"
                       size="large"
+                      autoComplete="new-password"
                     />
                   </Form.Item>
                 </Col>

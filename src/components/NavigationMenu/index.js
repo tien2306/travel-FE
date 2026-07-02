@@ -7,7 +7,7 @@ function NavigationMenu(props) {
   const currentPath = location.pathname;
   const { isMobile, setIsMenuOpen } = props;
 
-  console.log(props);
+  // console.log(props);
 
   const navLinkActive = (e) => {
     return e.isActive
