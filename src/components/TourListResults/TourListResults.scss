@@ -11,12 +11,8 @@ $color-text-sub: #718096;
     padding: 14px 20px;
     border-radius: 12px;
     margin-bottom: 20px;
-    @media (max-width: 600px) {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 12px;
-    }
   }
+
   &__count {
     font-size: 14px;
     color: #4a5568;
@@ -25,25 +21,22 @@ $color-text-sub: #718096;
       font-weight: 700;
     }
   }
+
   &__actions {
     display: flex;
     align-items: center;
     gap: 12px;
-    @media (max-width: 600px) {
-      width: 100%;
-      justify-content: space-between;
-    }
   }
+
   &__sort-label {
     font-size: 13px;
     color: $color-text-sub;
   }
+
   &__sort-select {
     width: 210px;
-    @media (max-width: 450px) {
-      width: 160px;
-    }
   }
+
   &__view-modes {
     display: flex;
     gap: 8px;
@@ -51,6 +44,7 @@ $color-text-sub: #718096;
     color: #a0aec0;
     cursor: pointer;
   }
+
   &__icon {
     &--active {
       color: $color-blue;
@@ -66,9 +60,10 @@ $color-text-sub: #718096;
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+  position: relative;
 
-  // FIX CHỐNG LỆCH CARD: Khống chế chiều cao cố định của card dạng lưới
-  height: 440px;
+  min-height: 440px;
+  height: 100%;
 
   transition:
     transform 0.2s ease,
@@ -84,9 +79,6 @@ $color-text-sub: #718096;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    height: calc(
-      100% - 200px
-    ); // Ép phần body co giãn chuẩn theo ảnh hero 200px
   }
 
   &__hero {
@@ -94,7 +86,7 @@ $color-text-sub: #718096;
     height: 200px;
     width: 100%;
     overflow: hidden;
-    flex-shrink: 0;
+
     img {
       width: 100%;
       height: 100%;
@@ -133,25 +125,21 @@ $color-text-sub: #718096;
     z-index: 2;
   }
 
-  &__quick-view {
-    cursor: pointer;
-  }
-
   &__body {
     padding: 16px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    overflow: hidden;
   }
 
   &__title {
     font-size: 15px;
     font-weight: 700;
     color: $color-text-main;
+    margin-top: 4px;
     margin-bottom: 8px;
     line-height: 1.4;
-    height: 42px;
+
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -159,38 +147,17 @@ $color-text-sub: #718096;
     overflow: hidden;
   }
 
-  &__grid-info {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 6px 12px;
-    font-size: 12px;
-    color: $color-text-sub;
-    margin-bottom: 8px;
-
-    // FIX DÀI CHỮ TUYẾN ĐƯỜNG: Chống tràn và tự động thêm dấu "..." nếu điểm đến quá dài
-    .tour-card__info-item {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-
-      &[style*="grid-column"] {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-    }
-
-    .anticon {
-      margin-right: 4px;
-    }
-  }
-
   &__date-block {
-    margin-top: auto; // Đẩy khối lịch bám sát lên trên footer
-    margin-bottom: 10px;
+    margin-top: auto;
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
     gap: 6px;
+  }
+
+  &__date-label {
+    font-size: 12px;
+    color: $color-text-sub;
   }
 
   &__date-badge-accent {
@@ -213,9 +180,8 @@ $color-text-sub: #718096;
     align-items: center;
     border-top: 1px solid #f0f2f5;
     padding-top: 10px;
+    margin-top: auto;
     position: relative;
-    margin-top: 0;
-    flex-shrink: 0;
   }
 
   &__price-label {
@@ -226,19 +192,16 @@ $color-text-sub: #718096;
   }
 
   &__price-value {
-    font-size: 19px;
+    font-size: 18px;
     font-weight: bold;
     color: $color-blue;
     line-height: 1;
-    letter-spacing: -0.5px;
   }
 
   &__price-unit {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     margin-left: 2px;
-    position: relative;
-    top: -2px;
   }
 
   &__more-badge {
@@ -255,104 +218,84 @@ $color-text-sub: #718096;
     align-items: center;
     justify-content: center;
     border-top-left-radius: 24px;
-    border-bottom-right-radius: 12px;
-    transition:
-      background 0.2s ease,
-      transform 0.2s ease;
     cursor: pointer;
+    transition: background 0.2s ease;
+
     &:hover {
       background: #0041a3;
     }
   }
 
+  // SỬA TOÀN BỘ CHẾ ĐỘ DÒNG NGANG (LIST MODE) CHUẨN ĐẸP TẠI ĐÂY
   &--list-mode {
-    height: auto; // Dạng list hàng ngang thì không khóa chiều cao cứng
+    flex-direction: row !important;
+    min-height: 220px !important;
+    height: 220px !important;
+
     .ant-card-body {
-      flex-direction: row;
+      flex-direction: row !important;
       align-items: stretch;
       width: 100%;
       height: 100%;
-      @media (max-width: 768px) {
-        flex-direction: column;
-      }
     }
+
     .tour-card__hero {
-      width: 320px;
-      height: 220px;
+      width: 320px !important;
+      height: 100% !important;
       flex-shrink: 0;
-      @media (max-width: 992px) {
-        width: 260px;
-      }
-      @media (max-width: 768px) {
-        width: 100%;
-        height: 200px;
-      }
     }
+
     .tour-card__body {
-      padding: 20px 24px;
+      padding: 20px 24px !important;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-start !important;
       flex-grow: 1;
-      height: auto;
-      @media (max-width: 768px) {
-        padding: 16px;
-      }
+      height: 100%;
+      position: relative; // Tạo gốc tọa độ để cố định footer ở đáy bên phải
     }
+
     .tour-card__title {
-      font-size: 16px;
-      margin-bottom: 10px;
-    }
-    .tour-card__grid-info {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px 16px;
+      font-size: 20px !important; // Làm tiêu đề to, nổi bật rõ ràng
       margin-bottom: 12px;
-      @media (max-width: 480px) {
-        grid-template-columns: 1fr;
-      }
-      .tour-card__info-item {
-        white-space: normal;
-        overflow: visible;
-        text-overflow: clip;
-      }
     }
-    .tour-card__date-section {
+
+    // Các dòng thông tin chi tiết (Nơi khởi hành, thời gian...)
+    .tour-card__grid-info {
       display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-    .tour-card__date-label {
-      font-size: 12px;
-      color: $color-text-sub;
-    }
-    .tour-card__date-list {
-      display: flex;
+      flex-direction: column;
       gap: 6px;
-      flex-wrap: wrap;
+      margin-bottom: 0;
     }
-    .tour-card__date-badge {
-      border: 1px solid #f5222d;
-      color: #f5222d;
-      background: #fff1f0;
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 11px;
-      font-weight: 600;
-    }
+
+    // Đẩy toàn bộ khu vực giá cả và nút xuống đáy bên phải của List-mode
     .tour-card__footer {
-      border-top: none;
-      padding-top: 0;
+      border-top: none !important;
+      padding-top: 0 !important;
       margin-top: auto;
-      @media (max-width: 768px) {
-        border-top: 1px solid #f0f2f5;
-        padding-top: 12px;
-      }
+
+      position: absolute;
+      bottom: 20px;
+      right: 24px;
+      left: auto;
+
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end; // Căn lề phải cho giá và nút
+      gap: 10px;
     }
+
+    // Sửa giá cả nhảy lên phía trên nút
+    .tour-card__price-container {
+      text-align: right;
+    }
+
+    // Sửa nút chi tiết thành nút bấm bình thường, không bám âm viền nữa
     .tour-card__more-badge {
-      bottom: -20px;
-      right: -24px;
-      border-bottom-right-radius: 12px;
+      position: static !important; // Hủy bỏ absolute tràn lề cũ
+      border-radius: 6px !important; // Bo tròn góc đều 4 cạnh cho đẹp mắt
+      height: 36px;
+      padding: 0 24px;
     }
   }
 
