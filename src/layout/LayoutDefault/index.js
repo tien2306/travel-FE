@@ -1,20 +1,22 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { Layout } from "antd";
 import { Outlet, useLocation } from "react-router-dom";
-import Header from "../../components/Header";
-import Footer from "antd/es/layout/layout";
+
 import "./layoutDefaulat.scss";
 import { getCarousel } from "../../services/carouselService";
+import Header from "../../components/Client/Header";
 
 const { Content } = Layout;
 
 function LayoutDefault() {
   const location = useLocation();
   const [pageTitle, setPageTitle] = useState("");
-  // Khai báo state lưu danh sách ảnh từ API Carousel
   const [carouselData, setCarouselData] = useState([]);
 
-  // Gọi API lấy dữ liệu Carousel
+  // State lưu ảnh hiện tại
+  const [currentBg, setCurrentBg] = useState("../../images/carousel-1.jpg");
+
+  // API lấy dữ liệu Carousel khi trang web được tải lần đầu
   useEffect(() => {
     const fetchCarousel = async () => {
       try {
@@ -29,29 +31,28 @@ function LayoutDefault() {
     fetchCarousel();
   }, []);
 
-  // UseMemo sẽ tính toán và KHÓA CHẶT ảnh nền lại, chỉ tính lại duy nhất khi location.pathname thay đổi.
-  const currentBg = useMemo(() => {
-    // Nếu API chưa trả về data, dùng tạm ảnh tĩnh dự phòng
-    if (!carouselData || carouselData.length === 0) {
-      return "../../images/carousel-1.jpg";
+  // 2. THEO DÕI CHUYỂN TRANG: Mỗi lần URL thay đổi, tự động bốc ngẫu nhiên một ảnh khác
+  useEffect(() => {
+    if (carouselData && carouselData.length > 0) {
+      const randomIndex = Math.floor(Math.random() * carouselData.length);
+      setCurrentBg(
+        carouselData[randomIndex]?.image || "../../images/carousel-1.jpg",
+      );
     }
+  }, [location.pathname, carouselData]);
 
-    // Tạo số ngẫu nhiên dựa vào chính độ dài mảng
-    const randomIndex = Math.floor(Math.random() * carouselData.length);
-    return carouselData[randomIndex]?.image || "../../images/carousel-1.jpg";
-
-    // Chỉ tính toán lại khi người dùng bấm chuyển trang (location.pathname thay đổi)
-  }, [location.pathname, carouselData.length]);
-
+  // Kiểm tra xem trang hiện tại có cần ẩn sub-page-banner phụ không
   const isHomeBanner =
     location.pathname === "/" ||
     location.pathname === "/home" ||
     location.pathname === "/login" ||
     location.pathname === "/register";
 
+  // Kiểm tra xem trang hiện tại có phải trang đăng nhập/đăng ký để ẩn footer không
   const isAuthBanner =
     location.pathname === "/login" || location.pathname === "/register";
 
+  // Tự động cập nhật tiêu đề (Page Title) dựa theo đường dẫn URL hiện tại
   useEffect(() => {
     const path = location.pathname.split("/").pop();
     if (path === "about") setPageTitle("About Us");
@@ -59,14 +60,14 @@ function LayoutDefault() {
     else if (path === "blog") setPageTitle("Our Blog");
     else if (path === "contact") setPageTitle("Contact Us");
     else setPageTitle("");
-  }, [location]);
+  }, [location.pathname]);
 
   return (
     <Layout className="layout-default">
       <Header />
 
       <Layout>
-        {/* header phụ */}
+        {/* Nếu KHÔNG PHẢI trang chủ/đăng nhập/đăng ký -> Hiển thị sub-page-banner phụ */}
         {!isHomeBanner && (
           <div
             className="sub-page-banner"
@@ -81,12 +82,12 @@ function LayoutDefault() {
         )}
 
         <Content className="content">
-          {/* Truyền dữ liệu an toàn xuống các component con */}
           <Outlet context={{ carouselData, defaultBgFromApi: currentBg }} />
         </Content>
       </Layout>
 
-      {!isAuthBanner && <Footer>Footer</Footer>}
+      {/* Nếu KHÔNG PHẢI trang đăng nhập/đăng ký -> Hiển thị Footer */}
+      {!isAuthBanner && <footer>Footer</footer>}
     </Layout>
   );
 }

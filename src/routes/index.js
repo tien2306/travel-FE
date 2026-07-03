@@ -1,15 +1,20 @@
-import PrivateRoutes from "../components/PrivateRoutes";
+import PrivateRoutes from "../components/Common/PrivateRoutes";
+import LayoutAdmin from "../layout/LayoutAdmin";
 import LayoutDefault from "../layout/LayoutDefault";
-import About from "../page/About";
-import Blog from "../page/Blog";
-import BlogDetail from "../page/Blog/BlogDetail";
-import BlogPosts from "../page/Blog/BlogPosts";
-import Contact from "../page/Contact";
-import Error404 from "../page/Error404";
-import Home from "../page/Home";
-import Login from "../page/Login";
-import Logout from "../page/Logout";
-import Register from "../page/Register";
+import About from "../page/Client/About";
+import Blog from "../page/Client/Blog";
+import BlogDetail from "../page/Client/Blog/BlogDetail";
+import BlogPosts from "../page/Client/Blog/BlogPosts";
+import Contact from "../page/Client/Contact";
+import Error404 from "../page/Auth/Error404";
+import Home from "../page/Client/Home";
+import Login from "../page/Auth/Login";
+import Register from "../page/Auth/Register";
+import DashBoard from "../page/Admin/DashBoard";
+import BookRoom from "../page/Admin/BookTour";
+import CreateRoom from "../page/Admin/CreateTour";
+import ListRoom from "../page/Admin/ListTour";
+import Logout from "../page/Auth/Logout";
 
 export const routes = [
   {
@@ -67,6 +72,33 @@ export const routes = [
       {
         path: "*",
         element: <Error404 />,
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <PrivateRoutes allowedRoles={["ADMIN"]} />,
+    children: [
+      {
+        element: <LayoutAdmin />,
+        children: [
+          {
+            index: true,
+            element: <DashBoard />,
+          },
+          {
+            path: "book-tour",
+            element: <BookRoom />,
+          },
+          {
+            path: "create-tour",
+            element: <CreateRoom />,
+          },
+          {
+            path: "list-tour",
+            element: <ListRoom />,
+          },
+        ],
       },
     ],
   },

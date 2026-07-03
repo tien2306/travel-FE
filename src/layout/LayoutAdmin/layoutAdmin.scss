@@ -1,0 +1,71 @@
+.layout-admin {
+  .header {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    transition: all 0.2s;
+    background: #fff;
+
+    // đặt lại thuộc tính bị dính từ header client
+    flex-direction: row;
+    position: static;
+    width: auto;
+    height: 60px;
+
+    &__logo {
+      width: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid #ddd;
+
+      &--collapsed {
+        width: 80px;
+        transition: all 0.2s;
+      }
+
+      // đặt lại thuộc tính bị dính từ header client
+      a {
+        color: #000;
+      }
+    }
+
+    // đặt lại thuộc tính bị dính từ header client
+    &__logo-text {
+      font-size: 20px;
+    }
+
+    &__logo-icon {
+      font-size: 20px;
+    }
+
+    &__nav {
+      flex: 1;
+      padding: 10px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    &__nav-left {
+      display: flex;
+      align-items: center;
+      font-size: 20px;
+    }
+    &__nav-right {
+      .user-menu__trigger {
+        color: #000;
+      }
+    }
+
+    &__collapse {
+      margin-right: 20px;
+      cursor: pointer;
+    }
+  }
+
+  .content {
+    padding: 20px;
+    background: #f9fbfd;
+    border-left: 1px solid #ddd;
+  }
+}
