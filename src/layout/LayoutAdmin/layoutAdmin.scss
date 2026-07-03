@@ -44,6 +44,11 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+
+      // đặt lại thuộc tính bị dính từ header client
+      @media (max-width: 1150px) {
+        display: flex !important;
+      }
     }
 
     &__nav-left {

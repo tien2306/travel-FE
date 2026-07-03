@@ -13,20 +13,20 @@ function NavigationMenu(props) {
   const state = useSelector((state) => state.loginReducer);
   const role = state?.role;
 
-  // Hàm xử lý đóng menu trượt khi người dùng click chọn link (chỉ chạy trên thiết bị di động)
+  // Hàm xử lý đóng menu
   const handleCloseMenu = () => {
     if (isMobile && setIsMenuOpen) {
       setIsMenuOpen(false);
     }
   };
 
+  // Hàm xử lý active
   const navLinkActive = (e) => {
     return e.isActive
       ? "header__nav-link header__nav-link--active"
       : "header__nav-link";
   };
 
-  // Giữ nguyên toàn bộ cấu hình mảng dữ liệu menu con của bạn
   const serviceItems = [
     { key: "s1", label: <Link to="/service/services">Travel Services</Link> },
     {
@@ -111,7 +111,7 @@ function NavigationMenu(props) {
         Contact
       </NavLink>
 
-      {/* 3. ĐIỀU KIỆN CHO MÀN HÌNH NHỎ: Chỉ hiển thị nút Admin khi đang ở màn hình mobile (isMobile) VÀ user đăng nhập quyền ADMIN */}
+      {/* 3.Chỉ hiển thị nút Admin khi đang ở màn hình mobile  VÀ user đăng nhập quyền ADMIN */}
       {isMobile && role === "ADMIN" && (
         <NavLink
           to="/admin"

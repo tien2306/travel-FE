@@ -13,10 +13,10 @@ const initialState = {
 
 export const loginReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "CHECK_LOGIN": // Hoặc tên action type bạn đang đặt cho hàm checkLogin
+    case "CHECK_LOGIN":
       return {
         ...state,
-        isLogin: action.status, // Giữ nguyên logic action cũ của bạn
+        isLogin: action.status,
         role: action.role,
       };
     default:

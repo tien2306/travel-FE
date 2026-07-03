@@ -1,6 +1,4 @@
-// ============================================================
 // MIXIN DÙNG CHUNG
-// ============================================================
 %flex-center {
   display: flex;
   align-items: center;
@@ -23,9 +21,7 @@
     padding: 0 3%;
   }
 
-  // ============================================================
   // TRẠNG THÁI STICKY (khi cuộn trang)
-  // ============================================================
   &--sticky {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     background: #fff;
@@ -79,12 +75,12 @@
         font-size: 16px;
         height: auto;
         padding: 10px 24px;
-        box-sizing: border-box; // đảm bảo border không cộng thêm vào kích thước
+        box-sizing: border-box;
 
         &:hover {
           background: #ffffff !important;
           color: #13357b !important;
-          border-color: #13357b !important; // chỉ đổi màu, không đổi độ rộng border
+          border-color: #13357b !important;
           span {
             color: #13357b;
           }
@@ -93,9 +89,7 @@
     }
   }
 
-  // ============================================================
   // TOPBAR (dòng trên cùng: mạng xã hội + đăng nhập/đăng ký)
-  // ============================================================
   &__topbar {
     background: #13357b;
     transition: all 0.3s ease;
@@ -150,9 +144,7 @@
     text-decoration: none;
   }
 
-  // ============================================================
   // MAINBAR (logo + menu + nút Book Now + nút mobile)
-  // ============================================================
   &__mainbar {
     transition: all 0.4s ease;
     background: transparent;
@@ -240,7 +232,7 @@
     padding: 10px 24px;
     border-radius: 25px;
     box-sizing: border-box;
-    display: inline-block; // Link không tự có display giống Button của antd
+    display: inline-block;
 
     &:hover {
       background-color: #ffffff;
@@ -257,9 +249,7 @@
     @extend %flex-center;
   }
 
-  // ============================================================
   // MOBILE DRAWER (menu trượt khi thu nhỏ màn hình)
-  // ============================================================
   &__nav-mobile {
     display: flex;
     flex-direction: column;
@@ -302,12 +292,8 @@
     }
   }
 
-  // ============================================================
   // RESPONSIVE BREAKPOINTS
-  // ============================================================
-  // Tìm đúng đoạn này ở gần cuối file SCSS để thay thế:
-  // Thay thế chính xác đoạn @media (max-width: 1150px) cũ bằng đoạn này:
-  // Thay thế chính xác đoạn @media (max-width: 1150px) ở cuối file của bạn:
+
   @media (max-width: 1150px) {
     &__topbar,
     &__nav,
@@ -320,23 +306,20 @@
 
       svg {
         font-size: 22px;
-        color: #fff; // Chưa scroll mặc định màu trắng
+        color: #fff;
       }
 
-      // Chưa scroll: hover vào nút vẫn giữ màu trắng
       &:hover svg {
         color: #fff !important;
       }
     }
 
-    // Khi ĐÃ scroll (Sticky)
     &--sticky {
       .header__btn-toggler {
         svg {
-          color: #13357b !important; // Cuộn xuống đổi mặc định sang màu xanh
+          color: #13357b !important;
         }
 
-        // Hover vào lúc ĐÃ scroll: Ép icon SVG bắt buộc ăn màu xanh đậm, không cho dòng màu trắng ở trên đè vào
         &:hover svg {
           color: #13357b !important;
         }
@@ -345,9 +328,7 @@
   }
 }
 
-// ============================================================
 // ANTD DRAWER (menu mobile trượt từ bên phải)
-// ============================================================
 .ant-drawer {
   z-index: 1100;
 
@@ -360,9 +341,7 @@
   }
 }
 
-// ============================================================
 // ANTD DROPDOWN (menu con của Service/Package/Blog/Pages)
-// ============================================================
 .ant-dropdown {
   .ant-dropdown-menu {
     border-top: 3px solid #13357b;
