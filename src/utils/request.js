@@ -11,6 +11,8 @@ export const get = async (path) => {
   const res = await fetch(API_DOMAIN + path, {
     method: "GET",
     headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
       ...getAuthHeaders(),
     },
   });
@@ -54,5 +56,30 @@ export const patch = async (option, path) => {
     body: JSON.stringify(option),
   });
   const result = await respone.json();
+  return result;
+};
+
+//Upload file
+export const postWithFile = async (formData, path) => {
+  const res = await fetch(API_DOMAIN + path, {
+    method: "POST",
+    headers: {
+      ...getAuthHeaders(),
+    },
+    body: formData,
+  });
+  const result = await res.json();
+  return result;
+};
+
+export const patchWithFile = async (formData, path) => {
+  const res = await fetch(API_DOMAIN + path, {
+    method: "PATCH",
+    headers: {
+      ...getAuthHeaders(),
+    },
+    body: formData,
+  });
+  const result = await res.json();
   return result;
 };

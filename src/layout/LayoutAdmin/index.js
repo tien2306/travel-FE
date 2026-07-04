@@ -1,7 +1,5 @@
 import { Layout } from "antd";
 import "./layoutAdmin.scss";
-// import logo from "../../images/logo.png";
-// import logoFold from "../../images/logo-fold.png";
 import {
   SearchOutlined,
   MenuUnfoldOutlined,
@@ -17,7 +15,7 @@ import Notify from "../../components/Common/Notify";
 const { Sider, Content } = Layout;
 
 function LayoutAdmin() {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   return (
     <Layout className="layout-admin">
       <header className="header">

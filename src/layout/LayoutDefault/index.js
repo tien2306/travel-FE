@@ -21,8 +21,9 @@ function LayoutDefault() {
     const fetchCarousel = async () => {
       try {
         const res = await getCarousel();
-        if (res && res.success && res.data.length > 0) {
-          setCarouselData(res.data);
+        // console.log(res);
+        if (res && res.success && res.data.items.length > 0) {
+          setCarouselData(res.data.items);
         }
       } catch (error) {
         console.error("Lỗi gọi API Carousel:", error);
@@ -35,9 +36,18 @@ function LayoutDefault() {
   useEffect(() => {
     if (carouselData && carouselData.length > 0) {
       const randomIndex = Math.floor(Math.random() * carouselData.length);
-      setCurrentBg(
-        carouselData[randomIndex]?.image || "../../images/carousel-1.jpg",
-      );
+      // setCurrentBg(
+      //   carouselData[randomIndex]?.image || "../../images/carousel-1.jpg",
+      // );
+
+      const apiImageName = carouselData[randomIndex]?.image;
+      if (apiImageName) {
+        setCurrentBg(
+          `${process.env.REACT_APP_API_URL}hero-carousels/image/${apiImageName.trim()}`,
+        );
+      } else {
+        setCurrentBg("../../images/carousel-1.jpg");
+      }
     }
   }, [location.pathname, carouselData]);
 

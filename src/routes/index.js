@@ -13,8 +13,9 @@ import Register from "../page/Auth/Register";
 import DashBoard from "../page/Admin/DashBoard";
 import BookRoom from "../page/Admin/BookTour";
 import CreateRoom from "../page/Admin/CreateTour";
-import ListRoom from "../page/Admin/ListTour";
 import Logout from "../page/Auth/Logout";
+import CreateCarousel from "../page/Admin/CreateCarousel";
+import ListCarousel from "../page/Admin/ListCarousel";
 
 export const routes = [
   {
@@ -96,7 +97,15 @@ export const routes = [
           },
           {
             path: "list-tour",
-            element: <ListRoom />,
+            element: <ListCarousel />,
+          },
+          {
+            path: "create-carousel",
+            element: <CreateCarousel />,
+          },
+          {
+            path: "list-carousel",
+            element: <ListCarousel />,
           },
         ],
       },

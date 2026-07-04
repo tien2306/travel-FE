@@ -3,19 +3,28 @@ import { useOutletContext } from "react-router-dom";
 
 function HeroCarousel() {
   const { carouselData } = useOutletContext();
-  if (!carouselData || carouselData.length === 0) {
+
+  const activeCarousels =
+    carouselData?.filter((slide) => slide.isActive === true) || [];
+  //filter lọc trả về tất cả phần tử slide active = true
+
+  if (activeCarousels.length === 0) {
     return <div style={{ height: "450px", background: "#eaeaea" }} />;
   }
+
+  const urlImage = `${process.env.REACT_APP_API_URL}hero-carousels/image/`;
 
   return (
     <div className="home">
       <div className="hero-carousel">
-        <Carousel arrows autoplay speed="600">
-          {carouselData?.map((slide) => (
+        <Carousel arrows autoplay speed={600}>
+          {activeCarousels.map((slide) => (
             <div key={slide.id || slide._id} className="hero-carousel__item">
               <div
                 className="hero-carousel__bg"
-                style={{ backgroundImage: `url(${slide.image})` }}
+                style={{
+                  backgroundImage: `url(${urlImage + slide.image.trim()})`,
+                }}
               />
               <div className="hero-carousel__overlay">
                 <div className="hero-carousel__caption">
