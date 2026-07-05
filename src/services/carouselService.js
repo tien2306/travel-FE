@@ -1,5 +1,10 @@
 import { del, get, patch, patchWithFile, postWithFile } from "../utils/request";
 
+export const getCarouselUser = async () => {
+  const result = await get(`hero-carousels/`);
+  return result;
+};
+
 export const getCarousel = async (page = 1) => {
   const result = await get(`hero-carousels/admin?page=${page}`);
   return result;

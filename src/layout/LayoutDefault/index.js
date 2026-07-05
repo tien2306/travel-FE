@@ -3,7 +3,7 @@ import { Layout } from "antd";
 import { Outlet, useLocation } from "react-router-dom";
 
 import "./layoutDefaulat.scss";
-import { getCarousel } from "../../services/carouselService";
+import { getCarouselUser } from "../../services/carouselService";
 import Header from "../../components/Client/Header";
 
 const { Content } = Layout;
@@ -20,10 +20,10 @@ function LayoutDefault() {
   useEffect(() => {
     const fetchCarousel = async () => {
       try {
-        const res = await getCarousel();
+        const res = await getCarouselUser();
         // console.log(res);
-        if (res && res.success && res.data.items.length > 0) {
-          setCarouselData(res.data.items);
+        if (res && res.success && res.data.length > 0) {
+          setCarouselData(res.data);
         }
       } catch (error) {
         console.error("Lỗi gọi API Carousel:", error);

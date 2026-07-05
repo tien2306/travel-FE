@@ -7,8 +7,8 @@
 
     // đặt lại thuộc tính bị dính từ header client
     flex-direction: row;
-    position: static;
-    width: auto;
+    position: sticky;
+    // width: auto;
     height: 60px;
 
     &__logo {

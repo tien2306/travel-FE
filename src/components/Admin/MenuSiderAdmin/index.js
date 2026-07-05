@@ -63,7 +63,7 @@ function MenuSider() {
         mode="inline"
         items={items}
         defaultSelectedKeys={["home"]}
-        defaultOpenKeys={["Tour", "hero-carousel"]}
+        // defaultOpenKeys={["Tour", "hero-carousel"]}
       />
     </>
   );
