@@ -1,25 +1,31 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Table, Switch, message, Image } from "antd";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   getCarousel,
   updateCarouselStatus,
 } from "../../../services/carouselService";
 
-import "./ListCarousel.scss";
 import EditCarousel from "../../../components/Admin/ListCarousel/EditCarousel";
 import DeleteCarousel from "../../../components/Admin/ListCarousel/DeleteCarousel";
+
+import "./ListCarousel.scss";
 
 function ListCarousel() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
-  const [pagination, setPagination] = useState({
-    current: 1,
-    pageSize: 10,
-    total: 0,
-  });
 
-  const fetchApi = async () => {
+  const [totalItems, setTotalItems] = useState(0); // Tổng số ảnh
+  const [pageSize, setPageSize] = useState(10); // Tổng giới hạn số ảnh
+
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  // 1. Đọc trực tiếp số trang hiện tại từ thanh URL trình duyệt
+  const currentPage = parseInt(searchParams.get("page")) || 1;
+
+  // 2. Giữ nguyên function giữa các lần render.
+  const fetchApi = useCallback(async (page) => {
     setLoading(true);
     try {
       const res = await getCarousel(page);
@@ -30,32 +36,36 @@ function ListCarousel() {
         }));
         setData(formattedData);
 
-        setPagination({
-          current: res.data.pagination.page,
-          pageSize: res.data.pagination.limit,
-          total: res.data.pagination.total,
-        });
+        setTotalItems(res.data.pagination.total);
+        setPageSize(res.data.pagination.limit);
       }
     } catch (error) {
       message.error("Lỗi khi tải danh sách banner!");
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
+  // 3. Lắng nghe URL: Cứ hễ số trang trên thanh URL thay đổi là tự reload dữ liệu mới
   useEffect(() => {
-    fetchApi();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+    fetchApi(currentPage);
+  }, [currentPage, fetchApi]);
 
+  // 4. Hàm load lại trang cho Edit và Delete
   const handleReload = () => {
-    fetchApi();
+    fetchApi(currentPage);
   };
 
-  const handleTableChange = (newPagination) => {
-    setPage(newPagination.current);
+  // 5. Xử lý khi người dùng bấm chuyển trang trên Antd Table
+  const handlePageChange = (page) => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set("page", page.current.toString());
+
+    // Đổi hướng URL (Trình duyệt tự hiểu không cần tải lại toàn bộ trang admin)
+    navigate(`?${newParams.toString()}`);
   };
 
+  //6. Xử lý trạng thái hiện ảnh
   const handleStatusChange = async (checked, record) => {
     try {
       const res = await updateCarouselStatus(record.key, { isActive: checked });
@@ -71,6 +81,17 @@ function ListCarousel() {
       message.error("Lỗi hệ thống khi cập nhật trạng thái!");
     }
   };
+
+  // dataIndex tìm dữ liệu
+  // vd  dataIndex: "subtitle",
+  // thì cái   render: (text) => text || "---",
+  // console.log(text) // một string
+  // Nếu  dataIndex: "isActive",
+  // thì cái render: (isActive, record) => (...)
+  // console.log(isActive) // là một boolean
+
+  // oncell: ở màn nhỏ thay vì chỉ hiện giá trị dataIndex: "subtitle",
+  // thì nó sẽ hiển thị | Tiêu đề phụ:  giá trị của subtitle
 
   const columns = [
     {
@@ -91,19 +112,19 @@ function ListCarousel() {
       },
     },
     {
-      title: "Subtitle",
+      title: "Tiêu đề phụ",
       dataIndex: "subtitle",
       key: "subtitle",
       width: 150,
-      onCell: () => ({ "data-label": "Subtitle:" }),
+      onCell: () => ({ "data-label": "Tiêu đề phụ:" }),
       render: (text) => text || "---",
     },
     {
-      title: "Title",
+      title: "Tiêu đề chính",
       dataIndex: "title",
       key: "title",
       width: 180,
-      onCell: () => ({ "data-label": "Title:" }),
+      onCell: () => ({ "data-label": "Tiêu đề chính:" }),
     },
     {
       title: "Mô tả",
@@ -166,9 +187,14 @@ function ListCarousel() {
         dataSource={data}
         columns={columns}
         loading={loading}
-        bordered
-        pagination={pagination}
-        onChange={handleTableChange}
+        // bordered
+        // 7. Cấu hình trực tiếp object pagination cho Antd Table đọc
+        pagination={{
+          current: currentPage,
+          pageSize: pageSize,
+          total: totalItems,
+        }}
+        onChange={handlePageChange}
       />
     </>
   );

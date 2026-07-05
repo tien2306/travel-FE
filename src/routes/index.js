@@ -27,6 +27,10 @@ export const routes = [
         element: <Home />,
       },
       {
+        path: "tours",
+        element: <Home />,
+      },
+      {
         path: "about",
         element: <About />,
       },

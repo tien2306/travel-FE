@@ -56,7 +56,8 @@ function LayoutDefault() {
     location.pathname === "/" ||
     location.pathname === "/home" ||
     location.pathname === "/login" ||
-    location.pathname === "/register";
+    location.pathname === "/register" ||
+    location.pathname === "/tours";
 
   // Kiểm tra xem trang hiện tại có phải trang đăng nhập/đăng ký để ẩn footer không
   const isAuthBanner =
