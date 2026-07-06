@@ -5,6 +5,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import "./layoutDefaulat.scss";
 import { getCarouselUser } from "../../services/carouselService";
 import Header from "../../components/Client/Header";
+import { IMAGE_URLS } from "../../constants/api";
 
 const { Content } = Layout;
 
@@ -43,7 +44,7 @@ function LayoutDefault() {
       const apiImageName = carouselData[randomIndex]?.image;
       if (apiImageName) {
         setCurrentBg(
-          `${process.env.REACT_APP_API_URL}hero-carousels/image/${apiImageName.trim()}`,
+          `${IMAGE_URLS.HERO_CAROUSEL}${apiImageName.trim()}`,
         );
       } else {
         setCurrentBg("../../images/carousel-1.jpg");

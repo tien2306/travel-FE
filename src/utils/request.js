@@ -1,6 +1,5 @@
 import { getCookie } from "../helpers/cookie";
-
-const API_DOMAIN = process.env.REACT_APP_API_URL;
+import { API_DOMAIN } from "../constants/api";
 
 const getAuthHeaders = () => {
   const token = getCookie("accessToken");

@@ -8,6 +8,7 @@ import {
 
 import EditCarousel from "../../../components/Admin/ListCarousel/EditCarousel";
 import DeleteCarousel from "../../../components/Admin/ListCarousel/DeleteCarousel";
+import { IMAGE_URLS } from "../../../constants/api";
 
 import "./ListCarousel.scss";
 
@@ -100,7 +101,7 @@ function ListCarousel() {
       key: "image",
       width: 130,
       render: (imageText) => {
-        const src = `${process.env.REACT_APP_API_URL}hero-carousels/image/${imageText?.trim()}`;
+        const src = `${IMAGE_URLS.HERO_CAROUSEL}${imageText?.trim()}`;
         return (
           <Image
             src={src}

@@ -1,5 +1,6 @@
 import { Button, Carousel } from "antd";
 import { useOutletContext } from "react-router-dom";
+import { IMAGE_URLS } from "../../../constants/api";
 
 function HeroCarousel() {
   const { carouselData } = useOutletContext();
@@ -12,7 +13,7 @@ function HeroCarousel() {
     return <div style={{ height: "450px", background: "#eaeaea" }} />;
   }
 
-  const urlImage = `${process.env.REACT_APP_API_URL}hero-carousels/image/`;
+  const urlImage = IMAGE_URLS.HERO_CAROUSEL;
 
   return (
     <div className="home">

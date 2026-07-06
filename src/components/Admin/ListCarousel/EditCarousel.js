@@ -13,6 +13,7 @@ import { EditOutlined, UploadOutlined } from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
 import { updateCarousel } from "../../../services/carouselService";
 import { patch } from "../../../utils/request";
+import { IMAGE_URLS } from "../../../constants/api";
 
 function EditCarousel(props) {
   const { record, onReload } = props;
@@ -36,7 +37,7 @@ function EditCarousel(props) {
             uid: "-1",
             name: record.image,
             status: "done",
-            url: `${process.env.REACT_APP_API_URL}hero-carousels/image/${record.image?.trim()}`,
+            url: `${IMAGE_URLS.HERO_CAROUSEL}${record.image?.trim()}`,
           },
         ],
       });
