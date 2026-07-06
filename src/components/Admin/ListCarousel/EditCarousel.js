@@ -12,7 +12,7 @@ import {
 import { EditOutlined, UploadOutlined } from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
 import { updateCarousel } from "../../../services/carouselService";
-import { patch } from "../../../utils/request"; // Import thêm hàm gọi patch JSON thuần của bạn
+import { patch } from "../../../utils/request";
 
 function EditCarousel(props) {
   const { record, onReload } = props;
@@ -85,7 +85,7 @@ function EditCarousel(props) {
           description: values.description || "",
         };
 
-        // Gọi trực tiếp utility patch JSON thông qua đường dẫn endpoint giống của bạn
+        // Gọi trực tiếp utility patch
         res = await patch(updateData, `hero-carousels/${record.key}`);
       }
 
