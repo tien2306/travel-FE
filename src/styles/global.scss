@@ -1,0 +1,69 @@
+// ============================================================
+// GLOBAL STYLES — src/styles/global.scss
+// File này được import vào src/index.js để áp dụng toàn cục.
+// Chỉ chứa CSS reset và base styles — KHÔNG viết component styles tại đây.
+// ============================================================
+@use "./variables" as *;
+@use "./mixins" as *;
+
+// --- Box Model Reset ---
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+// --- Body Base ---
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  color: $text-dark;
+  background-color: $bg-white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// --- Typography Reset ---
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  font-weight: 700;
+}
+
+p {
+  margin-top: 0;
+}
+
+// --- Link Reset ---
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: $transition-base;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+// --- Image Fluid ---
+img {
+  max-width: 100%;
+  display: block;
+}
+
+// --- List Reset ---
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+// --- Button Reset ---
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: inherit;
+}

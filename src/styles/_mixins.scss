@@ -1,0 +1,89 @@
+// ============================================================
+// MIXINS TIỆN ÍCH TOÀN DỰ ÁN — src/styles/_mixins.scss
+// Cách dùng trong component: @use "../../styles/mixins" as *;
+// Sau đó dùng: @include mobile { ... }
+// ============================================================
+
+// ----------------------------------------------------------
+// RESPONSIVE BREAKPOINT MIXINS
+// ----------------------------------------------------------
+
+/// Mobile nhỏ: <= 576px (điện thoại dọc)
+@mixin mobile {
+  @media (max-width: 576px) {
+    @content;
+  }
+}
+
+/// Tablet / Mobile lớn: <= 768px
+@mixin tablet {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+/// Desktop nhỏ: <= 992px (tablet ngang, laptop nhỏ)
+@mixin desktop-sm {
+  @media (max-width: 992px) {
+    @content;
+  }
+}
+
+/// Header navigation breakpoint: <= 1150px
+/// Dùng để ẩn nav desktop, hiện nút toggler mobile
+@mixin nav-break {
+  @media (max-width: 1150px) {
+    @content;
+  }
+}
+
+/// Min-width helper: Từ breakpoint trở lên
+/// Ví dụ: @include from(576px) { flex-direction: row; }
+@mixin from($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+// ----------------------------------------------------------
+// TIỆN ÍCH UI
+// ----------------------------------------------------------
+
+/// Cắt văn bản nhiều dòng (WebKit multi-line clamp)
+/// Ví dụ: @include text-ellipsis(2); → Cắt tối đa 2 dòng
+@mixin text-ellipsis($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  line-clamp: $lines;
+  overflow: hidden;
+}
+
+/// Flexbox căn giữa hoàn toàn (cả ngang lẫn dọc)
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/// Flexbox căn dọc giữa
+@mixin flex-vcenter {
+  display: flex;
+  align-items: center;
+}
+
+/// Flexbox space-between
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/// Absolute fill — phủ đầy element cha (dùng cho overlay)
+@mixin absolute-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

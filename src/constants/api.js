@@ -1,3 +1,10 @@
+// ============================================================
+// NGUỒN THẬT DUY NHẤT (Single Source of Truth) cho API config
+// Mọi đường dẫn API và ảnh đều phải import từ file này.
+// Tuyệt đối KHÔNG dùng process.env.REACT_APP_API_URL trực tiếp
+// ở bất kỳ component hoặc service nào khác.
+// ============================================================
+
 export const API_DOMAIN = process.env.REACT_APP_API_URL;
 
 // ----------------------------------------------------------
@@ -11,7 +18,7 @@ export const ENDPOINTS = {
   AUTH_LOGIN: "auth/login",
   AUTH_REGISTER: "auth/register",
   USERS: "users",
-  // ANSWERS: "answers",
+  ANSWERS: "answers",
   QUESTIONS: "questions",
 };
 

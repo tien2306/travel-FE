@@ -1,7 +1,8 @@
 import { get, post } from "../utils/request";
+import { ENDPOINTS } from "../constants/api";
 
 export const login = async (options) => {
-  const result = await post(options, "auth/login");
+  const result = await post(options, ENDPOINTS.AUTH_LOGIN);
 
   // const users = result.find(
   //   (u) => u.email === email && u.password === password,
@@ -12,11 +13,11 @@ export const login = async (options) => {
 };
 
 export const register = async (options) => {
-  const result = await post(options, "auth/register");
+  const result = await post(options, ENDPOINTS.AUTH_REGISTER);
   return result;
 };
 
 export const checkExist = async (key, value) => {
-  const result = await get(`users?${key}=${value}`);
+  const result = await get(`${ENDPOINTS.USERS}?${key}=${value}`);
   return result;
 };

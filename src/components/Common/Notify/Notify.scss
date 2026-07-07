@@ -1,6 +1,8 @@
+@use "../../../styles/variables" as *;
+
 .user-menu {
   &__trigger {
-    color: #fff;
+    color: $text-white;
     font-weight: 700;
     font-size: 16px;
     align-items: center;

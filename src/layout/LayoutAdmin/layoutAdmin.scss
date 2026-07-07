@@ -1,9 +1,12 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
 .layout-admin {
   .header {
     display: flex;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid $border-gray;
     transition: all 0.2s;
-    background: #fff;
+    background: $bg-white;
 
     // đặt lại thuộc tính bị dính từ header client
     flex-direction: row;
@@ -16,7 +19,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border-right: 1px solid #ddd;
+      border-right: 1px solid $border-gray;
 
       &--collapsed {
         width: 80px;
@@ -25,7 +28,7 @@
 
       // đặt lại thuộc tính bị dính từ header client
       a {
-        color: #000;
+        color: $text-dark;
       }
     }
 
@@ -46,7 +49,7 @@
       justify-content: space-between;
 
       // đặt lại thuộc tính bị dính từ header client
-      @media (max-width: 1150px) {
+      @include nav-break {
         display: flex !important;
       }
     }
@@ -58,7 +61,7 @@
     }
     &__nav-right {
       .user-menu__trigger {
-        color: #000;
+        color: $text-dark;
       }
     }
 
@@ -70,7 +73,7 @@
 
   .content {
     padding: 20px;
-    background: #f9fbfd;
-    border-left: 1px solid #ddd;
+    background: $bg-light;
+    border-left: 1px solid $border-gray;
   }
 }

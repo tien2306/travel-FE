@@ -1,0 +1,72 @@
+// ============================================================
+// BẢNG BIẾN TOÀN DỰ ÁN — src/styles/_variables.scss
+// Mọi màu sắc, typography, spacing dùng chung đều định nghĩa tại đây.
+// Cách dùng trong component:
+// @use "../../styles/variables" ;
+// thì khi dùng vd: color: variables.$text-dark;
+// @use "../../styles/variables" as *;
+// thì khi dùng vd: color: $text-dark;
+// ============================================================
+
+// --- Brand Colors ---
+$primary-color: #0d6efd; // Xanh dương chính — nút, link, highlight
+$brand-dark: #13357b; // Xanh đậm — header, active state
+$color-blue: #0052cc; // Xanh tour card — giá tiền, badge
+$color-blue-hover: #0041a3; // Xanh hover button
+
+// --- Text Colors ---
+$text-dark: #212529; // Chữ tiêu đề đậm nhất
+$text-heading: #1a202c; // Chữ tiêu đề đậm (SidebarFilter, HeaderSearch)
+$text-body: #2d3748; // Chữ nội dung chính
+$text-muted: #6c757d; // Chữ phụ, placeholder
+$text-sub: #8c8c8c; // Chú thích nhỏ, subtitle
+$text-secondary: #4a5568; // Chữ thứ cấp (count, checkbox label)
+$text-light: #a0aec0; // Chữ mờ, nhãn giá, arrow icon
+$text-white: #ffffff; // Trắng tinh (dùng thay #fff và #ffffff)
+$text-overlay: #dddddd; // Chữ trên nền tối (banner breadcrumb)
+
+// --- Background Colors ---
+$bg-white: #ffffff;
+$bg-light: #f9fbfd; // Nền sáng nhẹ (admin layout content)
+$bg-page: #f4f6fa; // Nền trang Tour client
+$bg-input: #fafafa; // Nền input hover state
+$bg-icon-box: #f0f5ff; // Nền icon tròn xanh nhạt (HeaderSearch)
+$bg-selected: #e6f7ff; // Nền item được chọn trong dropdown
+
+// --- Border & Divider ---
+$border-color: #e8e8e8; // Đường kẻ chuẩn
+$border-light: #f0f2f5; // Đường kẻ rất nhẹ (card footer, dashed)
+$border-input: #e2e8f0; // Border input card (HeaderSearch, TourCard)
+$border-subtle: #f0f0f0; // Border phân tách mờ nhất (SidebarFilter)
+$border-divider: #edf2f7; // Vạch chia dọc section (HeaderSearch)
+$border-gray: #dddddd; // Border nhẹ (cardItem, layoutAdmin)
+
+// --- Status / Semantic Colors ---
+$antd-primary: #1677ff; // Màu xanh focus mặc định Antd 5.x
+$antd-info: #1890ff; // Màu info badge Antd (date badge TourCard)
+$color-danger: #e53e3e; // Đỏ cảnh báo (TourCard progress text)
+$color-danger-antd: #ff4d4f; // Đỏ chuẩn Antd (reset btn hover)
+
+// --- Typography ---
+$font-family-base:
+  "Segoe UI",
+  "Roboto",
+  -apple-system,
+  BlinkMacSystemFont,
+  sans-serif;
+$font-size-sm: 12px;
+$font-size-base: 14px;
+$font-size-md: 16px;
+$font-size-lg: 18px;
+$font-size-xl: 24px;
+$font-size-xxl: 32px;
+
+// --- Spacing & Border Radius ---
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 16px;
+$radius-pill: 50px;
+
+// --- Transitions ---
+$transition-base: all 0.3s ease;
+$transition-fast: all 0.2s ease;

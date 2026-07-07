@@ -1,6 +1,5 @@
-$primary-color: #0d6efd;
-$text-dark: #212529;
-$text-muted: #6c757d;
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
 
 .register-container {
   position: relative;
@@ -10,7 +9,7 @@ $text-muted: #6c757d;
   background-attachment: fixed;
   padding-top: 100px;
 
-  @media (max-width: 992px) {
+  @include desktop-sm {
     padding-top: 80px;
   }
 
@@ -35,12 +34,12 @@ $text-muted: #6c757d;
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(15px);
     padding: 30px 25px;
-    border-radius: 16px;
+    border-radius: $radius-lg;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.25);
 
-    @media (max-width: 576px) {
+    @include mobile {
       padding: 20px 15px;
     }
 
@@ -70,7 +69,7 @@ $text-muted: #6c757d;
 
     .ant-input-affix-wrapper-large {
       padding: 10px 14px;
-      border-radius: 8px;
+      border-radius: $radius-md;
       background: rgba(255, 255, 255, 0.9);
     }
 
@@ -81,10 +80,10 @@ $text-muted: #6c757d;
       border-color: $primary-color;
       font-weight: 600;
       font-size: 16px;
-      border-radius: 8px;
+      border-radius: $radius-md;
       box-shadow: 0 4px 12px rgba($primary-color, 0.3);
       margin-top: 10px;
-      transition: all 0.3s ease;
+      transition: $transition-base;
 
       &:hover,
       &:focus {

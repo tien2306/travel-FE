@@ -1,3 +1,6 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
 // -------------- HeroCarousel ------------------
 .hero-carousel {
   width: 100%;
@@ -38,12 +41,12 @@
 
   &__caption {
     max-width: 900px;
-    color: #ffffff;
+    color: $text-white;
     animation: fadeInUp 0.8s ease-in-out;
   }
 
   &__subtitle {
-    color: #ffffff;
+    color: $text-white;
     text-transform: uppercase;
     font-weight: 700;
     letter-spacing: 3px;
@@ -52,14 +55,14 @@
   }
 
   &__title {
-    color: #ffffff;
+    color: $text-white;
     text-transform: capitalize;
     font-size: 48px;
     font-weight: 800;
     margin-bottom: 24px;
     line-height: 1.2;
 
-    @media (max-width: 768px) {
+    @include tablet {
       font-size: 32px;
     }
   }
@@ -70,28 +73,28 @@
     opacity: 0.9;
     line-height: 1.6;
 
-    @media (max-width: 768px) {
+    @include tablet {
       font-size: 14px;
     }
   }
 
   &__btn {
-    background-color: #13357b;
-    border-color: #13357b;
-    border-radius: 50px;
+    background-color: $brand-dark;
+    border-color: $brand-dark;
+    border-radius: $radius-pill;
     font-weight: 600;
     padding: 12px 40px;
     height: auto;
 
     &:hover {
-      background-color: #ffffff !important;
-      color: #13357b !important;
-      border-color: #ffffff !important;
+      background-color: $bg-white !important;
+      color: $brand-dark !important;
+      border-color: $bg-white !important;
     }
   }
 }
 
-@media (max-width: 1150px) {
+@include nav-break {
   .hero-carousel {
     padding: 0;
   }
@@ -99,13 +102,13 @@
 
 .hero-carousel {
   .ant-carousel .slick-dots li button {
-    background: #ffffff;
+    background: $text-white;
     opacity: 0.4;
     height: 4px;
     border-radius: 2px;
   }
   .ant-carousel .slick-dots li.slick-active button {
-    background: #13357b;
+    background: $brand-dark;
     opacity: 1;
     width: 24px;
   }

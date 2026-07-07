@@ -1,6 +1,5 @@
-$primary-color: #0d6efd;
-$text-dark: #212529;
-$text-muted: #6c757d;
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
 
 .login-container {
   position: relative;
@@ -32,7 +31,7 @@ $text-muted: #6c757d;
     backdrop-filter: blur(15px);
     // -webkit-backdrop-filter: blur(15px);
     padding: 40px 30px;
-    border-radius: 16px;
+    border-radius: $radius-lg;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.25);
@@ -63,7 +62,7 @@ $text-muted: #6c757d;
 
     .ant-input-affix-wrapper-large {
       padding: 10px 14px;
-      border-radius: 8px;
+      border-radius: $radius-md;
       background: rgba(255, 255, 255, 0.9);
     }
 
@@ -90,9 +89,9 @@ $text-muted: #6c757d;
       border-color: $primary-color;
       font-weight: 600;
       font-size: 16px;
-      border-radius: 8px;
+      border-radius: $radius-md;
       box-shadow: 0 4px 12px rgba($primary-color, 0.3);
-      transition: all 0.3s ease;
+      transition: $transition-base;
 
       &:hover,
       &:focus {

@@ -1,9 +1,5 @@
-// MIXIN DÙNG CHUNG
-%flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
 
 .header {
   display: flex;
@@ -24,7 +20,7 @@
   // TRẠNG THÁI STICKY (khi cuộn trang)
   &--sticky {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    background: #fff;
+    background: $bg-white;
 
     .header__topbar {
       margin-top: -50px;
@@ -38,39 +34,39 @@
         a,
         span,
         svg {
-          color: #13357b;
+          color: $brand-dark;
         }
 
         // Thêm loại trừ nút toggler để lúc scroll hover nút toggler không bị biến thành màu trắng
         span:not(.header__btn-toggler):hover svg {
-          color: #fff;
+          color: $text-white;
         }
 
         button a,
         button span {
-          color: #fff;
+          color: $text-white;
         }
 
         .header__nav-link {
           &:hover {
-            color: #fff;
-            background: #13357b;
+            color: $text-white;
+            background: $brand-dark;
           }
         }
 
         .header__nav-link--active {
-          color: #fff;
+          color: $text-white;
 
           svg {
-            color: #fff;
+            color: $text-white;
           }
         }
       }
 
       &__btn-book {
-        background: #13357b;
-        border: 1px solid #13357b;
-        color: #ffffff !important;
+        background: $brand-dark;
+        border: 1px solid $brand-dark;
+        color: $text-white !important;
         font-weight: 600;
         font-size: 16px;
         height: auto;
@@ -78,11 +74,11 @@
         box-sizing: border-box;
 
         &:hover {
-          background: #ffffff !important;
-          color: #13357b !important;
-          border-color: #13357b !important;
+          background: $bg-white !important;
+          color: $brand-dark !important;
+          border-color: $brand-dark !important;
           span {
-            color: #13357b;
+            color: $brand-dark;
           }
         }
       }
@@ -91,7 +87,7 @@
 
   // TOPBAR (dòng trên cùng: mạng xã hội + đăng nhập/đăng ký)
   &__topbar {
-    background: #13357b;
+    background: $brand-dark;
     transition: all 0.3s ease;
     width: 100%;
   }
@@ -112,34 +108,34 @@
   }
 
   &__socials {
-    @extend %flex-center;
+    @include flex-center;
     gap: 15px;
     a {
-      @extend %flex-center;
-      color: #fff;
+      @include flex-center;
+      color: $text-white;
       font-weight: 700;
       width: 35px;
       height: 35px;
       border-radius: 50%;
-      border: 1px solid #fff;
+      border: 1px solid $text-white;
       transition: all 0.3s ease;
       &:hover {
-        background: #fff;
-        color: #13357b;
+        background: $text-white;
+        color: $brand-dark;
       }
     }
   }
 
   &__auth {
-    @extend %flex-center;
+    @include flex-center;
     gap: 15px;
   }
 
   &__auth-item {
-    color: #fff;
+    color: $text-white;
     font-weight: 700;
     font-size: 14px;
-    @extend %flex-center;
+    @include flex-center;
     gap: 8px;
     text-decoration: none;
   }
@@ -165,7 +161,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #fff;
+    color: $text-white;
     flex-shrink: 0;
     a {
       display: flex;
@@ -191,7 +187,7 @@
   }
 
   &__nav-link {
-    color: #ffffff;
+    color: $text-white;
     font-size: 16px;
     font-weight: 600;
     text-decoration: none;
@@ -203,12 +199,12 @@
     gap: 6px;
     white-space: nowrap;
     &:hover {
-      color: #fff;
-      background: #13357b;
+      color: $text-white;
+      background: $brand-dark;
     }
     &--active {
-      color: #ffffff;
-      background-color: #13357b;
+      color: $text-white;
+      background-color: $brand-dark;
     }
     &--dropdown {
       cursor: pointer;
@@ -223,9 +219,9 @@
   }
 
   &__btn-book {
-    background-color: #13357b;
-    border: 1px solid #13357b;
-    color: #ffffff;
+    background-color: $brand-dark;
+    border: 1px solid $brand-dark;
+    color: $text-white;
     font-weight: 600;
     font-size: 16px;
     height: auto;
@@ -235,18 +231,18 @@
     display: inline-block;
 
     &:hover {
-      background-color: #ffffff;
-      color: #13357b;
-      border-color: #13357b;
+      background-color: $bg-white;
+      color: $brand-dark;
+      border-color: $brand-dark;
     }
   }
 
   &__btn-toggler {
-    display: none;
     padding: 0;
     width: 40px;
     height: 40px;
-    @extend %flex-center;
+    @include flex-center;
+    display: none;
   }
 
   // MOBILE DRAWER (menu trượt khi thu nhỏ màn hình)
@@ -258,15 +254,15 @@
       width: 100%;
       padding: 12px 15px;
       justify-content: space-between;
-      color: #333;
+      color: $text-dark;
       &--active {
-        color: #ffffff;
-        background-color: #13357b;
+        color: $text-white;
+        background-color: $brand-dark;
       }
 
       &:hover {
-        color: #fff;
-        background: #13357b;
+        color: $text-white;
+        background: $brand-dark;
       }
     }
   }
@@ -274,12 +270,12 @@
   &__auth-mobile {
     margin-top: 20px;
     padding-top: 20px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid $border-color;
     display: flex;
     flex-direction: column;
     gap: 15px;
     a {
-      color: #333;
+      color: $text-dark;
       font-weight: 600;
       text-decoration: none;
       display: flex;
@@ -287,14 +283,14 @@
       gap: 10px;
       font-size: 16px;
       &:hover {
-        color: #13357b;
+        color: $brand-dark;
       }
     }
   }
 
   // RESPONSIVE BREAKPOINTS
 
-  @media (max-width: 1150px) {
+  @include nav-break {
     &__topbar,
     &__nav,
     &__btn-book {
@@ -306,22 +302,22 @@
 
       svg {
         font-size: 22px;
-        color: #fff;
+        color: $text-white;
       }
 
       &:hover svg {
-        color: #fff !important;
+        color: $text-white !important;
       }
     }
 
     &--sticky {
       .header__btn-toggler {
         svg {
-          color: #13357b !important;
+          color: $brand-dark !important;
         }
 
         &:hover svg {
-          color: #13357b !important;
+          color: $brand-dark !important;
         }
       }
     }
@@ -344,20 +340,20 @@
 // ANTD DROPDOWN (menu con của Service/Package/Blog/Pages)
 .ant-dropdown {
   .ant-dropdown-menu {
-    border-top: 3px solid #13357b;
+    border-top: 3px solid $brand-dark;
     border-radius: 0 0 4px 4px;
     min-width: 160px;
     .ant-dropdown-menu-item {
       padding: 10px 20px;
       a {
-        color: #333333;
+        color: $text-dark;
         text-decoration: none;
         font-weight: 500;
       }
       &:hover {
         background-color: #f5f5f5;
         a {
-          color: #13357b;
+          color: $brand-dark;
         }
       }
     }

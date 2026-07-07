@@ -1,20 +1,18 @@
-$color-blue-main: #0052cc;
-$color-text-dark: #1a202c;
-$color-text-gray: #718096;
-$color-border: #e2e8f0;
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
 
 .tour-search {
   display: flex;
   align-items: center;
-  background-color: #ffffff;
-  border: 1px solid $color-border;
+  background-color: $bg-white;
+  border: 1px solid $border-input;
   border-radius: 100px;
   padding: 6px 6px 6px 20px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
   width: 100%;
 
   /* 🛠️ THÊM MEDIA QUERIES ĐỂ RESPONSIVE CHO MOBILE 500PX */
-  @media (max-width: 768px) {
+  @include tablet {
     flex-direction: column;
     align-items: stretch;
     border-radius: 20px; /* Đổi bo tròn viên thuốc sang dạng hộp */
@@ -27,7 +25,7 @@ $color-border: #e2e8f0;
     display: flex;
     align-items: center;
     padding: 2px 16px;
-    border-right: 1px solid #edf2f7;
+    border-right: 1px solid $border-divider;
 
     &:nth-last-of-type(2) {
       border-right: none;
@@ -38,10 +36,10 @@ $color-border: #e2e8f0;
     }
 
     /* Trên Mobile thì bỏ vạch ngăn cách dọc đi */
-    @media (max-width: 768px) {
+    @include tablet {
       border-right: none;
       padding: 0 0 12px 0;
-      border-bottom: 1px solid #edf2f7; /* Thay bằng vạch ngăn cách ngang nhẹ */
+      border-bottom: 1px solid $border-divider; /* Thay bằng vạch ngăn cách ngang nhẹ */
     }
   }
 
@@ -51,9 +49,9 @@ $color-border: #e2e8f0;
     justify-content: center;
     width: 38px;
     height: 38px;
-    background-color: #f0f5ff;
+    background-color: $bg-icon-box;
     border-radius: 50%;
-    color: $color-blue-main;
+    color: $color-blue;
     font-size: 16px;
     margin-right: 10px;
   }
@@ -66,11 +64,12 @@ $color-border: #e2e8f0;
 
   &__label {
     font-size: 11px;
-    color: $color-text-gray;
+    color: $text-muted;
     font-weight: 500;
     margin-bottom: -1px;
     padding-left: 11px;
-    @media (max-width: 768px) {
+
+    @include tablet {
       padding-left: 0;
     }
   }
@@ -81,18 +80,19 @@ $color-border: #e2e8f0;
       padding: 0 11px;
       height: 26px;
       background: transparent;
-      @media (max-width: 768px) {
+
+      @include tablet {
         padding: 0;
       }
       .ant-select-selection-item {
         font-size: 14px;
         font-weight: 600;
-        color: $color-text-dark;
+        color: $text-heading;
         line-height: 26px;
       }
     }
     .ant-select-arrow {
-      color: #a0aec0;
+      color: $text-light;
       right: 8px;
     }
   }
@@ -102,18 +102,19 @@ $color-border: #e2e8f0;
     padding: 0 11px;
     height: 26px;
     background: transparent;
-    @media (max-width: 768px) {
+
+    @include tablet {
       padding: 0;
     }
     input {
       font-size: 14px;
       font-weight: 600;
-      color: $color-text-dark;
+      color: $text-heading;
       cursor: pointer;
       line-height: 26px;
     }
     .ant-picker-suffix {
-      color: #a0aec0;
+      color: $text-light;
     }
   }
 
@@ -128,14 +129,14 @@ $color-border: #e2e8f0;
     height: 46px;
     position: relative;
 
-    @media (max-width: 768px) {
+    @include tablet {
       width: 100%; /* Trên mobile thì để full dòng tự nhiên */
     }
   }
 
   /* 2. NÚT BẤM TÌM KIẾM (CHỈ PHÓNG TO NỘI BỘ NÚT) */
   &__submit-btn {
-    background-color: $color-blue-main;
+    background-color: $color-blue;
     border: none;
     border-radius: 100px;
     height: 46px;
@@ -156,7 +157,7 @@ $color-border: #e2e8f0;
 
     /* Khi rà chuột vào, chỉ có lớp vỏ nút phóng to ra ngoài, không đẩy khung */
     &:hover {
-      background-color: #0041a3;
+      background-color: $color-blue-hover;
       transform: scale(1.002); /* Phóng to nút độc lập */
       box-shadow: 0 8px 20px rgba(0, 82, 204, 0.3);
     }
@@ -171,8 +172,8 @@ $color-border: #e2e8f0;
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
   .ant-select-item-option-selected {
-    background-color: #e6f7ff;
-    color: $color-blue-main;
+    background-color: $bg-selected;
+    color: $color-blue;
     font-weight: 600;
   }
 }

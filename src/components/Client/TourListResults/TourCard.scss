@@ -1,12 +1,11 @@
-$color-blue: #0052cc;
-$color-text-main: #2d3748;
-$color-text-sub: #718096;
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
 
 .tour-card {
-  border-radius: 12px;
+  border-radius: $radius-lg;
   overflow: hidden;
-  border: 1px solid #e2e8f0;
-  background: #ffffff;
+  border: 1px solid $border-input;
+  background: $bg-white;
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
@@ -52,7 +51,7 @@ $color-text-sub: #718096;
     top: 12px;
     left: 12px;
     background: rgba(0, 82, 204, 0.85);
-    color: #ffffff;
+    color: $text-white;
     padding: 4px 10px;
     border-radius: 20px;
     font-size: 11px;
@@ -65,7 +64,7 @@ $color-text-sub: #718096;
     bottom: 0;
     width: 100%;
     background: rgba(0, 0, 0, 0.6);
-    color: #ffffff;
+    color: $text-white;
     display: flex;
     justify-content: space-between;
     padding: 6px 12px;
@@ -83,15 +82,11 @@ $color-text-sub: #718096;
   &__title {
     font-size: 15px;
     font-weight: 700;
-    color: $color-text-main;
+    color: $text-body;
     margin-top: 4px;
     margin-bottom: 8px;
     line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    line-clamp: 2;
-    overflow: hidden;
+    @include text-ellipsis(2);
   }
 
   &__date-block {
@@ -104,15 +99,15 @@ $color-text-sub: #718096;
 
   &__date-label {
     font-size: 12px;
-    color: $color-text-sub;
+    color: $text-muted;
   }
 
   &__date-badge-accent {
-    background: #e6f7ff;
+    background: $bg-selected;
     border: 1px solid #91d5ff;
-    color: #1890ff;
+    color: $antd-info;
     padding: 2px 8px;
-    border-radius: 4px;
+    border-radius: $radius-sm;
     font-size: 11px;
     font-weight: 600;
   }
@@ -125,7 +120,7 @@ $color-text-sub: #718096;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid #f0f2f5;
+    border-top: 1px solid $border-light;
     padding-top: 10px;
     margin-top: auto;
     position: relative;
@@ -134,7 +129,7 @@ $color-text-sub: #718096;
   &__price-label {
     display: block;
     font-size: 11px;
-    color: #a0aec0;
+    color: $text-light;
     margin-bottom: 2px;
   }
 
@@ -156,7 +151,7 @@ $color-text-sub: #718096;
     bottom: -16px;
     right: -16px;
     background: $color-blue;
-    color: #ffffff;
+    color: $text-white;
     font-size: 12px;
     font-weight: 600;
     height: 38px;
@@ -169,7 +164,7 @@ $color-text-sub: #718096;
     transition: background 0.2s ease;
 
     &:hover {
-      background: #0041a3;
+      background: $color-blue-hover;
     }
   }
 
@@ -253,7 +248,7 @@ $color-text-sub: #718096;
 
   &__progress-text {
     font-size: 11px;
-    color: #e53e3e;
+    color: $color-danger;
     font-weight: 600;
     white-space: nowrap;
   }

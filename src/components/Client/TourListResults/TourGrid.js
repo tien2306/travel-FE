@@ -26,7 +26,7 @@ export default function TourGrid({ data }) {
             >
               <div className="tour-card__hero">
                 <img
-                  src={tour.image || fallbackImage}
+                  src={tour.thumbnail || fallbackImage}
                   alt=""
                   className="tour-card__img"
                   onError={(e) => {
