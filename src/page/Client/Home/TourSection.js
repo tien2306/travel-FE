@@ -52,7 +52,7 @@ function TourSection() {
         placement="left"
         onClose={() => setDrawerOpen(false)}
         open={drawerOpen}
-        width={320}
+        size={320}
         styles={{ body: { padding: 0 } }}
       >
         <div style={{ padding: "20px 24px" }}>
