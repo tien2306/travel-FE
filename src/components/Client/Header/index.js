@@ -16,6 +16,7 @@ import {
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import NavigationMenu from "../NavigationMenu";
+import DarkModeToggle from "./DarkModeToggle";
 import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
@@ -106,6 +107,7 @@ const Header = () => {
 
             {/* Khối Hành động (Nút Book Now + Nút 3 gạch Mobile) */}
             <div className="header__right-actions">
+              <DarkModeToggle />
               <Link
                 type="primary"
                 shape="round"

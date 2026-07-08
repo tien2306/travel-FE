@@ -85,11 +85,15 @@
     font-weight: 600;
     padding: 12px 40px;
     height: auto;
+    transition: $transition-base;
 
     &:hover {
-      background-color: $bg-white !important;
-      color: $brand-dark !important;
-      border-color: $bg-white !important;
+      background-color: $btn-book-hover-bg !important;
+      color: $btn-book-hover-text !important;
+      border-color: $btn-book-hover-bg !important;
+      span {
+        color: $btn-book-hover-text !important;
+      }
     }
   }
 }
@@ -115,3 +119,5 @@
 }
 
 // -------------- End HeroCarousel ------------------
+
+

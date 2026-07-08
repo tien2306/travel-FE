@@ -1,32 +1,36 @@
-// import { useEffect } from "react";
-// import "./App.css";
-
-// import { checkLogin } from "./actions/login";
-// import { getCookie } from "./helpers/cookie";
-// import { useDispatch } from "react-redux";
+import React from "react";
+import { ConfigProvider, theme as antdTheme } from "antd";
+import { ThemeProvider, useTheme } from "./context/ThemeContext";
 import AllRoutes from "./components/Common/Allroute";
 
-function App() {
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   // Khi người dùng F5 hoặc vừa vào trang web
-  //   const token = getCookie("accessToken");
-  //   const storedUser = getCookie("user") ? JSON.parse(getCookie("user")) : null;
-
-  //   if (token && storedUser) {
-  //     // Đọc thông tin role từ cookie user lên store khi F5
-  //     const userRole = storedUser.role.name || null;
-  //     dispatch(checkLogin(true, userRole));
-  //   } else {
-  //     dispatch(checkLogin(false, null));
-  //   }
-  // }, [dispatch]);
+function AppContent() {
+  const { theme } = useTheme();
 
   return (
-    <>
+    <ConfigProvider
+      theme={{
+        algorithm:
+          theme === "dark"
+            ? antdTheme.darkAlgorithm
+            : antdTheme.defaultAlgorithm,
+      }}
+    >
       <AllRoutes />
-    </>
+    </ConfigProvider>
+  );
+}
+
+function App() {
+  // truyền props ngầm định
+  // Cách  viết:
+  // <ThemeProvider> <AppContent /> </ThemeProvider>
+
+  // Cách React tự động hiểu và chuyển đổi ở bên dưới hệ thống:
+  // <ThemeProvider props={{ children: <AppContent /> }} />
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 

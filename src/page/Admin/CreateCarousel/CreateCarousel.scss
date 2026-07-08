@@ -114,7 +114,7 @@
 
         &:hover {
           border-color: $antd-primary;
-          background-color: #fafafa;
+          background-color: $bg-input;
         }
       }
     }
@@ -174,7 +174,7 @@
       &:hover {
         color: $color-danger-antd;
         border-color: $color-danger-antd;
-        background: #fff1f0;
+        background: rgba(255, 77, 79, 0.1);  // Fix: rgba(#ff4d4f) — dùng literal vì $color-danger-antd là CSS var
       }
     }
   }

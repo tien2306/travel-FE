@@ -20,7 +20,7 @@
   // TRẠNG THÁI STICKY (khi cuộn trang)
   &--sticky {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    background: $bg-white;
+    background: $header-sticky-bg;
 
     .header__topbar {
       margin-top: -50px;
@@ -34,12 +34,12 @@
         a,
         span,
         svg {
-          color: $brand-dark;
+          color: $header-sticky-text;
         }
 
         // Thêm loại trừ nút toggler để lúc scroll hover nút toggler không bị biến thành màu trắng
         span:not(.header__btn-toggler):hover svg {
-          color: $text-white;
+          color: $text-muted;
         }
 
         button a,
@@ -49,16 +49,16 @@
 
         .header__nav-link {
           &:hover {
-            color: $text-white;
-            background: $brand-dark;
+            color: $header-sticky-hover-text;
+            background: $header-sticky-hover-bg;
           }
         }
 
         .header__nav-link--active {
-          color: $text-white;
+          color: $header-sticky-hover-text;
 
           svg {
-            color: $text-white;
+            color: $header-sticky-hover-text;
           }
         }
       }
@@ -74,11 +74,11 @@
         box-sizing: border-box;
 
         &:hover {
-          background: $bg-white !important;
-          color: $brand-dark !important;
-          border-color: $brand-dark !important;
+          background: $btn-book-hover-bg !important;
+          color: $btn-book-hover-text !important;
+          border-color: $btn-book-hover-bd !important;
           span {
-            color: $brand-dark;
+            color: $btn-book-hover-text !important;
           }
         }
       }
@@ -154,6 +154,14 @@
     padding: 15px 0;
     transition: all 0.4s ease;
     width: 100%;
+
+    svg {
+      color: $text-white;
+
+      &:hover {
+        color: $text-light;
+      }
+    }
   }
 
   // --- Logo ---
@@ -229,11 +237,12 @@
     border-radius: 25px;
     box-sizing: border-box;
     display: inline-block;
+    transition: $transition-base;
 
     &:hover {
-      background-color: $bg-white;
-      color: $brand-dark;
-      border-color: $brand-dark;
+      background-color: $btn-book-hover-bg;
+      color: $btn-book-hover-text;
+      border-color: $btn-book-hover-bg;
     }
   }
 
@@ -241,8 +250,9 @@
     padding: 0;
     width: 40px;
     height: 40px;
-    @include flex-center;
-    display: none;
+    display: none; // Mặc định ẩn trên màn hình lớn (> 1150px)
+    align-items: center;
+    justify-content: center;
   }
 
   // MOBILE DRAWER (menu trượt khi thu nhỏ màn hình)
@@ -283,7 +293,7 @@
       gap: 10px;
       font-size: 16px;
       &:hover {
-        color: $brand-dark;
+        color: $text-secondary;
       }
     }
   }
@@ -298,7 +308,7 @@
     }
 
     &__btn-toggler {
-      display: flex;
+      display: flex; // Chỉ hiển thị trên màn hình nhỏ (<= 1150px)
 
       svg {
         font-size: 22px;
@@ -313,11 +323,11 @@
     &--sticky {
       .header__btn-toggler {
         svg {
-          color: $brand-dark !important;
+          color: $header-sticky-text !important;
         }
 
         &:hover svg {
-          color: $brand-dark !important;
+          color: $header-sticky-text !important;
         }
       }
     }
@@ -351,9 +361,10 @@
         font-weight: 500;
       }
       &:hover {
-        background-color: #f5f5f5;
-        a {
-          color: $brand-dark;
+        background-color: $dropdown-hover-bg; // Fix: #f5f5f5 → biến động theo theme
+        a,
+        span {
+          color: $dropdown-hover-text !important; // Fix: hover text biến động theo theme
         }
       }
     }

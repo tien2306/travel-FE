@@ -23,6 +23,8 @@ body {
   background-color: $bg-white;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  // Chuyển màu nền và chữ mượt khi toggle Dark/Light Mode
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 // --- Typography Reset ---

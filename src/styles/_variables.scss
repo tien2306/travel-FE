@@ -1,53 +1,193 @@
 // ============================================================
 // BẢNG BIẾN TOÀN DỰ ÁN — src/styles/_variables.scss
 // Mọi màu sắc, typography, spacing dùng chung đều định nghĩa tại đây.
-// Cách dùng trong component:
-// @use "../../styles/variables" ;
-// thì khi dùng vd: color: variables.$text-dark;
-// @use "../../styles/variables" as *;
-// thì khi dùng vd: color: $text-dark;
 // ============================================================
 
-// --- Brand Colors ---
-$primary-color: #0d6efd; // Xanh dương chính — nút, link, highlight
-$brand-dark: #13357b; // Xanh đậm — header, active state
-$color-blue: #0052cc; // Xanh tour card — giá tiền, badge
-$color-blue-hover: #0041a3; // Xanh hover button
+:root,
+html[data-theme="light"] {
+  // --- Brand Colors ---
+  --primary-color: #0d6efd; // Xanh dương chính — nút, link, highlight
+  --brand-dark: #13357b; // Xanh đậm — header, active state
+  --color-blue: #0052cc; // Xanh tour card — giá tiền, badge
+  --color-blue-hover: #0041a3; // Xanh hover button
 
-// --- Text Colors ---
-$text-dark: #212529; // Chữ tiêu đề đậm nhất
-$text-heading: #1a202c; // Chữ tiêu đề đậm (SidebarFilter, HeaderSearch)
-$text-body: #2d3748; // Chữ nội dung chính
-$text-muted: #6c757d; // Chữ phụ, placeholder
-$text-sub: #8c8c8c; // Chú thích nhỏ, subtitle
-$text-secondary: #4a5568; // Chữ thứ cấp (count, checkbox label)
-$text-light: #a0aec0; // Chữ mờ, nhãn giá, arrow icon
-$text-white: #ffffff; // Trắng tinh (dùng thay #fff và #ffffff)
-$text-overlay: #dddddd; // Chữ trên nền tối (banner breadcrumb)
+  // --- Text Colors ---
+  --text-dark: #212529; // Chữ tiêu đề đậm nhất
+  --text-heading: #1a202c; // Chữ tiêu đề đậm (SidebarFilter, HeaderSearch)
+  --text-body: #2d3748; // Chữ nội dung chính
+  --text-muted: #6c757d; // Chữ phụ, placeholder
+  --text-sub: #8c8c8c; // Chú thích nhỏ, subtitle
+  --text-secondary: #4a5568; // Chữ thứ cấp (count, checkbox label)
+  --text-light: #a0aec0; // Chữ mờ, nhãn giá, arrow icon
+  --text-white: #ffffff; // Trắng tinh
+  --text-overlay: #dddddd; // Chữ trên nền tối (banner breadcrumb)
 
-// --- Background Colors ---
-$bg-white: #ffffff;
-$bg-light: #f9fbfd; // Nền sáng nhẹ (admin layout content)
-$bg-page: #f4f6fa; // Nền trang Tour client
-$bg-input: #fafafa; // Nền input hover state
-$bg-icon-box: #f0f5ff; // Nền icon tròn xanh nhạt (HeaderSearch)
-$bg-selected: #e6f7ff; // Nền item được chọn trong dropdown
+  // --- Background Colors ---
+  --bg-white: #ffffff;
+  --bg-light: #f9fbfd; // Nền sáng nhẹ (admin layout content)
+  --bg-page: #f4f6fa; // Nền trang Tour client
+  --bg-input: #fafafa; // Nền input hover state
+  --bg-icon-box: #f0f5ff; // Nền icon tròn xanh nhạt (HeaderSearch)
+  --bg-selected: #e6f7ff; // Nền item được chọn trong dropdown
 
-// --- Border & Divider ---
-$border-color: #e8e8e8; // Đường kẻ chuẩn
-$border-light: #f0f2f5; // Đường kẻ rất nhẹ (card footer, dashed)
-$border-input: #e2e8f0; // Border input card (HeaderSearch, TourCard)
-$border-subtle: #f0f0f0; // Border phân tách mờ nhất (SidebarFilter)
-$border-divider: #edf2f7; // Vạch chia dọc section (HeaderSearch)
-$border-gray: #dddddd; // Border nhẹ (cardItem, layoutAdmin)
+  // --- Border & Divider ---
+  --border-color: #e8e8e8; // Đường kẻ chuẩn
+  --border-light: #f0f2f5; // Đường kẻ rất nhẹ (card footer, dashed)
+  --border-input: #e2e8f0; // Border input card (HeaderSearch, TourCard)
+  --border-subtle: #f0f0f0; // Border phân tách mờ nhất (SidebarFilter)
+  --border-divider: #edf2f7; // Vạch chia dọc section (HeaderSearch)
+  --border-gray: #dddddd; // Border nhẹ (cardItem, layoutAdmin)
 
-// --- Status / Semantic Colors ---
-$antd-primary: #1677ff; // Màu xanh focus mặc định Antd 5.x
-$antd-info: #1890ff; // Màu info badge Antd (date badge TourCard)
-$color-danger: #e53e3e; // Đỏ cảnh báo (TourCard progress text)
-$color-danger-antd: #ff4d4f; // Đỏ chuẩn Antd (reset btn hover)
+  // --- Status / Semantic Colors ---
+  --antd-primary: #1677ff; // Màu xanh focus mặc định Antd 5.x
+  --antd-info: #1890ff; // Màu info badge Antd (date badge TourCard)
+  --antd-info-border: #91d5ff; // Viền của info badge
+  --color-danger: #e53e3e; // Đỏ cảnh báo (TourCard progress text)
+  --color-danger-antd: #ff4d4f; // Đỏ chuẩn Antd (reset btn hover)
 
-// --- Typography ---
+  // --- Header Sticky Colors (Light Theme) ---
+  --header-sticky-bg: #ffffff;
+  --header-sticky-text: #13357b;
+  --header-sticky-hover-bg: #13357b;
+  --header-sticky-hover-text: #ffffff;
+
+  // --- Glassmorphism (Login / Register card) ---
+  --bg-glass-card: rgba(255, 255, 255, 0.85);
+  --bg-glass-border: rgba(255, 255, 255, 0.25);
+
+  // --- Semantic Shadows ---
+  --shadow-primary: rgba(
+    13,
+    110,
+    253,
+    0.3
+  ); // Dùng thay rgba($primary-color) trong SASS
+
+  // --- Hover State Overrides ---
+  --btn-book-hover-bg: #ffffff;
+  --btn-book-hover-text: #13357b;
+  --dropdown-hover-bg: #f9fbfd;
+  --dropdown-hover-text: #13357b;
+  --btn-book-hover-bd: #000000;
+}
+
+html[data-theme="dark"] {
+  // --- Brand Colors (Dark Theme - Slate Premium) ---
+  --primary-color: #3b82f6; // Xanh dương sáng nổi bật trên nền tối
+  --brand-dark: #0f172a; // Nền tối hẳn cho topbar
+  --color-blue: #60a5fa; // Xanh nhạt dễ nhìn trên nền tối
+  --color-blue-hover: #93c5fd;
+
+  // --- Text Colors (Dark Theme - Slate Premium) ---
+  --text-dark: #f8fafc; // Chữ tiêu đề Slate 50 (sáng, dịu mắt, tránh trắng tinh)
+  --text-heading: #f1f5f9; // Slate 100
+  --text-body: #e2e8f0; // Slate 200 (chữ nội dung chính)
+  --text-muted: #94a3b8; // Slate 400 (chữ phụ)
+  --text-sub: #94a3b8;
+  --text-secondary: #cbd5e1; // Slate 300
+  --text-light: #64748b; // Slate 500
+  --text-white: #f8fafc;
+  --text-overlay: #cbd5e1;
+
+  // --- Background Colors (Dark Theme - Slate Premium) ---
+  --bg-white: #1e293b; // Nền card/box Slate 800 (tránh đen tuyệt đối)
+  --bg-light: #0f172a; // Nền phụ Slate 900
+  --bg-page: #0f172a; // Nền trang chính Slate 900
+  --bg-input: #334155; // Slate 700
+  --bg-icon-box: #334155; // Slate 700
+  --bg-selected: #334155; // Slate 700
+
+  // --- Border & Divider (Dark Theme - Slate Premium) ---
+  --border-color: #1e293b;
+  --border-light: #0f172a;
+  --border-input: #334155;
+  --border-subtle: #334155;
+  --border-divider: #334155;
+  --border-gray: #475569; // Slate 600
+
+  // --- Status / Semantic Colors (Dark Theme) ---
+  --antd-primary: #3b82f6;
+  --antd-info: #60a5fa;
+  --antd-info-border: #1e3a8a;
+  --color-danger: #f87171; // Đỏ nhẹ dễ chịu hơn
+  --color-danger-antd: #f87171;
+
+  // --- Header Sticky Colors (Dark Theme) ---
+  --header-sticky-bg: #1e293b; // Slate 800
+  --header-sticky-text: #f1f5f9; // Slate 100
+  --header-sticky-hover-bg: #334155; // Slate 700
+  --header-sticky-hover-text: #ffffff;
+
+  // --- Glassmorphism (Login / Register card — Dark) ---
+  --bg-glass-card: rgba(30, 41, 59, 0.88); // Slate 800 mờ
+  --bg-glass-border: rgba(71, 85, 105, 0.45); // Slate 600 mờ
+
+  // --- Semantic Shadows ---
+  --shadow-primary: rgba(59, 130, 246, 0.35); // Xanh sáng dark mode
+
+  // --- Hover State Overrides (Dark Theme) ---
+  --btn-book-hover-bg: #ffffff;
+  --btn-book-hover-text: #000000;
+  --dropdown-hover-bg: #334155;
+  --dropdown-hover-text: #ffffff;
+}
+
+// Map các biến SASS hiện tại trỏ đến các CSS Variables động
+$primary-color: var(--primary-color);
+$brand-dark: var(--brand-dark);
+$color-blue: var(--color-blue);
+$color-blue-hover: var(--color-blue-hover);
+
+$text-dark: var(--text-dark);
+$text-heading: var(--text-heading);
+$text-body: var(--text-body);
+$text-muted: var(--text-muted);
+$text-sub: var(--text-sub);
+$text-secondary: var(--text-secondary);
+$text-light: var(--text-light);
+$text-white: var(--text-white);
+$text-overlay: var(--text-overlay);
+
+$bg-white: var(--bg-white);
+$bg-light: var(--bg-light);
+$bg-page: var(--bg-page);
+$bg-input: var(--bg-input);
+$bg-icon-box: var(--bg-icon-box);
+$bg-selected: var(--bg-selected);
+
+$border-color: var(--border-color);
+$border-light: var(--border-light);
+$border-input: var(--border-input);
+$border-subtle: var(--border-subtle);
+$border-divider: var(--border-divider);
+$border-gray: var(--border-gray);
+
+$antd-primary: var(--antd-primary);
+$antd-info: var(--antd-info);
+$antd-info-border: var(--antd-info-border);
+$color-danger: var(--color-danger);
+$color-danger-antd: var(--color-danger-antd);
+
+// --- Header Sticky SASS Variables ---
+$header-sticky-bg: var(--header-sticky-bg);
+$header-sticky-text: var(--header-sticky-text);
+$header-sticky-hover-bg: var(--header-sticky-hover-bg);
+$header-sticky-hover-text: var(--header-sticky-hover-text);
+
+// --- Glassmorphism ---
+$bg-glass-card: var(--bg-glass-card);
+$bg-glass-border: var(--bg-glass-border);
+
+// --- Semantic Shadows ---
+$shadow-primary: var(--shadow-primary);
+
+// --- Hover State Overrides ---
+$btn-book-hover-bg: var(--btn-book-hover-bg);
+$btn-book-hover-text: var(--btn-book-hover-text);
+$dropdown-hover-bg: var(--dropdown-hover-bg);
+$dropdown-hover-text: var(--dropdown-hover-text);
+$btn-book-hover-bd: var(--btn-book-hover-bd);
+// --- Spacing & Typo (Tĩnh - Giữ Nguyên) ---
 $font-family-base:
   "Segoe UI",
   "Roboto",
@@ -61,12 +201,10 @@ $font-size-lg: 18px;
 $font-size-xl: 24px;
 $font-size-xxl: 32px;
 
-// --- Spacing & Border Radius ---
 $radius-sm: 4px;
 $radius-md: 8px;
 $radius-lg: 16px;
 $radius-pill: 50px;
 
-// --- Transitions ---
 $transition-base: all 0.3s ease;
 $transition-fast: all 0.2s ease;

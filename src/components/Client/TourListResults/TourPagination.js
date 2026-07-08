@@ -12,6 +12,7 @@ export default function TourPagination(props) {
         total={total}
         onChange={onChange}
         showSizeChanger={false}
+        responsive
       />
     </div>
   );

@@ -104,7 +104,7 @@
 
   &__date-badge-accent {
     background: $bg-selected;
-    border: 1px solid #91d5ff;
+    border: 1px solid $antd-info-border;
     color: $antd-info;
     padding: 2px 8px;
     border-radius: $radius-sm;
@@ -168,69 +168,123 @@
     }
   }
 
+  // Chế độ List-mode: Chỉ kích hoạt từ màn hình lớn (992px trở lên)
   &--list-mode {
-    flex-direction: row !important;
-    min-height: 220px !important;
-    height: 220px !important;
-
-    .ant-card-body {
+    @media (min-width: 992px) {
       flex-direction: row !important;
-      align-items: stretch;
-      width: 100%;
-      height: 100%;
+      min-height: 220px !important;
+      height: auto !important;
+
+      .ant-card-body {
+        flex-direction: row !important;
+        align-items: stretch;
+        width: 100%;
+        height: 100%;
+      }
+
+      .tour-card__hero {
+        width: 300px !important;
+        height: auto !important;
+        min-height: 220px;
+        flex-shrink: 0;
+      }
+
+      .tour-card__body {
+        padding: 20px 24px !important;
+        display: flex;
+        flex-direction: row !important; // Chia đôi nội dung: bên trái text, bên phải giá
+        justify-content: space-between !important;
+        align-items: stretch;
+        flex-grow: 1;
+        width: calc(100% - 300px);
+      }
+
+      .tour-card__main-content {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        padding-right: 16px;
+      }
+
+      .tour-card__title {
+        font-size: 18px !important;
+        margin-bottom: 8px;
+      }
+
+      .tour-card__grid-info {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-top: 12px;
+      }
+
+      .tour-card__footer {
+        border-top: none !important;
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+        position: relative !important;
+        bottom: auto !important;
+        right: auto !important;
+        left: auto !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-end;
+        gap: 12px;
+        flex-shrink: 0;
+        min-width: 160px;
+      }
+
+      .tour-card__price-section {
+        text-align: right;
+      }
+
+      .tour-card__price-value {
+        font-size: 20px !important;
+      }
+
+      .tour-card__more-badge {
+        position: static !important;
+        border-radius: 6px !important;
+        height: 36px;
+        padding: 0 20px;
+        width: 100%;
+        text-align: center;
+      }
     }
 
-    .tour-card__hero {
-      width: 320px !important;
-      height: 100% !important;
-      flex-shrink: 0;
-    }
+    // Khi màn hình nhỏ hơn 992px: Tự động trả về layout dọc (Grid) gọn gàng
+    @media (max-width: 991.98px) {
+      flex-direction: column !important;
+      height: auto !important;
+      min-height: unset !important;
 
-    .tour-card__body {
-      padding: 20px 24px !important;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start !important;
-      flex-grow: 1;
-      height: 100%;
-      position: relative;
-    }
+      .tour-card__hero {
+        height: 200px !important;
+        width: 100% !important;
+      }
 
-    .tour-card__title {
-      font-size: 20px !important;
-      margin-bottom: 12px;
-    }
+      .tour-card__body {
+        padding: 16px !important;
+      }
 
-    .tour-card__grid-info {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-bottom: 0;
-    }
+      .tour-card__footer {
+        position: relative !important;
+        margin-top: 16px !important;
+        padding-top: 12px !important;
+        border-top: 1px solid $border-light !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        flex-direction: row !important;
+      }
 
-    .tour-card__footer {
-      border-top: none !important;
-      padding-top: 0 !important;
-      margin-top: auto;
-      position: absolute;
-      bottom: 20px;
-      right: 24px;
-      left: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 10px;
-    }
-
-    .tour-card__price-container {
-      text-align: right;
-    }
-
-    .tour-card__more-badge {
-      position: static !important;
-      border-radius: 6px !important;
-      height: 36px;
-      padding: 0 24px;
+      .tour-card__more-badge {
+        position: static !important;
+        border-radius: 4px !important;
+        height: 34px;
+        padding: 0 16px;
+      }
     }
   }
 
