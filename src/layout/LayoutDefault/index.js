@@ -3,7 +3,7 @@ import { Layout } from "antd";
 import { Outlet, useLocation } from "react-router-dom";
 
 import "./layoutDefaulat.scss";
-import { getCarouselUser } from "../../services/carouselService";
+import { getCarouselUser } from "../../services/carousel";
 import Header from "../../components/Client/Header";
 import { IMAGE_URLS } from "../../constants/api";
 
@@ -43,9 +43,7 @@ function LayoutDefault() {
 
       const apiImageName = carouselData[randomIndex]?.image;
       if (apiImageName) {
-        setCurrentBg(
-          `${IMAGE_URLS.HERO_CAROUSEL}${apiImageName.trim()}`,
-        );
+        setCurrentBg(`${IMAGE_URLS.HERO_CAROUSEL}${apiImageName.trim()}`);
       } else {
         setCurrentBg("../../images/carousel-1.jpg");
       }

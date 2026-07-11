@@ -11,7 +11,7 @@ import {
 } from "antd";
 import { EditOutlined, UploadOutlined } from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
-import { updateCarousel } from "../../../services/carouselService";
+import { updateCarousel } from "../../../services/carousel";
 import { patch } from "../../../utils/request";
 import { IMAGE_URLS } from "../../../constants/api";
 

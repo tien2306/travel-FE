@@ -1,6 +1,6 @@
 import { Button, Popconfirm } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
-import { deleteTour } from "../../../services/tourService";
+import { deleteTour } from "../../../services/tour";
 
 function DeleteRoom(props) {
   const { record, onReload } = props;

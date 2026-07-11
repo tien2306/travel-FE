@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { setCookie } from "../../../helpers/cookie";
-import { checkLogin } from "../../../actions/login";
+import { checkLogin } from "../../../store/slices/loginSlice";
 
 function Logout() {
   const navigate = useNavigate();
@@ -15,10 +15,10 @@ function Logout() {
     setCookie("user", "", -1);
 
     // Xóa trạng thái đăng nhập và quyền hạn trên Redux Store
-    dispatch(checkLogin(false, null));
+    dispatch(checkLogin({ status: false, role: null }));
 
     // Đẩy người dùng về trang chủ
-    navigate("/login");
+    navigate("/");
   }, [dispatch, navigate]);
 
   return null;

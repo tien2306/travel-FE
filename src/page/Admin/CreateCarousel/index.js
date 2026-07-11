@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form, Button, message, Image } from "antd";
 import { RedoOutlined, CheckOutlined } from "@ant-design/icons";
-import { createCarousel } from "../../../services/carouselService";
+import { createCarousel } from "../../../services/carousel";
 import FormMainInputs from "../../../components/Admin/CreateCarousel/FormMainInputs";
 import FormSideConfigs from "../../../components/Admin/CreateCarousel/FormSideConfigs";
 import "./CreateCarousel.scss";

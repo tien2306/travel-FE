@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Select, Spin } from "antd";
 import { AppstoreOutlined, MenuOutlined } from "@ant-design/icons";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { getTour } from "../../../services/tourService";
+import { getTours } from "../../../services/tour";
 import TourGrid from "./TourGrid";
 import TourList from "./TourList";
 import TourPagination from "./TourPagination";
@@ -57,7 +57,7 @@ export default function TourListResults() {
   const fetchApi = useCallback(async (page) => {
     setLoading(true);
     try {
-      const res = await getTour(page);
+      const res = await getTours(page);
       if (res && res.success && res.data?.items) {
         setTours(res.data.items);
         setTotalItems(res.data.pagination.total);

@@ -10,7 +10,7 @@ import {
 } from "@ant-design/icons";
 import "./Register.scss";
 import { useNavigate, useOutletContext } from "react-router-dom";
-import { register } from "../../../services/userService";
+import { register } from "../../../services/user";
 
 const Register = () => {
   const navigate = useNavigate();

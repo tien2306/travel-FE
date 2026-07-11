@@ -1,6 +1,6 @@
 import { Button, Popconfirm, message } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
-import { deleteCarousel } from "../../../services/carouselService";
+import { deleteCarousel } from "../../../services/carousel";
 
 function DeleteCarousel(props) {
   const { record, onReload } = props;

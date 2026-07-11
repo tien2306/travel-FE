@@ -12,7 +12,7 @@ import {
   Spin,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { updateTour } from "../../../services/tourService";
+import { updateTour } from "../../../services/tour";
 
 function EditRoom(props) {
   const [showModal, setShowModal] = useState(false);

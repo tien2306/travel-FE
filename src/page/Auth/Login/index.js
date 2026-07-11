@@ -4,8 +4,8 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "./Login.scss";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { login } from "../../../services/userService";
-import { checkLogin } from "../../../actions/login";
+import { login } from "../../../services/user";
+import { checkLogin } from "../../../store/slices/loginSlice";
 import { getCookie, setCookie } from "../../../helpers/cookie";
 
 const Login = () => {
@@ -53,7 +53,7 @@ const Login = () => {
         // }
 
         //3. Thay đổi trạng thái để header cập nhật lại giao diện
-        dispatch(checkLogin(true, userRole));
+        dispatch(checkLogin({ status: true, role: userRole }));
 
         // 4. Điều hướng dựa theo quyền hạn
         if (userData.role.name === "ADMIN") {

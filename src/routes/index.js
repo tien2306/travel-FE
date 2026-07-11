@@ -12,7 +12,8 @@ import Login from "../page/Auth/Login";
 import Register from "../page/Auth/Register";
 import DashBoard from "../page/Admin/DashBoard";
 import BookRoom from "../page/Admin/BookTour";
-import CreateRoom from "../page/Admin/CreateTour";
+import CreateTour from "../page/Admin/CreateTour";
+import ListTour from "../page/Admin/ListTour";
 import Logout from "../page/Auth/Logout";
 import CreateCarousel from "../page/Admin/CreateCarousel";
 import ListCarousel from "../page/Admin/ListCarousel";
@@ -97,11 +98,11 @@ export const routes = [
           },
           {
             path: "create-tour",
-            element: <CreateRoom />,
+            element: <CreateTour />,
           },
           {
             path: "list-tour",
-            element: <ListCarousel />,
+            element: <ListTour />,
           },
           {
             path: "create-carousel",

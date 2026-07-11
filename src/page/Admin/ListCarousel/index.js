@@ -1,10 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { Table, Switch, message, Image } from "antd";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import {
-  getCarousel,
-  updateCarouselStatus,
-} from "../../../services/carouselService";
+import { getCarousel, updateCarouselStatus } from "../../../services/carousel";
 
 import EditCarousel from "../../../components/Admin/ListCarousel/EditCarousel";
 import DeleteCarousel from "../../../components/Admin/ListCarousel/DeleteCarousel";
