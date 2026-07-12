@@ -18,7 +18,7 @@ const loginSlice = createSlice({
       // payload structure: { status: boolean, role: string | null }
       state.isLogin = action.payload.status;
       state.role = action.payload.role;
-    },
+    }, // => type:name/checkLogin <=>  type:login/checkLogin | Hàm này là action creators
   },
 });
 
