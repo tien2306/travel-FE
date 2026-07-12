@@ -11,7 +11,6 @@ import Home from "../page/Client/Home";
 import Login from "../page/Auth/Login";
 import Register from "../page/Auth/Register";
 import DashBoard from "../page/Admin/DashBoard";
-import BookRoom from "../page/Admin/BookTour";
 import CreateTour from "../page/Admin/CreateTour";
 import ListTour from "../page/Admin/ListTour";
 import Logout from "../page/Auth/Logout";
@@ -92,10 +91,10 @@ export const routes = [
             index: true,
             element: <DashBoard />,
           },
-          {
-            path: "book-tour",
-            element: <BookRoom />,
-          },
+          // {
+          //   path: "book-tour",
+          //   element: <BookTour />,
+          // },
           {
             path: "create-tour",
             element: <CreateTour />,

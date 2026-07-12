@@ -8,9 +8,9 @@ import {
   HomeOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
-import MenuSiderAdmin from "../../components/Admin/MenuSiderAdmin";
 import { Link, Outlet } from "react-router-dom";
 import Notify from "../../components/Common/Notify";
+import MenuSider from "../../components/Admin/MenuSider";
 
 const { Sider, Content } = Layout;
 
@@ -67,7 +67,7 @@ function LayoutAdmin() {
           // collapsedWidth={0}
           // onCollapse={(value) => setCollapsed(value)}
         >
-          <MenuSiderAdmin />
+          <MenuSider />
         </Sider>
         <Content className="content">
           <Outlet />
