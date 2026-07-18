@@ -1,17 +1,19 @@
 import React from "react";
 import { Button } from "antd";
 import { SunOutlined, MoonOutlined } from "@ant-design/icons";
-import { useTheme } from "../../../context/ThemeContext";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleTheme } from "../../../store/slices/themeSlice";
 
 const DarkModeToggle = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useSelector((state) => state.themeReducer);
+  const dispatch = useDispatch();
 
   return (
     <Button
       type="text"
       shape="circle"
       icon={theme === "dark" ? <SunOutlined /> : <MoonOutlined />}
-      onClick={toggleTheme}
+      onClick={() => dispatch(toggleTheme())}
       style={{
         fontSize: "18px",
         display: "flex",

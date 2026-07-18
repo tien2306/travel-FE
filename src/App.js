@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ConfigProvider, theme as antdTheme } from "antd";
-import { ThemeProvider, useTheme } from "./context/ThemeContext";
 import AllRoutes from "./components/Common/Allroute";
+import { useDispatch, useSelector } from "react-redux";
+import { initTheme } from "./store/slices/themeSlice";
 
 function AppContent() {
-  const { theme } = useTheme();
+  const { theme } = useSelector((state) => state.themeReducer);
+  // console.log(theme);
 
   return (
     <ConfigProvider
@@ -21,17 +23,13 @@ function AppContent() {
 }
 
 function App() {
-  // truyền props ngầm định
-  // Cách  viết:
-  // <ThemeProvider> <AppContent /> </ThemeProvider>
+  const dispatch = useDispatch();
+  // Khởi chạy để set attribute data-theme vào thẻ html ngay khi app load
+  useEffect(() => {
+    dispatch(initTheme());
+  }, [dispatch]);
 
-  // Cách React tự động hiểu và chuyển đổi ở bên dưới hệ thống:
-  // <ThemeProvider props={{ children: <AppContent /> }} />
-  return (
-    <ThemeProvider>
-      <AppContent />
-    </ThemeProvider>
-  );
+  return <AppContent />;
 }
 
 export default App;
