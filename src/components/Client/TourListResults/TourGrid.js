@@ -2,12 +2,14 @@ import React from "react";
 import { Row, Col, Card, Progress } from "antd";
 import { useNavigate } from "react-router-dom";
 import BG from "../../../images/carousel-1.jpg";
+import { IMAGE_URLS } from "../../../constants/api";
 
 export default function TourGrid({ data }) {
   const navigate = useNavigate();
 
   // Tạo chuỗi ảnh SVG mặc định an toàn để thay thế khi ảnh API bị trống hoặc lỗi tải
   const fallbackImage = BG;
+  const urlImage = IMAGE_URLS.TOURS;
 
   return (
     <Row gutter={[24, 24]}>
@@ -26,7 +28,7 @@ export default function TourGrid({ data }) {
             >
               <div className="tour-card__hero">
                 <img
-                  src={tour.thumbnail || fallbackImage}
+                  src={urlImage + tour.thumbnail || fallbackImage}
                   alt=""
                   className="tour-card__img"
                   onError={(e) => {

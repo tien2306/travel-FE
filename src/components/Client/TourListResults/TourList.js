@@ -7,10 +7,12 @@ import {
   SendOutlined,
 } from "@ant-design/icons";
 import BG from "../../../images/carousel-2.jpg";
+import { IMAGE_URLS } from "../../../constants/api";
 
 export default function TourList({ data }) {
   const navigate = useNavigate();
   const fallbackImage = BG;
+  const urlImage = IMAGE_URLS.TOURS;
 
   return (
     <Row gutter={[0, 20]}>
@@ -30,7 +32,7 @@ export default function TourList({ data }) {
               {/* Khối ảnh bên trái */}
               <div className="tour-card__hero">
                 <img
-                  src={tour.thumbnail || fallbackImage}
+                  src={urlImage + tour.thumbnail || fallbackImage}
                   alt=""
                   className="tour-card__img"
                   onError={(e) => {
