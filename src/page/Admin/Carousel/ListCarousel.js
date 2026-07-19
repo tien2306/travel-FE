@@ -3,8 +3,9 @@ import { Table, Switch, message, Image } from "antd";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getCarousel, updateCarouselStatus } from "../../../services/carousel";
 
-import EditCarousel from "../../../components/Admin/ListCarousel/EditCarousel";
-import DeleteCarousel from "../../../components/Admin/ListCarousel/DeleteCarousel";
+import EditCarousel from "./EditCarousel";
+import DeleteCarousel from "./DeleteCarousel";
+import CreateCarouselModal from "../../../components/Admin/CreateCarouselModal/CreateCarouselModal";
 import { IMAGE_URLS } from "../../../constants/api";
 
 import "./ListCarousel.scss";
@@ -172,12 +173,15 @@ function ListCarousel() {
 
   return (
     <>
-      <div className="list-carousel-container">
-        <h2 className="list-title">Danh sách banner</h2>
-        <p className="list-sub">
-          Quản lý trạng thái hiển thị, chỉnh sửa hoặc gỡ bỏ các banner quảng
-          cáo.
-        </p>
+      <div className="list-carousel-header">
+        <div className="list-carousel-header__info">
+          <h2 className="list-title">Danh sách banner</h2>
+          <p className="list-sub">
+            Quản lý trạng thái hiển thị, chỉnh sửa hoặc gỡ bỏ các banner quảng
+            cáo.
+          </p>
+        </div>
+        <CreateCarouselModal onReload={handleReload} />
       </div>
 
       <Table

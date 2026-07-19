@@ -8,6 +8,7 @@ import {
   Modal,
   Button,
   Upload,
+  Image,
 } from "antd";
 import { EditOutlined, UploadOutlined } from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
@@ -21,6 +22,10 @@ function EditCarousel(props) {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
+
+  // State preview ảnh
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewSrc, setPreviewSrc] = useState("");
 
   const rule = [{ required: true, message: "Bắt buộc điền thông tin!" }];
 
@@ -53,6 +58,24 @@ function EditCarousel(props) {
   const getValueFromFile = (e) => {
     if (Array.isArray(e)) return e;
     return e && e.fileList;
+  };
+
+  // Xem trước ảnh (ảnh server dùng url, ảnh mới dùng FileReader)
+  const handlePreview = async (file) => {
+    if (file.url) {
+      setPreviewSrc(file.url);
+      setPreviewOpen(true);
+      return;
+    }
+    if (!file.preview) {
+      file.preview = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+    setPreviewSrc(file.preview);
+    setPreviewOpen(true);
   };
 
   const handleSubmit = async (values) => {
@@ -116,6 +139,18 @@ function EditCarousel(props) {
   return (
     <>
       {contextHolder}
+
+      {/* Image ẩn để kích hoạt preview lightbox */}
+      {previewSrc && (
+        <Image
+          style={{ display: "none" }}
+          src={previewSrc}
+          preview={{
+            open: previewOpen,
+            onOpenChange: (open) => setPreviewOpen(open),
+          }}
+        />
+      )}
       <Button
         type="primary"
         icon={<EditOutlined />}
@@ -153,7 +188,12 @@ function EditCarousel(props) {
             getValueFromEvent={getValueFromFile}
             rules={rule}
           >
-            <Upload maxCount={1} beforeUpload={() => false} listType="picture">
+            <Upload
+              maxCount={1}
+              beforeUpload={() => false}
+              listType="picture"
+              onPreview={handlePreview}
+            >
               <Button icon={<UploadOutlined />}>Thay đổi tệp</Button>
             </Upload>
           </Form.Item>

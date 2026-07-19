@@ -10,6 +10,10 @@ export const getTours = async (page = 1) => {
   const result = await get(`${ENDPOINTS.TOURS}?page=${page}`);
   return result;
 };
+export const getToursAdmin = async (page = 1) => {
+  const result = await get(`${ENDPOINTS.TOURS_ADMIN}/all?page=${page}`);
+  return result;
+};
 
 export const createTour = async (formData) => {
   const result = await postWithFile(formData, ENDPOINTS.TOURS);

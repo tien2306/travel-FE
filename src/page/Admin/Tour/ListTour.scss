@@ -1,0 +1,468 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+// ============================================================
+// STYLES CHO TRANG QUẢN LÝ TOUR — PREMIUM DESIGN
+// Responsive cascade: 1400+ → 1150 → 992 → 768 → 576
+// ============================================================
+
+// --- Header khu vực tiêu đề + nút tạo ---
+.list-tour-header {
+  @include flex-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px 24px;
+  background: $bg-white;
+  border-radius: $radius-lg;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+
+  &__info {
+    .list-title {
+      margin: 0;
+      font-size: 26px;
+      font-weight: 700;
+      color: $text-dark;
+      letter-spacing: -0.5px;
+    }
+
+    .list-sub {
+      color: $text-sub;
+      margin: 4px 0 0;
+      font-size: 15px;
+    }
+  }
+
+  // Hover effect cho nút Thêm Tour Mới
+  .ant-btn-primary {
+    border-radius: $radius-md;
+    height: 40px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px $shadow-primary;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px $shadow-primary;
+    }
+  }
+
+  // Responsive header: tablet (768px - 1024px)
+  @media (max-width: 1024px) and (min-width: 577px) {
+    padding: 14px 20px;
+
+    &__info {
+      .list-title {
+        font-size: 22px;
+      }
+
+      .list-sub {
+        font-size: 14px;
+      }
+    }
+
+    .ant-btn-primary {
+      flex-shrink: 0;
+    }
+  }
+
+  // Mobile: xếp dọc, nút full width
+  @include mobile {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 14px 16px;
+    gap: 12px;
+
+    &__info {
+      text-align: center;
+
+      .list-title {
+        font-size: 20px;
+      }
+
+      .list-sub {
+        font-size: 13px;
+      }
+    }
+
+    .ant-btn-primary {
+      width: 100%;
+      height: 42px;
+      justify-content: center;
+    }
+  }
+}
+
+// --- Bảng danh sách Tour ---
+.tour-table {
+  background: $bg-white;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  padding: 12px;
+
+  // Custom Header của Bảng
+  .ant-table-thead > tr > th {
+    background: $bg-light;
+    color: $text-dark;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid $border-color;
+  }
+
+  // Custom Row của Bảng
+  .ant-table-tbody > tr.ant-table-row {
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
+
+    &:hover {
+      background-color: $bg-selected !important;
+    }
+  }
+
+  // Ảnh thumbnail tour
+  .tour-thumbnail {
+    width: 110px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: $radius-md;
+    border: 1px solid $border-subtle;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  // Format giá tiền
+  .tour-price {
+    font-weight: 700;
+    color: $color-blue;
+    white-space: nowrap;
+    background: rgba(13, 110, 253, 0.08);
+    border-radius: 4px;
+    padding: 2px 8px;
+    display: inline-block;
+
+    html[data-theme="dark"] & {
+      background: rgba(96, 165, 250, 0.12);
+    }
+  }
+
+  // Nút Sửa + Xóa
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+
+    .ant-btn {
+      border-radius: $radius-sm;
+      transition: all 0.2s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  // Switch trạng thái tour
+  .tour-status-switch {
+    &.ant-switch-checked {
+      background-color: #52c41a;
+    }
+
+    .ant-switch-inner-checked,
+    .ant-switch-inner-unchecked {
+      font-size: 11px;
+    }
+  }
+
+  // =========================================================
+  // BREAKPOINT 1: ≤ 1150px
+  // Ẩn: Số lượng, Đã bán, Ngày khởi hành
+  // Giữ: Hình ảnh | Tên Tour | Giá | Trạng thái | Hành động
+  // =========================================================
+  @include nav-break {
+    padding: 8px;
+
+    .ant-table-thead > tr > th,
+    .ant-table-tbody > tr > td {
+      padding: 10px 10px !important;
+      font-size: 13px;
+    }
+
+    .tour-thumbnail {
+      width: 88px;
+      height: 56px;
+    }
+
+    // Thu gọn badge Trạng thái
+    .ant-tag {
+      font-size: 11px;
+      padding: 1px 8px;
+      white-space: nowrap;
+    }
+
+    // Thu gọn giá
+    .tour-price {
+      font-size: 12px;
+      padding: 2px 6px;
+    }
+
+    // Tên tour gọn hơn
+    .ant-table-tbody > tr > td:nth-child(2) {
+      max-width: 180px;
+    }
+  }
+
+  // =========================================================
+  // BREAKPOINT 2: ≤ 992px (desktop-sm)
+  // Tiếp tục giảm kích thước các phần tử
+  // =========================================================
+  @include desktop-sm {
+    .ant-table-thead > tr > th,
+    .ant-table-tbody > tr > td {
+      padding: 8px 8px !important;
+      font-size: 12px;
+    }
+
+    .tour-thumbnail {
+      width: 75px;
+      height: 48px;
+    }
+
+    .tour-price {
+      font-size: 11px;
+      padding: 2px 5px;
+    }
+
+    .ant-tag {
+      font-size: 10px;
+      padding: 1px 5px;
+    }
+
+    .action-buttons {
+      gap: 6px;
+    }
+  }
+
+  // =========================================================
+  // BREAKPOINT 3: ≤ 768px — Chuyển sang Card Layout
+  // Mỗi row trở thành một card riêng biệt
+  // =========================================================
+  @include tablet {
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+
+    // Reset Ant Design table thành block
+    table,
+    thead,
+    tbody,
+    tr,
+    th,
+    td,
+    .ant-table,
+    .ant-table-container,
+    .ant-table-content {
+      display: block !important;
+      width: 100% !important;
+      box-sizing: border-box;
+    }
+
+    // Ẩn header bảng (thay bằng data-label)
+    thead {
+      display: none !important;
+    }
+
+    // Ẩn các cột phụ trong card layout (không cần thiết)
+    td.col-hide-1150 {
+      display: none !important;
+    }
+
+    tbody {
+      padding: 0;
+    }
+
+    // Mỗi hàng (tr) → Card bo tròn đẹp
+    tr.ant-table-row {
+      background: $bg-white;
+      border: 1px solid $border-light;
+      border-radius: $radius-lg;
+      padding: 0;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    // Cell mặc định: label bên trái, value bên phải
+    td.ant-table-cell {
+      display: flex !important;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid $border-subtle;
+      text-align: right;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: $text-dark;
+        margin-right: 12px;
+        flex-shrink: 0;
+        text-align: left;
+        font-size: 13px;
+        min-width: 90px;
+      }
+    }
+
+    // Ô Hình ảnh: chiếm full width, không có label
+    td.ant-table-cell:has(.tour-thumbnail) {
+      justify-content: center;
+      padding: 0;
+      border-bottom: 1px solid $border-color;
+
+      &::before {
+        display: none !important;
+      }
+
+      .tour-thumbnail {
+        width: 100% !important;
+        height: 180px !important;
+        margin: 0;
+        border-radius: 0;
+        border: none;
+        display: block;
+      }
+    }
+
+    // Tên tour: nổi bật hơn
+    td.ant-table-cell:has(.ant-table-cell-content > span),
+    td.ant-table-cell:nth-child(2) {
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    // Giá: highlight màu
+    td.ant-table-cell:has(.tour-price) {
+      background: rgba(13, 110, 253, 0.02);
+
+      .tour-price {
+        font-size: 15px;
+        padding: 3px 10px;
+      }
+    }
+
+    // Ô Hành động: nút full width
+    td.ant-table-cell:has(.action-buttons) {
+      justify-content: center;
+      padding: 14px 16px;
+      background: $bg-light;
+      border-bottom: none;
+
+      &::before {
+        display: none !important;
+      }
+
+      .action-buttons {
+        width: 100%;
+        justify-content: center;
+        gap: 10px;
+
+        .ant-btn {
+          flex: 1;
+          max-width: 140px;
+          height: 38px;
+          font-size: 13px;
+        }
+      }
+    }
+
+    // Pagination căn giữa
+    .ant-table-pagination {
+      display: flex !important;
+      justify-content: center !important;
+      margin: 20px 0 !important;
+      width: 100% !important;
+    }
+  }
+
+  // =========================================================
+  // BREAKPOINT 4: ≤ 576px — Mobile nhỏ
+  // =========================================================
+  @include mobile {
+    tr.ant-table-row {
+      margin-bottom: 14px;
+    }
+
+    td.ant-table-cell {
+      padding: 10px 14px;
+      font-size: 13px;
+
+      &::before {
+        font-size: 12px;
+        min-width: 80px;
+      }
+    }
+
+    td.ant-table-cell:has(.tour-thumbnail) {
+      .tour-thumbnail {
+        height: 160px !important;
+      }
+    }
+
+    td.ant-table-cell:has(.action-buttons) {
+      padding: 12px 14px;
+
+      .action-buttons {
+        gap: 8px;
+
+        .ant-btn {
+          height: 36px;
+          font-size: 12px;
+        }
+      }
+    }
+
+    .tour-price {
+      font-size: 13px;
+      padding: 2px 6px;
+    }
+
+    .ant-tag {
+      font-size: 11px;
+    }
+
+    // Pagination nhỏ gọn hơn
+    .ant-table-pagination {
+      margin: 14px 0 !important;
+
+      .ant-pagination-item,
+      .ant-pagination-prev,
+      .ant-pagination-next {
+        min-width: 28px;
+        height: 28px;
+        line-height: 26px;
+        font-size: 12px;
+      }
+    }
+  }
+}

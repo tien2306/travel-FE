@@ -1,32 +1,29 @@
 import { useEffect, useState, useCallback } from "react";
-import { Table, Tag, Image, message } from "antd";
+import { Table, Switch, Image, message } from "antd";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { getTours } from "../../../services/tour";
-
-import EditTour from "../../../components/Admin/ListTour/EditTour";
-import DeleteTour from "../../../components/Admin/ListTour/DeleteTour";
-import CreateTourModal from "../../../components/Admin/ListTour/CreateTourModal";
-
+import { getToursAdmin, updateTourStatus } from "../../../services/tour";
 import bg from "../../../images/carousel-1.jpg";
+
+import EditTour from "./EditTour";
+import DeleteTour from "./DeleteTour";
+import CreateTourModal from "../../../components/Admin/CreateTourModal/CreateTourModal";
 
 import "./ListTour.scss";
 import { IMAGE_URLS } from "../../../constants/api";
+import { formatDate, formatPrice } from "../../../helpers/fomatDate";
 
-// Hàm format giá tiền sang dạng "1.000.000 ₫"
-const formatPrice = (price) => {
-  if (!price) return "---";
-  return Number(price).toLocaleString("vi-VN") + " ₫";
-};
+// Hook lấy chiều rộng cửa sổ và cập nhật khi resize
+function useWindowWidth() {
+  const [width, setWidth] = useState(window.innerWidth);
 
-// Hàm format ngày sang "dd/mm/yyyy"
-const formatDate = (dateStr) => {
-  if (!dateStr) return "---";
-  const date = new Date(dateStr);
-  const dd = String(date.getDate()).padStart(2, "0");
-  const mm = String(date.getMonth() + 1).padStart(2, "0");
-  const yyyy = date.getFullYear();
-  return `${dd}/${mm}/${yyyy}`;
-};
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return width;
+}
 
 function ListTour() {
   const [data, setData] = useState([]);
@@ -38,6 +35,11 @@ function ListTour() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
+  // Lấy chiều rộng màn hình để điều chỉnh cột
+  const windowWidth = useWindowWidth();
+  const isSmallScreen = windowWidth <= 1150;
+  const isTablet = windowWidth <= 768;
+
   // 1. Đọc số trang hiện tại từ URL
   const currentPage = parseInt(searchParams.get("page")) || 1;
 
@@ -45,7 +47,7 @@ function ListTour() {
   const fetchApi = useCallback(async (page) => {
     setLoading(true);
     try {
-      const res = await getTours(page);
+      const res = await getToursAdmin(page);
       if (res && res.success) {
         const formattedData = res.data.items.map((item) => ({
           ...item,
@@ -80,20 +82,46 @@ function ListTour() {
     navigate(`?${newParams.toString()}`);
   };
 
-  // 6. Cấu hình cột bảng
-  const columns = [
+  // 6. Xử lý bật/tắt trạng thái tour bằng Switch
+  const handleStatusChange = async (checked, record) => {
+    const newStatus = checked ? "ACTIVE" : "INACTIVE";
+    try {
+      const res = await updateTourStatus(record.key, { status: newStatus });
+      if (res && res.success) {
+        message.success("Cập nhật trạng thái thành công!");
+        setData((prevData) =>
+          prevData.map((item) =>
+            item.key === record.key ? { ...item, status: newStatus } : item,
+          ),
+        );
+      } else {
+        message.error("Cập nhật trạng thái thất bại!");
+      }
+    } catch (error) {
+      message.error("Lỗi hệ thống khi cập nhật trạng thái!");
+    }
+  };
+
+  // dataIndex tìm dữ liệu
+  // vd  dataIndex: "subtitle",
+  // thì cái   render: (text) => text || "---",
+  // console.log(text) // một string
+  // Nếu  dataIndex: "isActive",
+  // thì cái render: (isActive, record) => (...)
+  // console.log(isActive) // là một boolean
+
+  // oncell: ở màn nhỏ thay vì chỉ hiện giá trị dataIndex: "subtitle",
+  // thì nó sẽ hiển thị | Tiêu đề phụ:  giá trị của subtitle
+
+  // 7. Toàn bộ cột bảng
+  const allColumns = [
     {
       title: "Hình ảnh",
       dataIndex: "thumbnail",
       key: "thumbnail",
       width: 120,
       render: (imageText) => {
-        let src = ``;
-        if (!imageText) {
-          src = bg;
-        } else {
-          src = `${IMAGE_URLS.TOURS}${imageText?.trim()}`;
-        }
+        const src = !imageText ? bg : `${IMAGE_URLS.TOURS}${imageText?.trim()}`;
         return (
           <Image
             src={src}
@@ -108,7 +136,7 @@ function ListTour() {
       title: "Tên Tour",
       dataIndex: "name",
       key: "name",
-      width: 200,
+      width: isSmallScreen ? 180 : 200,
       onCell: () => ({ "data-label": "Tên Tour:" }),
       ellipsis: true,
     },
@@ -116,12 +144,13 @@ function ListTour() {
       title: "Giá",
       dataIndex: "price",
       key: "price",
-      width: 140,
+      width: isSmallScreen ? 130 : 150,
       onCell: () => ({ "data-label": "Giá:" }),
       render: (price) => (
         <span className="tour-price">{formatPrice(price)}</span>
       ),
     },
+    // --- Các cột ẩn dưới 1150px ---
     {
       title: "Số lượng",
       dataIndex: "quantity",
@@ -129,6 +158,7 @@ function ListTour() {
       width: 90,
       align: "center",
       onCell: () => ({ "data-label": "Số lượng:" }),
+      hideBelow: 1150,
     },
     {
       title: "Đã bán",
@@ -138,16 +168,18 @@ function ListTour() {
       align: "center",
       onCell: () => ({ "data-label": "Đã bán:" }),
       render: (sold) => sold || 0,
+      hideBelow: 1150,
     },
     {
       title: "Ngày khởi hành",
       dataIndex: "startDate",
       key: "startDate",
       width: 130,
-      responsive: ["lg"],
       onCell: () => ({ "data-label": "Khởi hành:" }),
       render: (date) => formatDate(date),
+      hideBelow: 1150,
     },
+    // --- Luôn hiển thị ---
     {
       title: "Trạng thái",
       dataIndex: "status",
@@ -155,12 +187,15 @@ function ListTour() {
       width: 130,
       align: "center",
       onCell: () => ({ "data-label": "Trạng thái:" }),
-      render: (status) => {
-        const color = status === "ACTIVE" ? "green" : "red";
-        const label =
-          status === "ACTIVE" ? "Đang hoạt động" : "Ngừng hoạt động";
-        return <Tag color={color}>{label}</Tag>;
-      },
+      render: (status, record) => (
+        <Switch
+          checked={status === "ACTIVE"}
+          checkedChildren="Active"
+          unCheckedChildren="InActive"
+          onChange={(checked) => handleStatusChange(checked, record)}
+          className="tour-status-switch"
+        />
+      ),
     },
     {
       title: "Hành động",
@@ -175,6 +210,14 @@ function ListTour() {
       ),
     },
   ];
+
+  // 8. Lọc cột theo kích thước màn hình
+  const columns = allColumns.filter(
+    (col) => !col.hideBelow || windowWidth > col.hideBelow,
+  );
+
+  // 9. Tính scroll x dựa theo số cột còn lại
+  const tableScrollX = isTablet ? undefined : isSmallScreen ? 700 : 1000;
 
   return (
     <>
@@ -195,6 +238,7 @@ function ListTour() {
         dataSource={data}
         columns={columns}
         loading={loading}
+        scroll={{ x: tableScrollX }}
         pagination={{
           current: currentPage,
           pageSize: pageSize,

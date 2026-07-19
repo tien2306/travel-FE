@@ -15,6 +15,7 @@ export const ENDPOINTS = {
   HERO_CAROUSEL: "hero-carousels/",
   HERO_CAROUSEL_ADMIN: "hero-carousels/admin",
   TOURS: "tours",
+  TOURS_ADMIN: "tours/admin",
   AUTH_LOGIN: "auth/login",
   AUTH_REGISTER: "auth/register",
   USERS: "users",

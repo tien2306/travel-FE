@@ -11,11 +11,9 @@ import Home from "../page/Client/Home";
 import Login from "../page/Auth/Login";
 import Register from "../page/Auth/Register";
 import DashBoard from "../page/Admin/DashBoard";
-import CreateTour from "../page/Admin/CreateTour";
-import ListTour from "../page/Admin/ListTour";
+import ListTour from "../page/Admin/Tour/LisTour";
 import Logout from "../page/Auth/Logout";
-import CreateCarousel from "../page/Admin/CreateCarousel";
-import ListCarousel from "../page/Admin/ListCarousel";
+import ListCarousel from "../page/Admin/Carousel/ListCarousel";
 
 export const routes = [
   {
@@ -91,21 +89,9 @@ export const routes = [
             index: true,
             element: <DashBoard />,
           },
-          // {
-          //   path: "book-tour",
-          //   element: <BookTour />,
-          // },
-          {
-            path: "create-tour",
-            element: <CreateTour />,
-          },
           {
             path: "list-tour",
             element: <ListTour />,
-          },
-          {
-            path: "create-carousel",
-            element: <CreateCarousel />,
           },
           {
             path: "list-carousel",
