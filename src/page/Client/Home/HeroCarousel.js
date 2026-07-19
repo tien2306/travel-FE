@@ -76,7 +76,22 @@ function HeroCarousel() {
                 <div className="hero-slide__actions">
                   <button
                     className="hero-slide__btn hero-slide__btn--primary"
-                    onClick={() => navigate("/tour")}
+                    onClick={() => {
+                      // Tìm phần tử danh sách tour bằng class của nó
+                      const tourSection =
+                        document.querySelector(".tour-results");
+
+                      if (tourSection) {
+                        // Nếu tìm thấy, cuộn mượt mà xuống vị trí đó
+                        tourSection.scrollIntoView({
+                          behavior: "smooth",
+                          block: "start",
+                        });
+                      } else {
+                        // Nếu không tìm thấy (ví dụ đứng ở trang khác), thì mới chuyển hướng về trang tours
+                        navigate("/tours");
+                      }
+                    }}
                   >
                     Khám phá ngay
                     <svg
@@ -88,6 +103,7 @@ function HeroCarousel() {
                       <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
                   </button>
+
                   <button
                     className="hero-slide__btn hero-slide__btn--outline"
                     onClick={() => navigate("/contact")}
