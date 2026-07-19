@@ -1,0 +1,390 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+// ============================================================
+// FOOTER — Travela-style dark footer
+// Tất cả màu sắc lấy từ _variables.scss → hỗ trợ dark/light mode.
+// Không dùng !important, không hardcode màu trực tiếp.
+// ============================================================
+
+// ============================================================
+// SUBSCRIBE SECTION
+// ============================================================
+.subscribe-section {
+  position: relative;
+  background:
+    linear-gradient($subscribe-overlay, $subscribe-overlay),
+    url("https://images.unsplash.com/photo-1488085061387-422e29b40080?w=1600&q=80")
+      center center / cover no-repeat;
+  background-attachment: fixed;
+  padding: 80px 0;
+
+  @include tablet {
+    padding: 56px 0;
+    background-attachment: scroll;
+  }
+
+  @include mobile {
+    padding: 44px 0;
+  }
+}
+
+.subscribe-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.subscribe-label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: $text-white;
+  margin-bottom: 16px;
+
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+    width: 44px;
+    height: 1.5px;
+    background: $text-white;
+    margin: 0 12px;
+    opacity: 0.7;
+  }
+}
+
+.subscribe-title {
+  font-size: clamp(26px, 4vw, 38px);
+  font-weight: 800;
+  color: $text-white;
+  margin: 0 0 16px;
+  line-height: 1.2;
+}
+
+.subscribe-desc {
+  color: $subscribe-text;
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+// ---- Subscribe form — pill input style ----
+.subscribe-form {
+  position: relative;
+  max-width: 520px;
+  margin: 0 auto;
+
+  // Ant Design Input override — dùng nesting, không !important
+  .ant-input {
+    border-radius: $radius-pill;
+    border: 1.5px solid $primary-color;
+    padding: 12px 155px 12px 22px;
+    font-size: 14px;
+    height: auto;
+    background: $subscribe-input-bg;
+    color: $text-white;
+
+    &::placeholder {
+      color: $subscribe-placeholder;
+    }
+
+    &:focus,
+    &:focus-within {
+      border-color: $text-white;
+      box-shadow: none;
+    }
+  }
+
+  // Ant Design Button
+  .subscribe-btn.ant-btn {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: $radius-pill;
+    padding: 7px 22px;
+    height: auto;
+    font-weight: 600;
+    font-size: 13px;
+    background: $primary-color;
+    border-color: $primary-color;
+    color: $text-white;
+    transition: background $transition-fast, border-color $transition-fast;
+
+    &:hover {
+      background: $primary-hover;
+      border-color: $primary-hover;
+    }
+  }
+}
+
+// ============================================================
+// FOOTER MAIN
+// ============================================================
+.footer {
+  background: $footer-bg;
+  padding: 72px 0 0;
+
+  @include tablet { padding: 56px 0 0; }
+  @include mobile { padding: 44px 0 0; }
+}
+
+.footer-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px;
+
+  @include desktop-sm { padding: 0 28px; }
+  @include tablet     { padding: 0 20px; }
+  @include mobile     { padding: 0 16px; }
+}
+
+// ---- Grid ----
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1.2fr;
+  gap: 48px;
+
+  @include desktop-sm {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px;
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+
+// ---- Column title ----
+.footer-col-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: $text-white;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 36px;
+    height: 2px;
+    background: $primary-color;
+    border-radius: 2px;
+  }
+}
+
+// ---- Col 1: Brand + contacts + socials ----
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  color: $primary-color;
+
+  svg { flex-shrink: 0; }
+
+  span {
+    font-size: 22px;
+    font-weight: 800;
+    color: $text-white;
+    letter-spacing: -0.5px;
+  }
+}
+
+.footer-contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.footer-contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: $footer-text;
+  font-size: 14px;
+  line-height: 1.55;
+  text-decoration: none;
+  transition: color $transition-fast, letter-spacing $transition-fast;
+
+  svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: $primary-color;
+  }
+
+  &:hover {
+    color: $primary-color;
+    letter-spacing: 0.4px;
+  }
+}
+
+// ---- Socials ----
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+
+  // IconShare dùng stroke — màu mờ hơn
+  .footer-socials__icon {
+    color: $footer-text-faint;
+    flex-shrink: 0;
+  }
+}
+
+.footer-social-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: $primary-color;
+  color: $footer-social-color; // fill="currentColor" lấy màu từ đây
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: background $transition-base, color $transition-base, transform $transition-fast;
+
+  svg { display: block; }
+
+  &:hover {
+    background: $footer-social-hover-bg;
+    color: $primary-color;
+    transform: translateY(-2px);
+  }
+}
+
+// ---- Col 2 & 3: Links ----
+.footer-link-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.footer-link-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: $footer-text;
+  font-size: 14px;
+  line-height: 2.1;
+  text-decoration: none;
+  transition: color $transition-base, letter-spacing $transition-base, padding-left $transition-base;
+
+  svg {
+    flex-shrink: 0;
+    color: $primary-color;
+  }
+
+  &:hover {
+    color: $primary-color;
+    letter-spacing: 1.2px;
+    padding-left: 4px;
+  }
+}
+
+// ---- Col 4: Selects ----
+// Màu sắc được inject bởi ConfigProvider trong FooterMain.js
+// Chỉ giữ layout, kích thước grid ở đây
+.footer-selects {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+// ---- Payments ----
+.footer-payments-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: $text-white;
+  margin-bottom: 14px;
+}
+
+.footer-payments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.payment-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid $footer-badge-border;
+  border-radius: 6px;
+  padding: 4px 10px;
+  height: 32px;
+  color: $footer-badge-text;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  transition: border-color $transition-fast, color $transition-fast;
+
+  &:hover {
+    border-color: $primary-color;
+    color: $text-white;
+  }
+}
+
+// ---- Divider ----
+.footer-divider {
+  border: none;
+  border-top: 1px solid $footer-border;
+  margin: 48px 0 0;
+}
+
+// ---- Copyright ----
+.footer-copyright {
+  background: $footer-copyright-bg;
+  padding: 18px 0;
+}
+
+.footer-copyright-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  @include desktop-sm { padding: 0 28px; }
+
+  @include tablet {
+    padding: 0 20px;
+    flex-direction: column;
+    text-align: center;
+    gap: 6px;
+  }
+
+  @include mobile { padding: 0 16px; }
+}
+
+.footer-copyright-text {
+  font-size: 13px;
+  color: $footer-text-faint;
+  margin: 0;
+
+  a {
+    color: $footer-text;
+    text-decoration: none;
+    transition: color $transition-fast;
+
+    &:hover { color: $primary-color; }
+  }
+}

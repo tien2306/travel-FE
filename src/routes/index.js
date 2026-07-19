@@ -14,6 +14,7 @@ import DashBoard from "../page/Admin/DashBoard";
 import ListTour from "../page/Admin/Tour/LisTour";
 import Logout from "../page/Auth/Logout";
 import ListCarousel from "../page/Admin/Carousel/ListCarousel";
+import Tours from "../page/Client/Tours";
 
 export const routes = [
   {
@@ -26,7 +27,7 @@ export const routes = [
       },
       {
         path: "tours",
-        element: <Home />,
+        element: <Tours />,
       },
       {
         path: "about",

@@ -36,18 +36,28 @@ export default function TourListResults() {
 
   // Cách 2:
   // Xử lý khi bấm nút chuyển trang trên Antd Pagination
+  // Đổi từ [searchParams] thành [searchParams, setSearchParams] ở dòng khai báo đầu hàm nhé:
+
   const handlePageChange = (page) => {
-    // 1. Tạo một bản sao từ các tham số hiện tại trên URL
+    // 1. Tạo bản sao tham số cũ
     const newParams = new URLSearchParams(searchParams);
 
-    // 2. Thêm hoặc cập nhật số trang mới vào bản sao đó
+    // 2. Cập nhật trang mới
     newParams.set("page", page.toString());
 
-    // 3. Đổi hướng thẳng về "/tours" kèm theo các tham số mới (Gộp cả 2 trường hợp if/else cũ)
+    // 3. Ép URL luôn trỏ về trang "/tours" kèm theo tham số (để tránh bị /?page=2 khi đang ở Home)
     navigate(`/tours?${newParams.toString()}`);
 
-    // 4. Cuộn mượt mà lên đầu danh sách
-    tourListRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    // 4. Cuộn mượt mà đến đầu danh sách Tour
+    // Đặt thời gian chờ 300ms để đợi quá trình navigate/render hoàn tất, giúp tính toán chuẩn tọa độ lưng chừng
+    setTimeout(() => {
+      if (tourListRef.current) {
+        tourListRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 300);
   };
 
   // Đọc số trang từ URL trình duyệt (ví dụ: localhost:3000/tours?page=2 -> lấy ra số 2)

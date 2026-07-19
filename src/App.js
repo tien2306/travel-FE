@@ -3,6 +3,7 @@ import { ConfigProvider, theme as antdTheme } from "antd";
 import AllRoutes from "./components/Common/Allroute";
 import { useDispatch, useSelector } from "react-redux";
 import { initTheme } from "./store/slices/themeSlice";
+import ScrollToTop from "./components/Common/ScrollToTop";
 
 function AppContent() {
   const { theme } = useSelector((state) => state.themeReducer);
@@ -17,6 +18,7 @@ function AppContent() {
             : antdTheme.defaultAlgorithm,
       }}
     >
+      <ScrollToTop />
       <AllRoutes />
     </ConfigProvider>
   );

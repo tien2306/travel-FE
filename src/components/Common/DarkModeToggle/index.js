@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "antd";
 import { SunOutlined, MoonOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleTheme } from "../../store/slices/themeSlice";
+import { toggleTheme } from "../../../store/slices/themeSlice";
 
 const DarkModeToggle = () => {
   const { theme } = useSelector((state) => state.themeReducer);

@@ -6,7 +6,7 @@ import HeaderSearch from "../../../components/Client/HeaderSearch";
 import TourListResults from "../../../components/Client/TourListResults";
 import "./tour.scss";
 
-function TourSection() {
+function Tours() {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
@@ -63,4 +63,4 @@ function TourSection() {
   );
 }
 
-export default TourSection;
+export default Tours;

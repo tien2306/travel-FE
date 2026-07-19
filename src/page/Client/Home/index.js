@@ -1,14 +1,16 @@
 import React from "react";
 import HeroCarousel from "./HeroCarousel";
-import TourSection from "./TourSection";
-import "./home.scss";
+import Tour from "../Tours";
+import Contact from "../Contact";
 
 function Home() {
   return (
     <div className="home-page">
       <HeroCarousel />
 
-      <TourSection />
+      <Tour />
+
+      <Contact />
     </div>
   );
 }

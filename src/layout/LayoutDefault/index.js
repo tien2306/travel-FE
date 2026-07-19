@@ -6,6 +6,7 @@ import "./layoutDefaulat.scss";
 import { getCarouselUser } from "../../services/carousel";
 import Header from "../../components/Client/Header";
 import { IMAGE_URLS } from "../../constants/api";
+import Footer from "../../components/Client/Footer";
 
 const { Content } = Layout;
 
@@ -22,7 +23,6 @@ function LayoutDefault() {
     const fetchCarousel = async () => {
       try {
         const res = await getCarouselUser();
-        // console.log(res);
         if (res && res.success && res.data.length > 0) {
           setCarouselData(res.data);
         }
@@ -37,10 +37,6 @@ function LayoutDefault() {
   useEffect(() => {
     if (carouselData && carouselData.length > 0) {
       const randomIndex = Math.floor(Math.random() * carouselData.length);
-      // setCurrentBg(
-      //   carouselData[randomIndex]?.image || "../../images/carousel-1.jpg",
-      // );
-
       const apiImageName = carouselData[randomIndex]?.image;
       if (apiImageName) {
         setCurrentBg(`${IMAGE_URLS.HERO_CAROUSEL}${apiImageName.trim()}`);
@@ -51,26 +47,35 @@ function LayoutDefault() {
   }, [location.pathname, carouselData]);
 
   // Kiểm tra xem trang hiện tại có cần ẩn sub-page-banner phụ không
+  // (Giữ nguyên không cho trang chủ, đăng nhập, đăng ký hiển thị banner)
   const isHomeBanner =
     location.pathname === "/" ||
     location.pathname === "/home" ||
     location.pathname === "/login" ||
-    location.pathname === "/register" ||
-    location.pathname === "/tours";
+    location.pathname === "/register";
 
   // Kiểm tra xem trang hiện tại có phải trang đăng nhập/đăng ký để ẩn footer không
   const isAuthBanner =
     location.pathname === "/login" || location.pathname === "/register";
 
-  // Tự động cập nhật tiêu đề (Page Title) dựa theo đường dẫn URL hiện tại
+  // Tự động cập nhật tiêu đề (Page Title) bằng cách dùng .includes() dễ hiểu
   useEffect(() => {
-    const path = location.pathname.split("/").pop();
-    if (path === "about") setPageTitle("About Us");
-    else if (path === "service") setPageTitle("Our Services");
-    else if (path === "blog") setPageTitle("Our Blog");
-    else if (path === "contact") setPageTitle("Contact Us");
+    const currentPath = location.pathname.toLowerCase();
+
+    if (currentPath.includes("about")) setPageTitle("About Us");
+    else if (currentPath.includes("service")) setPageTitle("Our Services");
+    else if (currentPath.includes("blog")) setPageTitle("Our Blog");
+    else if (currentPath.includes("contact")) setPageTitle("Contact Us");
+    else if (currentPath.includes("tours"))
+      setPageTitle("Us Tour"); // Chạy đúng cho cả /tours và /tours?page=2
     else setPageTitle("");
   }, [location.pathname]);
+
+  // Thêm một useEffect toàn cục để tự động kéo lên đầu trang khi thay đổi tuyến đường (Route chính)
+  // Nhưng sẽ bỏ qua nếu chỉ thay đổi query số trang (?page=2) đúng như bạn lên kế hoạch
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]); // Chỉ lắng nghe pathname (ví dụ: đổi từ / sang /tours), không lắng nghe tham số phân trang
 
   return (
     <Layout className="layout-default">
@@ -97,7 +102,7 @@ function LayoutDefault() {
       </Layout>
 
       {/* Nếu KHÔNG PHẢI trang đăng nhập/đăng ký -> Hiển thị Footer */}
-      {!isAuthBanner && <footer>Footer</footer>}
+      {!isAuthBanner && <Footer />}
     </Layout>
   );
 }

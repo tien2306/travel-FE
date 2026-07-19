@@ -69,6 +69,27 @@ html[data-theme="light"] {
   --dropdown-hover-bg: #f9fbfd;
   --dropdown-hover-text: #13357b;
   --btn-book-hover-bd: #000000;
+
+  // --- Footer (Light — footer luôn tối nên giữ nguyên cả 2 theme) ---
+  --footer-bg:              #0d1117; // Nền footer chính
+  --footer-copyright-bg:    #060c16; // Nền bar copyright
+  --footer-text:            rgba(255, 255, 255, 0.65); // Chữ/link footer
+  --footer-text-faint:      rgba(255, 255, 255, 0.4);  // Chữ copyright
+  --footer-border:          rgba(255, 255, 255, 0.07); // Đường kẻ divider
+  --footer-input-bg:        #1a2035; // Nền Select footer
+  --footer-input-bd:        #2d3748; // Border Select footer
+  --footer-input-text:      rgba(255, 255, 255, 0.75); // Chữ trong Select
+  --footer-input-arrow:     rgba(255, 255, 255, 0.4);  // Mũi tên Select
+  --footer-social-color:    #ffffff; // Màu icon trong nút social
+  --footer-social-hover-bg: #ffffff; // Nền nút social khi hover
+  --footer-badge-border:    rgba(255, 255, 255, 0.2);  // Viền payment badge
+  --footer-badge-text:      rgba(255, 255, 255, 0.75); // Chữ payment badge
+  --subscribe-overlay:      rgba(19, 53, 123, 0.65);   // Overlay subscribe bg
+  --subscribe-text:         rgba(255, 255, 255, 0.8);  // Mô tả subscribe
+  --subscribe-input-bg:     rgba(255, 255, 255, 0.12); // Nền input subscribe
+  --subscribe-placeholder:  rgba(255, 255, 255, 0.55); // Placeholder input
+  --primary-hover:          #0050d0; // Màu hover nút primary
+  --shadow-focus-primary:   rgba(13, 110, 253, 0.2);   // Focus ring
 }
 
 html[data-theme="dark"] {
@@ -130,6 +151,27 @@ html[data-theme="dark"] {
   --btn-book-hover-text: #000000;
   --dropdown-hover-bg: #334155;
   --dropdown-hover-text: #ffffff;
+
+  // --- Footer (Dark — footer vẫn tối, chỉ điều chỉnh nếu cần) ---
+  --footer-bg:              #060c16; // Tối hơn chút trên dark mode
+  --footer-copyright-bg:    #020509;
+  --footer-text:            rgba(255, 255, 255, 0.6);
+  --footer-text-faint:      rgba(255, 255, 255, 0.35);
+  --footer-border:          rgba(255, 255, 255, 0.05);
+  --footer-input-bg:        #0f172a; // Slate 900
+  --footer-input-bd:        #1e293b; // Slate 800
+  --footer-input-text:      rgba(255, 255, 255, 0.65);
+  --footer-input-arrow:     rgba(255, 255, 255, 0.35);
+  --footer-social-color:    #ffffff;
+  --footer-social-hover-bg: #f1f5f9;
+  --footer-badge-border:    rgba(255, 255, 255, 0.15);
+  --footer-badge-text:      rgba(255, 255, 255, 0.6);
+  --subscribe-overlay:      rgba(10, 25, 65, 0.75);
+  --subscribe-text:         rgba(255, 255, 255, 0.75);
+  --subscribe-input-bg:     rgba(255, 255, 255, 0.08);
+  --subscribe-placeholder:  rgba(255, 255, 255, 0.45);
+  --primary-hover:          #2563eb; // Xanh sáng hơn trên dark
+  --shadow-focus-primary:   rgba(59, 130, 246, 0.25);
 }
 
 // Map các biến SASS hiện tại trỏ đến các CSS Variables động
@@ -187,6 +229,27 @@ $btn-book-hover-text: var(--btn-book-hover-text);
 $dropdown-hover-bg: var(--dropdown-hover-bg);
 $dropdown-hover-text: var(--dropdown-hover-text);
 $btn-book-hover-bd: var(--btn-book-hover-bd);
+
+// --- Footer ---
+$footer-bg:              var(--footer-bg);
+$footer-copyright-bg:    var(--footer-copyright-bg);
+$footer-text:            var(--footer-text);
+$footer-text-faint:      var(--footer-text-faint);
+$footer-border:          var(--footer-border);
+$footer-input-bg:        var(--footer-input-bg);
+$footer-input-bd:        var(--footer-input-bd);
+$footer-input-text:      var(--footer-input-text);
+$footer-input-arrow:     var(--footer-input-arrow);
+$footer-social-color:    var(--footer-social-color);
+$footer-social-hover-bg: var(--footer-social-hover-bg);
+$footer-badge-border:    var(--footer-badge-border);
+$footer-badge-text:      var(--footer-badge-text);
+$subscribe-overlay:      var(--subscribe-overlay);
+$subscribe-text:         var(--subscribe-text);
+$subscribe-input-bg:     var(--subscribe-input-bg);
+$subscribe-placeholder:  var(--subscribe-placeholder);
+$primary-hover:          var(--primary-hover);
+$shadow-focus-primary:   var(--shadow-focus-primary);
 // --- Spacing & Typo (Tĩnh - Giữ Nguyên) ---
 $font-family-base:
   "Segoe UI",
