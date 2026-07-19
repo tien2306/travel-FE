@@ -16,7 +16,7 @@ import {
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import NavigationMenu from "../NavigationMenu";
-import DarkModeToggle from "./DarkModeToggle";
+import DarkModeToggle from "../../Common/DarkModeToggle";
 import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {

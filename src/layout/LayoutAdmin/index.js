@@ -11,6 +11,7 @@ import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import Notify from "../../components/Common/Notify";
 import MenuSider from "../../components/Admin/MenuSider";
+import DarkModeToggle from "../../components/Common/DarkModeToggle";
 
 const { Sider, Content } = Layout;
 
@@ -51,6 +52,7 @@ function LayoutAdmin() {
             </div>
           </div>
           <div className="header__nav-right">
+            <DarkModeToggle />
             <Notify />
           </div>
         </div>

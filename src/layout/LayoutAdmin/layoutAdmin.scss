@@ -60,6 +60,9 @@
       font-size: 20px;
     }
     &__nav-right {
+      display: flex;
+      gap: 10px;
+      @include flex-between;
       .user-menu__trigger {
         color: $text-dark;
       }
