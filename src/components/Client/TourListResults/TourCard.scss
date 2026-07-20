@@ -168,9 +168,9 @@
     }
   }
 
-  // Chế độ List-mode: Chỉ kích hoạt từ màn hình lớn (992px trở lên)
+  // Chế độ List-mode: Chỉ kích hoạt từ màn hình desktop trở lên
   &--list-mode {
-    @media (min-width: 992px) {
+    @include from(992px) {
       flex-direction: row !important;
       min-height: 220px !important;
       height: auto !important;
@@ -192,7 +192,7 @@
       .tour-card__body {
         padding: 20px 24px !important;
         display: flex;
-        flex-direction: row !important; // Chia đôi nội dung: bên trái text, bên phải giá
+        flex-direction: row !important;
         justify-content: space-between !important;
         align-items: stretch;
         flex-grow: 1;
@@ -245,7 +245,7 @@
 
       .tour-card__more-badge {
         position: static !important;
-        border-radius: 6px !important;
+        border-radius: $radius-md !important;
         height: 36px;
         padding: 0 20px;
         width: 100%;
@@ -253,8 +253,8 @@
       }
     }
 
-    // Khi màn hình nhỏ hơn 992px: Tự động trả về layout dọc (Grid) gọn gàng
-    @media (max-width: 991.98px) {
+    // Khi màn hình nhỏ (Tablet/Mobile): Tự động trả về layout dọc (Grid)
+    @include desktop-sm {
       flex-direction: column !important;
       height: auto !important;
       min-height: unset !important;

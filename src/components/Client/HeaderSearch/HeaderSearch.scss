@@ -4,11 +4,12 @@
 .tour-search {
   display: flex;
   align-items: center;
-  background-color: $bg-white;
-  border: 1px solid $border-input;
-  border-radius: 100px;
-  padding: 6px 6px 6px 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+  gap: 12px;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
   width: 100%;
 
   /* 🛠️ THÊM MEDIA QUERIES ĐỂ RESPONSIVE CHO MOBILE 500PX */
@@ -24,22 +25,19 @@
     flex: 1;
     display: flex;
     align-items: center;
-    padding: 2px 16px;
-    border-right: 1px solid $border-divider;
+    background-color: $bg-input; /* Sử dụng biến hệ thống */
+    border-radius: 100px;
+    padding: 6px 16px 6px 6px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 
-    &:nth-last-of-type(2) {
-      border-right: none;
-    }
-
-    &--filter {
-      padding-left: 0;
+    &:hover {
+      background-color: $bg-page;
     }
 
     /* Trên Mobile thì bỏ vạch ngăn cách dọc đi */
     @include tablet {
-      border-right: none;
-      padding: 0 0 12px 0;
-      border-bottom: 1px solid $border-divider; /* Thay bằng vạch ngăn cách ngang nhẹ */
+      border-radius: 20px;
+      padding: 12px;
     }
   }
 
@@ -49,11 +47,13 @@
     justify-content: center;
     width: 38px;
     height: 38px;
-    background-color: $bg-icon-box;
+    background-color: $bg-white;
     border-radius: 50%;
-    color: $color-blue;
+    color: $text-secondary;
     font-size: 16px;
-    margin-right: 10px;
+    margin-right: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    flex-shrink: 0;
   }
 
   &__field {
@@ -63,58 +63,94 @@
   }
 
   &__label {
-    font-size: 11px;
+    font-size: 12px;
     color: $text-muted;
     font-weight: 500;
-    margin-bottom: -1px;
-    padding-left: 11px;
+    margin-bottom: 0px;
+    padding-left: 0;
+  }
 
-    @include tablet {
-      padding-left: 0;
+  &__input {
+    padding: 0;
+    height: 24px;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    font-size: 15px;
+    font-weight: 700;
+    color: $color-blue;
+    line-height: 24px;
+
+    &::placeholder {
+      font-size: 14px;
+      font-weight: 500;
+      color: $text-light;
+    }
+
+    /* Icon X để xóa chữ trong Input */
+    .ant-input-clear-icon {
+      color: $text-light;
+      font-size: 14px;
     }
   }
 
   .ant-select {
     width: 100%;
     .ant-select-selector {
-      padding: 0 11px;
-      height: 26px;
-      background: transparent;
+      padding: 0;
+      height: 24px;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
 
-      @include tablet {
-        padding: 0;
-      }
       .ant-select-selection-item {
+        font-size: 15px;
+        font-weight: 700;
+        color: $color-blue;
+        line-height: 24px;
+      }
+      .ant-select-selection-placeholder {
         font-size: 14px;
-        font-weight: 600;
-        color: $text-heading;
-        line-height: 26px;
+        font-weight: 500;
+        color: $text-light;
+        line-height: 24px;
       }
     }
     .ant-select-arrow {
       color: $text-light;
-      right: 8px;
+      right: 0;
+    }
+    .ant-select-clear {
+      color: $text-muted;
+      background: transparent;
+      right: 0;
+      font-size: 14px;
+      margin-top: -7px;
     }
   }
 
   &__picker {
     width: 100%;
-    padding: 0 11px;
-    height: 26px;
-    background: transparent;
+    padding: 0;
+    height: 24px;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
 
-    @include tablet {
-      padding: 0;
-    }
     input {
-      font-size: 14px;
-      font-weight: 600;
-      color: $text-heading;
+      font-size: 15px;
+      font-weight: 700;
+      color: $color-blue;
       cursor: pointer;
-      line-height: 26px;
+      line-height: 24px;
     }
     .ant-picker-suffix {
+      display: none;
+    }
+    .ant-picker-clear {
       color: $text-light;
+      background: transparent;
+      right: 0;
     }
   }
 
@@ -125,8 +161,8 @@
 
     /* 🛠️ SỬA TẠI ĐÂY: Khống chế không cho khối bọc này co giãn, tạo vùng đệm an toàn */
     flex: none;
-    width: 140px; /* Đặt chiều rộng cố định vừa khít nút bấm lúc chưa hover */
-    height: 46px;
+    width: 160px; /* Đặt chiều rộng cố định vừa khít nút bấm lúc chưa hover */
+    height: 52px;
     position: relative;
 
     @include tablet {
@@ -139,15 +175,15 @@
     background-color: $color-blue;
     border: none;
     border-radius: 100px;
-    height: 46px;
-    width: 100%; /* Ép nút chiếm trọn 140px của khung bọc */
-    font-size: 14px;
+    height: 100%;
+    width: 100%; /* Ép nút chiếm trọn 160px của khung bọc */
+    font-size: 16px;
     font-weight: 600;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    box-shadow: 0 4px 12px rgba(0, 82, 204, 0.15);
+    box-shadow: 0 4px 12px $shadow-primary;
 
     /* Cấu hình transition mượt, bắt buộc có will-change để trình duyệt tối ưu phần cứng */
     transition:
@@ -158,8 +194,8 @@
     /* Khi rà chuột vào, chỉ có lớp vỏ nút phóng to ra ngoài, không đẩy khung */
     &:hover {
       background-color: $color-blue-hover;
-      transform: scale(1.002); /* Phóng to nút độc lập */
-      box-shadow: 0 8px 20px rgba(0, 82, 204, 0.3);
+      transform: scale(1.02); /* Phóng to nút độc lập */
+      box-shadow: 0 8px 20px $shadow-primary;
     }
 
     &:active {

@@ -13,8 +13,8 @@ function Tours() {
     <div className="tour-page">
       <div className="tour-page__container">
         <Row gutter={[24, 24]}>
-          {/* Cột trái: Bộ lọc (Ở màn hình to hiển thị dạng cột lg={6} hoặc xl={5}, màn hình md trở xuống ẩn đi) */}
-          <Col xs={0} lg={6} xl={5}>
+          {/* Cột trái: Bộ lọc */}
+          <Col xs={0} lg={6} xl={5} className="tour-page__sidebar-col">
             <SidebarFilter />
           </Col>
 

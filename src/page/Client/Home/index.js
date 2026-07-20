@@ -22,8 +22,10 @@ function Home() {
     observer.observe(document.body);
     return () => {
       observer.disconnect();
-      // Xóa sạch toàn bộ mốc cuộn cũ lửng lơ trong bộ nhớ khi rời trang Home
-      ScrollTrigger.getAll().forEach((t) => t.kill());
+      // Lưu ý: Không được dùng ScrollTrigger.getAll().kill() ở đây
+      // vì React 18 có thể render trang mới trước khi chạy hàm unmount của trang cũ,
+      // dẫn đến việc kill nhầm cả các trigger của trang mới (ví dụ trang About).
+      // useGSAP sẽ tự động dọn dẹp các trigger của chính nó.
     };
   }, []);
 
