@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import HeroCarousel from "./HeroCarousel";
-import Tour from "../Tours";
+import ToursAll from "../Tours/ToursAll";
 import Contact from "../Contact";
 import About from "../About";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -33,7 +33,7 @@ function Home() {
     <div className="home-page">
       <HeroCarousel />
 
-      <Tour />
+      <ToursAll />
 
       <About />
 

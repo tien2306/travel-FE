@@ -15,6 +15,8 @@ import ListTour from "../page/Admin/Tour/LisTour";
 import Logout from "../page/Auth/Logout";
 import ListCarousel from "../page/Admin/Carousel/ListCarousel";
 import Tours from "../page/Client/Tours";
+import ToursAll from "../page/Client/Tours/ToursAll";
+import ToursDetail from "../page/Client/Tours/ToursDetail";
 
 export const routes = [
   {
@@ -28,6 +30,16 @@ export const routes = [
       {
         path: "tours",
         element: <Tours />,
+        children: [
+          {
+            index: true,
+            element: <ToursAll />,
+          },
+          {
+            path: ":id",
+            element: <ToursDetail />,
+          },
+        ],
       },
       {
         path: "about",

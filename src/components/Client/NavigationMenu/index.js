@@ -20,11 +20,18 @@ function NavigationMenu(props) {
     }
   };
 
-  // Hàm xử lý active
+  // Hàm xử lý active chung cho NavLink độc lập
   const navLinkActive = (e) => {
     return e.isActive
       ? "header__nav-link header__nav-link--active"
       : "header__nav-link";
+  };
+
+  // Hàm xử lý active riêng cho các NavLink bọc Dropdown (vì cần giữ trạng thái active khi vào trang con)
+  const getDropdownNavLinkClass = (prefixPath) => {
+    return currentPath.startsWith(prefixPath)
+      ? "header__nav-link header__nav-link--dropdown header__nav-link--active"
+      : "header__nav-link header__nav-link--dropdown";
   };
 
   const serviceItems = [
@@ -59,48 +66,60 @@ function NavigationMenu(props) {
         About
       </NavLink>
 
+      {/* SERVICE */}
       <Dropdown
         menu={{ items: serviceItems, onClick: handleCloseMenu }}
-        trigger={isMobile ? ["click"] : ["hover"]}
+        trigger={["hover"]}
       >
-        <span
-          className={`header__nav-link header__nav-link--dropdown ${currentPath.startsWith("/service") ? "header__nav-link--active" : ""}`}
+        <NavLink
+          to="/service" // Click thẳng vào Service sẽ ra trang tổng này
+          className={getDropdownNavLinkClass("/service")}
+          onClick={handleCloseMenu}
         >
           Service <DownOutlined style={{ fontSize: "10px" }} />
-        </span>
+        </NavLink>
       </Dropdown>
 
+      {/* PACKAGE */}
       <Dropdown
         menu={{ items: packageItems, onClick: handleCloseMenu }}
-        trigger={isMobile ? ["click"] : ["hover"]}
+        trigger={["hover"]}
       >
-        <span
-          className={`header__nav-link header__nav-link--dropdown ${currentPath.startsWith("/package") ? "header__nav-link--active" : ""}`}
+        <NavLink
+          to="/package" // Click thẳng vào Package sẽ ra trang tổng này
+          className={getDropdownNavLinkClass("/package")}
+          onClick={handleCloseMenu}
         >
           Package <DownOutlined style={{ fontSize: "10px" }} />
-        </span>
+        </NavLink>
       </Dropdown>
 
+      {/* BLOG */}
       <Dropdown
         menu={{ items: blogItems, onClick: handleCloseMenu }}
-        trigger={isMobile ? ["click"] : ["hover"]}
+        trigger={["hover"]}
       >
-        <span
-          className={`header__nav-link header__nav-link--dropdown ${currentPath.startsWith("/blog") ? "header__nav-link--active" : ""}`}
+        <NavLink
+          to="/blog" // Click thẳng vào Blog sẽ ra trang tổng này
+          className={getDropdownNavLinkClass("/blog")}
+          onClick={handleCloseMenu}
         >
           Blog <DownOutlined style={{ fontSize: "10px" }} />
-        </span>
+        </NavLink>
       </Dropdown>
 
+      {/* PAGES */}
       <Dropdown
         menu={{ items: pageItems, onClick: handleCloseMenu }}
-        trigger={isMobile ? ["click"] : ["hover"]}
+        trigger={isMobile ? ["hover"] : ["hover"]}
       >
-        <span
-          className={`header__nav-link header__nav-link--dropdown ${currentPath.startsWith("/pages") ? "header__nav-link--active" : ""}`}
+        <NavLink
+          to="/pages" // Click thẳng vào Pages sẽ ra trang tổng này
+          className={getDropdownNavLinkClass("/pages")}
+          onClick={handleCloseMenu}
         >
           Pages <DownOutlined style={{ fontSize: "10px" }} />
-        </span>
+        </NavLink>
       </Dropdown>
 
       <NavLink
@@ -111,7 +130,7 @@ function NavigationMenu(props) {
         Contact
       </NavLink>
 
-      {/* 3.Chỉ hiển thị nút Admin khi đang ở màn hình mobile  VÀ user đăng nhập quyền ADMIN */}
+      {/* 3.Chỉ hiển thị nút Admin khi đang ở màn hình mobile VÀ user đăng nhập quyền ADMIN */}
       {isMobile && role === "ADMIN" && (
         <NavLink
           to="/admin"

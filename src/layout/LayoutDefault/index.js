@@ -66,6 +66,8 @@ function LayoutDefault() {
     else if (currentPath.includes("service")) setPageTitle("Our Services");
     else if (currentPath.includes("blog")) setPageTitle("Our Blog");
     else if (currentPath.includes("contact")) setPageTitle("Contact Us");
+    else if (currentPath.includes("package")) setPageTitle("Package Us");
+    else if (currentPath.includes("pages")) setPageTitle("Pages Us");
     else if (currentPath.includes("tours"))
       setPageTitle("Us Tour"); // Chạy đúng cho cả /tours và /tours?page=2
     else setPageTitle("");
