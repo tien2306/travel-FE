@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Select, DatePicker, Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
+import { useSearchAnimation } from "../../../page/Client/Tours/animations";
 import "./HeaderSearch.scss";
 
 export default function HeaderSearch() {
+  const containerRef = useRef(null);
+  useSearchAnimation(containerRef);
+
   return (
-    <div className="tour-search">
+    <div className="tour-search" ref={containerRef}>
       {/* KHỐI 1: LOẠI HÌNH TOUR */}
       <div className="tour-search__section tour-search__section--filter">
         <div className="tour-search__field">

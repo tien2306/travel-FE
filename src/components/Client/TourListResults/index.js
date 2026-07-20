@@ -6,6 +6,7 @@ import { getTours } from "../../../services/tour";
 import TourGrid from "./TourGrid";
 import TourList from "./TourList";
 import TourPagination from "./TourPagination";
+import { useTourListAnimation } from "../../../page/Client/Tours/animations";
 import "./TourListResults.scss";
 import "./TourCard.scss";
 
@@ -17,6 +18,8 @@ export default function TourListResults() {
   const [pageSize, setPageSize] = useState(10); // Tổng số trang
   const tourListRef = useRef(null); //Lưu ví trí load lại khi click vào pagination
   const navigate = useNavigate();
+
+  useTourListAnimation(tourListRef, tours, loading);
 
   // Đọc  dữ liệu URL
   const [searchParams] = useSearchParams();

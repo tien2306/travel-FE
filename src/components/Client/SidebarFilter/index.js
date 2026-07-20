@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Switch, Select, Checkbox, Slider, Button } from "antd";
 import { SlidersOutlined } from "@ant-design/icons";
+import { useSidebarAnimation } from "../../../page/Client/Tours/animations";
 import "./SidebarFilter.scss";
 
 export default function SidebarFilter() {
+  const containerRef = useRef(null);
+  useSidebarAnimation(containerRef);
+
   return (
-    <div className="tour-filter">
+    <div className="tour-filter" ref={containerRef}>
       {/* Tiêu đề bộ lọc */}
       <div className="tour-filter__header">
         <span className="tour-filter__title">

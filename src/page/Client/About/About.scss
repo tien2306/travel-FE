@@ -1,0 +1,218 @@
+@import "../../../styles/variables";
+
+.about {
+  padding: 5rem 0;
+  background-color: var(--bg-page);
+  overflow: hidden;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  &__gallery {
+    position: relative;
+    border-radius: var(--radius-lg);
+    z-index: 1;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      right: 20px;
+      bottom: 20px;
+      border: 2px solid var(--primary-color);
+      border-radius: inherit;
+      z-index: -1;
+      opacity: 0.15;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 4/5;
+  }
+
+  &__experience-badge {
+    position: absolute;
+    bottom: 40px;
+    right: -40px;
+    background: var(--bg-white);
+    padding: 1.5rem 2rem;
+    border-radius: var(--radius-md);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-left: 4px solid var(--primary-color);
+  }
+
+  &__experience-years {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    line-height: 1;
+  }
+
+  &__experience-text {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-heading);
+    text-transform: uppercase;
+    line-height: 1.3;
+    letter-spacing: 0.5px;
+  }
+
+  &__content {
+    padding-left: 3rem;
+  }
+
+  &__subtitle {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    &::before,
+    &::after {
+      content: "";
+      width: 60px;
+      height: 2px;
+      background: var(--primary-color);
+      display: inline-block;
+    }
+  }
+
+  &__title {
+    font-size: 3rem !important;
+    font-weight: 800 !important;
+    color: var(--text-heading) !important;
+    margin-bottom: 1.5rem !important;
+    line-height: 1.2 !important;
+  }
+
+  &__highlight {
+    color: var(--primary-color);
+  }
+
+  &__description {
+    color: var(--text-body);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem !important;
+  }
+
+  &__features {
+    margin: 2.5rem 0 3rem 0 !important;
+  }
+
+  &__feature-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    transition: var(--transition-base);
+
+    &:hover .about__feature-icon {
+      background: var(--primary-color);
+      color: var(--text-white);
+    }
+  }
+
+  &__feature-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--bg-icon-box);
+    border-radius: 50%;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    transition: var(--transition-base);
+  }
+
+  &__feature-text {
+    font-weight: 600;
+    color: var(--text-heading);
+    font-size: 1.05rem;
+  }
+
+  &__action {
+    background-color: var(--primary-color);
+    height: 56px;
+    padding: 0 3rem;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    font-size: 1.1rem;
+    border: none;
+    box-shadow: var(--shadow-primary);
+    transition: var(--transition-base);
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 25px var(--shadow-primary);
+      background-color: var(--primary-hover) !important;
+      color: var(--text-white) !important;
+    }
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 1199px) {
+    &__experience-badge {
+      right: -20px;
+    }
+
+    &__content {
+      padding-left: 1rem;
+    }
+  }
+
+  @media (max-width: 991px) {
+    padding: 4rem 0;
+
+    &__content {
+      padding-left: 0;
+      margin-top: 4rem;
+    }
+
+    &__experience-badge {
+      right: 20px;
+      bottom: -20px;
+    }
+
+    &__title {
+      font-size: 2.5rem !important;
+    }
+  }
+
+  @media (max-width: 575px) {
+    &__title {
+      font-size: 2rem !important;
+    }
+
+    &__experience-badge {
+      right: 10px;
+      bottom: -15px;
+      padding: 1rem 1.25rem;
+
+      .about__experience-years {
+        font-size: 2rem;
+      }
+      .about__experience-text {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}

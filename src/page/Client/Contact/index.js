@@ -1,7 +1,15 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Form, Input, Button, Row, Col } from "antd";
-import { IconMapPin, IconPhone, IconMail, IconSend, IconCheck } from "../../../components/Common/Icons";
+import {
+  IconMapPin,
+  IconPhone,
+  IconMail,
+  IconSend,
+  IconCheck,
+} from "../../../components/Common/Icons";
+
 import "./Contact.scss";
+import { useContactAnimation } from "./useContactAnimation";
 
 const { TextArea } = Input;
 
@@ -28,10 +36,15 @@ const INFO_BLOCKS = [
 function Contact() {
   const [form] = Form.useForm();
   const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading]     = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // Tạo một cái nhãn gắn vào thẻ HTML ở dưới, giúp GSAP định vị chính xác khu vực cần scroll
+  const containerRef = useRef(null);
+  useContactAnimation(containerRef);
 
   const onFinish = async () => {
     setLoading(true);
+    // Ép trình duyệt đợi 0.9 giây (giả lập thời gian gửi dữ liệu lên server) rồi mới báo thành công
     await new Promise((r) => setTimeout(r, 900));
     setLoading(false);
     setSubmitted(true);
@@ -43,43 +56,44 @@ function Contact() {
   };
 
   return (
-    <section className="contact-page">
-      <div className="contact-container">
-
+    <section className="contact" ref={containerRef}>
+      <div className="contact__container">
         {/* ── Section Header ── */}
-        <div className="contact-section-header">
-          <p className="contact-section-label">Contact Us</p>
-          <h1 className="contact-section-title">Contact For Any Query</h1>
+        <div className="contact__header">
+          <p className="contact__label">Contact Us</p>
+          <h1 className="contact__title">Contact For Any Query</h1>
         </div>
 
         {/* ── Main grid ── */}
-        <div className="contact-main-grid">
-
+        <div className="contact__grid">
           {/* Info card */}
-          <div className="contact-info-card">
+          <div className="contact__info-card">
             {INFO_BLOCKS.map(({ Icon, title, lines }) => (
-              <div className="contact-info-block" key={title}>
-                <div className="contact-info-icon-wrap">
+              <div className="contact__info-block" key={title}>
+                <div className="contact__info-icon">
                   <Icon size={26} />
                 </div>
-                <h4 className="contact-info-block-title">{title}</h4>
+                <h4 className="contact__info-title">{title}</h4>
                 {lines.map((line, i) => (
-                  <p className="contact-info-block-text" key={i}>{line}</p>
+                  <p className="contact__info-text" key={i}>
+                    {line}
+                  </p>
                 ))}
               </div>
             ))}
           </div>
 
           {/* Form panel */}
-          <div className="contact-form-panel">
+          <div className="contact__form-panel">
             {submitted ? (
-              <div className="contact-success">
-                <div className="contact-success__icon">
+              <div className="contact__success">
+                <div className="contact__success-icon">
                   <IconCheck size={28} />
                 </div>
-                <p className="contact-success__title">Gửi thành công!</p>
-                <p className="contact-success__sub">
-                  Cảm ơn bạn đã liên hệ. Chúng tôi sẽ phản hồi trong vòng 24 giờ làm việc.
+                <p className="contact__success-title">Gửi thành công!</p>
+                <p className="contact__success-sub">
+                  Cảm ơn bạn đã liên hệ. Chúng tôi sẽ phản hồi trong vòng 24 giờ
+                  làm việc.
                 </p>
                 <Button
                   id="contact-send-another-btn"
@@ -92,9 +106,10 @@ function Contact() {
               </div>
             ) : (
               <>
-                <h2 className="contact-form-title">Send us a message</h2>
-                <p className="contact-form-sub">
-                  Điền thông tin bên dưới, đội ngũ tư vấn TravelGo sẽ liên hệ lại sớm nhất.
+                <h2 className="contact__form-title">Send us a message</h2>
+                <p className="contact__form-sub">
+                  Điền thông tin bên dưới, đội ngũ tư vấn TravelGo sẽ liên hệ
+                  lại sớm nhất.
                 </p>
 
                 <Form
@@ -108,7 +123,9 @@ function Contact() {
                       <Form.Item
                         name="name"
                         label="Your Name"
-                        rules={[{ required: true, message: "Vui lòng nhập họ tên" }]}
+                        rules={[
+                          { required: true, message: "Vui lòng nhập họ tên" },
+                        ]}
                       >
                         <Input
                           id="contact-name-input"
@@ -123,7 +140,7 @@ function Contact() {
                         label="Your Email"
                         rules={[
                           { required: true, message: "Vui lòng nhập email" },
-                          { type: "email",   message: "Email không hợp lệ" },
+                          { type: "email", message: "Email không hợp lệ" },
                         ]}
                       >
                         <Input
@@ -138,7 +155,9 @@ function Contact() {
                   <Form.Item
                     name="subject"
                     label="Subject"
-                    rules={[{ required: true, message: "Vui lòng nhập chủ đề" }]}
+                    rules={[
+                      { required: true, message: "Vui lòng nhập chủ đề" },
+                    ]}
                   >
                     <Input
                       id="contact-subject-input"
@@ -150,7 +169,9 @@ function Contact() {
                   <Form.Item
                     name="message"
                     label="Message"
-                    rules={[{ required: true, message: "Vui lòng nhập nội dung" }]}
+                    rules={[
+                      { required: true, message: "Vui lòng nhập nội dung" },
+                    ]}
                   >
                     <TextArea
                       id="contact-message-input"
@@ -167,7 +188,7 @@ function Contact() {
                       htmlType="submit"
                       loading={loading}
                       icon={!loading ? <IconSend size={16} /> : null}
-                      className="contact-submit-btn"
+                      className="contact__submit-btn"
                       block
                     >
                       {loading ? "Đang gửi..." : "Send Message"}
@@ -180,7 +201,7 @@ function Contact() {
         </div>
 
         {/* ── Google Map ── */}
-        <div className="contact-map-card">
+        <div className="contact__map-card">
           <iframe
             title="TravelGo Office Location"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.4!2d106.6907!3d10.7771!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f4670702e31%3A0xa5777fb3a5bb9522!2zMTMyIE5ndXnhu4VuIMSQw6xuaCBDaGnhu4N1LCBR3KF1IDMsIFRow6BuaCBwaeG7kSBI4buTIENow60gTWluaCwgVmlldG5hbQ!5e0!3m2!1svi!2s!4v1700000000000!5m2!1svi!2s"
@@ -189,7 +210,6 @@ function Contact() {
             allowFullScreen
           />
         </div>
-
       </div>
     </section>
   );
