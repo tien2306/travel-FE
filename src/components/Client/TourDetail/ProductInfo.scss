@@ -9,6 +9,8 @@
     margin-bottom: 16px;
     margin-top: 0;
     letter-spacing: -0.5px;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   .product-price-box {
@@ -83,6 +85,7 @@
           font-size: $font-size-base;
           color: $text-heading;
           line-height: 1.4;
+          word-break: break-word;
         }
       }
     }

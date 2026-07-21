@@ -45,8 +45,8 @@ const RelatedTours = () => {
           slidesPerView={1.2}
           breakpoints={{
             576: { slidesPerView: 2.2 },
-            768: { slidesPerView: 2.5 },
-            1024: { slidesPerView: 3 },
+            768: { slidesPerView: 3 },
+            1024: { slidesPerView: 4 },
           }}
         >
           {tours.map((tour) => {
@@ -59,85 +59,44 @@ const RelatedTours = () => {
               <SwiperSlide key={tour.id || tour._id}>
                 <Card
                   hoverable
-                  className="tour-card"
+                  className="related-tour-card"
                   onClick={() => navigate(`/tours/${tour.slug}`)}
                   style={{ height: "100%", display: "flex", flexDirection: "column" }}
-                  styles={{ body: { display: "flex", flexDirection: "column", flexGrow: 1 } }}
+                  styles={{ body: { display: "flex", flexDirection: "column", flexGrow: 1, padding: 0 } }}
                 >
-                  <div className="tour-card__hero">
-                    {/* Badge trạng thái */}
-                    <span className={`tour-card__status-badge ${tour.status !== "ACTIVE" ? "status-inactive" : availableSeats <= 0 ? "status-full" : "status-available"}`}>
+                  <div className="related-tour-card__hero">
+                    <span className={`status-badge ${tour.status !== "ACTIVE" ? "inactive" : availableSeats <= 0 ? "full" : "available"}`}>
                       {tour.status !== "ACTIVE" ? "Tạm ngưng" : availableSeats <= 0 ? "Hết chỗ" : "Còn chỗ"}
                     </span>
 
                     <img
                       src={tour.thumbnail ? (urlImage + tour.thumbnail) : fallbackImage}
                       alt={tour.name}
-                      className="tour-card__img"
+                      className="hero-img"
                       onError={(e) => {
                         e.target.onerror = null;
                         e.target.src = fallbackImage;
                       }}
                     />
-
-                    <span className="tour-card__departure-badge">
-                      📍 Khởi hành:{" "}
-                      {tour.departurePlace === "Ho Chi Minh City"
-                        ? "TP. HCM"
-                        : tour.departurePlace || "TP. HCM"}
-                    </span>
-
-                    <div className="tour-card__score-bar">
-                      <span>📍 Điểm đến: {tour.destination || "..."}</span>
-                      <span>Còn {availableSeats} chỗ</span>
-                    </div>
                   </div>
 
-                  <div className="tour-card__body" style={{ flexGrow: 1 }}>
-                    <h3 className="tour-card__title">{tour.name}</h3>
+                  <div className="related-tour-card__body">
+                    <h3 className="title">{tour.name}</h3>
 
-                    <div className="tour-card__progress-block">
-                      <Progress
-                        percent={percentSold}
-                        size="small"
-                        status="active"
-                        showInfo={false}
-                        strokeColor={
-                          percentSold > 74
-                            ? { "0%": "#fa8c16", "100%": "#ff4d4f" }
-                            : { "0%": "#108ee9", "100%": "#87d068" }
-                        }
-                      />
-                      <span className="tour-card__progress-text">
-                        Đã đặt {percentSold}%
+                    <div className="info-row">
+                      <span className="label">📍 Hành trình:</span>
+                      <span className="value" title={`${tour.departurePlace === "Ho Chi Minh City" ? "TP. HCM" : (tour.departurePlace || "TP. HCM")} -> ${tour.destination || "Đang cập nhật"}`}>
+                        {tour.departurePlace === "Ho Chi Minh City" ? "TP. HCM" : (tour.departurePlace || "TP. HCM")} 
+                        {" ➔ "} 
+                        {tour.destination || "Đang cập nhật"}
                       </span>
                     </div>
 
-                    <p className="tour-card__short-desc">
-                      {tour.shortDesc ||
-                        "Trải nghiệm chuyến du lịch tuyệt vời cùng gia đình và người thân."}
-                    </p>
-
-                    <div className="tour-card__date-block">
-                      <span className="tour-card__date-label">
-                        📅 Lịch khởi hành:
-                      </span>
-                      <span className="tour-card__date-badge-accent">
+                    <div className="info-row">
+                      <span className="label">📅 Khởi hành:</span>
+                      <span className="value">
                         {tour.startDate ? new Date(tour.startDate).toLocaleDateString("vi-VN") : "Đang cập nhật"}
                       </span>
-                    </div>
-
-                    <div className="tour-card__footer" style={{ marginTop: "auto" }}>
-                      <div className="tour-card__price-section">
-                        <span className="tour-card__price-label">
-                          Giá trọn gói từ:
-                        </span>
-                        <span className="tour-card__price-value">
-                          {Number(tour.price || 0).toLocaleString("vi-VN")}
-                          <span className="tour-card__price-unit">đ</span>
-                        </span>
-                      </div>
-                      <span className="tour-card__more-badge">Chi tiết</span>
                     </div>
                   </div>
                 </Card>
