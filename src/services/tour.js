@@ -6,6 +6,11 @@ export const getToursUser = async () => {
   return result;
 };
 
+export const getTourBySlug = async (slug) => {
+  const result = await get(`${ENDPOINTS.TOURS}/slug/${slug}`);
+  return result;
+};
+
 export const getTours = async (page = 1) => {
   const result = await get(`${ENDPOINTS.TOURS}?page=${page}`);
   return result;

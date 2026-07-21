@@ -24,17 +24,20 @@ export default function TourGrid({ data }) {
             <Card
               hoverable
               className="tour-card"
-              onClick={() => navigate(`/tours/slug/${tour.slug}`)}
+              onClick={() => navigate(`/tours/${tour.slug}`)}
             >
               <div className="tour-card__hero">
+                {/* Badge trạng thái */}
+                <span className={`tour-card__status-badge ${tour.status !== "ACTIVE" ? "status-inactive" : availableSeats <= 0 ? "status-full" : "status-available"}`}>
+                  {tour.status !== "ACTIVE" ? "Tạm ngưng" : availableSeats <= 0 ? "Hết chỗ" : "Còn chỗ"}
+                </span>
+
                 <img
                   src={urlImage + tour.thumbnail || fallbackImage}
                   alt=""
                   className="tour-card__img"
                   onError={(e) => {
-                    // Bẻ gãy vòng lặp vô hạn lập tức bằng cách chặn sự kiện onError tiếp theo
                     e.target.onerror = null;
-                    // Đổi sang ảnh SVG dự phòng an toàn
                     e.target.src = fallbackImage;
                   }}
                 />

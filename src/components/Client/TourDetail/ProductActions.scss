@@ -1,0 +1,45 @@
+@use "../../../styles/variables" as *;
+
+.product-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+
+  .action-btn {
+    background: $bg-white;
+    border: 1px solid $border-color;
+    border-radius: $radius-pill; // Bo tròn dạng viên thuốc cho hiện đại
+    padding: 8px 16px;
+    font-size: $font-size-base;
+    font-weight: 600;
+    color: $text-secondary;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: $transition-fast;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+
+    .icon {
+      font-size: 16px;
+      transition: $transition-fast;
+    }
+
+    &:hover {
+      background-color: $bg-icon-box; // Chuyển màu nền nhẹ (thường là xanh rất nhạt)
+      border-color: $primary-color;
+      color: $primary-color;
+      transform: translateY(-2px); // Nẩy nhẹ lên
+      box-shadow: 0 4px 8px rgba(13, 110, 253, 0.08); // Bóng màu primary mờ
+
+      .icon {
+        transform: scale(1.1);
+      }
+    }
+
+    &:active {
+      transform: translateY(0); // Lún nhẹ khi click
+    }
+  }
+}

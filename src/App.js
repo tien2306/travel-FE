@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ConfigProvider, theme as antdTheme } from "antd";
+import { ConfigProvider, theme as antdTheme, FloatButton } from "antd";
 import AllRoutes from "./components/Common/Allroute";
 import { useDispatch, useSelector } from "react-redux";
 import { initTheme } from "./store/slices/themeSlice";
@@ -20,6 +20,11 @@ function AppContent() {
     >
       <ScrollToTop />
       <AllRoutes />
+      <FloatButton.BackTop 
+        shape="circle" 
+        type="primary" 
+        style={{ right: 24, bottom: 24 }} 
+      />
     </ConfigProvider>
   );
 }

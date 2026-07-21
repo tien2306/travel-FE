@@ -27,10 +27,15 @@ export default function TourList({ data }) {
             <Card
               hoverable
               className="tour-card tour-card--list-mode"
-              onClick={() => navigate(`/tours/slug/${tour.slug}`)}
+              onClick={() => navigate(`/tours/${tour.slug}`)}
             >
               {/* Khối ảnh bên trái */}
               <div className="tour-card__hero">
+                {/* Badge trạng thái */}
+                <span className={`tour-card__status-badge ${tour.status !== "ACTIVE" ? "status-inactive" : availableSeats <= 0 ? "status-full" : "status-available"}`}>
+                  {tour.status !== "ACTIVE" ? "Tạm ngưng" : availableSeats <= 0 ? "Hết chỗ" : "Còn chỗ"}
+                </span>
+
                 <img
                   src={urlImage + tour.thumbnail || fallbackImage}
                   alt=""

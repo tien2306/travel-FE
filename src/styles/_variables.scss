@@ -44,6 +44,8 @@ html[data-theme="light"] {
   --antd-info-border: #91d5ff; // Viền của info badge
   --color-danger: #e53e3e; // Đỏ cảnh báo (TourCard progress text)
   --color-danger-antd: #ff4d4f; // Đỏ chuẩn Antd (reset btn hover)
+  --color-timeline: #faad14; // Vàng cam cho Timeline / Hành trình
+  --color-cps: #d70018; // Đỏ thương hiệu CellphoneS
 
   // --- Header Sticky Colors (Light Theme) ---
   --header-sticky-bg: #ffffff;
@@ -209,6 +211,8 @@ $antd-info: var(--antd-info);
 $antd-info-border: var(--antd-info-border);
 $color-danger: var(--color-danger);
 $color-danger-antd: var(--color-danger-antd);
+$color-timeline: var(--color-timeline);
+$color-cps: var(--color-cps);
 
 // --- Header Sticky SASS Variables ---
 $header-sticky-bg: var(--header-sticky-bg);

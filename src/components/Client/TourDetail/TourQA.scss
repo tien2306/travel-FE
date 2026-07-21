@@ -1,0 +1,166 @@
+@use "../../../styles/variables" as *;
+
+.tour-qa-section {
+  background: $bg-white;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  padding: 32px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  margin-top: 40px;
+  scroll-margin-top: 100px;
+
+  .section-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: $text-heading;
+    margin-bottom: 24px;
+    margin-top: 0;
+  }
+
+  .qa-form {
+    margin-bottom: 40px;
+
+    .btn-submit-qa {
+      margin-top: 15px;
+      background-color: $color-cps;
+      color: $text-white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: $radius-md;
+      cursor: pointer;
+      font-weight: 700;
+      transition: $transition-fast;
+
+      &:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  .qa-list {
+    .qa-item {
+      position: relative;
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid $border-subtle;
+
+      &:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      // Đường kẻ dọc (thread line) kết nối Q và A
+      &::before {
+        content: "";
+        position: absolute;
+        top: 36px; // Bắt đầu dưới avatar đầu
+        left: 16px; // Ngay giữa avatar 32px
+        bottom: 60px; // Kết thúc trước avatar rep
+        width: 1px;
+        border-left: 2px dotted #d1d5db; // Màu xám chuẩn
+        z-index: 1;
+      }
+
+      .qa-question,
+      .qa-reply {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .q-avatar,
+      .r-avatar {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: $text-white;
+        flex-shrink: 0;
+        font-size: 14px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .q-avatar {
+        background-color: #4b6b7d;
+      } // Màu trầm
+      .r-avatar {
+        background-color: $color-cps;
+      }
+
+      .q-content,
+      .r-content {
+        margin-bottom: 20px;
+        flex: 1;
+
+        .q-header {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-bottom: 6px;
+
+          strong {
+            font-size: 15px;
+            font-weight: 700;
+            color: $text-heading;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+          }
+
+          .badge-qtv {
+            background-color: $color-cps;
+            color: $text-white;
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-weight: 700;
+          }
+
+          .q-time,
+          .r-time {
+            font-size: 13px;
+            color: $text-light;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+          }
+        }
+
+        p {
+          margin: 0 0 6px 0;
+          font-size: 15px;
+          line-height: 1.6;
+          color: $text-body;
+        }
+
+        .qa-action {
+          margin-top: 8px;
+
+          .btn-reply {
+            color: $color-cps;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+
+      .qa-reply {
+        margin-top: 0;
+      }
+    }
+  }
+}
