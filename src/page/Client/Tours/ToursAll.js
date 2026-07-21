@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Row, Col, Drawer, Button } from "antd";
 import { SlidersOutlined } from "@ant-design/icons";
-import SidebarFilter from "../../../components/Client/SidebarFilter";
-import HeaderSearch from "../../../components/Client/HeaderSearch";
-import TourListResults from "../../../components/Client/TourListResults";
+import SidebarFilter from "../../../components/Client/ToursAll/SidebarFilter";
+import HeaderSearch from "../../../components/Client/ToursAll/HeaderSearch";
+import TourListResults from "../../../components/Client/ToursAll/TourListResults";
 import "./ToursAll.scss";
 
 function ToursAll() {

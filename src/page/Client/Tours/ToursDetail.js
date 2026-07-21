@@ -4,12 +4,12 @@ import { Spin, Row, Col, Breadcrumb } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import { getTourBySlug } from "../../../services/tour";
 import { IMAGE_URLS } from "../../../constants/api";
-import ProductGallery from "../../../components/Client/TourDetail/ProductGallery";
-import ProductActions from "../../../components/Client/TourDetail/ProductActions";
-import ProductInfo from "../../../components/Client/TourDetail/ProductInfo";
-import RelatedTours from "../../../components/Client/TourDetail/RelatedTours";
-import TourReviews from "../../../components/Client/TourDetail/TourReviews";
-import TourQA from "../../../components/Client/TourDetail/TourQA";
+import ProductGallery from "../../../components/Client/ToursDetail/ProductGallery";
+import ProductActions from "../../../components/Client/ToursDetail/ProductActions";
+import ProductInfo from "../../../components/Client/ToursDetail/ProductInfo";
+import ToursRelated from "../../../components/Client/ToursRelated";
+import TourReviews from "../../../components/Client/ToursDetail/TourReviews";
+import TourQA from "../../../components/Client/ToursDetail/TourQA";
 import "./ToursDetail.scss";
 
 function ToursDetail() {
@@ -61,7 +61,7 @@ function ToursDetail() {
     <div className="product-detail-page">
       <div className="pd-container">
         {/* Breadcrumb sử dụng Ant Design */}
-        <Breadcrumb 
+        <Breadcrumb
           className="pd-breadcrumb"
           items={[
             {
@@ -99,11 +99,14 @@ function ToursDetail() {
           <h2 className="section-title">Mô tả chi tiết</h2>
           <div className="content-box">
             {tour.detailDesc ? (
-              tour.detailDesc.split('\n').filter(line => line.trim() !== '').map((line, index) => (
-                <div key={index} className="timeline-item">
-                  <p className="raw-text">{line}</p>
-                </div>
-              ))
+              tour.detailDesc
+                .split("\n")
+                .filter((line) => line.trim() !== "")
+                .map((line, index) => (
+                  <div key={index} className="timeline-item">
+                    <p className="raw-text">{line}</p>
+                  </div>
+                ))
             ) : (
               <p className="raw-text">Đang cập nhật mô tả...</p>
             )}
@@ -111,7 +114,7 @@ function ToursDetail() {
         </div>
 
         {/* Các Component mở rộng */}
-        <RelatedTours />
+        <ToursRelated />
         <TourReviews />
         <TourQA />
       </div>

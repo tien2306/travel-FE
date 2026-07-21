@@ -17,6 +17,7 @@ import ListCarousel from "../page/Admin/Carousel/ListCarousel";
 import Tours from "../page/Client/Tours";
 import ToursAll from "../page/Client/Tours/ToursAll";
 import ToursDetail from "../page/Client/Tours/ToursDetail";
+import ToursRelated from "../page/Client/Tours/ToursRelated";
 
 export const routes = [
   {
@@ -34,6 +35,10 @@ export const routes = [
           {
             index: true,
             element: <ToursAll />,
+          },
+          {
+            path: "related",
+            element: <ToursRelated />,
           },
           {
             path: ":id",

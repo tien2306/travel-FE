@@ -28,8 +28,14 @@ export default function TourGrid({ data }) {
             >
               <div className="tour-card__hero">
                 {/* Badge trạng thái */}
-                <span className={`tour-card__status-badge ${tour.status !== "ACTIVE" ? "status-inactive" : availableSeats <= 0 ? "status-full" : "status-available"}`}>
-                  {tour.status !== "ACTIVE" ? "Tạm ngưng" : availableSeats <= 0 ? "Hết chỗ" : "Còn chỗ"}
+                <span
+                  className={`tour-card__status-badge ${tour.status !== "ACTIVE" ? "status-inactive" : availableSeats <= 0 ? "status-full" : "status-available"}`}
+                >
+                  {tour.status !== "ACTIVE"
+                    ? "Tạm ngưng"
+                    : availableSeats <= 0
+                      ? "Hết chỗ"
+                      : "Còn chỗ"}
                 </span>
 
                 <img
