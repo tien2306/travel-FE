@@ -55,8 +55,8 @@ function FormSideConfigs(props) {
       <Form.Item
         label="Thumbnail (Ảnh đại diện tour)"
         name="thumbnail"
-        valuePropName="fileList"
-        getValueFromEvent={getValueFromFile}
+        valuePropName="fileList" // 🌟 Mẹo 1: Bảo Form.Item hãy vào thuộc tính 'fileList' của Upload để lấy dữ liệu
+        getValueFromEvent={getValueFromFile} // 🌟 Mẹo 2: Định nghĩa cách gom dữ liệu khi người dùng chọn ảnh
         // rules={[{ required: false, message: "Vui lòng chọn ảnh thumbnail!" }]}
         className="upload-form-item"
       >
@@ -94,16 +94,14 @@ function FormSideConfigs(props) {
           fileList={imagesFileList}
           className="tour-uploader"
         >
-          {imagesFileList.length >= 8 ? null : (
-            <div className="upload-btn-inner">
-              <UploadOutlined className="icon-blue" />
-              <div className="upload-text">
-                {imagesFileList.length > 0
-                  ? "Thêm ảnh khác"
-                  : "Chọn nhiều ảnh cho tour"}
-              </div>
+          <div className="upload-btn-inner">
+            <UploadOutlined className="icon-blue" />
+            <div className="upload-text">
+              {imagesFileList.length > 0
+                ? "Thêm ảnh khác"
+                : "Chọn nhiều ảnh cho tour"}
             </div>
-          )}
+          </div>
         </Upload>
       </Form.Item>
     </div>
