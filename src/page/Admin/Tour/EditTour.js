@@ -202,9 +202,9 @@ function EditTour(props) {
           });
 
           // THỦ THUẬT FIX LỖI VALIDATE ARRAY KHI CÓ ĐÚNG 1 ẢNH CŨ
-          if (oldImages.length === 1) {
-            formData.append("images", oldImages[0]);
-          }
+          // if (oldImages.length === 1) {
+          //   formData.append("images", oldImages[0]);
+          // }
 
           // 3. THÊM ẢNH MỚI: Duyệt qua mảng ảnh mới (những ảnh CÓ originFileObj)
           const newFiles = values.images
