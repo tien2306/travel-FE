@@ -183,10 +183,12 @@ function EditTour(props) {
         formData.append("detailDesc", values.detailDesc || "");
 
         // Thumbnail (single file)
-        if (values.thumbnail[0].originFileObj) {
-          formData.append("thumbnail", values.thumbnail[0].originFileObj); // Gửi FILE THẬT
-        } else if (values.thumbnail[0].name) {
-          formData.append("thumbnail", values.thumbnail[0].name); // Gửi cái TÊN ẢNH CŨ
+        if (values.thumbnail && values.thumbnail.length > 0) {
+          if (values.thumbnail[0].originFileObj) {
+            formData.append("thumbnail", values.thumbnail[0].originFileObj); // Gửi FILE THẬT
+          } else if (values.thumbnail[0].name) {
+            formData.append("thumbnail", values.thumbnail[0].name); // Gửi cái TÊN ẢNH CŨ
+          }
         }
 
         // Images (multiple files)
