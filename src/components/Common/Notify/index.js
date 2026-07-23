@@ -12,10 +12,12 @@ import {
 } from "@ant-design/icons";
 import "./Notify.scss";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 function Notify(props) {
   // Lấy đường dẫn URL hiện tại của trình duyệt
   const location = useLocation();
+  const { t } = useTranslation("header");
 
   // Lấy dữ liệu đăng nhập và quyền hạn từ Redux Store
   const state = useSelector((state) => state.loginReducer);
@@ -26,20 +28,20 @@ function Notify(props) {
   const loggedOutMenu = [
     {
       id: "profile",
-      title: "Trang cá nhân",
+      title: t("notify.profile"),
       icon: <UserOutlined />,
       to: "/profile",
     },
-    { id: "inbox", title: "Tin nhắn", icon: <MessageOutlined />, to: "/inbox" },
+    { id: "inbox", title: t("notify.inbox"), icon: <MessageOutlined />, to: "/inbox" },
     {
       id: "noti",
-      title: "Thông báo",
+      title: t("notify.notifications"),
       icon: <BellOutlined />,
       to: "/notifications",
     },
     {
       id: "setting",
-      title: "Cài đặt",
+      title: t("notify.settings"),
       icon: <SettingOutlined />,
       to: "/settings",
     },
@@ -49,20 +51,20 @@ function Notify(props) {
   const loggedInMenu = [
     {
       id: "profile",
-      title: "Trang cá nhân",
+      title: t("notify.profile"),
       icon: <UserOutlined />,
       to: "/profile",
     },
-    { id: "inbox", title: "Tin nhắn", icon: <MessageOutlined />, to: "/inbox" },
+    { id: "inbox", title: t("notify.inbox"), icon: <MessageOutlined />, to: "/inbox" },
     {
       id: "noti",
-      title: "Thông báo",
+      title: t("notify.notifications"),
       icon: <BellOutlined />,
       to: "/notifications",
     },
     {
       id: "setting",
-      title: "Cài đặt",
+      title: t("notify.settings"),
       icon: <SettingOutlined />,
       to: "/settings",
     },
@@ -75,7 +77,7 @@ function Notify(props) {
   if (role === "ADMIN" && !isAdminPage) {
     loggedInMenu.push({
       id: "admin",
-      title: "Trang quản trị",
+      title: t("notify.admin"),
       icon: <LayoutOutlined />,
       to: "/admin",
     });
@@ -84,7 +86,7 @@ function Notify(props) {
   // Luôn luôn thêm nút Log Out vào cuối danh sách menu đăng nhập
   loggedInMenu.push({
     id: "logout",
-    title: "Log Out",
+    title: t("notify.logout"),
     icon: <LogoutOutlined />,
     to: "/logout",
   });
@@ -110,7 +112,7 @@ function Notify(props) {
       <Dropdown menu={{ items }} trigger={["click"]} placement="bottomRight">
         <div className="user-menu__trigger" style={{ cursor: "pointer" }}>
           <HomeOutlined className="icons-trigger" />
-          <span>My Dashboard</span>
+          <span>{t("notify.myDashboard")}</span>
           <DownOutlined className="icons-trigger" />
         </div>
       </Dropdown>

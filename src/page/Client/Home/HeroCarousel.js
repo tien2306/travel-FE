@@ -2,6 +2,7 @@ import { useRef, useState, useCallback } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, EffectFade, Keyboard } from "swiper/modules";
 import { useOutletContext, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { IMAGE_URLS } from "../../../constants/api";
 
 import "swiper/css";
@@ -11,7 +12,11 @@ import "./HeroCarousel.scss";
 function HeroCarousel() {
   const { carouselData } = useOutletContext();
   const navigate = useNavigate();
+  // chuyển đến slide tiếp theo
   const swiperRef = useRef(null);
+  const { t } = useTranslation("home");
+
+  //Logic xử lí cái thanh trượt bên dưới số hiển thị
   const [activeIndex, setActiveIndex] = useState(0);
   const [progress, setProgress] = useState(0);
 
@@ -35,6 +40,7 @@ function HeroCarousel() {
 
   const urlImage = IMAGE_URLS.HERO_CAROUSEL;
   const pad = (n) => String(n + 1).padStart(2, "0");
+  // End Logic xử lí cái thanh trượt bên dưới số hiển thị
 
   return (
     <div className="hero-carousel">
@@ -67,7 +73,7 @@ function HeroCarousel() {
             <div className="hero-slide__content">
               <div className="hero-slide__caption">
                 <span className="hero-slide__tag">
-                  {slide.subtitle || "Explore The World"}
+                  {slide.subtitle || t("hero.defaultTag")}
                 </span>
                 <h1 className="hero-slide__title">{slide.title}</h1>
                 {slide.description && (
@@ -93,7 +99,7 @@ function HeroCarousel() {
                       }
                     }}
                   >
-                    Khám phá ngay
+                    {t("hero.exploreBtn")}
                     <svg
                       viewBox="0 0 24 24"
                       fill="none"
@@ -108,7 +114,7 @@ function HeroCarousel() {
                     className="hero-slide__btn hero-slide__btn--outline"
                     onClick={() => navigate("/contact")}
                   >
-                    Liên hệ tư vấn
+                    {t("hero.contactBtn")}
                   </button>
                 </div>
               </div>

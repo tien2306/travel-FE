@@ -1,0 +1,56 @@
+{
+  "search": {
+    "departure": "Điểm khởi hành",
+    "all": "Tất cả",
+    "hcm": "TP. Hồ Chí Minh",
+    "hn": "Hà Nội",
+    "destination": "Điểm đến",
+    "anyLocation": "Địa điểm bất kỳ...",
+    "date": "Ngày đi",
+    "dateFormat": "DD thg MM, YYYY",
+    "button": "Tìm kiếm"
+  },
+  "filter": {
+    "title": "Bộ lọc",
+    "reset": "Đặt lại",
+    "destination": "Điểm đến",
+    "selectDestination": "Chọn điểm đến",
+    "attractions": "Điểm tham quan",
+    "selectAttraction": "Chọn điểm tham quan",
+    "category": "Dòng tour",
+    "catStandard": "Tiêu chuẩn",
+    "catBestPrice": "Giá tốt",
+    "catEconomy": "Tiết kiệm",
+    "catEsg": "Tour ESG & LEI",
+    "transport": "Phương tiện",
+    "transFlight": "Máy bay",
+    "transBus": "Xe",
+    "budget": "Ngân sách",
+    "searchFilter": "Bộ lọc tìm kiếm"
+  },
+  "results": {
+    "count": "Kết quả:",
+    "programs": "chương trình tour",
+    "sortBy": "Sắp xếp theo:",
+    "sortDateAsc": "Ngày khởi hành gần nhất"
+  },
+  "detail": {
+    "notFound": "Không tìm thấy tour",
+    "backToList": "Quay lại danh sách",
+    "home": "Trang chủ",
+    "tours": "Du lịch",
+    "descTitle": "Mô tả chi tiết",
+    "descUpdating": "Đang cập nhật mô tả...",
+    "duration": "Thời gian",
+    "journey": "Hành trình",
+    "status": "Tình trạng",
+    "slotsAvailable": "Còn {{count}} chỗ",
+    "fullyBooked": "Tạm hết chỗ",
+    "sold": "Đã bán",
+    "guests": "khách",
+    "bookNow": "ĐẶT TOUR NGAY",
+    "bookSub": "Giữ chỗ tức thời - Thanh toán an toàn",
+    "fullyBookedBtn": "TẠM HẾT CHỖ",
+    "contactSub": "Vui lòng liên hệ để biết thêm chi tiết"
+  }
+}

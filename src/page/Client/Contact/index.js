@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { Form, Input, Button, Row, Col } from "antd";
+import { useTranslation } from "react-i18next";
 import {
   IconMapPin,
   IconPhone,
@@ -9,25 +10,25 @@ import {
 } from "../../../components/Common/Icons";
 
 import "./Contact.scss";
-import { useContactAnimation } from "./useContactAnimation";
+import { useContactAnimation } from "./animations";
 
 const { TextArea } = Input;
 
 // ─── Info blocks data ─────────────────────────────────────────
-const INFO_BLOCKS = [
+const getInfoBlocks = (t) => [
   {
     Icon: IconMapPin,
-    title: "Address",
+    title: t("info.addressTitle"),
     lines: ["132 Nguyễn Đình Chiểu,", "Quận 3, TP. Hồ Chí Minh"],
   },
   {
     Icon: IconPhone,
-    title: "Mobile",
+    title: t("info.mobileTitle"),
     lines: ["+84 28 3822 9988", "+84 28 3822 9989"],
   },
   {
     Icon: IconMail,
-    title: "Email",
+    title: t("info.emailTitle"),
     lines: ["hotro@travelgo.vn", "booking@travelgo.vn"],
   },
 ];
@@ -37,6 +38,7 @@ function Contact() {
   const [form] = Form.useForm();
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation("contact");
 
   // Tạo một cái nhãn gắn vào thẻ HTML ở dưới, giúp GSAP định vị chính xác khu vực cần scroll
   const containerRef = useRef(null);
@@ -60,15 +62,15 @@ function Contact() {
       <div className="contact__container">
         {/* ── Section Header ── */}
         <div className="contact__header">
-          <p className="contact__label">Contact Us</p>
-          <h1 className="contact__title">Contact For Any Query</h1>
+          <p className="contact__label">{t("header.label")}</p>
+          <h1 className="contact__title">{t("header.title")}</h1>
         </div>
 
         {/* ── Main grid ── */}
         <div className="contact__grid">
           {/* Info card */}
           <div className="contact__info-card">
-            {INFO_BLOCKS.map(({ Icon, title, lines }) => (
+            {getInfoBlocks(t).map(({ Icon, title, lines }) => (
               <div className="contact__info-block" key={title}>
                 <div className="contact__info-icon">
                   <Icon size={26} />
@@ -90,27 +92,21 @@ function Contact() {
                 <div className="contact__success-icon">
                   <IconCheck size={28} />
                 </div>
-                <p className="contact__success-title">Gửi thành công!</p>
-                <p className="contact__success-sub">
-                  Cảm ơn bạn đã liên hệ. Chúng tôi sẽ phản hồi trong vòng 24 giờ
-                  làm việc.
-                </p>
+                <p className="contact__success-title">{t("success.title")}</p>
+                <p className="contact__success-sub">{t("success.sub")}</p>
                 <Button
                   id="contact-send-another-btn"
                   type="primary"
                   onClick={handleReset}
                   style={{ borderRadius: 8 }}
                 >
-                  Gửi tin nhắn khác
+                  {t("success.button")}
                 </Button>
               </div>
             ) : (
               <>
-                <h2 className="contact__form-title">Send us a message</h2>
-                <p className="contact__form-sub">
-                  Điền thông tin bên dưới, đội ngũ tư vấn TravelGo sẽ liên hệ
-                  lại sớm nhất.
-                </p>
+                <h2 className="contact__form-title">{t("form.title")}</h2>
+                <p className="contact__form-sub">{t("form.sub")}</p>
 
                 <Form
                   form={form}
@@ -122,14 +118,12 @@ function Contact() {
                     <Col xs={24} md={12}>
                       <Form.Item
                         name="name"
-                        label="Your Name"
-                        rules={[
-                          { required: true, message: "Vui lòng nhập họ tên" },
-                        ]}
+                        label={t("form.nameLabel")}
+                        rules={[{ required: true, message: t("form.nameReq") }]}
                       >
                         <Input
                           id="contact-name-input"
-                          placeholder="Nguyễn Văn A"
+                          placeholder={t("form.namePlh")}
                           size="large"
                         />
                       </Form.Item>
@@ -137,15 +131,15 @@ function Contact() {
                     <Col xs={24} md={12}>
                       <Form.Item
                         name="email"
-                        label="Your Email"
+                        label={t("form.emailLabel")}
                         rules={[
-                          { required: true, message: "Vui lòng nhập email" },
-                          { type: "email", message: "Email không hợp lệ" },
+                          { required: true, message: t("form.emailReq") },
+                          { type: "email", message: t("form.emailInv") },
                         ]}
                       >
                         <Input
                           id="contact-email-input"
-                          placeholder="example@email.com"
+                          placeholder={t("form.emailPlh")}
                           size="large"
                         />
                       </Form.Item>
@@ -154,28 +148,24 @@ function Contact() {
 
                   <Form.Item
                     name="subject"
-                    label="Subject"
-                    rules={[
-                      { required: true, message: "Vui lòng nhập chủ đề" },
-                    ]}
+                    label={t("form.subjectLabel")}
+                    rules={[{ required: true, message: t("form.subjectReq") }]}
                   >
                     <Input
                       id="contact-subject-input"
-                      placeholder="Tiêu đề nội dung liên hệ..."
+                      placeholder={t("form.subjectPlh")}
                       size="large"
                     />
                   </Form.Item>
 
                   <Form.Item
                     name="message"
-                    label="Message"
-                    rules={[
-                      { required: true, message: "Vui lòng nhập nội dung" },
-                    ]}
+                    label={t("form.msgLabel")}
+                    rules={[{ required: true, message: t("form.msgReq") }]}
                   >
                     <TextArea
                       id="contact-message-input"
-                      placeholder="Nhập nội dung tin nhắn của bạn tại đây..."
+                      placeholder={t("form.msgPlh")}
                       rows={6}
                       size="large"
                     />
@@ -191,7 +181,7 @@ function Contact() {
                       className="contact__submit-btn"
                       block
                     >
-                      {loading ? "Đang gửi..." : "Send Message"}
+                      {loading ? t("form.sending") : t("form.send")}
                     </Button>
                   </Form.Item>
                 </Form>

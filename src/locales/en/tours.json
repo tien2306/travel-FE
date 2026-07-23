@@ -1,0 +1,56 @@
+{
+  "search": {
+    "departure": "Departure",
+    "all": "All",
+    "hcm": "Ho Chi Minh City",
+    "hn": "Hanoi",
+    "destination": "Destination",
+    "anyLocation": "Any location...",
+    "date": "Departure Date",
+    "dateFormat": "MMM DD, YYYY",
+    "button": "Search"
+  },
+  "filter": {
+    "title": "Filter",
+    "reset": "Reset",
+    "destination": "Destination",
+    "selectDestination": "Select destination",
+    "attractions": "Attractions",
+    "selectAttraction": "Select attraction",
+    "category": "Tour Category",
+    "catStandard": "Standard",
+    "catBestPrice": "Best Price",
+    "catEconomy": "Economy",
+    "catEsg": "ESG & LEI Tour",
+    "transport": "Transport",
+    "transFlight": "Flight",
+    "transBus": "Bus",
+    "budget": "Budget",
+    "searchFilter": "Search Filter"
+  },
+  "results": {
+    "count": "Results:",
+    "programs": "tour programs",
+    "sortBy": "Sort by:",
+    "sortDateAsc": "Nearest departure date"
+  },
+  "detail": {
+    "notFound": "Tour not found",
+    "backToList": "Back to list",
+    "home": "Home",
+    "tours": "Tours",
+    "descTitle": "Detailed Description",
+    "descUpdating": "Updating description...",
+    "duration": "Duration",
+    "journey": "Journey",
+    "status": "Status",
+    "slotsAvailable": "{{count}} slots available",
+    "fullyBooked": "Fully booked",
+    "sold": "Sold",
+    "guests": "guests",
+    "bookNow": "BOOK NOW",
+    "bookSub": "Instant reservation - Secure payment",
+    "fullyBookedBtn": "FULLY BOOKED",
+    "contactSub": "Please contact for more details"
+  }
+}

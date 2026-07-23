@@ -1,0 +1,33 @@
+{
+  "contactTitle": "Liên hệ",
+  "companyTitle": "Công ty",
+  "supportTitle": "Hỗ trợ",
+  "settingsTitle": "Cài đặt",
+  "paymentsTitle": "Thanh toán",
+  "address": "132 Nguyễn Đình Chiểu, Q.3, TP.HCM",
+  "links": {
+    "aboutUs": "Về chúng tôi",
+    "careers": "Tuyển dụng",
+    "blog": "Tin tức",
+    "press": "Báo chí",
+    "giftCards": "Thẻ quà tặng",
+    "magazine": "Tạp chí",
+    "contact": "Liên hệ",
+    "legalNotice": "Thông báo pháp lý",
+    "privacyPolicy": "Chính sách bảo mật",
+    "terms": "Điều khoản & Điều kiện",
+    "sitemap": "Sơ đồ trang",
+    "cookie": "Chính sách Cookie"
+  },
+  "subscribe": {
+    "label": "Đăng ký",
+    "title": "Bản tin của chúng tôi",
+    "desc": "Đăng ký để nhận những ưu đãi tour độc quyền, cẩm nang du lịch và tin tức mới nhất từ TravelGo ngay trong hộp thư của bạn.",
+    "placeholder": "Nhập địa chỉ email của bạn",
+    "button": "Đăng ký"
+  },
+  "copyright": {
+    "rights": "Bản quyền đã được bảo hộ.",
+    "designedBy": "Thiết kế bởi"
+  }
+}

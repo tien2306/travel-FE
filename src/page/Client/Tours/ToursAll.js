@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Row, Col, Drawer, Button } from "antd";
 import { SlidersOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 import SidebarFilter from "../../../components/Client/ToursAll/SidebarFilter";
 import HeaderSearch from "../../../components/Client/ToursAll/HeaderSearch";
 import TourListResults from "../../../components/Client/ToursAll/TourListResults";
@@ -8,6 +9,7 @@ import "./ToursAll.scss";
 
 function ToursAll() {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const { t } = useTranslation("tours");
 
   return (
     <div className="tour-page">
@@ -28,7 +30,7 @@ function ToursAll() {
                 onClick={() => setDrawerOpen(true)}
                 className="tour-page__mobile-filter-btn"
               >
-                Bộ lọc tìm kiếm
+                {t("filter.searchFilter")}
               </Button>
             </div>
 
@@ -46,7 +48,7 @@ function ToursAll() {
       <Drawer
         title={
           <span>
-            <SlidersOutlined /> Bộ lọc tìm kiếm
+            <SlidersOutlined /> {t("filter.searchFilter")}
           </span>
         }
         placement="left"

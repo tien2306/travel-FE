@@ -1,11 +1,13 @@
 import React, { useRef } from "react";
 import { Switch, Select, Checkbox, Slider, Button } from "antd";
 import { SlidersOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 import { useSidebarAnimation } from "../../../page/Client/Tours/animations";
 import "./SidebarFilter.scss";
 
 export default function SidebarFilter() {
   const containerRef = useRef(null);
+  const { t } = useTranslation("tours");
   useSidebarAnimation(containerRef);
 
   return (
@@ -13,10 +15,10 @@ export default function SidebarFilter() {
       {/* Tiêu đề bộ lọc */}
       <div className="tour-filter__header">
         <span className="tour-filter__title">
-          <SlidersOutlined /> Bộ lọc
+          <SlidersOutlined /> {t("filter.title")}
         </span>
         <Button type="link" className="tour-filter__reset-btn">
-          Đặt lại
+          {t("filter.reset")}
         </Button>
       </div>
 
@@ -28,9 +30,9 @@ export default function SidebarFilter() {
 
       {/* Điểm đến Dropdown */}
       <div className="tour-filter__section">
-        <span className="tour-filter__label">Điểm đến</span>
+        <span className="tour-filter__label">{t("filter.destination")}</span>
         <Select
-          placeholder="Chọn điểm đến"
+          placeholder={t("filter.selectDestination")}
           style={{ width: "100%" }}
           allowClear
         />
@@ -38,9 +40,9 @@ export default function SidebarFilter() {
 
       {/* Điểm tham quan Dropdown */}
       <div className="tour-filter__section">
-        <span className="tour-filter__label">Điểm tham quan</span>
+        <span className="tour-filter__label">{t("filter.attractions")}</span>
         <Select
-          placeholder="Chọn điểm tham quan"
+          placeholder={t("filter.selectAttraction")}
           style={{ width: "100%" }}
           allowClear
         />
@@ -48,27 +50,27 @@ export default function SidebarFilter() {
 
       {/* Nhóm lọc Dòng tour */}
       <div className="tour-filter__section">
-        <span className="tour-filter__label">Dòng tour</span>
+        <span className="tour-filter__label">{t("filter.category")}</span>
         <div className="tour-filter__checkbox-list">
-          <Checkbox>Tiêu chuẩn (8)</Checkbox>
-          <Checkbox>Giá tốt (6)</Checkbox>
-          <Checkbox>Tiết kiệm (4)</Checkbox>
-          <Checkbox>Tour ESG & LEI (1)</Checkbox>
+          <Checkbox>{t("filter.catStandard")} (8)</Checkbox>
+          <Checkbox>{t("filter.catBestPrice")} (6)</Checkbox>
+          <Checkbox>{t("filter.catEconomy")} (4)</Checkbox>
+          <Checkbox>{t("filter.catEsg")} (1)</Checkbox>
         </div>
       </div>
 
       {/* Nhóm lọc Phương tiện */}
       <div className="tour-filter__section">
-        <span className="tour-filter__label">Phương tiện</span>
+        <span className="tour-filter__label">{t("filter.transport")}</span>
         <div className="tour-filter__checkbox-list">
-          <Checkbox>Máy bay (15)</Checkbox>
-          <Checkbox>Xe (4)</Checkbox>
+          <Checkbox>{t("filter.transFlight")} (15)</Checkbox>
+          <Checkbox>{t("filter.transBus")} (4)</Checkbox>
         </div>
       </div>
 
       {/* Lọc khoảng Ngân sách */}
       <div className="tour-filter__section">
-        <span className="tour-filter__label">Ngân sách</span>
+        <span className="tour-filter__label">{t("filter.budget")}</span>
         <Slider
           range
           min={3990000}

@@ -1,0 +1,35 @@
+{
+  "info": {
+    "addressTitle": "Address",
+    "mobileTitle": "Mobile",
+    "emailTitle": "Email"
+  },
+  "header": {
+    "label": "Contact Us",
+    "title": "Contact For Any Query"
+  },
+  "success": {
+    "title": "Sent Successfully!",
+    "sub": "Thank you for contacting us. We will respond within 24 business hours.",
+    "button": "Send another message"
+  },
+  "form": {
+    "title": "Send us a message",
+    "sub": "Fill in the information below, TravelGo's consulting team will contact you as soon as possible.",
+    "nameLabel": "Your Name",
+    "nameReq": "Please enter your name",
+    "namePlh": "John Doe",
+    "emailLabel": "Your Email",
+    "emailReq": "Please enter your email",
+    "emailInv": "Invalid email",
+    "emailPlh": "example@email.com",
+    "subjectLabel": "Subject",
+    "subjectReq": "Please enter a subject",
+    "subjectPlh": "Contact subject...",
+    "msgLabel": "Message",
+    "msgReq": "Please enter your message",
+    "msgPlh": "Enter your message here...",
+    "sending": "Sending...",
+    "send": "Send Message"
+  }
+}

@@ -1,5 +1,8 @@
 import { Select } from "antd";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { changeLanguage } from "../../../store/slices/languageSlice";
+import { useTranslation } from "react-i18next";
 import {
   IconCompass,
   IconMapPin,
@@ -16,25 +19,7 @@ import {
 
 const { Option } = Select;
 
-// ─── Dữ liệu ─────────────────────────────────────────────────
-const COMPANY_LINKS = [
-  { label: "About Us", to: "/about" },
-  { label: "Careers", to: "/" },
-  { label: "Blog", to: "/blog" },
-  { label: "Press", to: "/" },
-  { label: "Gift Cards", to: "/" },
-  { label: "Magazine", to: "/" },
-];
-
-const SUPPORT_LINKS = [
-  { label: "Contact", to: "/contact" },
-  { label: "Legal Notice", to: "/" },
-  { label: "Privacy Policy", to: "/" },
-  { label: "Terms & Conditions", to: "/" },
-  { label: "Sitemap", to: "/" },
-  { label: "Cookie Policy", to: "/" },
-];
-
+// Dữ liệu tĩnh không cần dịch
 const PAYMENTS = ["VISA", "Mastercard", "PayPal", "AMEX", "Discover", "JCB"];
 
 const SOCIALS = [
@@ -46,6 +31,32 @@ const SOCIALS = [
 
 // ─── Footer Main ─────────────────────────────────────────────
 function FooterMain() {
+  const dispatch = useDispatch();
+  const { currentLanguage } = useSelector((state) => state.languageReducer);
+  const { t } = useTranslation("footer");
+
+  const COMPANY_LINKS = [
+    { label: t("links.aboutUs"), to: "/about" },
+    { label: t("links.careers"), to: "/" },
+    { label: t("links.blog"), to: "/blog" },
+    { label: t("links.press"), to: "/" },
+    { label: t("links.giftCards"), to: "/" },
+    { label: t("links.magazine"), to: "/" },
+  ];
+
+  const SUPPORT_LINKS = [
+    { label: t("links.contact"), to: "/contact" },
+    { label: t("links.legalNotice"), to: "/" },
+    { label: t("links.privacyPolicy"), to: "/" },
+    { label: t("links.terms"), to: "/" },
+    { label: t("links.sitemap"), to: "/" },
+    { label: t("links.cookie"), to: "/" },
+  ];
+
+  const handleLanguageChange = (value) => {
+    dispatch(changeLanguage(value));
+  };
+
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -56,11 +67,11 @@ function FooterMain() {
               <IconCompass size={24} />
               <span>TravelAway</span>
             </div>
-            <h4 className="footer-col-title">Liên hệ</h4>
+            <h4 className="footer-col-title">{t("contactTitle")}</h4>
             <div className="footer-contact-list">
               <a href="/" className="footer-contact-item">
                 <IconMapPin size={16} />
-                132 Nguyễn Đình Chiểu, Q.3, TP.HCM
+                {t("address")}
               </a>
               <a href="mailto:info@travelgo.vn" className="footer-contact-item">
                 <IconMail size={16} />
@@ -94,7 +105,7 @@ function FooterMain() {
 
           {/* ── Cột 2: Company ── */}
           <div>
-            <h4 className="footer-col-title">Company</h4>
+            <h4 className="footer-col-title">{t("companyTitle")}</h4>
             <nav className="footer-link-list">
               {COMPANY_LINKS.map((link) => (
                 <Link
@@ -111,7 +122,7 @@ function FooterMain() {
 
           {/* ── Cột 3: Support ── */}
           <div>
-            <h4 className="footer-col-title">Support</h4>
+            <h4 className="footer-col-title">{t("supportTitle")}</h4>
             <nav className="footer-link-list">
               {SUPPORT_LINKS.map((link) => (
                 <Link
@@ -128,19 +139,18 @@ function FooterMain() {
 
           {/* ── Cột 4: Cài đặt + Thanh toán ── */}
           <div>
-            <h4 className="footer-col-title">Cài đặt</h4>
+            <h4 className="footer-col-title">{t("settingsTitle")}</h4>
 
             <div className="footer-selects">
               <Select
                 id="footer-language-select"
-                defaultValue="vi"
+                value={currentLanguage}
+                onChange={handleLanguageChange}
                 style={{ width: "100%" }}
                 popupMatchSelectWidth={false}
               >
-                <Option value="vi">Tiếng Việt</Option>
                 <Option value="en">English</Option>
-                <Option value="zh">中文</Option>
-                <Option value="ko">한국어</Option>
+                <Option value="vi">Tiếng Việt</Option>
               </Select>
               <Select
                 id="footer-currency-select"
@@ -150,12 +160,10 @@ function FooterMain() {
               >
                 <Option value="vnd">₫ VND</Option>
                 <Option value="usd">$ USD</Option>
-                <Option value="eur">€ EUR</Option>
-                <Option value="gbp">£ GBP</Option>
               </Select>
             </div>
 
-            <p className="footer-payments-title">Thanh toán</p>
+            <p className="footer-payments-title">{t("paymentsTitle")}</p>
             <div className="footer-payments">
               {PAYMENTS.map((p) => (
                 <a href="/" key={p} className="payment-badge" aria-label={p}>
@@ -173,11 +181,11 @@ function FooterMain() {
       <div className="footer-copyright">
         <div className="footer-copyright-inner">
           <p className="footer-copyright-text">
-            &copy; {new Date().getFullYear()} <a href="/">TravelAway</a>. All
-            rights reserved.
+            &copy; {new Date().getFullYear()} <a href="/">TravelAway</a>.{" "}
+            {t("copyright.rights")}
           </p>
           <p className="footer-copyright-text">
-            Designed by <a href="/">TravelAway Team</a>
+            {t("copyright.designedBy")} <a href="/">TravelAway Team</a>
           </p>
         </div>
       </div>

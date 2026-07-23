@@ -3,11 +3,13 @@ import { DownOutlined } from "@ant-design/icons";
 import { Dropdown } from "antd";
 // 1. Nhập useSelector để lấy quyền từ Redux
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 function NavigationMenu(props) {
   const location = useLocation();
   const currentPath = location.pathname;
   const { isMobile, setIsMenuOpen } = props;
+  const { t } = useTranslation("header");
 
   // 2. Lấy thông tin role từ loginReducer (Đã xóa isLogin thừa để hết lỗi)
   const state = useSelector((state) => state.loginReducer);
@@ -35,35 +37,35 @@ function NavigationMenu(props) {
   };
 
   const serviceItems = [
-    { key: "s1", label: <Link to="/service/services">Travel Services</Link> },
+    { key: "s1", label: <Link to="/service/services">{t("menu.travelServices")}</Link> },
     {
       key: "s2",
-      label: <Link to="/service/service-detail">Travel Insurance</Link>,
+      label: <Link to="/service/service-detail">{t("menu.travelInsurance")}</Link>,
     },
   ];
   const packageItems = [
-    { key: "p1", label: <Link to="/package/family">Family Packages</Link> },
+    { key: "p1", label: <Link to="/package/family">{t("menu.familyPackages")}</Link> },
     {
       key: "p2",
-      label: <Link to="/package/honeymoon">Honeymoon Packages</Link>,
+      label: <Link to="/package/honeymoon">{t("menu.honeymoonPackages")}</Link>,
     },
   ];
   const blogItems = [
-    { key: "b1", label: <Link to="/blog/grid">Blog Grid</Link> },
-    { key: "b2", label: <Link to="/blog/detail">Blog Detail</Link> },
+    { key: "b1", label: <Link to="/blog/grid">{t("menu.blogGrid")}</Link> },
+    { key: "b2", label: <Link to="/blog/detail">{t("menu.blogDetail")}</Link> },
   ];
   const pageItems = [
-    { key: "pg1", label: <Link to="/pages/team">Our Team</Link> },
-    { key: "pg2", label: <Link to="/pages/testimonial">Testimonial</Link> },
+    { key: "pg1", label: <Link to="/pages/team">{t("menu.ourTeam")}</Link> },
+    { key: "pg2", label: <Link to="/pages/testimonial">{t("menu.testimonial")}</Link> },
   ];
 
   return (
     <>
       <NavLink to="/" end className={navLinkActive} onClick={handleCloseMenu}>
-        Home
+        {t("menu.home")}
       </NavLink>
       <NavLink to="/about" className={navLinkActive} onClick={handleCloseMenu}>
-        About
+        {t("menu.about")}
       </NavLink>
 
       {/* SERVICE */}
@@ -76,7 +78,7 @@ function NavigationMenu(props) {
           className={getDropdownNavLinkClass("/service")}
           onClick={handleCloseMenu}
         >
-          Service <DownOutlined style={{ fontSize: "10px" }} />
+          {t("menu.service")} <DownOutlined style={{ fontSize: "10px" }} />
         </NavLink>
       </Dropdown>
 
@@ -90,7 +92,7 @@ function NavigationMenu(props) {
           className={getDropdownNavLinkClass("/package")}
           onClick={handleCloseMenu}
         >
-          Package <DownOutlined style={{ fontSize: "10px" }} />
+          {t("menu.package")} <DownOutlined style={{ fontSize: "10px" }} />
         </NavLink>
       </Dropdown>
 
@@ -104,7 +106,7 @@ function NavigationMenu(props) {
           className={getDropdownNavLinkClass("/blog")}
           onClick={handleCloseMenu}
         >
-          Blog <DownOutlined style={{ fontSize: "10px" }} />
+          {t("menu.blog")} <DownOutlined style={{ fontSize: "10px" }} />
         </NavLink>
       </Dropdown>
 
@@ -118,7 +120,7 @@ function NavigationMenu(props) {
           className={getDropdownNavLinkClass("/pages")}
           onClick={handleCloseMenu}
         >
-          Pages <DownOutlined style={{ fontSize: "10px" }} />
+          {t("menu.pages")} <DownOutlined style={{ fontSize: "10px" }} />
         </NavLink>
       </Dropdown>
 
@@ -127,7 +129,7 @@ function NavigationMenu(props) {
         className={navLinkActive}
         onClick={handleCloseMenu}
       >
-        Contact
+        {t("menu.contact")}
       </NavLink>
 
       {/* 3.Chỉ hiển thị nút Admin khi đang ở màn hình mobile VÀ user đăng nhập quyền ADMIN */}
@@ -137,7 +139,7 @@ function NavigationMenu(props) {
           className={navLinkActive}
           onClick={handleCloseMenu}
         >
-          Admin
+          {t("menu.admin")}
         </NavLink>
       )}
     </>

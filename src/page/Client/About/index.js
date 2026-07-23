@@ -2,11 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { Row, Col, Button, Typography } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { useOutletContext } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { IMAGE_URLS } from "../../../constants/api";
 import "./About.scss";
 
 import fallbackImg from "../../../images/carousel-1.jpg";
-import { useAboutAnimation } from "./useAboutAnimation";
+import { useAboutAnimation } from "./animations";
 
 const { Title, Paragraph } = Typography;
 
@@ -14,6 +15,7 @@ function About() {
   const context = useOutletContext();
   const containerRef = useRef(null);
   const [currentImg, setCurrentImg] = useState(fallbackImg);
+  const { t } = useTranslation("about");
 
   // Gọi file hiệu ứng GSAP
   useAboutAnimation(containerRef);
@@ -32,12 +34,12 @@ function About() {
   }, [context?.carouselData]);
 
   const features = [
-    "First Class Flights",
-    "Handpicked Hotels",
-    "5 Star Accommodations",
-    "Latest Model Vehicles",
-    "150 Premium City Tours",
-    "24/7 Service",
+    t("features.f1"),
+    t("features.f2"),
+    t("features.f3"),
+    t("features.f4"),
+    t("features.f5"),
+    t("features.f6"),
   ];
 
   return (
@@ -54,33 +56,24 @@ function About() {
               <div className="about__experience-badge">
                 <span className="about__experience-years">10+</span>
                 <span className="about__experience-text">
-                  Years
+                  {t("years")}
                   <br />
-                  Experience
+                  {t("experience")}
                 </span>
               </div>
             </div>
           </Col>
           <Col xs={24} lg={13}>
             <div className="about__content">
-              <h5 className="about__subtitle">About Us</h5>
+              <h5 className="about__subtitle">{t("subtitle")}</h5>
               <Title level={1} className="about__title">
-                Welcome to&nbsp;
+                {t("title")}&nbsp;
                 <span className="about__highlight">TravelAway</span>
               </Title>
 
-              <Paragraph className="about__description">
-                Discover the world with us! We provide top-notch travel
-                experiences tailored just for you. From breathtaking natural
-                wonders to vibrant cityscapes, every journey is a story waiting
-                to be told.
-              </Paragraph>
+              <Paragraph className="about__description">{t("desc1")}</Paragraph>
 
-              <Paragraph className="about__description">
-                Our dedicated team of travel experts is committed to ensuring
-                your trip is seamless, enjoyable, and unforgettable. Let us
-                handle the details while you focus on making memories.
-              </Paragraph>
+              <Paragraph className="about__description">{t("desc2")}</Paragraph>
 
               <Row className="about__features" gutter={[16, 16]}>
                 {features.map((feature, index) => (
@@ -96,7 +89,7 @@ function About() {
               </Row>
 
               <Button type="primary" className="about__action">
-                Read More
+                {t("readMore")}
               </Button>
             </div>
           </Col>

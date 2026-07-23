@@ -1,0 +1,18 @@
+{
+  "years": "Years",
+  "experience": "Experience",
+  "subtitle": "About Us",
+  "title": "Welcome to",
+  "desc1": "Discover the world with us! We provide top-notch travel experiences tailored just for you. From breathtaking natural wonders to vibrant cityscapes, every journey is a story waiting to be told.",
+  "desc2": "Our dedicated team of travel experts is committed to ensuring your trip is seamless, enjoyable, and unforgettable. Let us handle the details while you focus on making memories.",
+  "features": {
+    "f1": "First Class Flights",
+    "f2": "Handpicked Hotels",
+    "f3": "5 Star Accommodations",
+    "f4": "Latest Model Vehicles",
+    "f5": "150 Premium City Tours",
+    "f6": "24/7 Service"
+  },
+  "readMore": "Read More",
+  "demoAntd": "Select a date to see Antd Magic:"
+}

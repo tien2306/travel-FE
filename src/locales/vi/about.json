@@ -1,0 +1,18 @@
+{
+  "years": "Năm",
+  "experience": "Kinh nghiệm",
+  "subtitle": "Về chúng tôi",
+  "title": "Chào mừng đến với",
+  "desc1": "Khám phá thế giới cùng chúng tôi! Chúng tôi cung cấp những trải nghiệm du lịch tuyệt vời được thiết kế riêng cho bạn. Từ những kỳ quan thiên nhiên kỳ vĩ đến những thành phố sôi động, mỗi chuyến đi là một câu chuyện đang chờ được kể.",
+  "desc2": "Đội ngũ chuyên gia du lịch tận tâm của chúng tôi cam kết đảm bảo chuyến đi của bạn diễn ra liền mạch, thú vị và khó quên. Hãy để chúng tôi lo các chi tiết trong khi bạn tập trung vào việc tạo nên những kỷ niệm.",
+  "features": {
+    "f1": "Chuyến bay Hạng nhất",
+    "f2": "Khách sạn tuyển chọn",
+    "f3": "Chỗ ở 5 sao",
+    "f4": "Xe đời mới nhất",
+    "f5": "150 Tour cao cấp trong thành phố",
+    "f6": "Dịch vụ 24/7"
+  },
+  "readMore": "Xem thêm",
+  "demoAntd": "Chọn ngày để xem phép thuật của Antd:"
+}

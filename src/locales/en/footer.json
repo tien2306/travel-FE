@@ -1,0 +1,33 @@
+{
+  "contactTitle": "Contact",
+  "companyTitle": "Company",
+  "supportTitle": "Support",
+  "settingsTitle": "Settings",
+  "paymentsTitle": "Payments",
+  "address": "132 Nguyen Dinh Chieu, D.3, HCMC",
+  "links": {
+    "aboutUs": "About Us",
+    "careers": "Careers",
+    "blog": "Blog",
+    "press": "Press",
+    "giftCards": "Gift Cards",
+    "magazine": "Magazine",
+    "contact": "Contact",
+    "legalNotice": "Legal Notice",
+    "privacyPolicy": "Privacy Policy",
+    "terms": "Terms & Conditions",
+    "sitemap": "Sitemap",
+    "cookie": "Cookie Policy"
+  },
+  "subscribe": {
+    "label": "Subscribe",
+    "title": "Our Newsletter",
+    "desc": "Subscribe to receive exclusive tour offers, travel guides, and the latest news from TravelGo right in your inbox.",
+    "placeholder": "Enter your email address",
+    "button": "Subscribe"
+  },
+  "copyright": {
+    "rights": "All rights reserved.",
+    "designedBy": "Designed by"
+  }
+}

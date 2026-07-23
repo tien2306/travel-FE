@@ -3,7 +3,17 @@ import { API_DOMAIN } from "../constants/api";
 
 const getAuthHeaders = () => {
   const token = getCookie("accessToken");
-  return token ? { Authorization: `Bearer ${token}` } : {};
+  const lang = localStorage.getItem("app_language") || "en";
+  
+  const headers = {
+    "Accept-Language": lang,
+  };
+  
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+  
+  return headers;
 };
 
 export const get = async (path) => {

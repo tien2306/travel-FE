@@ -1,0 +1,35 @@
+{
+  "info": {
+    "addressTitle": "Địa chỉ",
+    "mobileTitle": "Điện thoại",
+    "emailTitle": "Email"
+  },
+  "header": {
+    "label": "Liên hệ",
+    "title": "Liên hệ với chúng tôi"
+  },
+  "success": {
+    "title": "Gửi thành công!",
+    "sub": "Cảm ơn bạn đã liên hệ. Chúng tôi sẽ phản hồi trong vòng 24 giờ làm việc.",
+    "button": "Gửi tin nhắn khác"
+  },
+  "form": {
+    "title": "Gửi tin nhắn",
+    "sub": "Điền thông tin bên dưới, đội ngũ tư vấn TravelGo sẽ liên hệ lại sớm nhất.",
+    "nameLabel": "Họ và tên",
+    "nameReq": "Vui lòng nhập họ tên",
+    "namePlh": "Nguyễn Văn A",
+    "emailLabel": "Email của bạn",
+    "emailReq": "Vui lòng nhập email",
+    "emailInv": "Email không hợp lệ",
+    "emailPlh": "example@email.com",
+    "subjectLabel": "Chủ đề",
+    "subjectReq": "Vui lòng nhập chủ đề",
+    "subjectPlh": "Tiêu đề nội dung liên hệ...",
+    "msgLabel": "Nội dung",
+    "msgReq": "Vui lòng nhập nội dung",
+    "msgPlh": "Nhập nội dung tin nhắn của bạn tại đây...",
+    "sending": "Đang gửi...",
+    "send": "Gửi tin nhắn"
+  }
+}

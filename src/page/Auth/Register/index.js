@@ -11,11 +11,13 @@ import {
 import "./Register.scss";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { register } from "../../../services/user";
+import { useTranslation } from "react-i18next";
 
 const Register = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { defaultBgFromApi } = useOutletContext();
+  const { t } = useTranslation("auth");
 
   // Xử lí đăng ký
   const onFinish = async (values) => {
@@ -25,14 +27,14 @@ const Register = () => {
     try {
       const res = await register(account);
       if (res && res.success) {
-        message.success("Đăng ký tài khoản thành công!");
+        message.success(t("register.success"));
         navigate("/login");
       } else {
-        message.error("Đăng ký thất bại, vui lòng thử lại!");
+        message.error(res.message || t("register.fail"));
       }
     } catch (error) {
       console.error("Lỗi register:", error);
-      message.error("Không thể kết nối đến máy chủ backend!");
+      message.error(t("login.noServer")); // Use the same backend error msg
     } finally {
       setLoading(false);
     }
@@ -49,9 +51,9 @@ const Register = () => {
       <Row justify="center" align="middle" className="register-row">
         <Col xs={22} sm={20} md={16} lg={14} xl={12}>
           <div className="register-card">
-            <h2>Tạo Tài Khoản Mới</h2>
+            <h2>{t("register.title")}</h2>
             <p className="subtitle">
-              Đăng ký để trải nghiệm dịch vụ cùng EasyTour
+              {t("register.subtitle")}
             </p>
 
             <Form
@@ -64,12 +66,12 @@ const Register = () => {
                 {/* Tên tài khoản */}
                 <Col xs={24} md={12}>
                   <Form.Item
-                    label="Tên tài khoản (Username)"
+                    label={t("register.usernameLabel")}
                     name="username"
                     rules={[
                       {
                         required: true,
-                        message: "Vui lòng nhập tên tài khoản!",
+                        message: t("register.usernameReq"),
                       },
                     ]}
                   >
@@ -84,10 +86,10 @@ const Register = () => {
                 {/* Họ và tên */}
                 <Col xs={24} md={12}>
                   <Form.Item
-                    label="Họ và tên"
+                    label={t("register.fullNameLabel")}
                     name="fullName"
                     rules={[
-                      { required: true, message: "Vui lòng nhập họ và tên!" },
+                      { required: true, message: t("register.fullNameReq") },
                     ]}
                   >
                     <Input
@@ -101,11 +103,11 @@ const Register = () => {
                 {/* Email */}
                 <Col xs={24} md={12}>
                   <Form.Item
-                    label="Email"
+                    label={t("register.emailLabel")}
                     name="email"
                     rules={[
-                      { required: true, message: "Vui lòng nhập email!" },
-                      { type: "email", message: "Email không đúng định dạng!" },
+                      { required: true, message: t("register.emailReq") },
+                      { type: "email", message: t("login.emailInv") },
                     ]}
                   >
                     <Input
@@ -120,16 +122,16 @@ const Register = () => {
                 {/* Số điện thoại */}
                 <Col xs={24} md={12}>
                   <Form.Item
-                    label="Số điện thoại"
+                    label={t("register.phoneLabel")}
                     name="phone"
                     rules={[
                       {
                         required: true,
-                        message: "Vui lòng nhập số điện thoại!",
+                        message: t("register.phoneReq"),
                       },
                       {
                         pattern: /^[0-9]{10}$/,
-                        message: "Số điện thoại phải gồm 10 chữ số!",
+                        message: t("register.phoneFormat"),
                       },
                     ]}
                   >
@@ -144,15 +146,15 @@ const Register = () => {
                 {/* Địa chỉ - Chiếm trọn 1 hàng độc lập */}
                 <Col xs={24}>
                   <Form.Item
-                    label="Địa chỉ"
+                    label={t("register.addressLabel")}
                     name="address"
                     rules={[
-                      { required: true, message: "Vui lòng nhập địa chỉ!" },
+                      { required: true, message: t("register.addressReq") },
                     ]}
                   >
                     <Input
                       prefix={<HomeOutlined />}
-                      placeholder="Ví dụ: Ho Chi Minh"
+                      placeholder={t("register.addressPlh")}
                       size="large"
                     />
                   </Form.Item>
@@ -161,16 +163,16 @@ const Register = () => {
                 {/* Mật khẩu */}
                 <Col xs={24} md={12}>
                   <Form.Item
-                    label="Mật khẩu"
+                    label={t("register.pwdLabel")}
                     name="password"
                     rules={[
-                      { required: true, message: "Vui lòng nhập mật khẩu!" },
-                      { min: 6, message: "Mật khẩu từ 6 ký tự trở lên!" },
+                      { required: true, message: t("register.pwdReq") },
+                      { min: 6, message: t("login.pwdMin") },
                     ]}
                   >
                     <Input.Password
                       prefix={<LockOutlined />}
-                      placeholder="Nhập mật khẩu"
+                      placeholder={t("login.pwdPlh")}
                       size="large"
                       autoComplete="new-password"
                     />
@@ -180,13 +182,13 @@ const Register = () => {
                 {/* Xác nhận mật khẩu */}
                 <Col xs={24} md={12}>
                   <Form.Item
-                    label="Xác nhận mật khẩu"
+                    label={t("register.pwdConfirmLabel")}
                     name="confirmPassword"
                     dependencies={["password"]}
                     rules={[
                       {
                         required: true,
-                        message: "Vui lòng xác nhận mật khẩu!",
+                        message: t("register.pwdConfirmReq"),
                       },
                       ({ getFieldValue }) => ({
                         validator(_, value) {
@@ -194,7 +196,7 @@ const Register = () => {
                             return Promise.resolve();
                           }
                           return Promise.reject(
-                            new Error("Mật khẩu xác nhận không khớp!"),
+                            new Error(t("register.pwdMismatch")),
                           );
                         },
                       }),
@@ -202,7 +204,7 @@ const Register = () => {
                   >
                     <Input.Password
                       prefix={<LockOutlined />}
-                      placeholder="Nhập lại mật khẩu"
+                      placeholder={t("register.pwdConfirmPlh")}
                       size="large"
                       autoComplete="new-password"
                     />
@@ -219,7 +221,7 @@ const Register = () => {
                       size="large"
                       loading={loading}
                     >
-                      Đăng Ký
+                      {t("register.registerBtn")}
                     </Button>
                   </Form.Item>
                 </Col>
@@ -227,7 +229,7 @@ const Register = () => {
             </Form>
 
             <p className="login-text">
-              Đã có tài khoản? <a href="/login">Đăng nhập ngay</a>
+              {t("register.hasAccount")} <a href="/login">{t("register.loginNow")}</a>
             </p>
           </div>
         </Col>

@@ -18,12 +18,14 @@ import { Link } from "react-router-dom";
 import NavigationMenu from "../NavigationMenu";
 import DarkModeToggle from "../../Common/DarkModeToggle";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const { isLogin } = useSelector((state) => state.loginReducer);
   const dispatch = useDispatch();
+  const { t } = useTranslation("header");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,11 +74,11 @@ const Header = () => {
                   <>
                     <Link className="header__auth-item" to="register">
                       <UserOutlined />
-                      <span>Đăng Ký</span>
+                      <span>{t('register')}</span>
                     </Link>
                     <Link className="header__auth-item" to="login">
                       <LoginOutlined />
-                      <span>Đăng Nhập</span>
+                      <span>{t('login')}</span>
                     </Link>
                   </>
                 )}
@@ -114,7 +116,7 @@ const Header = () => {
                 size="large"
                 className="header__btn-book"
               >
-                Book Now
+                {t('bookNow')}
               </Link>
 
               <Button
@@ -143,15 +145,15 @@ const Header = () => {
           <div className="header__auth-mobile">
             {isLogin ? (
               <Link to="/logout" onClick={() => setIsMenuOpen(false)}>
-                <LogoutOutlined /> Đăng Xuất
+                <LogoutOutlined /> {t('logout')}
               </Link>
             ) : (
               <>
                 <Link to="/register" onClick={() => setIsMenuOpen(false)}>
-                  <UserOutlined /> Đăng Ký
+                  <UserOutlined /> {t('register')}
                 </Link>
                 <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                  <LoginOutlined /> Đăng Nhập
+                  <LoginOutlined /> {t('login')}
                 </Link>
               </>
             )}

@@ -2,11 +2,13 @@ import React, { useRef } from "react";
 import { Select, DatePicker, Button, Input } from "antd";
 import { SearchOutlined, EnvironmentOutlined, CalendarOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
+import { useTranslation } from "react-i18next";
 import { useSearchAnimation } from "../../../page/Client/Tours/animations";
 import "./HeaderSearch.scss";
 
 export default function HeaderSearch() {
   const containerRef = useRef(null);
+  const { t } = useTranslation("tours");
   useSearchAnimation(containerRef);
 
   return (
@@ -17,16 +19,16 @@ export default function HeaderSearch() {
           <EnvironmentOutlined />
         </div>
         <div className="tour-search__field">
-          <span className="tour-search__label">Điểm khởi hành</span>
+          <span className="tour-search__label">{t("search.departure")}</span>
           <Select
             variant="none"
             defaultValue="all"
             allowClear
             classNames={{ popup: { root: "tour-search__dropdown" } }}
           >
-            <Select.Option value="all">Tất cả</Select.Option>
-            <Select.Option value="hcm">TP. Hồ Chí Minh</Select.Option>
-            <Select.Option value="hn">Hà Nội</Select.Option>
+            <Select.Option value="all">{t("search.all")}</Select.Option>
+            <Select.Option value="hcm">{t("search.hcm")}</Select.Option>
+            <Select.Option value="hn">{t("search.hn")}</Select.Option>
           </Select>
         </div>
       </div>
@@ -37,10 +39,10 @@ export default function HeaderSearch() {
           <EnvironmentOutlined />
         </div>
         <div className="tour-search__field">
-          <span className="tour-search__label">Điểm đến</span>
+          <span className="tour-search__label">{t("search.destination")}</span>
           <Input
             variant="borderless"
-            placeholder="Địa điểm bất kỳ..."
+            placeholder={t("search.anyLocation")}
             allowClear
             className="tour-search__input"
           />
@@ -53,10 +55,10 @@ export default function HeaderSearch() {
           <CalendarOutlined />
         </div>
         <div className="tour-search__field">
-          <span className="tour-search__label">Ngày đi</span>
+          <span className="tour-search__label">{t("search.date")}</span>
           <DatePicker
             variant="none"
-            format="DD thg MM, YYYY"
+            format={t("search.dateFormat")}
             defaultValue={dayjs("2026-06-13")}
             allowClear={false}
             className="tour-search__picker"
@@ -64,14 +66,13 @@ export default function HeaderSearch() {
         </div>
       </div>
 
-      {/* KHỐI 4: NÚT TÌM KIẾM (Đã đổi tên chữ) */}
       <div className="tour-search__action">
         <Button
           type="primary"
           icon={<SearchOutlined />}
           className="tour-search__submit-btn"
         >
-          Tìm kiếm
+          {t("search.button")}
         </Button>
       </div>
     </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Select, Spin } from "antd";
 import { AppstoreOutlined, MenuOutlined } from "@ant-design/icons";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { getTours } from "../../../services/tour";
 import TourGrid from "./TourGrid";
 import TourList from "./TourList";
@@ -18,6 +19,7 @@ export default function TourListResults() {
   const [pageSize, setPageSize] = useState(10); // Tổng số trang
   const tourListRef = useRef(null); //Lưu ví trí load lại khi click vào pagination
   const navigate = useNavigate();
+  const { t } = useTranslation("tours");
 
   useTourListAnimation(tourListRef, tours, loading);
 
@@ -92,17 +94,17 @@ export default function TourListResults() {
     <div ref={tourListRef} className="tour-results">
       <div className="tour-results__toolbar">
         <div className="tour-results__count">
-          Kết quả: <span>{totalItems} chương trình tour</span>
+          {t("results.count")} <span>{totalItems} {t("results.programs")}</span>
         </div>
         <div className="tour-results__actions">
-          <span className="tour-results__sort-label">Sắp xếp theo:</span>
+          <span className="tour-results__sort-label">{t("results.sortBy")}</span>
           <Select
             defaultValue="date-asc"
             className="tour-results__sort-select"
             variant="filled"
           >
             <Select.Option value="date-asc">
-              Ngày khởi hành gần nhất
+              {t("results.sortDateAsc")}
             </Select.Option>
           </Select>
           <div className="tour-results__view-modes">

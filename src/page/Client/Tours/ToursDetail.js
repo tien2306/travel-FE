@@ -10,12 +10,14 @@ import ProductInfo from "../../../components/Client/ToursDetail/ProductInfo";
 import ToursRelated from "../../../components/Client/ToursRelated";
 import TourReviews from "../../../components/Client/ToursDetail/TourReviews";
 import TourQA from "../../../components/Client/ToursDetail/TourQA";
+import { useTranslation } from "react-i18next";
 import "./ToursDetail.scss";
 
 function ToursDetail() {
   const { id } = useParams();
   const [tour, setTour] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation("tours");
 
   useEffect(() => {
     const fetchTour = async () => {
@@ -42,9 +44,9 @@ function ToursDetail() {
   if (!tour) {
     return (
       <div className="td-not-found">
-        <h3>Không tìm thấy tour</h3>
+        <h3>{t("detail.notFound")}</h3>
         <Link to="/tours" className="btn-back">
-          Quay lại danh sách
+          {t("detail.backToList")}
         </Link>
       </div>
     );
@@ -67,12 +69,12 @@ function ToursDetail() {
             {
               title: (
                 <Link to="/">
-                  <HomeOutlined /> Trang chủ
+                  <HomeOutlined /> {t("detail.home")}
                 </Link>
               ),
             },
             {
-              title: <Link to="/tours">Du lịch</Link>,
+              title: <Link to="/tours">{t("detail.tours")}</Link>,
             },
             {
               title: <span className="current">{tour.name}</span>,
@@ -96,7 +98,7 @@ function ToursDetail() {
 
         {/* Nội dung chi tiết */}
         <div className="pd-content-section">
-          <h2 className="section-title">Mô tả chi tiết</h2>
+          <h2 className="section-title">{t("detail.descTitle")}</h2>
           <div className="content-box">
             {tour.detailDesc ? (
               tour.detailDesc
@@ -108,7 +110,7 @@ function ToursDetail() {
                   </div>
                 ))
             ) : (
-              <p className="raw-text">Đang cập nhật mô tả...</p>
+              <p className="raw-text">{t("detail.descUpdating")}</p>
             )}
           </div>
         </div>

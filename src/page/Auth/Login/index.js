@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../../../services/user";
 import { checkLogin } from "../../../store/slices/loginSlice";
 import { getCookie, setCookie } from "../../../helpers/cookie";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const [form] = Form.useForm();
@@ -14,6 +15,7 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { defaultBgFromApi } = useOutletContext();
+  const { t } = useTranslation("auth");
 
   // Xử lí nhớ tài khoản
   useEffect(() => {
@@ -34,7 +36,7 @@ const Login = () => {
     try {
       const res = await login(account);
       if (res && res.success) {
-        message.success("Đăng nhập thành công!");
+        message.success(t("login.success"));
 
         const token = res.data.accessToken;
         const userData = res.data.user;
@@ -62,11 +64,11 @@ const Login = () => {
           navigate("/");
         }
       } else {
-        message.error(res.message || "Đăng nhập thất bại!");
+        message.error(res.message || t("login.fail"));
       }
     } catch (error) {
       console.error("Lỗi login:", error);
-      message.error("Không thể kết nối đến máy chủ backend!");
+      message.error(t("login.noServer"));
     } finally {
       setLoading(false);
     }
@@ -82,8 +84,8 @@ const Login = () => {
       <Row justify="center" align="middle" className="login-row">
         <Col xs={22} sm={16} md={12} lg={10} xl={8}>
           <div className="login-card">
-            <h2>Chào Mừng Trở Lại</h2>
-            <p className="subtitle">Khám phá thế giới cùng EasyTour</p>
+            <h2>{t("login.welcome")}</h2>
+            <p className="subtitle">{t("login.subtitle")}</p>
 
             {/* Form */}
             <Form
@@ -96,16 +98,16 @@ const Login = () => {
             >
               {/* Tài khoản Email */}
               <Form.Item
-                label="Email"
+                label={t("login.emailLabel")}
                 name="email"
                 rules={[
-                  { required: true, message: "Vui lòng nhập địa chỉ email!" },
-                  { type: "email", message: "Email không đúng định dạng!" },
+                  { required: true, message: t("login.emailReq") },
+                  { type: "email", message: t("login.emailInv") },
                 ]}
               >
                 <Input
                   prefix={<UserOutlined />}
-                  placeholder="Nhập email của bạn"
+                  placeholder={t("login.emailPlh")}
                   size="large"
                   autoComplete="email"
                 />
@@ -113,16 +115,16 @@ const Login = () => {
 
               {/* Mật khẩu */}
               <Form.Item
-                label="Mật khẩu"
+                label={t("login.pwdLabel")}
                 name="password"
                 rules={[
-                  { required: true, message: "Vui lòng nhập mật khẩu!" },
-                  { min: 6, message: "Mật khẩu phải từ 6 ký tự trở lên!" },
+                  { required: true, message: t("login.pwdReq") },
+                  { min: 6, message: t("login.pwdMin") },
                 ]}
               >
                 <Input.Password
                   prefix={<LockOutlined />}
-                  placeholder="Nhập mật khẩu"
+                  placeholder={t("login.pwdPlh")}
                   size="large"
                   autoComplete="current-password"
                 />
@@ -131,10 +133,10 @@ const Login = () => {
               {/* Ghi nhớ */}
               <div className="form-actions">
                 <Form.Item name="remember" valuePropName="checked" noStyle>
-                  <Checkbox>Ghi nhớ tôi</Checkbox>
+                  <Checkbox>{t("login.remember")}</Checkbox>
                 </Form.Item>
                 <a href="/forgot" className="forgot-password">
-                  Quên mật khẩu?
+                  {t("login.forgot")}
                 </a>
               </div>
 
@@ -147,13 +149,13 @@ const Login = () => {
                   size="large"
                   loading={loading}
                 >
-                  Đăng Nhập
+                  {t("login.loginBtn")}
                 </Button>
               </Form.Item>
             </Form>
 
             <p className="register-text">
-              Chưa có tài khoản? <a href="/register">Đăng ký ngay</a>
+              {t("login.noAccount")} <a href="/register">{t("login.registerNow")}</a>
             </p>
           </div>
         </Col>

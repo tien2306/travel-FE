@@ -1,0 +1,33 @@
+{
+  "login": "Login",
+  "register": "Register",
+  "bookNow": "Book Now",
+  "logout": "Logout",
+  "menu": {
+    "home": "Home",
+    "about": "About",
+    "service": "Service",
+    "package": "Package",
+    "blog": "Blog",
+    "pages": "Pages",
+    "contact": "Contact",
+    "admin": "Admin",
+    "travelServices": "Travel Services",
+    "travelInsurance": "Travel Insurance",
+    "familyPackages": "Family Packages",
+    "honeymoonPackages": "Honeymoon Packages",
+    "blogGrid": "Blog Grid",
+    "blogDetail": "Blog Detail",
+    "ourTeam": "Our Team",
+    "testimonial": "Testimonial"
+  },
+  "notify": {
+    "profile": "Profile",
+    "inbox": "Inbox",
+    "notifications": "Notifications",
+    "settings": "Settings",
+    "admin": "Admin Dashboard",
+    "logout": "Log Out",
+    "myDashboard": "My Dashboard"
+  }
+}

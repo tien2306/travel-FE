@@ -7,11 +7,13 @@ import {
   UsergroupAddOutlined, 
   FireOutlined
 } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 import "./ProductInfo.scss";
 
 const ProductInfo = ({ tour }) => {
   const availableSlots = (tour.quantity || 0) - (tour.sold || 0);
   const isAvailable = availableSlots > 0 && tour.status === "ACTIVE";
+  const { t } = useTranslation("tours");
 
   return (
     <div className="product-info">
@@ -31,29 +33,29 @@ const ProductInfo = ({ tour }) => {
         <div className="variant-item">
           <CalendarOutlined className="v-icon" />
           <div className="v-text">
-            <span>Thời gian</span>
+            <span>{t("detail.duration")}</span>
             <strong>{formatDate(tour.startDate)} - {formatDate(tour.endDate)}</strong>
           </div>
         </div>
         <div className="variant-item">
           <EnvironmentOutlined className="v-icon" />
           <div className="v-text">
-            <span>Hành trình</span>
+            <span>{t("detail.journey")}</span>
             <strong>{tour.departurePlace || "..."} ➔ {tour.destination || "..."}</strong>
           </div>
         </div>
         <div className="variant-item">
           <UsergroupAddOutlined className="v-icon" />
           <div className="v-text">
-            <span>Tình trạng</span>
-            <strong>{isAvailable ? `Còn ${availableSlots} chỗ` : "Tạm hết chỗ"}</strong>
+            <span>{t("detail.status")}</span>
+            <strong>{isAvailable ? t("detail.slotsAvailable", { count: availableSlots }) : t("detail.fullyBooked")}</strong>
           </div>
         </div>
         <div className="variant-item">
           <FireOutlined className="v-icon" />
           <div className="v-text">
-            <span>Đã bán</span>
-            <strong>{tour.sold || 0} khách</strong>
+            <span>{t("detail.sold")}</span>
+            <strong>{tour.sold || 0} {t("detail.guests")}</strong>
           </div>
         </div>
       </div>
@@ -61,13 +63,13 @@ const ProductInfo = ({ tour }) => {
       <div className="product-booking">
         {isAvailable ? (
           <Link to={`/checkout/${tour.id}`} className="btn-buy-now">
-            <strong>ĐẶT TOUR NGAY</strong>
-            <span>Giữ chỗ tức thời - Thanh toán an toàn</span>
+            <strong>{t("detail.bookNow")}</strong>
+            <span>{t("detail.bookSub")}</span>
           </Link>
         ) : (
           <button className="btn-buy-now disabled" disabled>
-            <strong>TẠM HẾT CHỖ</strong>
-            <span>Vui lòng liên hệ để biết thêm chi tiết</span>
+            <strong>{t("detail.fullyBookedBtn")}</strong>
+            <span>{t("detail.contactSub")}</span>
           </button>
         )}
       </div>

@@ -1,0 +1,33 @@
+{
+  "login": "Đăng Nhập",
+  "register": "Đăng Ký",
+  "bookNow": "Đặt Ngay",
+  "logout": "Đăng Xuất",
+  "menu": {
+    "home": "Trang chủ",
+    "about": "Giới thiệu",
+    "service": "Dịch vụ",
+    "package": "Gói Tour",
+    "blog": "Tin tức",
+    "pages": "Trang",
+    "contact": "Liên hệ",
+    "admin": "Quản trị",
+    "travelServices": "Dịch vụ du lịch",
+    "travelInsurance": "Bảo hiểm du lịch",
+    "familyPackages": "Gói gia đình",
+    "honeymoonPackages": "Gói tuần trăng mật",
+    "blogGrid": "Dạng lưới",
+    "blogDetail": "Chi tiết tin tức",
+    "ourTeam": "Đội ngũ",
+    "testimonial": "Cảm nhận"
+  },
+  "notify": {
+    "profile": "Trang cá nhân",
+    "inbox": "Tin nhắn",
+    "notifications": "Thông báo",
+    "settings": "Cài đặt",
+    "admin": "Trang quản trị",
+    "logout": "Đăng xuất",
+    "myDashboard": "Bảng điều khiển"
+  }
+}
