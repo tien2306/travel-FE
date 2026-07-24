@@ -74,11 +74,6 @@ function LayoutDefault() {
     else setPageTitle("");
   }, [location.pathname]);
 
-  // Thêm một useEffect toàn cục để tự động kéo lên đầu trang khi thay đổi tuyến đường (Route chính)
-  // Nhưng sẽ bỏ qua nếu chỉ thay đổi query số trang (?page=2) đúng như bạn lên kế hoạch
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]); // Chỉ lắng nghe pathname (ví dụ: đổi từ / sang /tours), không lắng nghe tham số phân trang
 
   return (
     <Layout className="layout-default">

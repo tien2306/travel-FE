@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Row, Col, Drawer, Button } from "antd";
 import { SlidersOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
@@ -7,9 +7,19 @@ import HeaderSearch from "../../../components/Client/ToursAll/HeaderSearch";
 import TourListResults from "../../../components/Client/ToursAll/TourListResults";
 import "./ToursAll.scss";
 
+let cachedPriceRange = null; // Cache global price range to prevent UI flashing
+
 function ToursAll() {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [priceRange, setPriceRange] = useState(
+    cachedPriceRange || { min: 0, max: 200000000 },
+  );
   const { t } = useTranslation("tours");
+
+  const handlePriceRangeUpdate = (newRange) => {
+    cachedPriceRange = newRange;
+    setPriceRange(newRange);
+  };
 
   return (
     <div className="tour-page">
@@ -17,7 +27,9 @@ function ToursAll() {
         <Row gutter={[24, 24]}>
           {/* Cột trái: Bộ lọc */}
           <Col xs={0} lg={6} xl={5} className="tour-page__sidebar-col">
-            <SidebarFilter />
+            <div className="tour-page__sidebar">
+              <SidebarFilter priceRange={priceRange} />
+            </div>
           </Col>
 
           {/* Cột phải: Thanh tìm kiếm & Danh sách tour */}
@@ -38,7 +50,7 @@ function ToursAll() {
               <HeaderSearch />
             </div>
             <div className="tour-page__results">
-              <TourListResults />
+              <TourListResults onPriceRangeUpdate={handlePriceRangeUpdate} />
             </div>
           </Col>
         </Row>
@@ -58,7 +70,7 @@ function ToursAll() {
         styles={{ body: { padding: 0 } }}
       >
         <div style={{ padding: "20px 24px" }}>
-          <SidebarFilter />
+          <SidebarFilter priceRange={priceRange} />
         </div>
       </Drawer>
     </div>

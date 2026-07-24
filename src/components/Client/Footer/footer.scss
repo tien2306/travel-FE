@@ -157,8 +157,13 @@
   }
 
   @include mobile {
-    grid-template-columns: 1fr;
-    gap: 28px;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+
+    & > div:first-child,
+    & > div:last-child {
+      grid-column: span 2;
+    }
   }
 }
 

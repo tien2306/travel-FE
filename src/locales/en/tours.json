@@ -19,12 +19,20 @@
     "selectAttraction": "Select attraction",
     "category": "Tour Category",
     "catStandard": "Standard",
-    "catBestPrice": "Best Price",
+    "catPremium": "Premium",
+    "catSaving": "Saving",
     "catEconomy": "Economy",
+    "catBestPrice": "Best Price",
     "catEsg": "ESG & LEI Tour",
     "transport": "Transport",
     "transFlight": "Flight",
     "transBus": "Bus",
+    "transMotorbike": "Motorbike",
+    "destEngland": "England",
+    "destAustria": "Austria",
+    "destHanoi": "Hanoi",
+    "destDalat": "Dalat",
+    "destHcm": "Ho Chi Minh City",
     "budget": "Budget",
     "searchFilter": "Search Filter"
   },
@@ -32,7 +40,9 @@
     "count": "Results:",
     "programs": "tour programs",
     "sortBy": "Sort by:",
-    "sortDateAsc": "Nearest departure date"
+    "sortDateAsc": "Nearest departure date",
+    "sortPriceAsc": "Price: Low to High",
+    "sortPriceDesc": "Price: High to Low"
   },
   "detail": {
     "notFound": "Tour not found",

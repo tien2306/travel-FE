@@ -1,13 +1,15 @@
 import React from "react";
-import { Row, Col, Card, Progress } from "antd";
+import { Progress } from "antd";
 import { useNavigate } from "react-router-dom";
 import {
   EnvironmentOutlined,
   CalendarOutlined,
-  SendOutlined,
+  CarOutlined,
+  StarOutlined,
 } from "@ant-design/icons";
 import BG from "../../../images/carousel-2.jpg";
 import { IMAGE_URLS } from "../../../constants/api";
+import "./TourList.scss";
 
 export default function TourList({ data }) {
   const navigate = useNavigate();
@@ -15,126 +17,127 @@ export default function TourList({ data }) {
   const urlImage = IMAGE_URLS.TOURS;
 
   return (
-    <Row gutter={[0, 20]}>
+    <div className="tour-list-container">
       {data?.map((tour) => {
-        const totalSeats = tour.quantity || 30;
-        const soldSeats = tour.sold || 0;
-        const availableSeats = totalSeats - soldSeats;
-        const percentSold = Math.round((soldSeats / totalSeats) * 100);
-
         return (
-          <Col key={tour.id || tour._id} span={24}>
-            <Card
-              hoverable
-              className="tour-card tour-card--list-mode"
-              onClick={() => navigate(`/tours/${tour.slug}`)}
-            >
-              {/* Khối ảnh bên trái */}
-              <div className="tour-card__hero">
-                {/* Badge trạng thái */}
-                <span className={`tour-card__status-badge ${tour.status !== "ACTIVE" ? "status-inactive" : availableSeats <= 0 ? "status-full" : "status-available"}`}>
-                  {tour.status !== "ACTIVE" ? "Tạm ngưng" : availableSeats <= 0 ? "Hết chỗ" : "Còn chỗ"}
-                </span>
+          <div
+            key={tour.id || tour._id}
+            className="tour-list-card"
+            onClick={() => navigate(`/tours/${tour.slug}`)}
+          >
+            {/* Cột trái: Ảnh */}
+            <div className="tour-list-card__image-col">
+              <img
+                src={tour.thumbnail ? urlImage + tour.thumbnail : fallbackImage}
+                alt={tour.name}
+                className="tour-list-card__img"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = fallbackImage;
+                }}
+              />
+              <span
+                className={`tour-list-card__status ${
+                  tour.availableSeats <= 0
+                    ? "status-full"
+                    : tour.isAvailable
+                      ? "status-available"
+                      : "status-closed"
+                }`}
+              >
+                {tour.availableSeats <= 0
+                  ? "Hết Chỗ"
+                  : tour.isAvailable
+                    ? "Còn Chỗ"
+                    : "Ngưng Nhận"}
+              </span>
+            </div>
 
-                <img
-                  src={urlImage + tour.thumbnail || fallbackImage}
-                  alt=""
-                  className="tour-card__img"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = fallbackImage;
-                  }}
-                />
+            {/* Cột giữa: Thông tin chính */}
+            <div className="tour-list-card__info-col">
+              <h3 className="tour-list-card__title">{tour.name}</h3>
 
-                <span className="tour-card__departure-badge">
-                  📍 Khởi hành:{" "}
-                  {tour.departurePlace === "Ho Chi Minh City"
-                    ? "TP. HCM"
-                    : tour.departurePlace}
-                </span>
-
-                <div className="tour-card__score-bar">
-                  <span>Còn {availableSeats} chỗ</span>
-                </div>
-              </div>
-
-              {/* Khối nội dung bên phải */}
-              <div className="tour-card__body">
-                <div className="tour-card__main-content">
-                  <h3 className="tour-card__title">{tour.name}</h3>
-
-                  {/* Thanh tiến trình lượng đặt vé */}
-                  <div
-                    className="tour-card__progress-block"
-                    style={{ maxWidth: "250px" }}
-                  >
-                    <Progress
-                      percent={percentSold}
-                      size="small"
-                      status="active"
-                      showInfo={false}
-                      strokeColor={
-                        percentSold > 74
-                          ? { "0%": "#fa8c16", "100%": "#ff4d4f" }
-                          : { "0%": "#108ee9", "100%": "#87d068" }
-                      }
-                    />
-                    <span className="tour-card__progress-text">
-                      Đã đặt {percentSold}%
-                    </span>
-                  </div>
-
-                  {/* Lưới thông tin chi tiết (Đã bỏ Mã tour thừa) */}
-                  <div className="tour-card__grid-info">
-                    <div className="tour-card__info-item">
-                      <EnvironmentOutlined /> Nơi khởi hành:{" "}
-                      {tour.departurePlace === "Ho Chi Minh City"
-                        ? "TP. HCM"
-                        : tour.departurePlace}
-                    </div>
-                    <div className="tour-card__info-item">
-                      <CalendarOutlined /> Thời gian:{" "}
-                      {tour.shortDesc || "3 Ngày 2 Đêm"}
-                    </div>
-                    <div
-                      className="tour-card__info-item"
-                      style={{ gridColumn: "span 2" }}
-                    >
-                      <SendOutlined /> Điểm đến du lịch: {tour.destination}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Khối lịch khởi hành */}
-                <div className="tour-card__date-section">
-                  <span className="tour-card__date-label">
-                    📅 Ngày khởi hành:
+              <div className="tour-list-card__tags">
+                {tour.transport && (
+                  <span className="tour-list-card__tag">
+                    <CarOutlined />{" "}
+                    {tour.transport === "BUS"
+                      ? "Xe Khách"
+                      : tour.transport === "AIRPLANE"
+                        ? "Máy Bay"
+                        : tour.transport}
                   </span>
-                  <div className="tour-card__date-list">
-                    <span className="tour-card__date-badge">
-                      {new Date(tour.startDate).toLocaleDateString("vi-VN")}
-                    </span>
-                  </div>
-                </div>
+                )}
+                {tour.category && (
+                  <span
+                    className={`tour-list-card__tag ${
+                      tour.category === "PREMIUM"
+                        ? "tour-list-card__tag--orange"
+                        : tour.category === "SAVING"
+                          ? "tour-list-card__tag--green"
+                          : tour.category === "ECONOMY"
+                            ? "tour-list-card__tag--gray"
+                            : ""
+                    }`}
+                  >
+                    <StarOutlined /> Hạng: {tour.category}
+                  </span>
+                )}
+              </div>
 
-                {/* Khối giá tiền và nút chi tiết dưới đáy */}
-                <div className="tour-card__footer">
-                  <div className="tour-card__price-section">
-                    <span className="tour-card__price-label">
-                      Giá trọn gói từ:
-                    </span>
-                    <span className="tour-card__price-value">
-                      {Number(tour.price).toLocaleString("vi-VN")}
-                      <span className="tour-card__price-unit">đ</span>
-                    </span>
-                  </div>
-                  <span className="tour-card__more-badge">Xem chi tiết</span>
+              <div className="tour-list-card__details">
+                <div className="tour-list-card__detail-item">
+                  <EnvironmentOutlined className="icon-blue" />
+                  <strong>Lịch trình:</strong> {tour.departurePlace} ➔{" "}
+                  {tour.destination}
+                </div>
+                <div className="tour-list-card__detail-item">
+                  <CalendarOutlined className="icon-orange" />
+                  <strong>Thời gian:</strong>{" "}
+                  {new Date(tour.startDate).toLocaleDateString("vi-VN")} -{" "}
+                  {new Date(tour.endDate).toLocaleDateString("vi-VN")}
                 </div>
               </div>
-            </Card>
-          </Col>
+            </div>
+
+            {/* Cột phải: Giá và hành động */}
+            <div className="tour-list-card__action-col">
+              <div className="tour-list-card__progress-wrapper">
+                <div className="tour-list-card__progress-text">
+                  <span>
+                    Đã đặt <strong>{tour.bookedPercentage}%</strong>
+                  </span>
+                  <span className="highlight">
+                    Còn {tour.availableSeats} chỗ
+                  </span>
+                </div>
+                <Progress
+                  percent={tour.bookedPercentage}
+                  size="small"
+                  status="active"
+                  showInfo={false}
+                  strokeColor={
+                    tour.bookedPercentage > 74
+                      ? { "0%": "#fa8c16", "100%": "#ff4d4f" }
+                      : { "0%": "#108ee9", "100%": "#87d068" }
+                  }
+                />
+              </div>
+
+              <div className="tour-list-card__price-wrapper">
+                <span className="tour-list-card__price-label">
+                  Giá trọn gói từ:
+                </span>
+                <div className="tour-list-card__price">
+                  {Number(tour.price).toLocaleString("vi-VN")} <span>đ</span>
+                </div>
+              </div>
+
+              <button className="tour-list-card__btn">Xem chi tiết</button>
+            </div>
+          </div>
         );
       })}
-    </Row>
+    </div>
   );
 }

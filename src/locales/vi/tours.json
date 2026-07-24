@@ -7,7 +7,7 @@
     "destination": "Điểm đến",
     "anyLocation": "Địa điểm bất kỳ...",
     "date": "Ngày đi",
-    "dateFormat": "DD thg MM, YYYY",
+    "dateFormat": "DD/MM/YYYY",
     "button": "Tìm kiếm"
   },
   "filter": {
@@ -19,12 +19,20 @@
     "selectAttraction": "Chọn điểm tham quan",
     "category": "Dòng tour",
     "catStandard": "Tiêu chuẩn",
+    "catPremium": "Cao cấp",
+    "catSaving": "Tiết kiệm",
+    "catEconomy": "Phổ thông",
     "catBestPrice": "Giá tốt",
-    "catEconomy": "Tiết kiệm",
     "catEsg": "Tour ESG & LEI",
     "transport": "Phương tiện",
     "transFlight": "Máy bay",
-    "transBus": "Xe",
+    "transBus": "Xe Bus",
+    "transMotorbike": "Xe máy",
+    "destEngland": "Anh",
+    "destAustria": "Áo",
+    "destHanoi": "Hà Nội",
+    "destDalat": "Đà Lạt",
+    "destHcm": "TP. Hồ Chí Minh",
     "budget": "Ngân sách",
     "searchFilter": "Bộ lọc tìm kiếm"
   },
@@ -32,7 +40,9 @@
     "count": "Kết quả:",
     "programs": "chương trình tour",
     "sortBy": "Sắp xếp theo:",
-    "sortDateAsc": "Ngày khởi hành gần nhất"
+    "sortDateAsc": "Ngày khởi hành gần nhất",
+    "sortPriceAsc": "Giá: Thấp đến Cao",
+    "sortPriceDesc": "Giá: Cao đến Thấp"
   },
   "detail": {
     "notFound": "Không tìm thấy tour",

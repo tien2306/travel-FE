@@ -2,6 +2,8 @@
 @use "../../../styles/mixins" as *;
 
 .tour-results {
+  scroll-margin-top: 180px; // Tăng khoảng cách chừa ra cho thanh Menu cố định để không bị che Toolbar
+
   &__toolbar {
     display: flex;
     justify-content: space-between;

@@ -1,6 +1,11 @@
-import React, { useRef } from "react";
-import { Select, DatePicker, Button, Input } from "antd";
-import { SearchOutlined, EnvironmentOutlined, CalendarOutlined } from "@ant-design/icons";
+import React, { useRef, useState } from "react";
+import { DatePicker, Button, Input } from "antd";
+import { useFilterParams } from "../../../hooks/useFilterParams";
+import {
+  SearchOutlined,
+  EnvironmentOutlined,
+  CalendarOutlined,
+} from "@ant-design/icons";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import { useSearchAnimation } from "../../../page/Client/Tours/animations";
@@ -11,6 +16,23 @@ export default function HeaderSearch() {
   const { t } = useTranslation("tours");
   useSearchAnimation(containerRef);
 
+  const { params, updateParams } = useFilterParams();
+
+  const [departure, setDeparture] = useState(params.departurePlace || "");
+  const [keyword, setKeyword] = useState(params.keyword || "");
+  const [date, setDate] = useState(
+    params.startDate ? dayjs(params.startDate) : dayjs("2026-06-13"),
+  );
+
+  const handleSearch = () => {
+    updateParams({
+      departurePlace: departure,
+      keyword: keyword,
+      startDate: date ? date.format("YYYY-MM-DD") : "",
+      page: 1,
+    });
+  };
+
   return (
     <div className="tour-search" ref={containerRef}>
       {/* KHỐI 1: ĐIỂM KHỞI HÀNH */}
@@ -20,16 +42,14 @@ export default function HeaderSearch() {
         </div>
         <div className="tour-search__field">
           <span className="tour-search__label">{t("search.departure")}</span>
-          <Select
-            variant="none"
-            defaultValue="all"
+          <Input
+            variant="borderless"
+            placeholder={t("search.anyLocation")}
             allowClear
-            classNames={{ popup: { root: "tour-search__dropdown" } }}
-          >
-            <Select.Option value="all">{t("search.all")}</Select.Option>
-            <Select.Option value="hcm">{t("search.hcm")}</Select.Option>
-            <Select.Option value="hn">{t("search.hn")}</Select.Option>
-          </Select>
+            className="tour-search__input"
+            value={departure}
+            onChange={(e) => setDeparture(e.target.value)}
+          />
         </div>
       </div>
 
@@ -45,6 +65,8 @@ export default function HeaderSearch() {
             placeholder={t("search.anyLocation")}
             allowClear
             className="tour-search__input"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
           />
         </div>
       </div>
@@ -59,8 +81,9 @@ export default function HeaderSearch() {
           <DatePicker
             variant="none"
             format={t("search.dateFormat")}
-            defaultValue={dayjs("2026-06-13")}
-            allowClear={false}
+            value={date}
+            onChange={(val) => setDate(val)}
+            allowClear={true}
             className="tour-search__picker"
           />
         </div>
@@ -71,6 +94,7 @@ export default function HeaderSearch() {
           type="primary"
           icon={<SearchOutlined />}
           className="tour-search__submit-btn"
+          onClick={handleSearch}
         >
           {t("search.button")}
         </Button>

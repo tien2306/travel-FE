@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Select, Spin } from "antd";
 import { AppstoreOutlined, MenuOutlined } from "@ant-design/icons";
-import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { getTours } from "../../../services/tour";
+import { getToursFilter } from "../../../services/tour";
+import { useFilterParams } from "../../../hooks/useFilterParams";
 import TourGrid from "./TourGrid";
 import TourList from "./TourList";
 import TourPagination from "./TourPagination";
@@ -11,50 +11,23 @@ import { useTourListAnimation } from "../../../page/Client/Tours/animations";
 import "./TourListResults.scss";
 import "./TourCard.scss";
 
-export default function TourListResults() {
+export default function TourListResults({ onPriceRangeUpdate }) {
   const [viewMode, setViewMode] = useState("grid"); //Lưu chế độ
   const [tours, setTours] = useState([]); // Lưu data tour
   const [loading, setLoading] = useState(false); // Chế độ loading
   const [totalItems, setTotalItems] = useState(0); // Tổng số tour
   const [pageSize, setPageSize] = useState(10); // Tổng số trang
   const tourListRef = useRef(null); //Lưu ví trí load lại khi click vào pagination
-  const navigate = useNavigate();
   const { t } = useTranslation("tours");
 
   useTourListAnimation(tourListRef, tours, loading);
 
-  // Đọc  dữ liệu URL
-  const [searchParams] = useSearchParams();
-  // searchParams (Đọc dữ liệu): là một Object, một đối tượng đặc biệt (gọi là URLSearchParams instance).
-  // để đọc đc bắt buộc phải dùng các hàm đi kèm  vd: searchParams.get(key)
-  // setSearchParams (Ghi/Sửa dữ liệu): Hàm này dùng để đổi chữ trên URL, ép trình duyệt nhảy sang URL mới mà không làm tải lại trang (no-reload).
-
-  // Có 2 cách chính để truyền dữ liệu vào hàm này:
-  // Cách 1:
-  // URL cũ: ?sort=asc&color=red
-  // setSearchParams({ page: "2" });
-  // URL mới: ?page=2 (Mất sạch sort và color cũ!)
-
-  // .get(key) lấy 1 giá trị từ key
-  // .getAll(key) lấy toàn bộ giá trị từ key
-  // .has(key) KT tham số đó có tồn tại trên URL ?
-
-  // Cách 2:
-  // Xử lý khi bấm nút chuyển trang trên Antd Pagination
-  // Đổi từ [searchParams] thành [searchParams, setSearchParams] ở dòng khai báo đầu hàm nhé:
+  const { params, updateParams } = useFilterParams();
 
   const handlePageChange = (page) => {
-    // 1. Tạo bản sao tham số cũ
-    const newParams = new URLSearchParams(searchParams);
+    updateParams({ page });
 
-    // 2. Cập nhật trang mới
-    newParams.set("page", page.toString());
-
-    // 3. Ép URL luôn trỏ về trang "/tours" kèm theo tham số (để tránh bị /?page=2 khi đang ở Home)
-    navigate(`/tours?${newParams.toString()}`);
-
-    // 4. Cuộn mượt mà đến đầu danh sách Tour
-    // Đặt thời gian chờ 300ms để đợi quá trình navigate/render hoàn tất, giúp tính toán chuẩn tọa độ lưng chừng
+    // Cuộn mượt mà đến đầu danh sách Tour
     setTimeout(() => {
       if (tourListRef.current) {
         tourListRef.current.scrollIntoView({
@@ -65,46 +38,90 @@ export default function TourListResults() {
     }, 300);
   };
 
-  // Đọc số trang từ URL trình duyệt (ví dụ: localhost:3000/tours?page=2 -> lấy ra số 2)
-  const currentPage = parseInt(searchParams.get("page")) || 1;
+  const handleSortChange = (value) => {
+    if (value === "price-asc") {
+      updateParams({ sortBy: "price", sortOrder: "asc", page: 1 });
+    } else if (value === "price-desc") {
+      updateParams({ sortBy: "price", sortOrder: "desc", page: 1 });
+    } else {
+      updateParams({ sortBy: "", sortOrder: "", page: 1 });
+    }
+  };
 
-  // Giữ nguyên hàm giữa các lần render
-  const fetchApi = useCallback(async (page) => {
+  // Đọc số trang từ biến params
+  const currentPage = params.page || 1;
+
+  const fetchApi = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await getTours(page);
-      if (res && res.success && res.data?.items) {
-        setTours(res.data.items);
-        setTotalItems(res.data.pagination.total);
-        setPageSize(res.data.pagination.limit);
+      const res = await getToursFilter(params);
+
+      if (res && res.success) {
+        setTours(res.data);
+        setTotalItems(res.pagination?.total || 0);
+        setPageSize(res.pagination?.limit || 12);
+        if (res.priceRange && onPriceRangeUpdate) {
+          onPriceRangeUpdate(res.priceRange);
+        }
+      } else {
+        // Xử lý trường hợp không có data
+        setTours([]);
+        setTotalItems(0);
       }
     } catch (error) {
       console.error("Lỗi fetch tours:", error);
     } finally {
       setLoading(false);
     }
+  }, [params]);
+
+  // Tự động cuộn đến danh sách Tour khi vừa chuyển từ trang Home sang
+  useEffect(() => {
+    // Chỉ cuộn nếu có URL parameters (nghĩa là user vừa search/filter từ trang khác sang)
+    if (window.location.search && tourListRef.current) {
+      setTimeout(() => {
+        tourListRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 300);
+    }
   }, []);
 
-  // Lắng nghe URL trình duyệt: Cứ hễ URL thay đổi số trang là gọi lại API lấy dữ liệu mới
+  // Lắng nghe URL trình duyệt: Cứ hễ URL thay đổi là gọi lại API (ko chỉ page mà cả sort, category...)
   useEffect(() => {
-    fetchApi(currentPage);
-  }, [currentPage, fetchApi]);
+    fetchApi();
+  }, [params, fetchApi]);
 
   return (
     <div ref={tourListRef} className="tour-results">
       <div className="tour-results__toolbar">
         <div className="tour-results__count">
-          {t("results.count")} <span>{totalItems} {t("results.programs")}</span>
+          {t("results.count")}{" "}
+          <span>
+            {totalItems} {t("results.programs")}
+          </span>
         </div>
         <div className="tour-results__actions">
-          <span className="tour-results__sort-label">{t("results.sortBy")}</span>
+          <span className="tour-results__sort-label">
+            {t("results.sortBy")}
+          </span>
           <Select
-            defaultValue="date-asc"
+            value={
+              params.sortBy === "price"
+                ? `price-${params.sortOrder}`
+                : "default"
+            }
             className="tour-results__sort-select"
             variant="filled"
+            onChange={handleSortChange}
           >
-            <Select.Option value="date-asc">
-              {t("results.sortDateAsc")}
+            <Select.Option value="default">{t("results.sortBy")}</Select.Option>
+            <Select.Option value="price-asc">
+              {t("results.sortPriceAsc")}
+            </Select.Option>
+            <Select.Option value="price-desc">
+              {t("results.sortPriceDesc")}
             </Select.Option>
           </Select>
           <div className="tour-results__view-modes">

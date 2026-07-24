@@ -78,7 +78,7 @@
     box-shadow: none !important;
     font-size: 15px;
     font-weight: 700;
-    color: $color-blue;
+    color: $text-dark;
     line-height: 24px;
 
     &::placeholder {
@@ -106,7 +106,7 @@
       .ant-select-selection-item {
         font-size: 15px;
         font-weight: 700;
-        color: $color-blue;
+        color: $text-dark;
         line-height: 24px;
       }
       .ant-select-selection-placeholder {
@@ -140,7 +140,7 @@
     input {
       font-size: 15px;
       font-weight: 700;
-      color: $color-blue;
+      color: $text-dark;
       cursor: pointer;
       line-height: 24px;
     }
