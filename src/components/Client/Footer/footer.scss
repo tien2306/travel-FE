@@ -115,7 +115,9 @@
     background: $primary-color;
     border-color: $primary-color;
     color: $text-white;
-    transition: background $transition-fast, border-color $transition-fast;
+    transition:
+      background $transition-fast,
+      border-color $transition-fast;
 
     &:hover {
       background: $primary-hover;
@@ -131,8 +133,12 @@
   background: $footer-bg;
   padding: 72px 0 0;
 
-  @include tablet { padding: 56px 0 0; }
-  @include mobile { padding: 44px 0 0; }
+  @include tablet {
+    padding: 56px 0 0;
+  }
+  @include mobile {
+    padding: 44px 0 0;
+  }
 }
 
 .footer-container {
@@ -140,9 +146,15 @@
   margin: 0 auto;
   padding: 0 40px;
 
-  @include desktop-sm { padding: 0 28px; }
-  @include tablet     { padding: 0 20px; }
-  @include mobile     { padding: 0 16px; }
+  @include desktop-sm {
+    padding: 0 28px;
+  }
+  @include tablet {
+    padding: 0 20px;
+  }
+  @include mobile {
+    padding: 0 16px;
+  }
 }
 
 // ---- Grid ----
@@ -196,7 +208,9 @@
   margin-bottom: 20px;
   color: $primary-color;
 
-  svg { flex-shrink: 0; }
+  svg {
+    flex-shrink: 0;
+  }
 
   span {
     font-size: 22px;
@@ -221,7 +235,9 @@
   font-size: 14px;
   line-height: 1.55;
   text-decoration: none;
-  transition: color $transition-fast, letter-spacing $transition-fast;
+  transition:
+    color $transition-fast,
+    letter-spacing $transition-fast;
 
   svg {
     flex-shrink: 0;
@@ -259,9 +275,14 @@
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  transition: background $transition-base, color $transition-base, transform $transition-fast;
+  transition:
+    background $transition-base,
+    color $transition-base,
+    transform $transition-fast;
 
-  svg { display: block; }
+  svg {
+    display: block;
+  }
 
   &:hover {
     background: $footer-social-hover-bg;
@@ -285,7 +306,10 @@
   font-size: 14px;
   line-height: 2.1;
   text-decoration: none;
-  transition: color $transition-base, letter-spacing $transition-base, padding-left $transition-base;
+  transition:
+    color $transition-base,
+    letter-spacing $transition-base,
+    padding-left $transition-base;
 
   svg {
     flex-shrink: 0;
@@ -337,7 +361,9 @@
   font-weight: 700;
   letter-spacing: 0.5px;
   text-decoration: none;
-  transition: border-color $transition-fast, color $transition-fast;
+  transition:
+    border-color $transition-fast,
+    color $transition-fast;
 
   &:hover {
     border-color: $primary-color;
@@ -348,8 +374,8 @@
 // ---- Divider ----
 .footer-divider {
   border: none;
-  border-top: 1px solid $footer-border;
-  margin: 48px 0 0;
+  border-top: 1px solid var(--footer-border);
+  margin: 20px 0 0;
 }
 
 // ---- Copyright ----
@@ -368,7 +394,9 @@
   gap: 12px;
   flex-wrap: wrap;
 
-  @include desktop-sm { padding: 0 28px; }
+  @include desktop-sm {
+    padding: 0 28px;
+  }
 
   @include tablet {
     padding: 0 20px;
@@ -377,7 +405,9 @@
     gap: 6px;
   }
 
-  @include mobile { padding: 0 16px; }
+  @include mobile {
+    padding: 0 16px;
+  }
 }
 
 .footer-copyright-text {
@@ -390,6 +420,8 @@
     text-decoration: none;
     transition: color $transition-fast;
 
-    &:hover { color: $primary-color; }
+    &:hover {
+      color: $primary-color;
+    }
   }
 }

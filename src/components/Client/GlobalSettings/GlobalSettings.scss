@@ -1,0 +1,101 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.global-settings__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 12px;
+  height: 36px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color $transition-fast, color $transition-fast;
+  color: $text-white;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .global-settings__icon {
+    font-size: 16px;
+  }
+
+  .global-settings__text {
+    font-size: 13px;
+    font-weight: 600;
+  }
+}
+
+/* Khi cuộn trang, Header sticky -> chữ thành đen */
+.header--sticky .global-settings__trigger {
+  color: $text-body;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
+
+.global-settings-popover {
+  width: 220px;
+  padding: 8px 4px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid $border-color;
+    padding-bottom: 8px;
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 700;
+    color: $text-dark;
+  }
+
+  &__close {
+    cursor: pointer;
+    font-size: 14px;
+    color: $text-secondary;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $color-danger;
+    }
+  }
+
+  &__group {
+    margin-bottom: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: $text-secondary;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  &__select {
+    width: 100%;
+
+    .ant-select-selector {
+      border-radius: 8px !important;
+    }
+  }
+}
+
+.global-settings-overlay {
+  .ant-popover-inner {
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+}

@@ -17,6 +17,7 @@ import {
 import { Link } from "react-router-dom";
 import NavigationMenu from "../NavigationMenu";
 import DarkModeToggle from "../../Common/DarkModeToggle";
+import GlobalSettings from "../GlobalSettings";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
@@ -49,7 +50,7 @@ const Header = () => {
             justify="space-between"
             className="header__row-topbar"
           >
-            <Col xs={0} lg={16} className="header__socials-col">
+            <Col xs={0} lg={10} className="header__socials-col">
               <div className="header__socials">
                 <Link to="/">
                   <TwitterOutlined className="header__social-icon" />
@@ -68,7 +69,7 @@ const Header = () => {
                 </Link>
               </div>
             </Col>
-            <Col xs={0} lg={8} className="header__auth-col">
+            <Col xs={0} lg={14} className="header__auth-col">
               <div className="header__auth">
                 {!isLogin && (
                   <>
@@ -82,8 +83,10 @@ const Header = () => {
                     </Link>
                   </>
                 )}
-
-                <Notify />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <GlobalSettings />
+                  <Notify />
+                </div>
               </div>
             </Col>
           </Row>
@@ -109,6 +112,9 @@ const Header = () => {
 
             {/* Khối Hành động (Nút Book Now + Nút 3 gạch Mobile) */}
             <div className="header__right-actions">
+              <div className="header__global-settings-mobile">
+                <GlobalSettings />
+              </div>
               <DarkModeToggle />
               <Link
                 type="primary"
@@ -138,7 +144,7 @@ const Header = () => {
         placement="right"
         onClose={() => setIsMenuOpen(false)}
         open={isMenuOpen}
-        size={280}
+        width={280}
       >
         <nav className="header__nav-mobile">
           <NavigationMenu setIsMenuOpen={setIsMenuOpen} isMobile={true} />

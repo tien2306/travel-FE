@@ -1,7 +1,4 @@
-import { Select } from "antd";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { changeLanguage } from "../../../store/slices/languageSlice";
 import { useTranslation } from "react-i18next";
 import {
   IconCompass,
@@ -17,7 +14,6 @@ import {
   IconLinkedin,
 } from "../../Common/Icons";
 
-const { Option } = Select;
 
 // Dữ liệu tĩnh không cần dịch
 const PAYMENTS = ["VISA", "Mastercard", "PayPal", "AMEX", "Discover", "JCB"];
@@ -31,8 +27,6 @@ const SOCIALS = [
 
 // ─── Footer Main ─────────────────────────────────────────────
 function FooterMain() {
-  const dispatch = useDispatch();
-  const { currentLanguage } = useSelector((state) => state.languageReducer);
   const { t } = useTranslation("footer");
 
   const COMPANY_LINKS = [
@@ -52,10 +46,6 @@ function FooterMain() {
     { label: t("links.sitemap"), to: "/" },
     { label: t("links.cookie"), to: "/" },
   ];
-
-  const handleLanguageChange = (value) => {
-    dispatch(changeLanguage(value));
-  };
 
   return (
     <footer className="footer">
@@ -137,33 +127,9 @@ function FooterMain() {
             </nav>
           </div>
 
-          {/* ── Cột 4: Cài đặt + Thanh toán ── */}
+          {/* ── Cột 4: Thanh toán ── */}
           <div>
-            <h4 className="footer-col-title">{t("settingsTitle")}</h4>
-
-            <div className="footer-selects">
-              <Select
-                id="footer-language-select"
-                value={currentLanguage}
-                onChange={handleLanguageChange}
-                style={{ width: "100%" }}
-                popupMatchSelectWidth={false}
-              >
-                <Option value="en">English</Option>
-                <Option value="vi">Tiếng Việt</Option>
-              </Select>
-              <Select
-                id="footer-currency-select"
-                defaultValue="vnd"
-                style={{ width: "100%" }}
-                popupMatchSelectWidth={false}
-              >
-                <Option value="vnd">₫ VND</Option>
-                <Option value="usd">$ USD</Option>
-              </Select>
-            </div>
-
-            <p className="footer-payments-title">{t("paymentsTitle")}</p>
+            <h4 className="footer-col-title">{t("paymentsTitle")}</h4>
             <div className="footer-payments">
               {PAYMENTS.map((p) => (
                 <a href="/" key={p} className="payment-badge" aria-label={p}>

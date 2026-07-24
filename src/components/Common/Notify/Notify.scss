@@ -9,6 +9,7 @@
     justify-content: center;
     gap: 5px;
     display: flex;
+    white-space: nowrap; // NGĂN CHẶN XUỐNG DÒNG
 
     .icons-trigger {
       font-size: 12px;

@@ -29,10 +29,10 @@
   }
 }
 
-/// Header navigation breakpoint: <= 1150px
-/// Dùng để ẩn nav desktop, hiện nút toggler mobile
+/// Header navigation breakpoint: <= 1250px
+/// Dùng để ẩn nav desktop, hiện nút toggler mobile (Tránh vỡ layout khi chữ dịch sang Tiếng Việt dài ra)
 @mixin nav-break {
-  @media (max-width: 1150px) {
+  @media (max-width: 1350px) {
     @content;
   }
 }

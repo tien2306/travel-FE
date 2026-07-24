@@ -66,7 +66,7 @@ function ToursAll() {
         placement="left"
         onClose={() => setDrawerOpen(false)}
         open={drawerOpen}
-        size={320}
+        width={300}
         styles={{ body: { padding: 0 } }}
       >
         <div style={{ padding: "20px 24px" }}>

@@ -7,6 +7,10 @@
 @use "./mixins" as *;
 
 // --- Box Model Reset ---
+html {
+  scrollbar-gutter: stable;
+}
+
 *,
 *::before,
 *::after {
@@ -17,6 +21,8 @@
 body {
   margin: 0;
   padding: 0;
+  width: 100% !important; /* Chống AntD đổi chiều rộng */
+  padding-right: 0 !important; /* Ngăn Ant Design tự động thêm padding khi mở Drawer/Modal gây giật layout toàn trang */
   font-family: $font-family-base;
   font-size: $font-size-base;
   color: $text-dark;

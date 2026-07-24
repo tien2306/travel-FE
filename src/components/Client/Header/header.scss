@@ -9,8 +9,12 @@
   top: 0;
   left: 0;
   z-index: 1001;
-  transition: all 0.4s ease;
+  /* Chỉ transition các thuộc tính cần thiết (màu nền, đổ bóng) để KHÔNG animate width/padding khi mất scrollbar */
+  transition: background-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
   background: transparent;
+
+  /* Đã xử lý triệt để chống giật bằng scrollbar-gutter và !important ở body trong global.scss */
+  box-sizing: border-box;
 
   &__container {
     width: 100%;
@@ -138,6 +142,7 @@
     @include flex-center;
     gap: 8px;
     text-decoration: none;
+    white-space: nowrap;
   }
 
   // MAINBAR (logo + menu + nút Book Now + nút mobile)
@@ -180,10 +185,22 @@
     }
     &-icon {
       font-size: 32px;
+      @media (max-width: 992px) {
+        font-size: 28px;
+      }
+      @media (max-width: 576px) {
+        font-size: 26px;
+      }
     }
     &-text {
       font-size: 30px;
       font-weight: 800;
+      @media (max-width: 992px) {
+        font-size: 26px;
+      }
+      @media (max-width: 576px) {
+        font-size: 22px;
+      }
     }
   }
 
@@ -196,15 +213,15 @@
 
   &__nav-link {
     color: $text-white;
-    font-size: 16px;
+    font-size: 15px; // Giảm một chút để tiếng Việt dài cũng không bị tràn
     font-weight: 600;
     text-decoration: none;
-    padding: 12px 15px;
+    padding: 10px 12px; // Ép khoảng cách gần lại một chút
     border-radius: 4px;
     transition: all 0.3s ease;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px; // Giảm gap mũi tên dropdown
     white-space: nowrap;
     &:hover {
       color: $text-white;
@@ -224,6 +241,20 @@
     display: flex;
     align-items: center;
     // gap: 15px;
+
+    // @media (max-width: 992px) {
+    //   gap: 10px;
+    // }
+
+    // @media (max-width: 576px) {
+    //   gap: 8px; // Giảm gap trên điện thoại để không bị đẩy nút ra ngoài
+    // }
+
+    .header__global-settings-mobile {
+      @media (min-width: 1351px) {
+        display: none !important;
+      }
+    }
   }
 
   &__btn-book {
@@ -245,7 +276,6 @@
       border-color: $btn-book-hover-bg;
     }
   }
-
   &__btn-toggler {
     padding: 0;
     width: 40px;
@@ -308,7 +338,7 @@
     }
 
     &__btn-toggler {
-      display: flex; // Chỉ hiển thị trên màn hình nhỏ (<= 1150px)
+      display: flex !important; // Bắt buộc hiển thị trên màn hình nhỏ
 
       svg {
         font-size: 22px;
