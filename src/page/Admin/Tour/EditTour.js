@@ -39,6 +39,8 @@ function EditTour(props) {
         status: record.status,
         shortDesc: record.shortDesc,
         detailDesc: record.detailDesc,
+        category: record.category,
+        transport: record.transport,
 
         // Pre-fill thumbnail cũ
         thumbnail: record.thumbnail
@@ -181,6 +183,9 @@ function EditTour(props) {
         formData.append("status", values.status || "ACTIVE");
         formData.append("shortDesc", values.shortDesc || "");
         formData.append("detailDesc", values.detailDesc || "");
+        
+        formData.append("category", values.category || "");
+        formData.append("transport", values.transport || "");
 
         // Thumbnail (single file)
         if (values.thumbnail && values.thumbnail.length > 0) {
@@ -231,6 +236,8 @@ function EditTour(props) {
           status: values.status || "ACTIVE",
           shortDesc: values.shortDesc || "",
           detailDesc: values.detailDesc || "",
+          category: values.category || "",
+          transport: values.transport || "",
           thumbnail:
             values.thumbnail && values.thumbnail.length > 0
               ? values.thumbnail[0].name
@@ -265,17 +272,18 @@ function EditTour(props) {
     <>
       {contextHolder}
 
-      {/* Image ẩn để kích hoạt preview lightbox - Đã bọc kiểm tra rỗng và đổi phương thức */}
-      {previewSrc && (
-        <Image
-          style={{ display: "none" }}
-          src={previewSrc}
-          preview={{
-            open: previewOpen,
-            onOpenChange: (open) => setPreviewOpen(open),
-          }}
-        />
-      )}
+      {/* Image ẩn để kích hoạt preview lightbox */}
+      <div style={{ display: "none" }}>
+        {previewSrc && (
+          <Image
+            src={previewSrc}
+            preview={{
+              open: previewOpen,
+              onOpenChange: (open) => setPreviewOpen(open),
+            }}
+          />
+        )}
+      </div>
 
       <Button
         type="primary"

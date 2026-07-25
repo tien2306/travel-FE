@@ -1,29 +1,14 @@
 import { useEffect, useState, useCallback } from "react";
-import { Table, Switch, Image, message } from "antd";
+import { Table, Select, message, Input } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getToursAdmin, updateTourStatus } from "../../../services/tour";
-import bg from "../../../images/carousel-1.jpg";
-
 import EditTour from "./EditTour";
 import DeleteTour from "./DeleteTour";
 import CreateTourModal from "../../../components/Admin/CreateTourModal/CreateTourModal";
 
 import "./ListTour.scss";
-import { IMAGE_URLS } from "../../../constants/api";
 import { formatDate, formatPrice } from "../../../helpers/fomatDate";
-
-// Hook lấy chiều rộng cửa sổ và cập nhật khi resize
-function useWindowWidth() {
-  const [width, setWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  return width;
-}
 
 function ListTour() {
   const [data, setData] = useState([]);
@@ -34,11 +19,6 @@ function ListTour() {
 
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-
-  // Lấy chiều rộng màn hình để điều chỉnh cột
-  const windowWidth = useWindowWidth();
-  const isSmallScreen = windowWidth <= 1150;
-  const isTablet = windowWidth <= 768;
 
   // 1. Đọc số trang hiện tại từ URL
   const currentPage = parseInt(searchParams.get("page")) || 1;
@@ -82,9 +62,8 @@ function ListTour() {
     navigate(`?${newParams.toString()}`);
   };
 
-  // 6. Xử lý bật/tắt trạng thái tour bằng Switch
-  const handleStatusChange = async (checked, record) => {
-    const newStatus = checked ? "ACTIVE" : "INACTIVE";
+  // 6. Xử lý cập nhật trạng thái tour
+  const handleStatusChange = async (newStatus, record) => {
     try {
       const res = await updateTourStatus(record.key, { status: newStatus });
       if (res && res.success) {
@@ -114,29 +93,12 @@ function ListTour() {
   // thì nó sẽ hiển thị | Tiêu đề phụ:  giá trị của subtitle
 
   // 7. Toàn bộ cột bảng
-  const allColumns = [
-    {
-      title: "Hình ảnh",
-      dataIndex: "thumbnail",
-      key: "thumbnail",
-      width: 120,
-      render: (imageText) => {
-        const src = !imageText ? bg : `${IMAGE_URLS.TOURS}${imageText?.trim()}`;
-        return (
-          <Image
-            src={src}
-            alt="Tour"
-            className="tour-thumbnail"
-            placeholder={true}
-          />
-        );
-      },
-    },
+  const columns = [
     {
       title: "Tên Tour",
       dataIndex: "name",
       key: "name",
-      width: isSmallScreen ? 180 : 200,
+      width: 200,
       onCell: () => ({ "data-label": "Tên Tour:" }),
       ellipsis: true,
     },
@@ -144,7 +106,7 @@ function ListTour() {
       title: "Giá",
       dataIndex: "price",
       key: "price",
-      width: isSmallScreen ? 130 : 150,
+      width: 150,
       onCell: () => ({ "data-label": "Giá:" }),
       render: (price) => (
         <span className="tour-price">{formatPrice(price)}</span>
@@ -158,7 +120,6 @@ function ListTour() {
       width: 90,
       align: "center",
       onCell: () => ({ "data-label": "Số lượng:" }),
-      hideBelow: 1150,
     },
     {
       title: "Đã bán",
@@ -168,7 +129,6 @@ function ListTour() {
       align: "center",
       onCell: () => ({ "data-label": "Đã bán:" }),
       render: (sold) => sold || 0,
-      hideBelow: 1150,
     },
     {
       title: "Ngày khởi hành",
@@ -177,23 +137,26 @@ function ListTour() {
       width: 130,
       onCell: () => ({ "data-label": "Khởi hành:" }),
       render: (date) => formatDate(date),
-      hideBelow: 1150,
     },
     // --- Luôn hiển thị ---
     {
       title: "Trạng thái",
       dataIndex: "status",
       key: "status",
-      width: 130,
+      width: 140,
       align: "center",
       onCell: () => ({ "data-label": "Trạng thái:" }),
       render: (status, record) => (
-        <Switch
-          checked={status === "ACTIVE"}
-          checkedChildren="Active"
-          unCheckedChildren="InActive"
-          onChange={(checked) => handleStatusChange(checked, record)}
-          className="tour-status-switch"
+        <Select
+          value={status || "ACTIVE"}
+          onChange={(newStatus) => handleStatusChange(newStatus, record)}
+          options={[
+            { value: "ACTIVE", label: "ACTIVE" },
+            { value: "INACTIVE", label: "INACTIVE" },
+            { value: "CLOSED", label: "CLOSED" },
+          ]}
+          style={{ width: 120 }}
+          className="tour-status-select"
         />
       ),
     },
@@ -211,14 +174,6 @@ function ListTour() {
     },
   ];
 
-  // 8. Lọc cột theo kích thước màn hình
-  const columns = allColumns.filter(
-    (col) => !col.hideBelow || windowWidth > col.hideBelow,
-  );
-
-  // 9. Tính scroll x dựa theo số cột còn lại
-  const tableScrollX = isTablet ? undefined : isSmallScreen ? 700 : 1000;
-
   return (
     <>
       {/* Header: Tiêu đề + Nút tạo tour */}
@@ -229,7 +184,18 @@ function ListTour() {
             Thêm mới, chỉnh sửa hoặc xóa các tour du lịch.
           </p>
         </div>
-        <CreateTourModal onReload={handleReload} />
+        <div
+          className="list-tour-header__actions"
+          style={{ display: "flex", flexWrap: "wrap", gap: "12px", alignItems: "center" }}
+        >
+          <Input
+            size="large"
+            placeholder="Tìm kiếm tour..."
+            prefix={<SearchOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
+            style={{ width: "250px", borderRadius: "8px" }}
+          />
+          <CreateTourModal onReload={handleReload} />
+        </div>
       </div>
 
       {/* Bảng danh sách Tour */}
@@ -238,7 +204,7 @@ function ListTour() {
         dataSource={data}
         columns={columns}
         loading={loading}
-        scroll={{ x: tableScrollX }}
+        scroll={{ x: 1000 }}
         pagination={{
           current: currentPage,
           pageSize: pageSize,

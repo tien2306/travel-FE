@@ -48,6 +48,32 @@ function FormSideConfigs(props) {
           options={[
             { value: "ACTIVE", label: "Đang hoạt động" },
             { value: "INACTIVE", label: "Ngừng hoạt động" },
+            { value: "CLOSED", label: "Đã đóng" },
+          ]}
+        />
+      </Form.Item>
+
+      <Form.Item label="Dòng tour" name="category" className="config-item">
+        <Select
+          size="large"
+          placeholder="Chọn dòng tour"
+          options={[
+            { value: "STANDARD", label: "Tiêu chuẩn" },
+            { value: "PREMIUM", label: "Cao cấp" },
+            { value: "SAVING", label: "Tiết kiệm" },
+            { value: "ECONOMY", label: "Giá rẻ" },
+          ]}
+        />
+      </Form.Item>
+
+      <Form.Item label="Phương tiện" name="transport" className="config-item">
+        <Select
+          size="large"
+          placeholder="Chọn phương tiện"
+          options={[
+            { value: "PLANE", label: "Máy bay" },
+            { value: "BUS", label: "Xe khách" },
+            { value: "MOTORBIKE", label: "Xe máy" },
           ]}
         />
       </Form.Item>

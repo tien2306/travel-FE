@@ -1,8 +1,24 @@
 import { Form, Input, InputNumber, Row, Col } from "antd";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 const { TextArea } = Input;
 
 function FormMainInputs() {
   const rule = [{ required: true, message: "Bắt buộc điền thông tin này!" }];
+
+  const quillModules = {
+    toolbar: [
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      [{ 'size': ['small', false, 'large', 'huge'] }], // Thêm tính năng chọn cỡ chữ
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ 'color': [] }, { 'background': [] }],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'indent': '-1'}, { 'indent': '+1' }],
+      [{ 'align': [] }],
+      ['link', 'image'],
+      ['clean']
+    ],
+  };
 
   return (
     <div className="form-main-inputs">
@@ -74,10 +90,14 @@ function FormMainInputs() {
         />
       </Form.Item>
 
-      <Form.Item label="Mô tả chi tiết" name="detailDesc">
-        <TextArea
-          rows={5}
-          placeholder="Nhập lịch trình chi tiết, những điểm nổi bật của tour..."
+      <Form.Item 
+        label="Mô tả chi tiết" 
+        name="detailDesc"
+      >
+        <ReactQuill 
+          theme="snow" 
+          modules={quillModules}
+          placeholder="Nhập lịch trình chi tiết, những điểm nổi bật của tour..." 
         />
       </Form.Item>
     </div>

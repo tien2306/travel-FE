@@ -84,6 +84,8 @@ function CreateTourModal(props) {
       formData.append("shortDesc", values.shortDesc || "");
       formData.append("detailDesc", values.detailDesc || "");
       formData.append("status", values.status || "ACTIVE");
+      formData.append("category", values.category || "");
+      formData.append("transport", values.transport || "");
 
       // Date fields
       if (values.startDate) {
@@ -131,17 +133,18 @@ function CreateTourModal(props) {
     <>
       {contextHolder}
 
-      {/* Image ẩn để kích hoạt preview lightbox - Đã bọc kiểm tra rỗng */}
-      {previewSrc && (
-        <Image
-          style={{ display: "none" }}
-          src={previewSrc}
-          preview={{
-            open: previewOpen,
-            onOpenChange: (open) => setPreviewOpen(open),
-          }}
-        />
-      )}
+      {/* Image ẩn để kích hoạt preview lightbox */}
+      <div style={{ display: "none" }}>
+        {previewSrc && (
+          <Image
+            src={previewSrc}
+            preview={{
+              open: previewOpen,
+              onOpenChange: (open) => setPreviewOpen(open),
+            }}
+          />
+        )}
+      </div>
 
       <Button type="primary" icon={<PlusOutlined />} onClick={handleShowModal}>
         Thêm Tour mới
