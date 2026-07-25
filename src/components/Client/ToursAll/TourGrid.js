@@ -2,15 +2,23 @@ import React from "react";
 import { Row, Col, Card, Progress } from "antd";
 import { useNavigate } from "react-router-dom";
 import { StarFilled } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 import BG from "../../../images/carousel-1.jpg";
 import { IMAGE_URLS } from "../../../constants/api";
 
 export default function TourGrid({ data }) {
   const navigate = useNavigate();
+  const { t } = useTranslation("tours");
 
   // Tạo chuỗi ảnh SVG mặc định an toàn để thay thế khi ảnh API bị trống hoặc lỗi tải
   const fallbackImage = BG;
   const urlImage = IMAGE_URLS.TOURS;
+
+  const getCategoryKey = (category) => {
+    const cat = category;
+    // chữ cái đầu viết hoa, toàn bộ chữ sau viết thường
+    return cat.charAt(0).toUpperCase() + cat.slice(1).toLowerCase();
+  };
 
   return (
     <Row
@@ -33,16 +41,18 @@ export default function TourGrid({ data }) {
                   className={`tour-card__status-badge ${tour.availableSeats <= 0 ? "status-full" : tour.isAvailable ? "status-available" : "status-closed"}`}
                 >
                   {tour.availableSeats <= 0
-                    ? "Hết Chỗ"
+                    ? t("status.full")
                     : tour.isAvailable
-                      ? "Còn Chỗ"
-                      : "Ngưng Nhận"}
+                      ? t("status.available")
+                      : t("status.closed")}
                 </span>
 
                 {/* --- [CHỈ PC] Badge Danh mục (Góc phải ảnh) --- */}
-                <div className="tour-card__badge-category desktop-only">
+                <div
+                  className={`tour-card__badge-category desktop-only cat-${(tour.category || "Standard").toLowerCase()}`}
+                >
                   <StarFilled />
-                  <span>{tour.category || "Standard"}</span>
+                  <span>{t(`filter.cat${getCategoryKey(tour.category)}`)}</span>
                 </div>
 
                 <img
@@ -67,8 +77,13 @@ export default function TourGrid({ data }) {
                         ? "TP. HCM"
                         : tour.departurePlace}
                     </span>
-                    <span className="route-divider">|</span>
-                    <span className="route-destination" title={tour.destination}>{tour.destination}</span>
+                    <span className="route-divider">➔</span>
+                    <span
+                      className="route-destination"
+                      title={tour.destination}
+                    >
+                      {tour.destination}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -76,7 +91,9 @@ export default function TourGrid({ data }) {
               <div className="tour-card__body">
                 <div className="tour-card__floating-content">
                   {/* Title */}
-                  <h3 className="tour-card__title" title={tour.name}>{tour.name}</h3>
+                  <h3 className="tour-card__title" title={tour.name}>
+                    {tour.name}
+                  </h3>
 
                   {/* --- [CHỈ PC] Thanh tiến trình đặt chỗ --- */}
                   <div className="tour-card__progress-block">
@@ -92,7 +109,7 @@ export default function TourGrid({ data }) {
                       }
                     />
                     <span className="tour-card__progress-text">
-                      Đã đặt {tour.bookedPercentage}%
+                      {t("card.booked", { percent: tour.bookedPercentage })}
                     </span>
                   </div>
 
@@ -107,7 +124,7 @@ export default function TourGrid({ data }) {
                     <div className="tour-card__date-info">
                       <span className="tour-card__icon">📅</span>
                       <span className="tour-card__date-label">
-                        Lịch khởi hành:
+                        {t("card.departureDate")}
                       </span>
                       <span className="tour-card__date-badge-accent">
                         {new Date(tour.startDate).toLocaleDateString("vi-VN")}
@@ -120,9 +137,12 @@ export default function TourGrid({ data }) {
                     <div className="tour-card__route-info">
                       <span className="tour-card__icon">📍</span>
                       <span className="tour-card__route-label">
-                        Lịch trình:
+                        {t("card.itinerary")}
                       </span>
-                      <span className="tour-card__route-value" title={`${tour.departurePlace} ➔ ${tour.destination}`}>
+                      <span
+                        className="tour-card__route-value"
+                        title={`${tour.departurePlace} ➔ ${tour.destination}`}
+                      >
                         {tour.departurePlace} ➔ {tour.destination}
                       </span>
                     </div>
@@ -130,13 +150,17 @@ export default function TourGrid({ data }) {
 
                   <div className="tour-card__footer">
                     <div className="tour-card__price-section">
-                      <span className="tour-card__price-label">Giá từ:</span>
+                      <span className="tour-card__price-label">
+                        {t("card.priceFrom")}
+                      </span>
                       <span className="tour-card__price-value">
                         {Number(tour.price).toLocaleString("vi-VN")}
                         <span className="tour-card__price-unit">đ</span>
                       </span>
                     </div>
-                    <span className="tour-card__more-badge">Xem chi tiết</span>
+                    <span className="tour-card__more-badge">
+                      {t("card.viewDetail")}
+                    </span>
                   </div>
                 </div>
               </div>

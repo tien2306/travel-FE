@@ -17,7 +17,7 @@ import {
 import { Link } from "react-router-dom";
 import NavigationMenu from "../NavigationMenu";
 import DarkModeToggle from "../../Common/DarkModeToggle";
-import GlobalSettings from "../GlobalSettings";
+import GlobalSettings from "../../Common/GlobalSettings";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 

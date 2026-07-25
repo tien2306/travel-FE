@@ -48,20 +48,20 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 
       &.status-available {
-        background-color: #f6ffed;
-        color: #52c41a;
+        background-color: $status-available-bg;
+        color: $status-available-text;
       }
       &.status-inactive {
-        background-color: #f5f5f5;
-        color: #595959;
+        background-color: $status-closed-bg;
+        color: $status-closed-text;
       }
       &.status-full {
-        background-color: #fff1f0;
-        color: #f5222d;
+        background-color: $status-full-bg;
+        color: $status-full-text;
       }
       &.status-closed {
-        background-color: #fff7e6;
-        color: #fa8c16;
+        background-color: $status-closed-bg;
+        color: $status-closed-text;
       }
     }
 
@@ -144,8 +144,6 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     z-index: 10;
     text-transform: uppercase;
@@ -153,6 +151,28 @@
     .anticon {
       font-size: 15px;
       color: #ffd666;
+    }
+
+    // Các màu sắc riêng cho từng loại Category
+    &.cat-premium {
+      background: $cat-premium-bg;
+      color: $cat-premium-text;
+      .anticon { color: $cat-premium-text; }
+    }
+    &.cat-economy {
+      background: $cat-economy-bg;
+      color: $cat-economy-text;
+      .anticon { color: $cat-economy-text; }
+    }
+    &.cat-saving {
+      background: $cat-saving-bg;
+      color: $cat-saving-text;
+      .anticon { color: $cat-saving-text; }
+    }
+    &.cat-standard {
+      background: $cat-standard-bg;
+      color: $cat-standard-text;
+      .anticon { color: $cat-standard-text; }
     }
   }
 

@@ -1,7 +1,6 @@
 import { Layout } from "antd";
 import "./layoutAdmin.scss";
 import {
-  SearchOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   EnvironmentOutlined,
@@ -12,6 +11,7 @@ import { Link, Outlet } from "react-router-dom";
 import Notify from "../../components/Common/Notify";
 import MenuSider from "../../components/Admin/MenuSider";
 import DarkModeToggle from "../../components/Common/DarkModeToggle";
+import GlobalSettings from "../../components/Common/GlobalSettings";
 
 const { Sider, Content } = Layout;
 
@@ -47,11 +47,12 @@ function LayoutAdmin() {
             >
               {collapsed ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
             </div>
-            <div className="header__search">
+            {/* <div className="header__search">
               <SearchOutlined />
-            </div>
+            </div> */}
           </div>
           <div className="header__nav-right">
+            <GlobalSettings />
             <DarkModeToggle />
             <Notify />
           </div>

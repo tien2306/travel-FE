@@ -101,14 +101,10 @@ function ToursDetail() {
           <h2 className="section-title">{t("detail.descTitle")}</h2>
           <div className="content-box">
             {tour.detailDesc ? (
-              tour.detailDesc
-                .split("\n")
-                .filter((line) => line.trim() !== "")
-                .map((line, index) => (
-                  <div key={index} className="timeline-item">
-                    <p className="raw-text">{line}</p>
-                  </div>
-                ))
+              <div 
+                className="tour-detail-html-content"
+                dangerouslySetInnerHTML={{ __html: tour.detailDesc }} 
+              />
             ) : (
               <p className="raw-text">{t("detail.descUpdating")}</p>
             )}

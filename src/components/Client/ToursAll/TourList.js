@@ -7,14 +7,22 @@ import {
   CarOutlined,
   StarOutlined,
 } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 import BG from "../../../images/carousel-2.jpg";
 import { IMAGE_URLS } from "../../../constants/api";
 import "./TourList.scss";
 
 export default function TourList({ data }) {
   const navigate = useNavigate();
+  const { t } = useTranslation("tours");
   const fallbackImage = BG;
   const urlImage = IMAGE_URLS.TOURS;
+
+  const getCategoryKey = (category) => {
+    const cat = category;
+    // chữ cái đầu viết hoa, toàn bộ chữ sau viết thường
+    return cat.charAt(0).toUpperCase() + cat.slice(1).toLowerCase();
+  };
 
   return (
     <div className="tour-list-container">
@@ -46,10 +54,10 @@ export default function TourList({ data }) {
                 }`}
               >
                 {tour.availableSeats <= 0
-                  ? "Hết Chỗ"
+                  ? t("status.full")
                   : tour.isAvailable
-                    ? "Còn Chỗ"
-                    : "Ngưng Nhận"}
+                    ? t("status.available")
+                    : t("status.closed")}
               </span>
             </div>
 
@@ -62,25 +70,18 @@ export default function TourList({ data }) {
                   <span className="tour-list-card__tag">
                     <CarOutlined />{" "}
                     {tour.transport === "BUS"
-                      ? "Xe Khách"
+                      ? t("filter.transBus")
                       : tour.transport === "AIRPLANE"
-                        ? "Máy Bay"
-                        : tour.transport}
+                        ? t("filter.transFlight")
+                        : t("filter.transMotorbike")}
                   </span>
                 )}
                 {tour.category && (
                   <span
-                    className={`tour-list-card__tag ${
-                      tour.category === "PREMIUM"
-                        ? "tour-list-card__tag--orange"
-                        : tour.category === "SAVING"
-                          ? "tour-list-card__tag--green"
-                          : tour.category === "ECONOMY"
-                            ? "tour-list-card__tag--gray"
-                            : ""
-                    }`}
+                    className={`tour-list-card__tag cat-${(tour.category || "Standard").toLowerCase()}`}
                   >
-                    <StarOutlined /> Hạng: {tour.category}
+                    <StarOutlined /> {t("card.class")}{" "}
+                    {t(`filter.cat${getCategoryKey(tour.category)}`)}
                   </span>
                 )}
               </div>
@@ -88,12 +89,12 @@ export default function TourList({ data }) {
               <div className="tour-list-card__details">
                 <div className="tour-list-card__detail-item">
                   <EnvironmentOutlined className="icon-blue" />
-                  <strong>Lịch trình:</strong> {tour.departurePlace} ➔{" "}
+                  <strong>{t("card.itinerary")}</strong> {tour.departurePlace} ➔{" "}
                   {tour.destination}
                 </div>
                 <div className="tour-list-card__detail-item">
                   <CalendarOutlined className="icon-orange" />
-                  <strong>Thời gian:</strong>{" "}
+                  <strong>{t("card.duration")}</strong>{" "}
                   {new Date(tour.startDate).toLocaleDateString("vi-VN")} -{" "}
                   {new Date(tour.endDate).toLocaleDateString("vi-VN")}
                 </div>
@@ -105,10 +106,10 @@ export default function TourList({ data }) {
               <div className="tour-list-card__progress-wrapper">
                 <div className="tour-list-card__progress-text">
                   <span>
-                    Đã đặt <strong>{tour.bookedPercentage}%</strong>
+                    {t("card.booked", { percent: tour.bookedPercentage })}
                   </span>
                   <span className="highlight">
-                    Còn {tour.availableSeats} chỗ
+                    {t("card.seatsLeft", { count: tour.availableSeats })}
                   </span>
                 </div>
                 <Progress
@@ -126,14 +127,16 @@ export default function TourList({ data }) {
 
               <div className="tour-list-card__price-wrapper">
                 <span className="tour-list-card__price-label">
-                  Giá trọn gói từ:
+                  {t("card.pricePackageFrom")}
                 </span>
                 <div className="tour-list-card__price">
                   {Number(tour.price).toLocaleString("vi-VN")} <span>đ</span>
                 </div>
               </div>
 
-              <button className="tour-list-card__btn">Xem chi tiết</button>
+              <button className="tour-list-card__btn">
+                {t("card.viewDetail")}
+              </button>
             </div>
           </div>
         );

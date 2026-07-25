@@ -157,3 +157,33 @@
     overflow-y: auto;
   }
 }
+
+// ============================================================
+// React Quill Editor
+// ============================================================
+.ql-container {
+  min-height: 200px;
+  font-size: 15px;
+  font-family: inherit;
+  
+  .ql-editor {
+    min-height: 200px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: pre-wrap;
+    max-width: 100%;
+  }
+}
+
+.ql-toolbar.ql-snow {
+  border-top-left-radius: $radius-sm;
+  border-top-right-radius: $radius-sm;
+  border-color: $border-color;
+}
+
+.ql-container.ql-snow {
+  border-bottom-left-radius: $radius-sm;
+  border-bottom-right-radius: $radius-sm;
+  border-color: $border-color;
+}

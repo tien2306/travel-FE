@@ -28,7 +28,8 @@
 }
 
 /* Khi cuộn trang, Header sticky -> chữ thành đen */
-.header--sticky .global-settings__trigger {
+.header--sticky .global-settings__trigger,
+.layout-admin .global-settings__trigger {
   color: $text-body;
 
   &:hover {

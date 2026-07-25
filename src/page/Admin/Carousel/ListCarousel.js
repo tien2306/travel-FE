@@ -128,7 +128,6 @@ function ListCarousel() {
     {
       title: "Mô tả",
       dataIndex: "description",
-      responsive: ["xl"],
       key: "description",
       onCell: () => ({ "data-label": "Mô tả:" }),
       render: (text) => text || "---",
@@ -189,6 +188,7 @@ function ListCarousel() {
         dataSource={data}
         columns={columns}
         loading={loading}
+        scroll={{ x: 1000 }}
         // bordered
         // 7. Cấu hình trực tiếp object pagination cho Antd Table đọc
         pagination={{

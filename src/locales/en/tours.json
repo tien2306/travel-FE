@@ -62,5 +62,21 @@
     "bookSub": "Instant reservation - Secure payment",
     "fullyBookedBtn": "FULLY BOOKED",
     "contactSub": "Please contact for more details"
+  },
+  "status": {
+    "full": "Fully Booked",
+    "available": "Available",
+    "closed": "Closed"
+  },
+  "card": {
+    "booked": "Booked {{percent}}%",
+    "departureDate": "Departure Date:",
+    "itinerary": "Itinerary:",
+    "priceFrom": "Price from:",
+    "pricePackageFrom": "Package price from:",
+    "viewDetail": "View Details",
+    "class": "Class:",
+    "duration": "Duration:",
+    "seatsLeft": "{{count}} seats left"
   }
 }

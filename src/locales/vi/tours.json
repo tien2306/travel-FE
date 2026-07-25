@@ -62,5 +62,21 @@
     "bookSub": "Giữ chỗ tức thời - Thanh toán an toàn",
     "fullyBookedBtn": "TẠM HẾT CHỖ",
     "contactSub": "Vui lòng liên hệ để biết thêm chi tiết"
+  },
+  "status": {
+    "full": "Hết Chỗ",
+    "available": "Còn Chỗ",
+    "closed": "Ngưng Nhận"
+  },
+  "card": {
+    "booked": "Đã đặt {{percent}}%",
+    "departureDate": "Lịch khởi hành:",
+    "itinerary": "Lịch trình:",
+    "priceFrom": "Giá từ:",
+    "pricePackageFrom": "Giá trọn gói từ:",
+    "viewDetail": "Xem chi tiết",
+    "class": "Hạng:",
+    "duration": "Thời gian:",
+    "seatsLeft": "Còn {{count}} chỗ"
   }
 }

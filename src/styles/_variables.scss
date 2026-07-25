@@ -49,6 +49,24 @@ html[data-theme="light"] {
   --color-cps: #d70018; // Đỏ thương hiệu CellphoneS
   --color-orange: #fa8c16; // Cam nhấn mạnh
 
+  // --- Category Colors (Light Theme - Pastel/Subtle style) ---
+  --cat-premium-bg: #fff7e6; // Vàng đồng/Cam nhạt sang trọng
+  --cat-premium-text: #d46b08; // Cam sậm
+  --cat-economy-bg: #f9f0ff; // Tím nhạt (thay vì xám buồn tẻ)
+  --cat-economy-text: #722ed1; // Tím đậm
+  --cat-saving-bg: #f6ffed; // Xanh lá nhạt
+  --cat-saving-text: #389e0d; // Xanh đậm hơn chút cho rõ
+  --cat-standard-bg: #e6f4ff; // Xanh dương nhạt
+  --cat-standard-text: #0958d9;
+
+  // --- Status Badge Colors (Light Theme) ---
+  --status-available-bg: rgba(82, 196, 26, 0.95);
+  --status-available-text: #ffffff;
+  --status-full-bg: rgba(255, 77, 79, 0.95);
+  --status-full-text: #ffffff;
+  --status-closed-bg: rgba(140, 140, 140, 0.95);
+  --status-closed-text: #ffffff;
+
   // --- Header Sticky Colors (Light Theme) ---
   --header-sticky-bg: #ffffff;
   --header-sticky-text: #13357b;
@@ -75,25 +93,25 @@ html[data-theme="light"] {
   --btn-book-hover-bd: #000000;
 
   // --- Footer (Light — footer luôn tối nên giữ nguyên cả 2 theme) ---
-  --footer-bg:              #0d1117; // Nền footer chính
-  --footer-copyright-bg:    #060c16; // Nền bar copyright
-  --footer-text:            rgba(255, 255, 255, 0.65); // Chữ/link footer
-  --footer-text-faint:      rgba(255, 255, 255, 0.4);  // Chữ copyright
-  --footer-border:          rgba(255, 255, 255, 0.07); // Đường kẻ divider
-  --footer-input-bg:        #1a2035; // Nền Select footer
-  --footer-input-bd:        #2d3748; // Border Select footer
-  --footer-input-text:      rgba(255, 255, 255, 0.75); // Chữ trong Select
-  --footer-input-arrow:     rgba(255, 255, 255, 0.4);  // Mũi tên Select
-  --footer-social-color:    #ffffff; // Màu icon trong nút social
+  --footer-bg: #0d1117; // Nền footer chính
+  --footer-copyright-bg: #060c16; // Nền bar copyright
+  --footer-text: rgba(255, 255, 255, 0.65); // Chữ/link footer
+  --footer-text-faint: rgba(255, 255, 255, 0.4); // Chữ copyright
+  --footer-border: rgba(255, 255, 255, 0.07); // Đường kẻ divider
+  --footer-input-bg: #1a2035; // Nền Select footer
+  --footer-input-bd: #2d3748; // Border Select footer
+  --footer-input-text: rgba(255, 255, 255, 0.75); // Chữ trong Select
+  --footer-input-arrow: rgba(255, 255, 255, 0.4); // Mũi tên Select
+  --footer-social-color: #ffffff; // Màu icon trong nút social
   --footer-social-hover-bg: #ffffff; // Nền nút social khi hover
-  --footer-badge-border:    rgba(255, 255, 255, 0.2);  // Viền payment badge
-  --footer-badge-text:      rgba(255, 255, 255, 0.75); // Chữ payment badge
-  --subscribe-overlay:      rgba(19, 53, 123, 0.65);   // Overlay subscribe bg
-  --subscribe-text:         rgba(255, 255, 255, 0.8);  // Mô tả subscribe
-  --subscribe-input-bg:     rgba(255, 255, 255, 0.12); // Nền input subscribe
-  --subscribe-placeholder:  rgba(255, 255, 255, 0.55); // Placeholder input
-  --primary-hover:          #0050d0; // Màu hover nút primary
-  --shadow-focus-primary:   rgba(13, 110, 253, 0.2);   // Focus ring
+  --footer-badge-border: rgba(255, 255, 255, 0.2); // Viền payment badge
+  --footer-badge-text: rgba(255, 255, 255, 0.75); // Chữ payment badge
+  --subscribe-overlay: rgba(19, 53, 123, 0.65); // Overlay subscribe bg
+  --subscribe-text: rgba(255, 255, 255, 0.8); // Mô tả subscribe
+  --subscribe-input-bg: rgba(255, 255, 255, 0.12); // Nền input subscribe
+  --subscribe-placeholder: rgba(255, 255, 255, 0.55); // Placeholder input
+  --primary-hover: #0050d0; // Màu hover nút primary
+  --shadow-focus-primary: rgba(13, 110, 253, 0.2); // Focus ring
 }
 
 html[data-theme="dark"] {
@@ -139,6 +157,24 @@ html[data-theme="dark"] {
   --color-danger-antd: #f87171;
   --color-orange: #fb923c; // Cam nhạt dễ nhìn trên tối
 
+  // --- Category Colors (Dark Theme - Pastel/Subtle style) ---
+  --cat-premium-bg: #593206; // Bronze/Orange đậm
+  --cat-premium-text: #ffd666;
+  --cat-economy-bg: #34185c; // Tím mận đậm
+  --cat-economy-text: #d3adf7; // Tím sáng hơn một chút để nổi trên nền
+  --cat-saving-bg: #17471d; // Xanh rừng sâu
+  --cat-saving-text: #95de64;
+  --cat-standard-bg: #11365d; // Xanh lam đậm
+  --cat-standard-text: #69b1ff;
+
+  // --- Status Badge Colors (Dark Theme) ---
+  --status-available-bg: rgba(73, 170, 25, 0.95);
+  --status-available-text: #ffffff;
+  --status-full-bg: rgba(220, 60, 60, 0.95);
+  --status-full-text: #ffffff;
+  --status-closed-bg: rgba(100, 100, 100, 0.95);
+  --status-closed-text: #ffffff;
+
   // --- Header Sticky Colors (Dark Theme) ---
   --header-sticky-bg: #1e293b; // Slate 800
   --header-sticky-text: #f1f5f9; // Slate 100
@@ -159,25 +195,25 @@ html[data-theme="dark"] {
   --dropdown-hover-text: #ffffff;
 
   // --- Footer (Dark — footer vẫn tối, chỉ điều chỉnh nếu cần) ---
-  --footer-bg:              #060c16; // Tối hơn chút trên dark mode
-  --footer-copyright-bg:    #020509;
-  --footer-text:            rgba(255, 255, 255, 0.6);
-  --footer-text-faint:      rgba(255, 255, 255, 0.35);
-  --footer-border:          rgba(255, 255, 255, 0.05);
-  --footer-input-bg:        #0f172a; // Slate 900
-  --footer-input-bd:        #1e293b; // Slate 800
-  --footer-input-text:      rgba(255, 255, 255, 0.65);
-  --footer-input-arrow:     rgba(255, 255, 255, 0.35);
-  --footer-social-color:    #ffffff;
+  --footer-bg: #060c16; // Tối hơn chút trên dark mode
+  --footer-copyright-bg: #020509;
+  --footer-text: rgba(255, 255, 255, 0.6);
+  --footer-text-faint: rgba(255, 255, 255, 0.35);
+  --footer-border: rgba(255, 255, 255, 0.05);
+  --footer-input-bg: #0f172a; // Slate 900
+  --footer-input-bd: #1e293b; // Slate 800
+  --footer-input-text: rgba(255, 255, 255, 0.65);
+  --footer-input-arrow: rgba(255, 255, 255, 0.35);
+  --footer-social-color: #ffffff;
   --footer-social-hover-bg: #f1f5f9;
-  --footer-badge-border:    rgba(255, 255, 255, 0.15);
-  --footer-badge-text:      rgba(255, 255, 255, 0.6);
-  --subscribe-overlay:      rgba(10, 25, 65, 0.75);
-  --subscribe-text:         rgba(255, 255, 255, 0.75);
-  --subscribe-input-bg:     rgba(255, 255, 255, 0.08);
-  --subscribe-placeholder:  rgba(255, 255, 255, 0.45);
-  --primary-hover:          #2563eb; // Xanh sáng hơn trên dark
-  --shadow-focus-primary:   rgba(59, 130, 246, 0.25);
+  --footer-badge-border: rgba(255, 255, 255, 0.15);
+  --footer-badge-text: rgba(255, 255, 255, 0.6);
+  --subscribe-overlay: rgba(10, 25, 65, 0.75);
+  --subscribe-text: rgba(255, 255, 255, 0.75);
+  --subscribe-input-bg: rgba(255, 255, 255, 0.08);
+  --subscribe-placeholder: rgba(255, 255, 255, 0.45);
+  --primary-hover: #2563eb; // Xanh sáng hơn trên dark
+  --shadow-focus-primary: rgba(59, 130, 246, 0.25);
 }
 
 // Map các biến SASS hiện tại trỏ đến các CSS Variables động
@@ -220,6 +256,24 @@ $color-timeline: var(--color-timeline);
 $color-cps: var(--color-cps);
 $color-orange: var(--color-orange);
 
+// --- Category Colors ---
+$cat-premium-bg: var(--cat-premium-bg);
+$cat-premium-text: var(--cat-premium-text);
+$cat-economy-bg: var(--cat-economy-bg);
+$cat-economy-text: var(--cat-economy-text);
+$cat-saving-bg: var(--cat-saving-bg);
+$cat-saving-text: var(--cat-saving-text);
+$cat-standard-bg: var(--cat-standard-bg);
+$cat-standard-text: var(--cat-standard-text);
+
+// --- Status Badge Colors ---
+$status-available-bg: var(--status-available-bg);
+$status-available-text: var(--status-available-text);
+$status-full-bg: var(--status-full-bg);
+$status-full-text: var(--status-full-text);
+$status-closed-bg: var(--status-closed-bg);
+$status-closed-text: var(--status-closed-text);
+
 // --- Header Sticky SASS Variables ---
 $header-sticky-bg: var(--header-sticky-bg);
 $header-sticky-text: var(--header-sticky-text);
@@ -241,25 +295,25 @@ $dropdown-hover-text: var(--dropdown-hover-text);
 $btn-book-hover-bd: var(--btn-book-hover-bd);
 
 // --- Footer ---
-$footer-bg:              var(--footer-bg);
-$footer-copyright-bg:    var(--footer-copyright-bg);
-$footer-text:            var(--footer-text);
-$footer-text-faint:      var(--footer-text-faint);
-$footer-border:          var(--footer-border);
-$footer-input-bg:        var(--footer-input-bg);
-$footer-input-bd:        var(--footer-input-bd);
-$footer-input-text:      var(--footer-input-text);
-$footer-input-arrow:     var(--footer-input-arrow);
-$footer-social-color:    var(--footer-social-color);
+$footer-bg: var(--footer-bg);
+$footer-copyright-bg: var(--footer-copyright-bg);
+$footer-text: var(--footer-text);
+$footer-text-faint: var(--footer-text-faint);
+$footer-border: var(--footer-border);
+$footer-input-bg: var(--footer-input-bg);
+$footer-input-bd: var(--footer-input-bd);
+$footer-input-text: var(--footer-input-text);
+$footer-input-arrow: var(--footer-input-arrow);
+$footer-social-color: var(--footer-social-color);
 $footer-social-hover-bg: var(--footer-social-hover-bg);
-$footer-badge-border:    var(--footer-badge-border);
-$footer-badge-text:      var(--footer-badge-text);
-$subscribe-overlay:      var(--subscribe-overlay);
-$subscribe-text:         var(--subscribe-text);
-$subscribe-input-bg:     var(--subscribe-input-bg);
-$subscribe-placeholder:  var(--subscribe-placeholder);
-$primary-hover:          var(--primary-hover);
-$shadow-focus-primary:   var(--shadow-focus-primary);
+$footer-badge-border: var(--footer-badge-border);
+$footer-badge-text: var(--footer-badge-text);
+$subscribe-overlay: var(--subscribe-overlay);
+$subscribe-text: var(--subscribe-text);
+$subscribe-input-bg: var(--subscribe-input-bg);
+$subscribe-placeholder: var(--subscribe-placeholder);
+$primary-hover: var(--primary-hover);
+$shadow-focus-primary: var(--shadow-focus-primary);
 // --- Spacing & Typo (Tĩnh - Giữ Nguyên) ---
 $font-family-base:
   "Segoe UI",
