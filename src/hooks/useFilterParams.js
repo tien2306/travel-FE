@@ -47,16 +47,21 @@ export function useFilterParams() {
     // Object.keys(newValues); Lấy tất cả key của object tham số truyền vào Lưu thành 1 mảng
     // duyệt qua từng phần tử của mảng
     Object.keys(newValues).forEach((key) => {
-      //Key lúc này chỉ là tên biến
-      //newValues[key] là key động dùng để lấy cái giá trị của object tham số truyền vào newValues
       const value = newValues[key];
-      // Kiểm tra nếu không bị rỗng, không bị null
-      if (value !== "" && value !== null && value !== undefined) {
-        // Đè giá trị mới lên URL (Vd: sửa page thành 3)
-        newSearchParams.set(key, value);
-      } else {
-        // Nếu người dùng xóa ô tìm kiếm (rỗng) -> Xóa hẳn chữ đó khỏi URL cho sạch
+
+      // Nếu giá trị bị rỗng, null, hoặc BẰNG VỚI GIÁ TRỊ MẶC ĐỊNH (ví dụ page=1)
+      // Thì chúng ta xóa hẳn chữ đó khỏi URL cho thanh địa chỉ được sạch sẽ, gọn gàng.
+      // Dữ liệu ngầm vẫn lấy từ defaultParams nên không sợ bị lỗi.
+      if (
+        value === "" ||
+        value === null ||
+        value === undefined ||
+        value === defaultParams[key]
+      ) {
         newSearchParams.delete(key);
+      } else {
+        // Chỉ lưu những tham số thực sự có sự thay đổi (khác mặc định) lên URL
+        newSearchParams.set(key, value);
       }
     });
 

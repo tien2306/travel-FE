@@ -5,17 +5,15 @@ import { useTranslation } from "react-i18next";
 import { useFilterParams } from "../../../hooks/useFilterParams";
 import { useSidebarAnimation } from "../../../page/Client/Tours/animations";
 import "./SidebarFilter.scss";
-import { useLocation } from "react-router-dom";
 
 export default function SidebarFilter({ priceRange }) {
   const containerRef = useRef(null);
   const { t } = useTranslation("tours");
   useSidebarAnimation(containerRef);
   const { params, updateParams } = useFilterParams();
-  const location = useLocation();
 
-  const minBoundary = priceRange?.min || 0;
-  const maxBoundary = priceRange?.max || 200000000;
+  const minBoundary = priceRange?.min;
+  const maxBoundary = priceRange?.max;
 
   const getInitialBudget = useCallback(() => {
     const min =
@@ -36,8 +34,6 @@ export default function SidebarFilter({ priceRange }) {
   }, [getInitialBudget]);
 
   const handleArrayFilterChange = (e, key, itemValue) => {
-    // console.log(e, key, itemValue);
-
     // BƯỚC 1: LẤY DỮ LIỆU HIỆN TẠI TRÊN URL BIẾN THÀNH MẢNG
     // Kiểm tra xem trên URL nhóm này (params[key]) đã có chữ nào chưa?
     // - Nếu CÓ: Cắt chuỗi chữ đó bằng dấu phẩy (split(",")) để biến thành một Mảng các lựa chọn.
@@ -74,13 +70,8 @@ export default function SidebarFilter({ priceRange }) {
   };
 
   const handleReset = () => {
-    if (location.pathname === "/") {
-      return;
-    }
-
     // Tạo ra một Object trống trơn ban đầu
     const resetValues = {};
-
     // Dùng Object.keys để lấy ra mảng các tên biến hiện tại (Vd: ["page", "search", "minPrice"])
     // Sau đó dùng .forEach để duyệt qua từng tên biến một
     Object.keys(params).forEach((key) => {
@@ -90,6 +81,25 @@ export default function SidebarFilter({ priceRange }) {
 
     updateParams({ ...resetValues, page: 1 });
   };
+
+  // Kiểm tra xem người dùng có đang áp dụng bất kỳ bộ lọc nào không (bỏ qua 'page' và 'limit')
+  const isFiltered = Object.keys(params).some((key) => {
+    if (key === "page" || key === "limit") return false;
+
+    if (key === "minPrice") {
+      const minVal = Number(params[key]);
+      return minVal > 0 && minVal > (priceRange?.min || 0);
+    }
+
+    if (key === "maxPrice") {
+      const maxVal = Number(params[key]);
+      return maxVal < 400000000 && maxVal < (priceRange?.max || 200000000);
+    }
+
+    return (
+      params[key] !== "" && params[key] !== undefined && params[key] !== null
+    );
+  });
 
   return (
     <div className="tour-filter" ref={containerRef}>
@@ -102,6 +112,7 @@ export default function SidebarFilter({ priceRange }) {
           type="link"
           className="tour-filter__reset-btn"
           onClick={handleReset}
+          disabled={!isFiltered}
         >
           {t("filter.reset")}
         </Button>

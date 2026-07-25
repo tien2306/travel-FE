@@ -25,7 +25,7 @@ export default function TourListResults({ onPriceRangeUpdate }) {
   const { params, updateParams } = useFilterParams();
 
   const handlePageChange = (page) => {
-    updateParams({ page });
+    updateParams({ page: page });
 
     // Cuộn mượt mà đến đầu danh sách Tour
     setTimeout(() => {
