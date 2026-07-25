@@ -26,33 +26,72 @@
 
     @include desktop-sm {
       display: flex;
-      justify-content: flex-start;
-      margin-bottom: -8px; // Pull items slightly closer
+      justify-content: center;
+      position: sticky;
+      bottom: 24px;
+      width: 100%;
+      z-index: 999;
+      pointer-events: none; // Tránh chặn click vào các thành phần bên dưới
     }
   }
 
   &__mobile-filter-btn {
+    pointer-events: auto;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    height: 40px;
-    font-weight: 600;
-    font-size: 14px;
-    border-radius: $radius-md;
-    padding: 0 20px;
-    background-color: $color-blue;
-    border-color: $color-blue;
-    box-shadow: 0 2px 8px rgba(0, 82, 204, 0.15);
-
-    &:hover, &:focus {
-      background-color: $color-blue-hover !important;
-      border-color: $color-blue-hover !important;
-    }
+    height: 48px;
+    border-radius: 100px; // Dạng viên thuốc
+    background-color: $bg-white; // Nền trắng giống thiết kế
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); // Bóng đổ nhẹ nhàng hơn
+    padding: 0 8px;
 
     @include mobile {
-      width: 100%; // Spans full width only on mobile screens for easy tapping
+      height: 40px;
     }
+  }
+
+  &__mobile-fab-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 100%;
+    padding: 0 16px;
+    font-size: 15px;
+    font-weight: 600;
+    color: $text-dark;
+    
+    // Reset Ant Design Button styles
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+
+    @include mobile {
+      font-size: 13px;
+      padding: 0 12px;
+      gap: 6px;
+    }
+
+    .anticon {
+      font-size: 16px;
+      color: $text-secondary;
+      transition: color 0.3s ease;
+    }
+
+    &:hover, &:focus {
+      color: $color-blue !important;
+      .anticon {
+        color: $color-blue;
+      }
+    }
+  }
+
+  &__mobile-fab-divider {
+    width: 1px;
+    height: 20px;
+    background-color: $border-subtle;
+    margin: 0 4px;
   }
 
   &__sidebar-col {
@@ -73,14 +112,16 @@
     padding-top: 4px;
     margin-top: -4px;
 
-    /* TẮT STICKY Ở MÀN HÌNH NHỎ ĐỂ KHÔNG BỊ CHE SẢN PHẨM */
-    @include tablet {
-      position: static;
-      padding-bottom: 0;
-      padding-top: 0;
-      margin-top: 0;
-      background-color: transparent;
+    /* TẮT THANH TÌM KIẾM Ở TRANG CHÍNH TRÊN MÀN HÌNH NHỎ VÀ IPAD (VÌ ĐÃ CHUYỂN VÀO DRAWER) */
+    @include desktop-sm {
+      display: none;
     }
+  }
+
+  &__drawer-search {
+    margin-bottom: 24px;
+    border-bottom: 1px solid $border-subtle;
+    padding-bottom: 24px;
   }
 
   &__results {

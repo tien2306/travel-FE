@@ -6,7 +6,7 @@ import { useFilterParams } from "../../../hooks/useFilterParams";
 import { useSidebarAnimation } from "../../../page/Client/Tours/animations";
 import "./SidebarFilter.scss";
 
-export default function SidebarFilter({ priceRange }) {
+export default function SidebarFilter({ onSearchSubmit, priceRange }) {
   const containerRef = useRef(null);
   const { t } = useTranslation("tours");
   useSidebarAnimation(containerRef);
@@ -80,6 +80,10 @@ export default function SidebarFilter({ priceRange }) {
     });
 
     updateParams({ ...resetValues, page: 1 });
+
+    if (onSearchSubmit) {
+      onSearchSubmit();
+    }
   };
 
   // Kiểm tra xem người dùng có đang áp dụng bất kỳ bộ lọc nào không (bỏ qua 'page' và 'limit')

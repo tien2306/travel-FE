@@ -13,12 +13,12 @@
   width: 100%;
 
   /* 🛠️ THÊM MEDIA QUERIES ĐỂ RESPONSIVE CHO MOBILE 500PX */
-  @include tablet {
+  @include desktop-sm {
     flex-direction: column;
     align-items: stretch;
-    border-radius: 20px; /* Đổi bo tròn viên thuốc sang dạng hộp */
-    padding: 16px;
-    gap: 16px;
+    border-radius: 12px;
+    padding: 0; // Đã nằm trong Drawer nên không cần padding ngoài
+    gap: 10px;
   }
 
   &__section {
@@ -34,10 +34,10 @@
       background-color: $bg-page;
     }
 
-    /* Trên Mobile thì bỏ vạch ngăn cách dọc đi */
-    @include tablet {
-      border-radius: 20px;
-      padding: 12px;
+    /* Trên Mobile làm thon gọn lại */
+    @include desktop-sm {
+      border-radius: 12px;
+      padding: 8px 12px;
     }
   }
 
@@ -54,6 +54,13 @@
     margin-right: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     flex-shrink: 0;
+
+    @include desktop-sm {
+      width: 32px;
+      height: 32px;
+      margin-right: 10px;
+      font-size: 14px;
+    }
   }
 
   &__field {
@@ -165,8 +172,9 @@
     height: 52px;
     position: relative;
 
-    @include tablet {
+    @include desktop-sm {
       width: 100%; /* Trên mobile thì để full dòng tự nhiên */
+      height: 44px; /* Thu gọn chiều cao nút bấm trên điện thoại */
     }
   }
 

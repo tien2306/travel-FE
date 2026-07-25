@@ -32,14 +32,16 @@
     cursor: grabbing;
   }
 
-  @include tablet {
-    height: 65vh;
-    min-height: 440px;
+  @include desktop-sm {
+    height: 50vh;
+    min-height: 400px;
+    max-height: 480px; // Khống chế chiều cao tối đa trên iPad
   }
 
   @include mobile {
     height: 65vh;
     min-height: 480px; // Tăng min-height để chứa 2 nút xếp chồng
+    max-height: 600px; 
   }
 }
 

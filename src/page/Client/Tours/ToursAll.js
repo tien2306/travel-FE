@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { Row, Col, Drawer, Button } from "antd";
-import { SlidersOutlined } from "@ant-design/icons";
+import { SlidersOutlined, SearchOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import SidebarFilter from "../../../components/Client/ToursAll/SidebarFilter";
 import HeaderSearch from "../../../components/Client/ToursAll/HeaderSearch";
@@ -10,7 +10,8 @@ import "./ToursAll.scss";
 let cachedPriceRange = null;
 
 function ToursAll() {
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [filterDrawerOpen, setFilterDrawerOpen] = useState(false);
+  const [searchDrawerOpen, setSearchDrawerOpen] = useState(false);
   // 1. KHỞI TẠO STATE LƯU TRỮ KHOẢNG GIÁ (DÙNG ĐỂ HIỂN THỊ TRÊN THANH TRƯỢT SLIDER)
   // - useState này sẽ kiểm tra xem trong bộ nhớ đệm (cachedPriceRange) đã có khoảng giá chưa.
   // - Nếu CÓ: Lấy luôn giá trị trong cachedPriceRange làm giá trị bắt đầu.
@@ -58,23 +59,34 @@ function ToursAll() {
 
           {/* Cột phải: Thanh tìm kiếm & Danh sách tour */}
           <Col xs={24} lg={18} xl={19} className="tour-page__content">
-            {/* Nút hiển thị bộ lọc dạng Drawer trên Mobile/Tablet */}
-            <div className="tour-page__mobile-filter-bar">
-              <Button
-                type="primary"
-                icon={<SlidersOutlined />}
-                onClick={() => setDrawerOpen(true)}
-                className="tour-page__mobile-filter-btn"
-              >
-                {t("filter.searchFilter")}
-              </Button>
-            </div>
-
             <div className="tour-page__search">
               <HeaderSearch />
             </div>
             <div className="tour-page__results">
               <TourListResults onPriceRangeUpdate={handlePriceRangeUpdate} />
+            </div>
+            
+            {/* Nút hiển thị bộ lọc dạng Drawer trên Mobile/Tablet */}
+            <div className="tour-page__mobile-filter-bar">
+              <div className="tour-page__mobile-filter-btn">
+                <Button
+                  type="text"
+                  icon={<SlidersOutlined />}
+                  onClick={() => setFilterDrawerOpen(true)}
+                  className="tour-page__mobile-fab-action"
+                >
+                  {t("filter.title")}
+                </Button>
+                <div className="tour-page__mobile-fab-divider" />
+                <Button
+                  type="text"
+                  icon={<SearchOutlined />}
+                  onClick={() => setSearchDrawerOpen(true)}
+                  className="tour-page__mobile-fab-action"
+                >
+                  {t("search.button")}
+                </Button>
+              </div>
             </div>
           </Col>
         </Row>
@@ -84,17 +96,40 @@ function ToursAll() {
       <Drawer
         title={
           <span>
-            <SlidersOutlined /> {t("filter.searchFilter")}
+            <SlidersOutlined /> {t("filter.title")}
           </span>
         }
         placement="left"
-        onClose={() => setDrawerOpen(false)}
-        open={drawerOpen}
-        width={300}
+        onClose={() => setFilterDrawerOpen(false)}
+        open={filterDrawerOpen}
+        width={250}
         styles={{ body: { padding: 0 } }}
       >
         <div style={{ padding: "20px 24px" }}>
-          <SidebarFilter priceRange={priceRange} />
+          <SidebarFilter
+            onSearchSubmit={() => setFilterDrawerOpen(false)}
+            priceRange={priceRange}
+          />
+        </div>
+      </Drawer>
+
+      {/* Drawer chứa HeaderSearch cho màn hình Tablet/Mobile */}
+      <Drawer
+        title={
+          <span>
+            <SearchOutlined /> {t("search.button")}
+          </span>
+        }
+        placement="left"
+        onClose={() => setSearchDrawerOpen(false)}
+        open={searchDrawerOpen}
+        width={250}
+        styles={{ body: { padding: 0 } }}
+      >
+        <div style={{ padding: "20px 24px" }}>
+          <div className="tour-page__drawer-search">
+            <HeaderSearch onSearchSubmit={() => setSearchDrawerOpen(false)} />
+          </div>
         </div>
       </Drawer>
     </div>

@@ -11,13 +11,11 @@ import { useTranslation } from "react-i18next";
 import { useSearchAnimation } from "../../../page/Client/Tours/animations";
 import "./HeaderSearch.scss";
 
-export default function HeaderSearch() {
+export default function HeaderSearch({ onSearchSubmit }) {
   const containerRef = useRef(null);
   const { t } = useTranslation("tours");
   useSearchAnimation(containerRef);
-
   const { params, updateParams } = useFilterParams();
-
   const [departure, setDeparture] = useState(params.departurePlace || "");
   const [keyword, setKeyword] = useState(params.keyword || "");
   const [date, setDate] = useState(
@@ -31,6 +29,10 @@ export default function HeaderSearch() {
       startDate: date ? date.format("YYYY-MM-DD") : "",
       page: 1,
     });
+
+    if (onSearchSubmit) {
+      onSearchSubmit();
+    }
   };
 
   return (
