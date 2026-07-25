@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Row, Col, Drawer, Button } from "antd";
 import { SlidersOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
@@ -16,10 +16,14 @@ function ToursAll() {
   );
   const { t } = useTranslation("tours");
 
-  const handlePriceRangeUpdate = (newRange) => {
-    cachedPriceRange = newRange;
-    setPriceRange(newRange);
-  };
+  const handlePriceRangeUpdate = useCallback((newRange) => {
+    // Chỉ cập nhật nếu thực sự có thay đổi để tránh re-render không cần thiết
+    setPriceRange((prev) => {
+      if (prev.min === newRange.min && prev.max === newRange.max) return prev;
+      cachedPriceRange = newRange;
+      return newRange;
+    });
+  }, []);
 
   return (
     <div className="tour-page">

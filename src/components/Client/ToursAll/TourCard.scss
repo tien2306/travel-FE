@@ -7,7 +7,6 @@
   background: $bg-card-outer;
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
   position: relative;
   overflow: hidden;
   transition:
@@ -87,17 +86,74 @@
     z-index: 2;
   }
 
-  &__score-bar {
+  &__badges-overlay {
     position: absolute;
-    bottom: 0;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    color: $text-white;
+    bottom: 44px; /* Nằm ngay trên khối trắng (khối trắng margin-top -35px) */
+    left: 16px;
+    right: 16px;
     display: flex;
     justify-content: space-between;
-    padding: 8px 16px 44px 16px;
-    font-size: 12px;
-    z-index: 2;
+    align-items: center;
+    z-index: 5; /* Để nổi bật trên ảnh */
+  }
+
+  &__badge-route {
+    background: #e6fced; /* Xanh lá nhạt */
+    color: #0050b3; /* Xanh biển đậm */
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    text-transform: uppercase;
+    max-width: 100%; // Đảm bảo không bị tràn khỏi card
+    overflow: hidden;
+
+    > span:first-child {
+      flex-shrink: 0; // Không thu nhỏ Điểm đi
+    }
+
+    .route-divider {
+      color: #0050b3;
+      opacity: 0.6;
+      font-weight: 400;
+      flex-shrink: 0;
+    }
+
+    .route-destination {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex-shrink: 1; // Cho phép thu nhỏ Điểm đến nếu quá dài
+    }
+  }
+
+  &__badge-category {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(40, 40, 40, 0.85);
+    color: #ffd666; /* Vàng nghệ */
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+    text-transform: uppercase;
+
+    .anticon {
+      font-size: 15px;
+      color: #ffd666;
+    }
   }
 
   &__body {
@@ -111,19 +167,19 @@
   }
 
   &__floating-content {
-    width: 92%;
+    width: 95%;
     margin: 0 auto;
-    margin-top: -32px;
-    margin-bottom: 16px; /* Cách đáy một chút trên màn to */
+    margin-top: -35px;
+    margin-bottom: 10px;
     padding: 16px;
-    background: $bg-white;
+    background: var(--bg-white);
     border-radius: 12px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     position: relative;
     z-index: 4;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Cắt gọn góc của nút Xem chi tiết */
+    overflow: hidden;
   }
 
   &__title {
@@ -252,16 +308,27 @@
     display: none; // Ẩn mặc định trên Desktop
   }
 
+  // Desktop / Mobile visibility toggles
+  .desktop-only {
+    display: flex;
+    @include mobile {
+      display: none !important;
+    }
+  }
+
+  .mobile-only {
+    display: none;
+    @include mobile {
+      display: flex;
+    }
+  }
+
   // Ép nhỏ tối đa cho màn hình điện thoại (hiển thị 2 card 1 hàng)
   @include mobile {
     min-height: auto;
 
     .tour-card__hero {
       height: 140px;
-    }
-
-    .tour-card__score-bar {
-      display: none; // Ẩn hoàn toàn thanh ngang trên ảnh ở mobile
     }
 
     .tour-card__status-badge {
@@ -286,7 +353,8 @@
     .tour-card__title {
       font-size: 12px;
       margin-bottom: 6px;
-      @include text-ellipsis(2);
+      height: auto;
+      @include text-ellipsis(1);
     }
 
     .tour-card__progress-text {
@@ -296,20 +364,47 @@
     .tour-card__short-desc {
       font-size: 11px;
       margin-bottom: 6px;
+      height: auto;
       @include text-ellipsis(1);
     }
 
-    .tour-card__date-block,
+    .tour-card__date-block {
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      font-size: 11px;
+      width: 100%;
+    }
+
+    .tour-card__date-info {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .tour-card__date-label {
+      display: none; /* Ẩn nhãn chữ để đỡ chật chội */
+    }
+
+    .tour-card__date-badge-accent {
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
     .tour-card__route-mobile {
       margin-bottom: 4px;
       display: flex;
       align-items: center;
-      gap: 4px;
       font-size: 11px;
-      flex-wrap: nowrap;
+      width: 100%;
     }
 
-    .tour-card__date-label,
+    .tour-card__route-info {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
     .tour-card__route-label {
       display: none; /* Ẩn nhãn chữ để đỡ chật chội */
     }
@@ -319,11 +414,6 @@
       font-weight: 600;
       @include text-ellipsis(1);
       text-transform: capitalize;
-    }
-
-    .tour-card__date-badge-accent {
-      font-size: 11px;
-      white-space: nowrap;
     }
 
     .tour-card__footer {

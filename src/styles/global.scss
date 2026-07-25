@@ -9,6 +9,7 @@
 // --- Box Model Reset ---
 html {
   scrollbar-gutter: stable;
+  overflow-x: clip;
 }
 
 *,
@@ -21,8 +22,8 @@ html {
 body {
   margin: 0;
   padding: 0;
-  width: 100% !important; /* Chống AntD đổi chiều rộng */
-  padding-right: 0 !important; /* Ngăn Ant Design tự động thêm padding khi mở Drawer/Modal gây giật layout toàn trang */
+  width: 100% !important;
+  padding-right: 0 !important;
   font-family: $font-family-base;
   font-size: $font-size-base;
   color: $text-dark;
@@ -30,11 +31,19 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   // Chuyển màu nền và chữ mượt khi toggle Dark/Light Mode
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+  overflow-x: clip;
 }
 
 // --- Typography Reset ---
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin-top: 0;
   font-weight: 700;
 }
@@ -61,7 +70,8 @@ img {
 }
 
 // --- List Reset ---
-ul, ol {
+ul,
+ol {
   margin: 0;
   padding: 0;
   list-style: none;

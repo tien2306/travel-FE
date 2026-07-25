@@ -73,7 +73,7 @@ export default function TourListResults({ onPriceRangeUpdate }) {
     } finally {
       setLoading(false);
     }
-  }, [params]);
+  }, [params, onPriceRangeUpdate]);
 
   // Tự động cuộn đến danh sách Tour khi vừa chuyển từ trang Home sang
   useEffect(() => {
