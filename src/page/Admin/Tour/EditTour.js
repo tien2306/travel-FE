@@ -1,17 +1,19 @@
 import { useState, useEffect } from "react";
-import { Form, Button, Modal, Image, message } from "antd";
+import { Form, Button, Modal, Image, message, Steps } from "antd";
 import { EditOutlined, CheckOutlined } from "@ant-design/icons";
 import { updateTour } from "../../../services/tour";
 import { patch } from "../../../utils/request";
 import { IMAGE_URLS } from "../../../constants/api";
-import FormMainInputs from "../../../components/Admin/CreateTourModal/FormMainInputs";
-import FormSideConfigs from "../../../components/Admin/CreateTourModal/FormSideConfigs";
+import Step1Info from "../../../components/Admin/CreateTourModal/Step1Info";
+import Step2Images from "../../../components/Admin/CreateTourModal/Step2Images";
+import Step3Detail from "../../../components/Admin/CreateTourModal/Step3Detail";
 import dayjs from "dayjs";
 
 function EditTour(props) {
   const { record, onReload } = props;
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [currentStep, setCurrentStep] = useState(0);
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -99,6 +101,7 @@ function EditTour(props) {
     form.resetFields();
     setThumbnailFileList([]);
     setImagesFileList([]);
+    setCurrentStep(0);
   };
 
   const handleThumbnailChange = ({ fileList }) => {
@@ -138,6 +141,36 @@ function EditTour(props) {
         setPreviewOpen(true); // Mở popup
       };
     }
+  };
+
+  const handleNextStep = async () => {
+    try {
+      if (currentStep === 0) {
+        await form.validateFields([
+          "name",
+          "slug",
+          "price",
+          "quantity",
+          "sold",
+          "departurePlace",
+          "destination",
+          "startDate",
+          "endDate",
+          "status",
+          "category",
+          "transport",
+          "shortDesc",
+        ]);
+      }
+      messageApi.success(`Đã lưu tạm thông tin Bước ${currentStep + 1}, mời nhập tiếp!`);
+      setCurrentStep(currentStep + 1);
+    } catch (error) {
+      // Validate failed
+    }
+  };
+
+  const handlePrevStep = () => {
+    setCurrentStep(currentStep - 1);
   };
 
   const handleSubmit = async (values) => {
@@ -255,6 +288,7 @@ function EditTour(props) {
       if (res && res.success) {
         messageApi.success("Cập nhật tour thành công!");
         setShowModal(false);
+        setCurrentStep(0);
         onReload();
       } else {
         messageApi.error(
@@ -267,6 +301,49 @@ function EditTour(props) {
       setLoading(false);
     }
   };
+
+  const modalFooter = (
+    <div
+      className="form-action-footer"
+      style={{
+        display: "flex",
+        justifyContent: "flex-end",
+        gap: "10px",
+        borderTop: "none",
+        paddingTop: 0,
+        marginTop: 0
+      }}
+    >
+      <Button onClick={handleCancel} size="large">
+        Hủy
+      </Button>
+
+      {currentStep > 0 && (
+        <Button onClick={handlePrevStep} size="large">
+          Trở lại
+        </Button>
+      )}
+
+      {currentStep < 2 && (
+        <Button type="primary" onClick={handleNextStep} size="large">
+          Tiếp tục
+        </Button>
+      )}
+
+      {currentStep === 2 && (
+        <Button
+          loading={loading}
+          type="primary"
+          onClick={() => form.submit()}
+          icon={<CheckOutlined />}
+          size="large"
+          className="btn-submit"
+        >
+          Cập nhật tour
+        </Button>
+      )}
+    </div>
+  );
 
   return (
     <>
@@ -295,9 +372,10 @@ function EditTour(props) {
         title="Chỉnh sửa tour"
         open={showModal}
         onCancel={handleCancel}
-        footer={null}
+        footer={modalFooter}
         destroyOnHidden={true}
         width={900}
+        wrapClassName={previewOpen ? "no-scroll-modal" : ""}
       >
         <Form
           form={form}
@@ -306,12 +384,22 @@ function EditTour(props) {
           onFinish={handleSubmit}
           layout="vertical"
         >
-          <div className="form-grid-layout">
-            {/* Cột trái: các trường chính */}
-            <FormMainInputs />
+          <Steps
+            current={currentStep}
+            items={[
+              { title: "Thông tin" },
+              { title: "Hình ảnh" },
+              { title: "Lộ trình" },
+            ]}
+            style={{ marginBottom: 24 }}
+          />
 
-            {/* Cột phải: cấu hình + upload */}
-            <FormSideConfigs
+          <div style={{ display: currentStep === 0 ? "block" : "none" }}>
+            <Step1Info />
+          </div>
+
+          <div style={{ display: currentStep === 1 ? "block" : "none" }}>
+            <Step2Images
               thumbnailFileList={thumbnailFileList}
               imagesFileList={imagesFileList}
               onThumbnailChange={handleThumbnailChange}
@@ -320,28 +408,8 @@ function EditTour(props) {
             />
           </div>
 
-          <div
-            className="form-action-footer"
-            style={{
-              marginTop: "20px",
-              display: "flex",
-              justifyContent: "flex-end",
-              gap: "10px",
-            }}
-          >
-            <Button onClick={handleCancel} size="large">
-              Hủy
-            </Button>
-            <Button
-              loading={loading}
-              type="primary"
-              htmlType="submit"
-              icon={<CheckOutlined />}
-              size="large"
-              className="btn-submit"
-            >
-              Cập nhật tour
-            </Button>
+          <div style={{ display: currentStep === 2 ? "block" : "none" }}>
+            <Step3Detail />
           </div>
         </Form>
       </Modal>

@@ -69,60 +69,100 @@ function NavigationMenu(props) {
       </NavLink>
 
       {/* SERVICE */}
-      <Dropdown
-        menu={{ items: serviceItems, onClick: handleCloseMenu }}
-        trigger={["hover"]}
-      >
+      {isMobile ? (
         <NavLink
-          to="/service" // Click thẳng vào Service sẽ ra trang tổng này
-          className={getDropdownNavLinkClass("/service")}
+          to="/service"
+          className={navLinkActive}
           onClick={handleCloseMenu}
         >
-          {t("menu.service")} <DownOutlined style={{ fontSize: "10px" }} />
+          {t("menu.service")}
         </NavLink>
-      </Dropdown>
+      ) : (
+        <Dropdown
+          menu={{ items: serviceItems, onClick: handleCloseMenu }}
+          trigger={["hover"]}
+        >
+          <NavLink
+            to="/service"
+            className={getDropdownNavLinkClass("/service")}
+            onClick={handleCloseMenu}
+          >
+            {t("menu.service")} <DownOutlined style={{ fontSize: "10px" }} />
+          </NavLink>
+        </Dropdown>
+      )}
 
       {/* PACKAGE */}
-      <Dropdown
-        menu={{ items: packageItems, onClick: handleCloseMenu }}
-        trigger={["hover"]}
-      >
+      {isMobile ? (
         <NavLink
-          to="/package" // Click thẳng vào Package sẽ ra trang tổng này
-          className={getDropdownNavLinkClass("/package")}
+          to="/package"
+          className={navLinkActive}
           onClick={handleCloseMenu}
         >
-          {t("menu.package")} <DownOutlined style={{ fontSize: "10px" }} />
+          {t("menu.package")}
         </NavLink>
-      </Dropdown>
+      ) : (
+        <Dropdown
+          menu={{ items: packageItems, onClick: handleCloseMenu }}
+          trigger={["hover"]}
+        >
+          <NavLink
+            to="/package"
+            className={getDropdownNavLinkClass("/package")}
+            onClick={handleCloseMenu}
+          >
+            {t("menu.package")} <DownOutlined style={{ fontSize: "10px" }} />
+          </NavLink>
+        </Dropdown>
+      )}
 
       {/* BLOG */}
-      <Dropdown
-        menu={{ items: blogItems, onClick: handleCloseMenu }}
-        trigger={["hover"]}
-      >
+      {isMobile ? (
         <NavLink
-          to="/blog" // Click thẳng vào Blog sẽ ra trang tổng này
-          className={getDropdownNavLinkClass("/blog")}
+          to="/blog"
+          className={navLinkActive}
           onClick={handleCloseMenu}
         >
-          {t("menu.blog")} <DownOutlined style={{ fontSize: "10px" }} />
+          {t("menu.blog")}
         </NavLink>
-      </Dropdown>
+      ) : (
+        <Dropdown
+          menu={{ items: blogItems, onClick: handleCloseMenu }}
+          trigger={["hover"]}
+        >
+          <NavLink
+            to="/blog"
+            className={getDropdownNavLinkClass("/blog")}
+            onClick={handleCloseMenu}
+          >
+            {t("menu.blog")} <DownOutlined style={{ fontSize: "10px" }} />
+          </NavLink>
+        </Dropdown>
+      )}
 
       {/* PAGES */}
-      <Dropdown
-        menu={{ items: pageItems, onClick: handleCloseMenu }}
-        trigger={isMobile ? ["hover"] : ["hover"]}
-      >
+      {isMobile ? (
         <NavLink
-          to="/pages" // Click thẳng vào Pages sẽ ra trang tổng này
-          className={getDropdownNavLinkClass("/pages")}
+          to="/pages"
+          className={navLinkActive}
           onClick={handleCloseMenu}
         >
-          {t("menu.pages")} <DownOutlined style={{ fontSize: "10px" }} />
+          {t("menu.pages")}
         </NavLink>
-      </Dropdown>
+      ) : (
+        <Dropdown
+          menu={{ items: pageItems, onClick: handleCloseMenu }}
+          trigger={["hover"]}
+        >
+          <NavLink
+            to="/pages"
+            className={getDropdownNavLinkClass("/pages")}
+            onClick={handleCloseMenu}
+          >
+            {t("menu.pages")} <DownOutlined style={{ fontSize: "10px" }} />
+          </NavLink>
+        </Dropdown>
+      )}
 
       <NavLink
         to="/contact"

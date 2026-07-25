@@ -9,8 +9,9 @@
 // --- Box Model Reset ---
 html {
   scrollbar-gutter: stable;
-  overflow-x: clip;
 }
+
+
 
 *,
 *::before,
@@ -34,7 +35,6 @@ body {
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
-  overflow-x: clip;
 }
 
 // --- Typography Reset ---
@@ -84,4 +84,10 @@ button {
   background: none;
   padding: 0;
   font-family: inherit;
+}
+
+// --- Prevent scroll chaining for Modals and Image Previews ---
+.ant-modal-wrap,
+.ant-image-preview-wrap {
+  overscroll-behavior: contain;
 }

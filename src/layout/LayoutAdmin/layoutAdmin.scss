@@ -2,6 +2,7 @@
 @use "../../styles/mixins" as *;
 
 .layout-admin {
+  overflow-x: clip;
   .header {
     display: flex;
     border-bottom: 1px solid $border-gray;

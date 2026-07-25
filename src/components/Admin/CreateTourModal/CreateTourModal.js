@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Form, Button, Modal, Image, message } from "antd";
+import { Form, Button, Modal, Image, message, Steps } from "antd";
 import { PlusOutlined, CheckOutlined, RedoOutlined } from "@ant-design/icons";
 import { createTour } from "../../../services/tour";
-import FormMainInputs from "./FormMainInputs";
-import FormSideConfigs from "./FormSideConfigs";
+import Step1Info from "./Step1Info";
+import Step2Images from "./Step2Images";
+import Step3Detail from "./Step3Detail";
 import "../../../styles/AdminModal.scss";
 
 function CreateTourModal(props) {
@@ -12,6 +13,7 @@ function CreateTourModal(props) {
   const [messageApi, contextHolder] = message.useMessage();
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [currentStep, setCurrentStep] = useState(0);
 
   // File list cho thumbnail (single) và images (multiple)
   const [thumbnailFileList, setThumbnailFileList] = useState([]);
@@ -28,6 +30,7 @@ function CreateTourModal(props) {
     setThumbnailFileList([]);
     setImagesFileList([]);
     setShowModal(false);
+    setCurrentStep(0);
   };
 
   const handleResetAll = () => {
@@ -60,6 +63,38 @@ function CreateTourModal(props) {
     }
     setPreviewSrc(file.preview);
     setPreviewOpen(true);
+  };
+
+  const handleNextStep = async () => {
+    try {
+      if (currentStep === 0) {
+        await form.validateFields([
+          "name",
+          "slug",
+          "price",
+          "quantity",
+          "sold",
+          "departurePlace",
+          "destination",
+          "startDate",
+          "endDate",
+          "status",
+          "category",
+          "transport",
+          "shortDesc",
+        ]);
+      } else if (currentStep === 1) {
+        // Có thể thêm logic kiểm tra ảnh ở đây nếu muốn
+      }
+      messageApi.success(`Đã lưu thông tin Bước ${currentStep + 1}, mời nhập tiếp!`);
+      setCurrentStep(currentStep + 1);
+    } catch (error) {
+      // Validate failed
+    }
+  };
+
+  const handlePrevStep = () => {
+    setCurrentStep(currentStep - 1);
   };
 
   const handleSubmit = async (values) => {
@@ -118,6 +153,7 @@ function CreateTourModal(props) {
         messageApi.success("Tạo tour mới thành công!");
         handleResetAll();
         setShowModal(false);
+        setCurrentStep(0);
         onReload();
       } else {
         messageApi.error(res?.message || "Tạo tour không thành công!");
@@ -128,6 +164,44 @@ function CreateTourModal(props) {
       setLoading(false);
     }
   };
+
+  const modalFooter = (
+    <div className="form-action-footer" style={{ borderTop: 'none', paddingTop: 0, marginTop: 0 }}>
+      <Button
+        className="btn-reset"
+        icon={<RedoOutlined />}
+        onClick={handleResetAll}
+        size="large"
+      >
+        Làm mới form
+      </Button>
+
+      <div style={{ display: "flex", gap: "10px" }}>
+        {currentStep > 0 && (
+          <Button onClick={handlePrevStep} size="large">
+            Trở lại
+          </Button>
+        )}
+        {currentStep < 2 && (
+          <Button type="primary" onClick={handleNextStep} size="large">
+            Tiếp tục
+          </Button>
+        )}
+        {currentStep === 2 && (
+          <Button
+            loading={loading}
+            type="primary"
+            onClick={() => form.submit()}
+            icon={<CheckOutlined />}
+            size="large"
+            className="btn-submit"
+          >
+            Tạo tour
+          </Button>
+        )}
+      </div>
+    </div>
+  );
 
   return (
     <>
@@ -154,9 +228,10 @@ function CreateTourModal(props) {
         title="Thêm tour mới"
         open={showModal}
         onCancel={handleCancel}
-        footer={null}
+        footer={modalFooter}
         destroyOnHidden={true}
         width={900}
+        wrapClassName={previewOpen ? "no-scroll-modal" : ""}
       >
         <Form
           form={form}
@@ -166,12 +241,22 @@ function CreateTourModal(props) {
           layout="vertical"
           initialValues={{ status: "ACTIVE", sold: 0 }}
         >
-          <div className="form-grid-layout">
-            {/* Cột trái: các trường chính */}
-            <FormMainInputs />
+          <Steps
+            current={currentStep}
+            items={[
+              { title: "Thông tin" },
+              { title: "Hình ảnh" },
+              { title: "Lộ trình" },
+            ]}
+            style={{ marginBottom: 24 }}
+          />
 
-            {/* Cột phải: cấu hình + upload */}
-            <FormSideConfigs
+          <div style={{ display: currentStep === 0 ? "block" : "none" }}>
+            <Step1Info />
+          </div>
+
+          <div style={{ display: currentStep === 1 ? "block" : "none" }}>
+            <Step2Images
               thumbnailFileList={thumbnailFileList}
               imagesFileList={imagesFileList}
               onThumbnailChange={handleThumbnailChange}
@@ -180,25 +265,8 @@ function CreateTourModal(props) {
             />
           </div>
 
-          <div className="form-action-footer">
-            <Button
-              className="btn-reset"
-              icon={<RedoOutlined />}
-              onClick={handleResetAll}
-              size="large"
-            >
-              Làm mới form
-            </Button>
-            <Button
-              loading={loading}
-              type="primary"
-              htmlType="submit"
-              icon={<CheckOutlined />}
-              size="large"
-              className="btn-submit"
-            >
-              Tạo tour
-            </Button>
+          <div style={{ display: currentStep === 2 ? "block" : "none" }}>
+            <Step3Detail />
           </div>
         </Form>
       </Modal>

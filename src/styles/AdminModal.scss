@@ -75,6 +75,39 @@
       }
     }
   }
+
+  // Large uploader for Step 2 images
+  .large-uploader {
+    .ant-upload.ant-upload-select {
+      height: 150px;
+      border-width: 2px;
+      width: 100%;
+      
+      .upload-btn-inner {
+        .icon-blue {
+          font-size: 32px;
+        }
+        .upload-text {
+          font-size: 14px;
+          margin-top: 8px;
+        }
+      }
+    }
+    
+    // Sửa lỗi ảnh bị bóp dẹp (do wrapper của antd)
+    .ant-upload-list-picture-card-container {
+      width: 150px !important;
+      height: 150px !important;
+      margin-right: 16px;
+      margin-bottom: 16px;
+    }
+    
+    .ant-upload-list-picture-card .ant-upload-list-item {
+      width: 100% !important;
+      height: 100% !important;
+      padding: 8px;
+    }
+  }
 }
 
 // --- Upload button inner content ---
@@ -133,14 +166,18 @@
 
 // Modal width responsive
 .ant-modal {
+  padding-bottom: 24px !important;
+
   @include tablet {
     max-width: calc(100vw - 32px) !important;
-    margin: 16px auto !important;
+    margin: 0 auto !important;
+    top: 16px !important;
   }
 
   @include mobile {
     max-width: calc(100vw - 16px) !important;
-    margin: 8px auto !important;
+    margin: 0 auto !important;
+    top: 8px !important;
   }
 }
 
@@ -152,38 +189,12 @@
 }
 
 .ant-modal-body {
-  @include tablet {
-    max-height: 80vh;
-    overflow-y: auto;
-  }
+  // Let the modal grow and use outer scrollbar
+  padding-bottom: 24px;
 }
 
-// ============================================================
-// React Quill Editor
-// ============================================================
-.ql-container {
-  min-height: 200px;
-  font-size: 15px;
-  font-family: inherit;
-  
-  .ql-editor {
-    min-height: 200px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    word-break: break-word;
-    white-space: pre-wrap;
-    max-width: 100%;
-  }
+// Lớp CSS khóa cuộn Modal khi Image Preview đang mở
+.no-scroll-modal {
+  overflow: hidden !important;
 }
 
-.ql-toolbar.ql-snow {
-  border-top-left-radius: $radius-sm;
-  border-top-right-radius: $radius-sm;
-  border-color: $border-color;
-}
-
-.ql-container.ql-snow {
-  border-bottom-left-radius: $radius-sm;
-  border-bottom-right-radius: $radius-sm;
-  border-color: $border-color;
-}

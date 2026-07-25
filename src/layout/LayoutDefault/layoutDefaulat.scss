@@ -1,6 +1,10 @@
 @use "../../styles/variables" as *;
 @use "../../styles/mixins" as *;
 
+.layout-default {
+  overflow-x: clip;
+}
+
 .sub-page-banner {
   position: relative;
   width: 100%;
