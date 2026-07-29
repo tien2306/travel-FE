@@ -1,260 +1,704 @@
 @use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
 
-.product-detail-page {
-  padding: 40px 0 80px;
-  background-color: $bg-page;
-  color: $text-body;
-  font-family: $font-family-base;
+// ============================================================
+// TOUR DETAIL PAGE — Trang chi tiết tour
+// Đồng nhất style với các component con (Gallery, Info, Reviews, QA, Notes)
+// ============================================================
 
-  .pd-container {
-    max-width: 1200px;
+.tour-detail {
+  background: $bg-page;
+  min-height: 100vh;
+  padding-bottom: 48px;
+
+  &__container {
+    max-width: 1440px;
     margin: 0 auto;
-    padding: 0 15px;
+    padding: 0 20px;
+
+    @include mobile {
+      padding: 0 12px;
+    }
   }
 
-  .pd-breadcrumb {
-    margin-bottom: 24px;
-    font-size: 14px;
-    padding: 0;
-    background: transparent;
-    border: none;
-    box-shadow: none;
+  // --- Breadcrumb ---
+  &__breadcrumb {
+    padding: 14px 0;
 
     .ant-breadcrumb-link {
       a {
         color: $text-muted;
+        font-size: 13px;
         transition: $transition-fast;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
 
         &:hover {
           color: $primary-color;
-          background-color: transparent;
         }
       }
+
+      > span:last-child {
+        color: $text-heading;
+        font-weight: 600;
+        font-size: 13px;
+      }
     }
-    .current {
-      color: $text-heading;
-      font-weight: 600;
-    }
+
     .ant-breadcrumb-separator {
       color: $text-light;
-      margin: 0 8px;
     }
   }
 
-  .pd-main-section {
+  // --- Top Section: Gallery + Info ---
+  &__top {
+    display: grid;
+    // Chia đôi 50-50 để ảnh to rõ trên mọi màn hình (laptop, PC)
+    grid-template-columns: 1fr 1fr; 
+    gap: 40px;
     margin-bottom: 40px;
+    align-items: start; // Không để 2 cột bị kéo giãn (stretch) height bằng nhau nếu nội dung chênh lệch
+
+    @include desktop-sm { // <= 992px
+      gap: 24px;
+    }
+
+    @include tablet { // <= 768px
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
   }
 
-  // MÔ TẢ CHI TIẾT
-  .pd-content-section {
-    background: transparent;
-    border: none;
-    padding: 0;
-    box-shadow: none;
-    margin-top: 50px;
+  &__left,
+  &__right {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0; // Fix lỗi Swiper làm vỡ layout CSS Grid
+  }
 
-    .section-title {
-      font-size: 24px;
-      font-weight: 800;
+  // --- Loading / Not Found ---
+  &__loading,
+  &__not-found {
+    @include flex-center;
+    flex-direction: column;
+    min-height: 50vh;
+    gap: 16px;
+
+    h3 {
+      font-size: 18px;
       color: $text-heading;
-      margin-bottom: 24px;
+    }
+  }
+
+  &__btn-back {
+    display: inline-block;
+    padding: 10px 24px;
+    background: $primary-color;
+    color: #fff;
+    border-radius: $radius-md;
+    font-weight: 600;
+    font-size: 14px;
+    transition: $transition-base;
+
+    &:hover {
+      background: $color-blue-hover;
+      color: #fff;
+    }
+  }
+
+  // --- Tab Nav (sticky — tất cả màn hình) ---
+  &__tabs {
+    position: sticky;
+    top: 72px;
+    z-index: 100;
+    padding: 0;
+    margin-bottom: 32px;
+    background: $bg-page;
+    box-shadow: 0 1px 0 0 $border-color;
+
+    @include mobile {
+      top: 60px; // Header mobile thường thấp hơn desktop
+    }
+  }
+
+  &__tab-list {
+    display: flex;
+    gap: 32px;
+    width: 100%;
+    margin: 0;
+
+    @include mobile {
+      gap: 16px;
+      overflow-x: auto;
+      white-space: nowrap;
+
+      // Ẩn thanh cuộn
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  }
+
+  &__tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: $text-muted;
+    background: transparent;
+    cursor: pointer;
+    transition: $transition-fast;
+    border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: 0; // Xóa bo góc
+
+    .anticon {
+      font-size: 16px;
+    }
+
+    &:hover {
+      color: $primary-color;
+    }
+
+    &--active {
+      color: $primary-color;
+      border-bottom-color: $primary-color;
+    }
+
+    @include mobile {
+      padding: 12px 0;
+      font-size: 14px;
+
+      .anticon {
+        display: none;
+      }
+    }
+  }
+
+  // --- Section Wrapper ---
+  &__section {
+    scroll-margin-top: 180px;
+    margin-bottom: 24px;
+
+    @include mobile {
+      margin-bottom: 20px;
+    }
+
+    .ant-collapse-ghost {
+      > .ant-collapse-item {
+        > .ant-collapse-header {
+          padding: 0 0 16px 0 !important;
+          align-items: center;
+        }
+        > .ant-collapse-content {
+          > .ant-collapse-content-box {
+            padding: 16px 0 0 0 !important;
+          }
+        }
+      }
+    }
+  }
+
+  &__panel {
+    display: flex;
+    align-items: baseline;
+    width: 100%;
+    border-bottom: 1px solid $border-color;
+    padding-bottom: 16px;
+
+    &-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: $font-size-section-title;
+      font-weight: 700;
+      color: $text-heading;
+
+      @include mobile {
+        font-size: $font-size-section-title-sm;
+      }
+
+      &::before {
+        content: "";
+        display: block;
+        width: 4px;
+        height: 20px;
+        background: $primary-color;
+        border-radius: 2px;
+      }
+    }
+
+    &-action {
+      font-size: 15px;
+      color: $text-muted;
+      margin-left: 8px;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    &:hover &-action {
+      color: $primary-color;
+    }
+  }
+
+  // --- Section Title ---
+  &__title {
+    font-size: $font-size-section-title;
+    font-weight: 700;
+    color: $text-heading;
+    margin: 0;
+
+    @include mobile {
+      font-size: $font-size-section-title-sm;
+    }
+
+    &--bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+
+      &::before {
+        content: "";
+        display: block;
+        width: 4px;
+        height: 20px;
+        background: $primary-color;
+        border-radius: 2px;
+      }
+    }
+  }
+
+  &__no-content {
+    text-align: center;
+    color: $text-muted;
+    font-style: italic;
+    padding: 32px 0;
+    font-size: 14px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ============================================================
+// TINYMCE CONTENT — Override global reset
+// ============================================================
+.tour-detail__html-content {
+  font-family: $font-family-base;
+  font-size: 15px;
+  line-height: 1.8;
+  color: $text-body;
+  word-wrap: break-word;
+
+  > *:first-child {
+    margin-top: 0 !important;
+  }
+  > *:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  // --- Headings ---
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: $text-heading;
+    font-weight: 700;
+    line-height: 1.4;
+    margin: 24px 0 12px;
+    display: block;
+
+    &:first-child {
       margin-top: 0;
     }
+  }
 
-    .content-box {
-      margin-top: 24px;
-      
-      .timeline-item {
-        position: relative;
-        padding-left: 32px;
-        margin-left: 12px;
-        padding-bottom: 32px;
-        border-left: 2px dashed $color-timeline;
-        
-        // Xóa đường nối ở phần tử cuối cùng để không bị lố
-        &:last-child {
-          border-left-color: transparent;
-          padding-bottom: 0;
-        }
+  h1 {
+    font-size: 26px;
+    font-weight: 800;
+    border-bottom: 2px solid $border-color;
+    padding-bottom: 8px;
+  }
+  h2 {
+    font-size: 22px;
+    border-bottom: 1px solid $border-color;
+    padding-bottom: 6px;
+  }
+  h3 {
+    font-size: 19px;
+  }
+  h4 {
+    font-size: 17px;
+    color: $primary-color;
+  }
+  h5 {
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: $text-muted;
+  }
+  h6 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: $text-muted;
+  }
 
-        // Chấm tròn mốc thời gian
-        &::before {
-          content: '';
-          position: absolute;
-          top: 6px; // Canh thẳng hàng với đỉnh của đoạn chữ
-          left: -9px; // Căn giữa đúng 100% với viền 2px
-          width: 16px;
-          height: 16px;
-          border-radius: 50%;
-          background-color: $bg-white;
-          border: 4px solid $color-timeline;
-          box-shadow: 0 0 0 4px rgba(250, 173, 20, 0.2); // Hào quang tỏa sáng nhẹ
-        }
+  // --- Paragraph ---
+  p {
+    margin: 0 0 14px;
+    line-height: 1.8;
+    color: $text-body;
+    font-size: 15px;
 
-        .raw-text {
-          margin: 0;
-          white-space: pre-wrap;
-          font-family: $font-family-base;
-          font-size: 16px;
-          line-height: 1.7;
-          color: $text-body;
+    &:empty {
+      display: none;
+    }
+  }
+
+  // --- Links ---
+  a {
+    color: $primary-color;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: $transition-fast;
+    font-weight: 500;
+
+    &:hover {
+      color: $color-blue-hover;
+    }
+  }
+
+  // --- Text formatting ---
+  strong,
+  b {
+    font-weight: 700;
+    color: $text-heading;
+  }
+  em,
+  i {
+    font-style: italic;
+  }
+  u {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  s,
+  strike,
+  del {
+    text-decoration: line-through;
+    color: $text-muted;
+  }
+
+  // --- Lists (override global reset) ---
+  ul,
+  ol {
+    margin: 14px 0;
+    padding-left: 24px;
+    display: block;
+
+    li {
+      margin-bottom: 6px;
+      line-height: 1.8;
+      display: list-item;
+      color: $text-body;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    ul,
+    ol {
+      margin: 6px 0 0;
+      padding-left: 20px;
+    }
+  }
+
+  ul {
+    list-style: disc;
+    ul {
+      list-style: circle;
+    }
+    ul ul {
+      list-style: square;
+    }
+  }
+
+  ol {
+    list-style: decimal;
+    ol {
+      list-style: lower-alpha;
+    }
+    ol ol {
+      list-style: lower-roman;
+    }
+  }
+
+  // --- Table ---
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+    border: 1px solid $border-color;
+    border-radius: $radius-md;
+    overflow: hidden;
+
+    thead {
+      tr {
+        background: $bg-icon-box;
+
+        th {
+          padding: 10px 14px;
+          text-align: left;
+          font-weight: 700;
+          color: $text-heading;
+          border-bottom: 2px solid $primary-color;
+          border-right: 1px solid $border-color;
+
+          &:last-child {
+            border-right: none;
+          }
         }
       }
     }
 
-    .tour-detail-html-content {
-      position: relative;
-      padding-left: 16px; // Giảm từ 32px xuống 16px cho vừa vặn
-      font-family: $font-family-base;
-      font-size: 16px;
-      line-height: 1.8;
+    tbody {
+      tr {
+        border-bottom: 1px solid $border-color;
+        transition: $transition-fast;
+
+        &:nth-child(even) {
+          background: color-mix(in srgb, var(--primary-color) 2%, transparent);
+        }
+
+        &:hover {
+          background: color-mix(in srgb, var(--primary-color) 5%, transparent);
+        }
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        td {
+          padding: 9px 14px;
+          color: $text-body;
+          border-right: 1px solid $border-color;
+
+          &:last-child {
+            border-right: none;
+          }
+        }
+      }
+    }
+  }
+
+  // --- Images ---
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: $radius-md;
+    margin: 14px auto;
+    display: block;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  }
+
+  // --- Figure ---
+  figure {
+    margin: 16px 0;
+    text-align: center;
+
+    img {
+      margin: 0 auto;
+    }
+
+    figcaption {
+      margin-top: 8px;
+      font-size: 13px;
+      color: $text-muted;
+      font-style: italic;
+    }
+  }
+
+  // --- Blockquote ---
+  blockquote {
+    margin: 16px 0;
+    padding: 12px 18px;
+    border-left: 4px solid $primary-color;
+    background: $bg-icon-box;
+    border-radius: 0 $radius-md $radius-md 0;
+    color: $text-secondary;
+    font-style: italic;
+
+    p {
+      margin: 0;
+      color: $text-secondary;
+    }
+
+    blockquote {
+      margin-top: 10px;
+      border-left-color: $text-muted;
+    }
+  }
+
+  // --- Code ---
+  pre {
+    margin: 14px 0;
+    padding: 12px 16px;
+    background: $bg-light;
+    border: 1px solid $border-color;
+    border-radius: $radius-md;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.6;
+
+    code {
+      padding: 0;
+      background: none;
       color: $text-body;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-      word-break: break-word;
+    }
+  }
 
-      // Đường kẻ dọc timeline chạy suốt nội dung
-      &::before {
-        content: '';
-        position: absolute;
-        top: 8px;
-        bottom: 8px;
-        left: 4px; // Điều chỉnh theo padding mới (trước là 12px)
-        width: 0;
-        border-left: 2px dashed $color-timeline;
-        z-index: 1;
+  code {
+    padding: 2px 6px;
+    background: $bg-icon-box;
+    border-radius: $radius-sm;
+    font-size: 0.9em;
+    color: $color-cps;
+    font-family: "Courier New", monospace;
+  }
+
+  // --- HR ---
+  hr {
+    border: none;
+    height: 1px;
+    background: $border-color;
+    margin: 20px 0;
+  }
+
+  // --- Media ---
+  iframe,
+  video {
+    max-width: 100%;
+    border-radius: $radius-md;
+    margin: 14px 0;
+    border: 1px solid $border-color;
+  }
+
+  // --- Mark ---
+  mark {
+    background: color-mix(in srgb, var(--color-timeline) 25%, transparent);
+    color: $text-heading;
+    padding: 2px 4px;
+    border-radius: $radius-sm;
+  }
+
+  // --- Indent (Quill/TinyMCE class) ---
+  .ql-indent-1 {
+    padding-left: 20px;
+  }
+  .ql-indent-2 {
+    padding-left: 40px;
+  }
+  .ql-indent-3 {
+    padding-left: 60px;
+  }
+  .ql-indent-4 {
+    padding-left: 80px;
+  }
+
+  // --- Text alignment ---
+  [style*="text-align: center"],
+  [style*="text-align:center"] {
+    text-align: center;
+  }
+  [style*="text-align: right"],
+  [style*="text-align:right"] {
+    text-align: right;
+  }
+  [style*="text-align: justify"],
+  [style*="text-align:justify"] {
+    text-align: justify;
+  }
+
+  // --- Responsive ---
+  @include tablet {
+    font-size: 14.5px;
+
+    h1 {
+      font-size: 22px;
+    }
+    h2 {
+      font-size: 19px;
+    }
+    h3 {
+      font-size: 17px;
+    }
+    h4 {
+      font-size: 15px;
+    }
+
+    p {
+      font-size: 14.5px;
+    }
+
+    table {
+      font-size: 13px;
+
+      th,
+      td {
+        padding: 8px 10px;
       }
+    }
+  }
 
-      // Bỏ đi custom counter của ol để dùng native
-      counter-reset: none;
+  @include mobile {
+    font-size: 14px;
+    line-height: 1.75;
 
-      p, h1, h2, h3, h4, h5, h6, ol, blockquote, img {
-        position: relative;
-        z-index: 2;
-      }
+    h1 {
+      font-size: 20px;
+    }
+    h2 {
+      font-size: 18px;
+    }
+    h3 {
+      font-size: 16px;
+    }
 
-      p {
-        margin-bottom: 0.8em;
-      }
+    ul,
+    ol {
+      padding-left: 18px;
+    }
 
-      h1, h2, h3, h4, h5, h6 {
-        position: relative;
-        z-index: 2;
-        color: $text-heading;
-        margin-top: 1em;
-        margin-bottom: 0.5em;
-        font-weight: 700;
-        line-height: 1.3;
-        line-height: 1.3;
-        
-        // Ngắt đường kẻ dọc khi có Heading
-        &::after {
-          content: '';
-          position: absolute;
-          top: -1em;    
-          bottom: -0.5em; 
-          left: -16px;    
-          width: 16px;    
-          background-color: $bg-page;
-          z-index: -1;
-        }
-      }
+    table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
 
-      h1 { font-size: 2.2em; }
-      h2 { font-size: 1.8em; }
-      h3 { font-size: 1.5em; }
-      h4 { font-size: 1.2em; }
+    img {
+      margin: 10px auto;
+    }
 
-      ul {
-        list-style: none;
-        padding-left: 0;
-        margin-top: 0.8em;
-        margin-bottom: 0.8em;
-        margin-bottom: 0.8em;
-        
-        li {
-          position: relative;
-          padding-left: 12px; // Đẩy nhẹ chữ của ul vào một chút so với thẻ p
-          margin-bottom: 0.8em;
-          z-index: 2;
-
-          &::before {
-            content: '';
-            position: absolute;
-            top: 6px; // Mặc định cho chữ 16px
-            left: -21px; // Căn giữa dấu chấm vào đường kẻ dọc mới ở left: 4px
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background-color: $bg-page;
-            border: 4px solid $color-timeline;
-            box-shadow: 0 0 0 4px rgba(250, 173, 20, 0.2);
-            transition: top 0.2s ease;
-          }
-
-          // Tự động căn giữa dấu chấm nếu bên trong có chữ to
-          &:has(.ql-size-large)::before {
-            top: 10px;
-          }
-          
-          &:has(.ql-size-huge)::before {
-            top: 18px;
-          }
-        }
-      }
-
-      ol {
-        list-style: decimal;
-        padding-left: 2em;
-        margin-bottom: 0.8em;
-        
-        li {
-          margin-bottom: 0.4em;
-          padding-left: 0.2em;
-        }
-
-        // Cấp 2
-        ol {
-          list-style: lower-alpha;
-          margin-top: 0.4em;
-          
-          // Cấp 3
-          ol {
-            list-style: lower-roman;
-          }
-        }
-      }
-
-      // Vẫn giữ padding cho các class indent (dành cho p, span...)
-      .ql-indent-1 { padding-left: 3em; }
-      .ql-indent-2 { padding-left: 6em; }
-      .ql-indent-3 { padding-left: 9em; }
-      .ql-indent-4 { padding-left: 12em; }
-      .ql-indent-5 { padding-left: 15em; }
-      .ql-indent-6 { padding-left: 18em; }
-      .ql-indent-7 { padding-left: 21em; }
-      .ql-indent-8 { padding-left: 24em; }
-
-      strong, b {
-        font-weight: 600;
-      }
-
-      em, i {
-        font-style: italic;
-      }
-
-      a {
-        color: $primary-color;
-        text-decoration: underline;
-      }
-
-      // Hỗ trợ cỡ chữ (Size) từ trình soạn thảo
-      .ql-size-small { font-size: 0.75em; line-height: 1.5; }
-      .ql-size-large { font-size: 1.5em; line-height: 1.4; }
-      .ql-size-huge { font-size: 2.5em; line-height: 1.3; }
+    blockquote {
+      padding: 10px 14px;
+      margin: 10px 0;
     }
   }
 }

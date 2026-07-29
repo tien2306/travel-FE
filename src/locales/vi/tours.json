@@ -61,7 +61,96 @@
     "bookNow": "ĐẶT TOUR NGAY",
     "bookSub": "Giữ chỗ tức thời - Thanh toán an toàn",
     "fullyBookedBtn": "TẠM HẾT CHỖ",
-    "contactSub": "Vui lòng liên hệ để biết thêm chi tiết"
+    "contactSub": "Vui lòng liên hệ để biết thêm chi tiết",
+    "notesData": [
+      {
+        "label": "Giá tour bao gồm",
+        "content": "Vé máy bay khứ hồi.\nKhách sạn tiêu chuẩn 4 sao.\nCác bữa ăn theo chương trình.\nXe đưa đón tham quan.\nHướng dẫn viên tiếng Việt nhiệt tình, kinh nghiệm.\nBảo hiểm du lịch."
+      },
+      {
+        "label": "Giá tour không bao gồm",
+        "content": "Chi phí làm hộ chiếu, visa (nếu có).\nChi phí cá nhân: điện thoại, giặt ủi, hành lý quá cước, tham quan ngoài chương trình.\nTiền tip cho hướng dẫn viên và tài xế địa phương."
+      },
+      {
+        "label": "Thông tin Visa",
+        "content": "Hộ chiếu còn hạn trên 6 tháng tính đến ngày kết thúc tour.\nQuý khách vui lòng cung cấp đầy đủ hồ sơ theo yêu cầu của Lãnh sự quán để xin visa."
+      },
+      {
+        "label": "Lưu ý giá trẻ em",
+        "content": "Trẻ em dưới 2 tuổi: 30% giá tour (ngủ chung giường với người lớn).\nTrẻ em từ 2 đến dưới 11 tuổi: 75% giá tour (ngủ chung giường với người lớn).\nTrẻ em từ 11 tuổi trở lên: 100% giá tour người lớn."
+      },
+      {
+        "label": "Điều kiện thanh toán",
+        "content": "Đặt cọc 50% tổng giá trị tour ngay khi đăng ký.\nThanh toán số tiền còn lại trước ngày khởi hành 15 ngày làm việc."
+      },
+      {
+        "label": "Điều kiện đăng ký",
+        "content": "Khách hàng điền đầy đủ thông tin vào phiếu đăng ký.\nCung cấp bản sao hộ chiếu/CMND/CCCD rõ nét."
+      },
+      {
+        "label": "Lưu ý về chuyển hoặc hủy tour",
+        "content": "Chuyển đổi sang tour khác sẽ áp dụng phí theo quy định.\nViệc hủy tour phải được thông báo bằng văn bản và chịu phí hủy."
+      },
+      {
+        "label": "Các điều kiện hủy tour đối với ngày thường",
+        "content": "Hủy trước 30 ngày: mất tiền cọc.\nHủy từ 15-29 ngày: mất 50% giá tour.\nHủy từ 07-14 ngày: mất 75% giá tour.\nHủy trong vòng 06 ngày: mất 100% giá tour."
+      },
+      {
+        "label": "Các điều kiện hủy tour đối với ngày lễ, Tết",
+        "content": "Hủy trước 45 ngày: mất tiền cọc.\nHủy từ 30-44 ngày: mất 75% giá tour.\nHủy trong vòng 29 ngày: mất 100% giá tour."
+      },
+      {
+        "label": "Trường hợp bất khả kháng",
+        "content": "Trong trường hợp thiên tai, dịch bệnh, đình công, chuyến bay bị hủy... Công ty sẽ giữ quyền thay đổi lộ trình hoặc hủy tour và hoàn trả tiền cho khách hàng sau khi đã trừ các chi phí dịch vụ đã thực hiện."
+      },
+      {
+        "label": "Liên hệ",
+        "content": "Hotline hỗ trợ: 1900 xxxx.\nEmail: support@travelaway.vn"
+      }
+    ],
+    "actionFavorite": "Yêu thích",
+    "actionQA": "Hỏi đáp",
+    "actionReview": "Đánh giá",
+    "qaTitle": "Đặt câu hỏi về tour này",
+    "qaPlaceholder": "Mời bạn để lại câu hỏi...",
+    "qaSubmit": "GỬI CÂU HỎI",
+    "qaReply": "Phản hồi",
+    "qaReport": "Báo cáo vi phạm",
+    "qaCancel": "Hủy",
+    "qaReplyPlaceholder": "Thêm phản hồi...",
+    "qaViewReplies": "Xem {{count}} phản hồi",
+    "qaHideReplies": "Ẩn phản hồi",
+    "qaLoginTitle": "Đăng nhập để tham gia?",
+    "qaLoginText": "Vui lòng đăng nhập để có thể đặt câu hỏi hoặc phản hồi.",
+    "qaLoginBtn": "Đăng nhập",
+    "qaCloseBtn": "Đóng",
+    "rvBasedOn": "Dựa trên {{count}} đánh giá",
+    "rvFilterAll": "Tất cả đánh giá",
+    "rvFilterMedia": "Có hình ảnh/video",
+    "rvFilterStar": "{{count}} Sao",
+    "rvWriteBtn": "Viết đánh giá",
+    "rvCancelBtn": "Hủy",
+    "rvFormTitle": "Gửi đánh giá của bạn",
+    "rvFormLabel": "Đánh giá:",
+    "rvFormPlaceholder": "Mời bạn chia sẻ cảm nhận về tour...",
+    "rvFormUpload": "Tải ảnh/video lên",
+    "rvFormSubmit": "Gửi đánh giá",
+    "rvNoReview": "Chưa có đánh giá nào cho hạng mục này.",
+    "rvLoginTitle": "Đăng nhập để đánh giá?",
+    "rvLoginText": "Vui lòng đăng nhập để có thể chia sẻ trải nghiệm của bạn.",
+    "tabReviews": "Đánh giá",
+    "tabQA": "Hỏi đáp",
+    "collapseBtn": "(Thu Gọn)",
+    "expandBtn": "(Xem Thêm)",
+    "notesTitle": "Những thông tin cần lưu ý",
+    "reviewsTitle": "Đánh giá khách hàng",
+    "qaTitleHeader": "Hỏi đáp",
+    "favLoginTitle": "Đăng nhập để lưu tour?",
+    "favLoginText": "Vui lòng đăng nhập để lưu tour này vào danh sách yêu thích của bạn.",
+    "favRemoveSuccess": "Đã xoá khỏi danh sách yêu thích",
+    "favAddSuccess": "Đã thêm vào danh sách yêu thích ❤️",
+    "favRemoveTitle": "Bỏ yêu thích",
+    "favAddTitle": "Thêm yêu thích"
   },
   "status": {
     "full": "Hết Chỗ",
@@ -78,5 +167,13 @@
     "class": "Hạng:",
     "duration": "Thời gian:",
     "seatsLeft": "Còn {{count}} chỗ"
+  },
+  "related": {
+    "title": "Tour Tương Tự",
+    "from": "Từ",
+    "itinerary": "Lịch trình",
+    "departure": "Khởi hành",
+    "transport": "Phương tiện",
+    "viewMore": "Xem thêm +"
   }
 }

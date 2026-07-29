@@ -1,5 +1,6 @@
-import { Button, Popconfirm, message } from "antd";
+import { Button, Popconfirm } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
+import Swal from "sweetalert2";
 import { deleteTour } from "../../../services/tour";
 
 function DeleteTour(props) {
@@ -9,13 +10,13 @@ function DeleteTour(props) {
     try {
       const res = await deleteTour(record.key);
       if (res && res.success) {
-        message.success("Xóa tour thành công!");
+        Swal.fire({ toast: true, position: "top-end", icon: "success", title: "Xóa tour thành công!", timer: 1500, showConfirmButton: false });
         onReload();
       } else {
-        message.error("Xóa tour không thành công!");
+        Swal.fire({ toast: true, position: "top-end", icon: "error", title: "Xóa tour không thành công!", timer: 1500, showConfirmButton: false });
       }
     } catch (error) {
-      message.error("Lỗi hệ thống khi thực hiện xóa!");
+      Swal.fire({ toast: true, position: "top-end", icon: "error", title: "Lỗi hệ thống khi thực hiện xóa!", timer: 1500, showConfirmButton: false });
     }
   };
 

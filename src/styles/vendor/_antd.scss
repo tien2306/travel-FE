@@ -1,10 +1,20 @@
-@use "./variables" as *;
-@use "./mixins" as *;
+// ============================================================
+// VENDOR — ANTD OVERRIDES — src/styles/vendor/_antd.scss
+// Tập trung toàn bộ override Ant Design tại đây.
+// Import toàn cục qua global.scss — không cần import lại trong từng component.
+// ============================================================
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// --- Prevent scroll chaining for Modals and Image Previews ---
+.ant-modal-wrap,
+.ant-image-preview-wrap {
+  overscroll-behavior: contain;
+}
 
 // ============================================================
 // ADMIN MODAL FORM — Shared responsive styles
 // Dùng chung cho CreateTourModal và CreateCarouselModal
-// Import vào từng Modal component JS file
 // ============================================================
 
 // --- Layout 2 cột (desktop) ---
@@ -82,7 +92,7 @@
       height: 150px;
       border-width: 2px;
       width: 100%;
-      
+
       .upload-btn-inner {
         .icon-blue {
           font-size: 32px;
@@ -93,7 +103,7 @@
         }
       }
     }
-    
+
     // Sửa lỗi ảnh bị bóp dẹp (do wrapper của antd)
     .ant-upload-list-picture-card-container {
       width: 150px !important;
@@ -101,7 +111,7 @@
       margin-right: 16px;
       margin-bottom: 16px;
     }
-    
+
     .ant-upload-list-picture-card .ant-upload-list-item {
       width: 100% !important;
       height: 100% !important;
@@ -197,4 +207,3 @@
 .no-scroll-modal {
   overflow: hidden !important;
 }
-

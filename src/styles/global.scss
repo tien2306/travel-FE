@@ -1,93 +1,15 @@
 // ============================================================
 // GLOBAL STYLES — src/styles/global.scss
-// File này được import vào src/index.js để áp dụng toàn cục.
-// Chỉ chứa CSS reset và base styles — KHÔNG viết component styles tại đây.
+// Hub điều phối duy nhất — import vào src/index.js.
+// KHÔNG viết style trực tiếp tại đây, chỉ dùng @use để gom các partial.
 // ============================================================
+
+// --- Design tokens (biến + mixins) ---
 @use "./variables" as *;
 @use "./mixins" as *;
 
-// --- Box Model Reset ---
-html {
-  scrollbar-gutter: stable;
-}
+// --- Base reset (body, typography, link, button...) ---
+@use "./base/reset";
 
-
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-// --- Body Base ---
-body {
-  margin: 0;
-  padding: 0;
-  width: 100% !important;
-  padding-right: 0 !important;
-  font-family: $font-family-base;
-  font-size: $font-size-base;
-  color: $text-dark;
-  background-color: $bg-white;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  // Chuyển màu nền và chữ mượt khi toggle Dark/Light Mode
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
-}
-
-// --- Typography Reset ---
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin-top: 0;
-  font-weight: 700;
-}
-
-p {
-  margin-top: 0;
-}
-
-// --- Link Reset ---
-a {
-  text-decoration: none;
-  color: inherit;
-  transition: $transition-base;
-
-  &:hover {
-    text-decoration: none;
-  }
-}
-
-// --- Image Fluid ---
-img {
-  max-width: 100%;
-  display: block;
-}
-
-// --- List Reset ---
-ul,
-ol {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-// --- Button Reset ---
-button {
-  cursor: pointer;
-  border: none;
-  background: none;
-  padding: 0;
-  font-family: inherit;
-}
-
-// --- Prevent scroll chaining for Modals and Image Previews ---
-.ant-modal-wrap,
-.ant-image-preview-wrap {
-  overscroll-behavior: contain;
-}
+// --- Vendor overrides (Ant Design) ---
+@use "./vendor/antd";

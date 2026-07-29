@@ -65,7 +65,7 @@ function ToursAll() {
             <div className="tour-page__results">
               <TourListResults onPriceRangeUpdate={handlePriceRangeUpdate} />
             </div>
-            
+
             {/* Nút hiển thị bộ lọc dạng Drawer trên Mobile/Tablet */}
             <div className="tour-page__mobile-filter-bar">
               <div className="tour-page__mobile-filter-btn">
@@ -120,7 +120,7 @@ function ToursAll() {
             <SearchOutlined /> {t("search.button")}
           </span>
         }
-        placement="left"
+        placement="right"
         onClose={() => setSearchDrawerOpen(false)}
         open={searchDrawerOpen}
         width={250}

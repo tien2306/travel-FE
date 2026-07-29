@@ -1,5 +1,6 @@
-import { Button, Popconfirm, message } from "antd";
+import { Button, Popconfirm } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
+import Swal from "sweetalert2";
 import { deleteCarousel } from "../../../services/carousel";
 
 function DeleteCarousel(props) {
@@ -10,13 +11,13 @@ function DeleteCarousel(props) {
       // Gọi API xóa thông qua ID được truyền từ hàng dữ liệu của bảng
       const res = await deleteCarousel(record.key);
       if (res && res.success) {
-        message.success("Xóa banner thành công!");
+        Swal.fire({ toast: true, position: "top-end", icon: "success", title: "Xóa banner thành công!", timer: 1500, showConfirmButton: false });
         onReload(); // Kích hoạt làm mới lại danh sách ở file cha
       } else {
-        message.error("Xóa banner không thành công!");
+        Swal.fire({ toast: true, position: "top-end", icon: "error", title: "Xóa banner không thành công!", timer: 1500, showConfirmButton: false });
       }
     } catch (error) {
-      message.error("Lỗi hệ thống khi thực hiện xóa!");
+      Swal.fire({ toast: true, position: "top-end", icon: "error", title: "Lỗi hệ thống khi thực hiện xóa!", timer: 1500, showConfirmButton: false });
     }
   };
 

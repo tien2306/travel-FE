@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import {
-  message,
   Form,
   Input,
   InputNumber,
@@ -11,6 +10,7 @@ import {
   Image,
 } from "antd";
 import { EditOutlined, UploadOutlined } from "@ant-design/icons";
+import Swal from "sweetalert2";
 import TextArea from "antd/es/input/TextArea";
 import { updateCarousel } from "../../../services/carousel";
 import { patch } from "../../../utils/request";
@@ -21,7 +21,6 @@ function EditCarousel(props) {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
-  const [messageApi, contextHolder] = message.useMessage();
 
   // State preview ảnh
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -51,8 +50,21 @@ function EditCarousel(props) {
 
   const handleShowModal = () => setShowModal(true);
   const handleCancel = () => {
-    setShowModal(false);
-    form.resetFields();
+    Swal.fire({
+      title: "Bạn có chắc chắn muốn hủy?",
+      text: "Các thông tin chưa lưu sẽ bị mất!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Đồng ý thoát",
+      cancelButtonText: "Tiếp tục chỉnh sửa",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setShowModal(false);
+        form.resetFields();
+      }
+    });
   };
 
   const getValueFromFile = (e) => {
@@ -114,23 +126,14 @@ function EditCarousel(props) {
       }
 
       if (res && res.success) {
-        messageApi.open({
-          type: "success",
-          content: "Cập nhật banner thành công!",
-        });
+        Swal.fire({ toast: true, position: "top-end", icon: "success", title: "Cập nhật banner thành công!", timer: 1500, showConfirmButton: false });
         setShowModal(false);
         onReload();
       } else {
-        messageApi.open({
-          type: "error",
-          content: "Cập nhật không thành công từ máy chủ!",
-        });
+        Swal.fire({ toast: true, position: "top-end", icon: "error", title: "Cập nhật không thành công từ máy chủ!", timer: 1500, showConfirmButton: false });
       }
     } catch (error) {
-      messageApi.open({
-        type: "error",
-        content: "Lỗi kết nối hệ thống!",
-      });
+      Swal.fire({ toast: true, position: "top-end", icon: "error", title: "Lỗi kết nối hệ thống!", timer: 1500, showConfirmButton: false });
     } finally {
       setLoading(false);
     }
@@ -138,8 +141,6 @@ function EditCarousel(props) {
 
   return (
     <>
-      {contextHolder}
-
       {/* Image ẩn để kích hoạt preview lightbox */}
       {previewSrc && (
         <Image

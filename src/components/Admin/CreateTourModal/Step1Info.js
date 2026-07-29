@@ -1,9 +1,7 @@
 import { Form, Input, InputNumber, Row, Col, DatePicker, Select } from "antd";
-import QuillEditor from "../../Common/QuillEditor";
 
 function Step1Info() {
   const rule = [{ required: true, message: "Bắt buộc điền thông tin này!" }];
-
   return (
     <div className="step-content-container">
       <Form.Item label="Tên tour" name="name" rules={rule}>
@@ -16,11 +14,9 @@ function Step1Info() {
             label="Slug"
             name="slug"
             tooltip="Đường dẫn thân thiện cho SEO (vd: tour-da-lat-3-ngay)"
+            rules={rule}
           >
-            <Input
-              size="large"
-              placeholder="Nhập slug (tự sinh nếu bỏ trống)"
-            />
+            <Input size="large" placeholder="Nhập slug " />
           </Form.Item>
         </Col>
         <Col xs={24} sm={12}>
@@ -66,7 +62,7 @@ function Step1Info() {
 
       <Row gutter={16}>
         <Col xs={24} sm={12}>
-          <Form.Item label="Ngày khởi hành" name="startDate">
+          <Form.Item label="Ngày khởi hành" name="startDate" rules={rule}>
             <DatePicker
               style={{ width: "100%" }}
               size="large"
@@ -76,7 +72,7 @@ function Step1Info() {
           </Form.Item>
         </Col>
         <Col xs={24} sm={12}>
-          <Form.Item label="Ngày kết thúc" name="endDate">
+          <Form.Item label="Ngày kết thúc" name="endDate" rules={rule}>
             <DatePicker
               style={{ width: "100%" }}
               size="large"
@@ -89,13 +85,13 @@ function Step1Info() {
 
       <Row gutter={16}>
         <Col xs={24} sm={12}>
-          <Form.Item label="Nơi khởi hành" name="departurePlace">
+          <Form.Item label="Nơi khởi hành" name="departurePlace" rules={rule}>
             <Input size="large" placeholder="Ví dụ: TP. Hồ Chí Minh" />
           </Form.Item>
         </Col>
 
         <Col xs={24} sm={12}>
-          <Form.Item label="Điểm đến" name="destination">
+          <Form.Item label="Điểm đến" name="destination" rules={rule}>
             <Input size="large" placeholder="Ví dụ: Đà Lạt, Nha Trang..." />
           </Form.Item>
         </Col>
@@ -103,7 +99,7 @@ function Step1Info() {
 
       <Row gutter={16}>
         <Col xs={24} sm={12}>
-          <Form.Item label="Dòng tour" name="category">
+          <Form.Item label="Dòng tour" name="category" rules={rule}>
             <Select
               size="large"
               placeholder="Chọn dòng tour"
@@ -117,7 +113,7 @@ function Step1Info() {
           </Form.Item>
         </Col>
         <Col xs={24} sm={12}>
-          <Form.Item label="Phương tiện" name="transport">
+          <Form.Item label="Phương tiện" name="transport" rules={rule}>
             <Select
               size="large"
               placeholder="Chọn phương tiện"
@@ -145,9 +141,12 @@ function Step1Info() {
       </Row>
 
       <Form.Item label="Mô tả ngắn" name="shortDesc">
-        <QuillEditor
-          className="short-quill"
+        <Input.TextArea
+          rows={4}
+          size="large"
           placeholder="Nhập mô tả ngắn gọn, hấp dẫn cho tour..."
+          showCount
+          maxLength={500}
         />
       </Form.Item>
     </div>

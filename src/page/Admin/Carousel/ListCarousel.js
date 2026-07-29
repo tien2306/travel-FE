@@ -1,7 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
-import { Table, Switch, message, Image } from "antd";
+import { Table, Switch, Image } from "antd";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getCarousel, updateCarouselStatus } from "../../../services/carousel";
+import Swal from "sweetalert2";
 
 import EditCarousel from "./EditCarousel";
 import DeleteCarousel from "./DeleteCarousel";
@@ -39,7 +40,7 @@ function ListCarousel() {
         setPageSize(res.data.pagination.limit);
       }
     } catch (error) {
-      message.error("Lỗi khi tải danh sách banner!");
+      Swal.fire({ toast: true, position: "top-end", icon: "error", title: "Lỗi khi tải danh sách banner!", timer: 1500, showConfirmButton: false });
     } finally {
       setLoading(false);
     }
@@ -69,7 +70,7 @@ function ListCarousel() {
     try {
       const res = await updateCarouselStatus(record.key, { isActive: checked });
       if (res && res.success) {
-        message.success("Cập nhật trạng thái thành công!");
+        Swal.fire({ toast: true, position: "top-end", icon: "success", title: "Cập nhật trạng thái thành công!", timer: 1500, showConfirmButton: false });
         setData((prevData) =>
           prevData.map((item) =>
             item.key === record.key ? { ...item, isActive: checked } : item,
@@ -77,7 +78,7 @@ function ListCarousel() {
         );
       }
     } catch (error) {
-      message.error("Lỗi hệ thống khi cập nhật trạng thái!");
+      Swal.fire({ toast: true, position: "top-end", icon: "error", title: "Lỗi hệ thống khi cập nhật trạng thái!", timer: 1500, showConfirmButton: false });
     }
   };
 

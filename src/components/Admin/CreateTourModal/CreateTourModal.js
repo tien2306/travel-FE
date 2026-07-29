@@ -1,19 +1,25 @@
 import { useState } from "react";
-import { Form, Button, Modal, Image, message, Steps } from "antd";
-import { PlusOutlined, CheckOutlined, RedoOutlined } from "@ant-design/icons";
+import { Form, Button, Modal, Image, Steps } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import Swal from "sweetalert2";
 import { createTour } from "../../../services/tour";
+import { post } from "../../../utils/request";
+import { ENDPOINTS } from "../../../constants/api";
 import Step1Info from "./Step1Info";
 import Step2Images from "./Step2Images";
 import Step3Detail from "./Step3Detail";
-import "../../../styles/AdminModal.scss";
+import TourFormFooter from "./TourFormFooter";
+import { handleImagePreview } from "../../../helpers/image";
+import { buildTourPayload } from "../../../helpers/tourForm";
 
 function CreateTourModal(props) {
   const { onReload } = props;
   const [form] = Form.useForm();
-  const [messageApi, contextHolder] = message.useMessage();
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  // Key để force remount TinyEditor khi reset form (TinyEditor dùng initialValue, không tự reset)
+  const [resetKey, setResetKey] = useState(0);
 
   // File list cho thumbnail (single) và images (multiple)
   const [thumbnailFileList, setThumbnailFileList] = useState([]);
@@ -26,17 +32,32 @@ function CreateTourModal(props) {
   const handleShowModal = () => setShowModal(true);
 
   const handleCancel = () => {
-    form.resetFields();
-    setThumbnailFileList([]);
-    setImagesFileList([]);
-    setShowModal(false);
-    setCurrentStep(0);
+    Swal.fire({
+      title: "Bạn có chắc chắn muốn hủy?",
+      text: "Các thông tin chưa lưu sẽ bị mất!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Đồng ý thoát",
+      cancelButtonText: "Tiếp tục chỉnh sửa",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        form.resetFields();
+        setThumbnailFileList([]);
+        setImagesFileList([]);
+        setShowModal(false);
+        setCurrentStep(0);
+        setResetKey((k) => k + 1); // Reset TinyEditor khi đóng modal
+      }
+    });
   };
 
   const handleResetAll = () => {
     form.resetFields();
     setThumbnailFileList([]);
     setImagesFileList([]);
+    setResetKey((k) => k + 1); // Force remount TinyEditor → nội dung trắng
   };
 
   const handleThumbnailChange = ({ fileList }) => {
@@ -48,22 +69,8 @@ function CreateTourModal(props) {
   };
 
   // Xem trước ảnh (dùng chung cho thumbnail và images)
-  const handlePreview = async (file) => {
-    if (file.url) {
-      setPreviewSrc(file.url);
-      setPreviewOpen(true);
-      return;
-    }
-    if (!file.preview) {
-      file.preview = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => resolve(reader.result);
-      });
-    }
-    setPreviewSrc(file.preview);
-    setPreviewOpen(true);
-  };
+  const handlePreview = (file) =>
+    handleImagePreview(file, setPreviewSrc, setPreviewOpen);
 
   const handleNextStep = async () => {
     try {
@@ -86,7 +93,14 @@ function CreateTourModal(props) {
       } else if (currentStep === 1) {
         // Có thể thêm logic kiểm tra ảnh ở đây nếu muốn
       }
-      messageApi.success(`Đã lưu thông tin Bước ${currentStep + 1}, mời nhập tiếp!`);
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title: `Đã lưu thông tin Bước ${currentStep + 1}, mời nhập tiếp!`,
+        timer: 1500,
+        showConfirmButton: false,
+      });
       setCurrentStep(currentStep + 1);
     } catch (error) {
       // Validate failed
@@ -97,116 +111,70 @@ function CreateTourModal(props) {
     setCurrentStep(currentStep - 1);
   };
 
-  const handleSubmit = async (values) => {
-    // Validate thumbnail
-    // if (!values.thumbnail || values.thumbnail.length === 0) {
-    //   messageApi.error("Vui lòng chọn một ảnh thumbnail cho tour!");
-    //   return;
-    // }
+  const modalFooter = (
+    <TourFormFooter
+      currentStep={currentStep}
+      loading={loading}
+      isEditMode={false} // là trạng thái tạo tour hay cập nhật tour | tạo tour thì là false
+      form={form}
+      onCancel={handleCancel}
+      onPrevStep={handlePrevStep}
+      onNextStep={handleNextStep}
+      onResetAll={handleResetAll}
+    />
+  );
 
+  const handleSubmit = async (values) => {
     setLoading(true);
     try {
-      const formData = new FormData();
+      const { isFormData, payload } = buildTourPayload(values);
 
-      // Text fields
-      formData.append("name", values.name);
-      // formData.append("slug", values.slug || "");
-      formData.append("price", String(values.price));
-      formData.append("quantity", String(values.quantity));
-      formData.append("sold", String(values.sold || 0));
-      formData.append("departurePlace", values.departurePlace || "");
-      formData.append("destination", values.destination || "");
-      formData.append("shortDesc", values.shortDesc || "");
-      formData.append("detailDesc", values.detailDesc || "");
-      formData.append("status", values.status || "ACTIVE");
-      formData.append("category", values.category || "");
-      formData.append("transport", values.transport || "");
-
-      // Date fields
-      if (values.startDate) {
-        formData.append("startDate", values.startDate.toISOString());
+      let res;
+      if (isFormData) {
+        res = await createTour(payload);
+      } else {
+        res = await post(payload, ENDPOINTS.TOURS);
       }
-      if (values.endDate) {
-        formData.append("endDate", values.endDate.toISOString());
-      }
-
-      // Thumbnail (single file)
-      if (
-        values.thumbnail &&
-        values.thumbnail.length > 0 &&
-        values.thumbnail[0]?.originFileObj
-      ) {
-        formData.append("thumbnail", values.thumbnail[0].originFileObj);
-      }
-
-      // Images (multiple files array)
-      if (values.images && values.images.length > 0) {
-        values.images.forEach((file) => {
-          if (file.originFileObj) {
-            formData.append("images", file.originFileObj);
-          }
-        });
-      }
-      const res = await createTour(formData);
 
       if (res && res.success) {
-        messageApi.success("Tạo tour mới thành công!");
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title: "Tạo tour mới thành công!",
+          timer: 1500,
+          showConfirmButton: false,
+        });
         handleResetAll();
         setShowModal(false);
         setCurrentStep(0);
         onReload();
       } else {
-        messageApi.error(res?.message || "Tạo tour không thành công!");
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "error",
+          title: res?.message || "Tạo tour không thành công!",
+          timer: 1500,
+          showConfirmButton: false,
+        });
       }
     } catch (error) {
-      messageApi.error("Lỗi kết nối hệ thống!");
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Lỗi kết nối hệ thống!",
+        timer: 1500,
+        showConfirmButton: false,
+      });
     } finally {
       setLoading(false);
     }
   };
 
-  const modalFooter = (
-    <div className="form-action-footer" style={{ borderTop: 'none', paddingTop: 0, marginTop: 0 }}>
-      <Button
-        className="btn-reset"
-        icon={<RedoOutlined />}
-        onClick={handleResetAll}
-        size="large"
-      >
-        Làm mới form
-      </Button>
-
-      <div style={{ display: "flex", gap: "10px" }}>
-        {currentStep > 0 && (
-          <Button onClick={handlePrevStep} size="large">
-            Trở lại
-          </Button>
-        )}
-        {currentStep < 2 && (
-          <Button type="primary" onClick={handleNextStep} size="large">
-            Tiếp tục
-          </Button>
-        )}
-        {currentStep === 2 && (
-          <Button
-            loading={loading}
-            type="primary"
-            onClick={() => form.submit()}
-            icon={<CheckOutlined />}
-            size="large"
-            className="btn-submit"
-          >
-            Tạo tour
-          </Button>
-        )}
-      </div>
-    </div>
-  );
-
   return (
     <>
-      {contextHolder}
-
       {/* Image ẩn để kích hoạt preview lightbox */}
       <div style={{ display: "none" }}>
         {previewSrc && (
@@ -229,7 +197,7 @@ function CreateTourModal(props) {
         open={showModal}
         onCancel={handleCancel}
         footer={modalFooter}
-        destroyOnHidden={true}
+        destroyOnHidden={true} //xóa dữ liệu cũ khi mở hộp thoại
         width={900}
         wrapClassName={previewOpen ? "no-scroll-modal" : ""}
       >
@@ -252,7 +220,8 @@ function CreateTourModal(props) {
           />
 
           <div style={{ display: currentStep === 0 ? "block" : "none" }}>
-            <Step1Info />
+            {/* key={resetKey}: force remount TinyEditor khi reset */}
+            <Step1Info key={resetKey} />
           </div>
 
           <div style={{ display: currentStep === 1 ? "block" : "none" }}>
@@ -265,9 +234,8 @@ function CreateTourModal(props) {
             />
           </div>
 
-          <div style={{ display: currentStep === 2 ? "block" : "none" }}>
-            <Step3Detail />
-          </div>
+          {/* Render step 3 SAU khi user navigate tới → TinyEditor mount trong container visible */}
+          {currentStep === 2 && <Step3Detail key={resetKey} />}
         </Form>
       </Modal>
     </>

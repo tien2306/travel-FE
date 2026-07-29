@@ -1,11 +1,16 @@
 import { Form } from "antd";
-import QuillEditor from "../../Common/QuillEditor";
+import TinyEditor from "../../Common/TinyEditor";
 
 function Step3Detail() {
+  const rule = [{ required: true, message: "Bắt buộc điền thông tin này!" }];
   return (
     <div className="form-detail-desc" style={{ marginTop: "20px" }}>
-      <Form.Item label="Mô tả chi tiết" name="detailDesc">
-        <QuillEditor placeholder="Nhập lịch trình chi tiết, những điểm nổi bật của tour..." />
+      {/* preserve={true}: giữ lại giá trị detailDesc khi component unmount (chuyển bước) */}
+      <Form.Item name="detailDesc" preserve={true} rules={rule}>
+        <TinyEditor
+          className="detail-quill"
+          placeholder="Nhập nội dung chi tiết bài viết giới thiệu tour..."
+        />
       </Form.Item>
     </div>
   );

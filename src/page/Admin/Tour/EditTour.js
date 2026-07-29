@@ -1,21 +1,25 @@
-import { useState, useEffect } from "react";
-import { Form, Button, Modal, Image, message, Steps } from "antd";
-import { EditOutlined, CheckOutlined } from "@ant-design/icons";
+import { useState } from "react";
+import { Form, Button, Modal, Image, Steps } from "antd";
+import { EditOutlined } from "@ant-design/icons";
+import Swal from "sweetalert2";
 import { updateTour } from "../../../services/tour";
 import { patch } from "../../../utils/request";
 import { IMAGE_URLS } from "../../../constants/api";
 import Step1Info from "../../../components/Admin/CreateTourModal/Step1Info";
 import Step2Images from "../../../components/Admin/CreateTourModal/Step2Images";
 import Step3Detail from "../../../components/Admin/CreateTourModal/Step3Detail";
+import TourFormFooter from "../../../components/Admin/CreateTourModal/TourFormFooter";
 import dayjs from "dayjs";
+import { handleImagePreview } from "../../../helpers/image";
+import { buildTourPayload } from "../../../helpers/tourForm";
 
 function EditTour(props) {
   const { record, onReload } = props;
+  // console.log(record);
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [form] = Form.useForm();
-  const [messageApi, contextHolder] = message.useMessage();
 
   // File list cho thumbnail (single) và images (multiple)
   const [thumbnailFileList, setThumbnailFileList] = useState([]);
@@ -25,83 +29,79 @@ function EditTour(props) {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewSrc, setPreviewSrc] = useState("");
 
-  // Fill dữ liệu cũ vào form khi mở modal
-  useEffect(() => {
-    if (showModal && record) {
-      form.setFieldsValue({
-        name: record.name,
-        slug: record.slug || "",
-        price: record.price ? Number(record.price) : undefined,
-        quantity: record.quantity,
-        sold: record.sold || 0,
-        departurePlace: record.departurePlace,
-        destination: record.destination,
-        startDate: record.startDate ? dayjs(record.startDate) : undefined,
-        endDate: record.endDate ? dayjs(record.endDate) : undefined,
-        status: record.status,
-        shortDesc: record.shortDesc,
-        detailDesc: record.detailDesc,
-        category: record.category,
-        transport: record.transport,
+  // setFieldsValue cho form
+  const buildThumbnailList = () =>
+    record.thumbnail
+      ? [
+          {
+            uid: "-1", // id do antd tự sinh
+            name: record.thumbnail, // tên file ảnh
+            status: "done",
+            url: `${IMAGE_URLS.TOURS}${record.thumbnail?.trim()}`,
+          },
+        ]
+      : [];
 
-        // Pre-fill thumbnail cũ
-        thumbnail: record.thumbnail
-          ? [
-              {
-                uid: "-1", // ID tự chế để Ant Design phân biệt các file ảnh với nhau
-                name: record.thumbnail, // Tên file ảnh
-                status: "done", // Trạng thái 'done' nghĩa là ảnh này đã tải lên thành công rồi
-                url: `${IMAGE_URLS.TOURS}${record.thumbnail?.trim()}`, // Đường dẫn tuyệt đối để hiển thị ảnh lên màn hình
-              },
-            ]
-          : [],
+  // setFieldsValue cho form
+  const buildImagesList = () =>
+    record.images && record.images.length > 0
+      ? record.images.map((img, index) => ({
+          uid: `-${index + 2}`, // id do antd tự sinh
+          name: img, // tên file ảnh
+          status: "done",
+          url: `${IMAGE_URLS.TOURS}${img?.trim()}`,
+        }))
+      : [];
 
-        // Pre-fill images cũ (nếu có)
-        images:
-          record.images && record.images.length > 0
-            ? record.images.map((img, index) => ({
-                uid: `-${index + 2}`,
-                name: img,
-                status: "done",
-                url: `${IMAGE_URLS.TOURS}${img?.trim()}`,
-              }))
-            : [],
-      });
+  //Xử lí hiện modal
+  const handleShowModal = () => {
+    const thumbnailItems = buildThumbnailList();
+    const imagesItems = buildImagesList();
 
-      setThumbnailFileList(
-        record.thumbnail
-          ? [
-              {
-                uid: "-1",
-                name: record.thumbnail,
-                status: "done",
-                url: `${IMAGE_URLS.TOURS}${record.thumbnail?.trim()}`,
-              },
-            ]
-          : [],
-      );
+    form.setFieldsValue({
+      name: record.name,
+      slug: record.slug || "",
+      price: record.price ? Number(record.price) : undefined,
+      quantity: record.quantity,
+      sold: record.sold || 0,
+      departurePlace: record.departurePlace,
+      destination: record.destination,
+      startDate: record.startDate ? dayjs(record.startDate) : undefined,
+      endDate: record.endDate ? dayjs(record.endDate) : undefined,
+      status: record.status,
+      shortDesc: record.shortDesc,
+      detailDesc: record.detailDesc,
+      category: record.category,
+      transport: record.transport,
+      thumbnail: thumbnailItems,
+      images: imagesItems,
+    });
 
-      setImagesFileList(
-        record.images && record.images.length > 0
-          ? record.images.map((img, index) => ({
-              uid: `-${index + 2}`,
-              name: img,
-              status: "done",
-              url: `${IMAGE_URLS.TOURS}${img?.trim()}`,
-            }))
-          : [],
-      );
-    }
-  }, [showModal, record, form]);
+    setThumbnailFileList(thumbnailItems);
+    setImagesFileList(imagesItems);
+    setShowModal(true);
+  };
 
-  const handleShowModal = () => setShowModal(true);
-
+  //Xử lí hủy modal
   const handleCancel = () => {
-    setShowModal(false);
-    form.resetFields();
-    setThumbnailFileList([]);
-    setImagesFileList([]);
-    setCurrentStep(0);
+    Swal.fire({
+      title: "Bạn có chắc chắn muốn hủy?",
+      text: "Các thông tin chưa lưu sẽ bị mất!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Đồng ý thoát",
+      cancelButtonText: "Tiếp tục chỉnh sửa",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setShowModal(false);
+        form.resetFields();
+        setThumbnailFileList([]);
+        setImagesFileList([]);
+        setCurrentStep(0);
+      }
+    });
   };
 
   const handleThumbnailChange = ({ fileList }) => {
@@ -113,36 +113,10 @@ function EditTour(props) {
   };
 
   // Xem trước ảnh (dùng chung cho thumbnail và images)
-  const handlePreview = (file) => {
-    // TRƯỜNG HỢP 1: Ảnh đã có sẵn link trên mạng (Ảnh cũ lấy từ database/server)
-    if (file.url) {
-      setPreviewSrc(file.url);
-      setPreviewOpen(true);
-      return;
-    }
+  const handlePreview = (file) =>
+    handleImagePreview(file, setPreviewSrc, setPreviewOpen);
 
-    // TRƯỜNG HỢP 2: Ảnh mới chọn từ máy tính và ĐÃ ĐƯỢC ĐỌC TRƯỚC ĐÓ RỒI
-    if (file.preview) {
-      // Nếu có sẵn preview rồi thì mở luôn
-      setPreviewSrc(file.preview);
-      setPreviewOpen(true);
-    } else {
-      // Nếu chưa có thì
-      // FileReader: công cụ có sẵn trong trình duyệt giúp đọc nội dung của các tệp (như file ảnh, văn bản).
-      const reader = new FileReader();
-
-      // Lệnh bắt đầu đọc tệp gốc trong máy tính và chuyển đổi nó thành một chuỗi mã hóa Base64
-      reader.readAsDataURL(file.originFileObj);
-
-      // Đăng ký sự kiện: Khi nào trình duyệt đọc file THÀNH CÔNG thì mới kích hoạt đoạn code bên dưới
-      reader.onload = () => {
-        file.preview = reader.result; // Lưu lại chuỗi Base64
-        setPreviewSrc(file.preview); // Cập nhật state để hiển thị
-        setPreviewOpen(true); // Mở popup
-      };
-    }
-  };
-
+  // Xử lí trang tiếp theo
   const handleNextStep = async () => {
     try {
       if (currentStep === 0) {
@@ -162,193 +136,88 @@ function EditTour(props) {
           "shortDesc",
         ]);
       }
-      messageApi.success(`Đã lưu tạm thông tin Bước ${currentStep + 1}, mời nhập tiếp!`);
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title: `Đã lưu tạm thông tin Bước ${currentStep + 1}, mời nhập tiếp!`,
+        timer: 1500,
+        showConfirmButton: false,
+      });
       setCurrentStep(currentStep + 1);
     } catch (error) {
       // Validate failed
     }
   };
 
+  // Xử lí trang trước đó
   const handlePrevStep = () => {
     setCurrentStep(currentStep - 1);
   };
 
+  //Xử lí footer Modal
+  const modalFooter = (
+    <TourFormFooter
+      currentStep={currentStep}
+      loading={loading}
+      isEditMode={true}
+      form={form}
+      onCancel={handleCancel}
+      onPrevStep={handlePrevStep}
+      onNextStep={handleNextStep}
+    />
+  );
+
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
+      const { isFormData, payload } = buildTourPayload(values);
+
       let res;
-
-      // Chuyển đổi ngày
-      const formattedStartDate = values.startDate
-        ? values.startDate.toISOString()
-        : "";
-      const formattedEndDate = values.endDate
-        ? values.endDate.toISOString()
-        : "";
-
-      // Kiểm tra có đổi ảnh mới không (thumbnail hoặc images)
-      const hasNewThumbnail =
-        values.thumbnail &&
-        values.thumbnail.length > 0 &&
-        values.thumbnail[0]?.originFileObj;
-      // trong antd khi tạo ảnh nó sẽ sinh ra originFileObj
-      // chỉ cần kt nó xem có nó ko ? có -> true ko -> false
-
-      const hasNewImages =
-        values.images &&
-        values.images.length > 0 &&
-        values.images.some((file) => file.originFileObj);
-      // trong antd khi tạo ảnh nó sẽ sinh ra originFileObj
-      // chỉ cần kt 1 p tử có originFileObj ko ? có -> true ko -> false
-
-      if (hasNewThumbnail || hasNewImages) {
-        // TRƯỜNG HỢP 1: CÓ ĐỔI ẢNH -> Dùng FormData gửi multipart/form-data
-        const formData = new FormData();
-        formData.append("name", values.name);
-        formData.append("slug", values.slug || "");
-        formData.append("price", String(values.price));
-        formData.append("quantity", String(values.quantity));
-        formData.append("sold", String(values.sold || 0));
-        formData.append("departurePlace", values.departurePlace || "");
-        formData.append("destination", values.destination || "");
-        formData.append("startDate", formattedStartDate);
-        formData.append("endDate", formattedEndDate);
-        formData.append("status", values.status || "ACTIVE");
-        formData.append("shortDesc", values.shortDesc || "");
-        formData.append("detailDesc", values.detailDesc || "");
-        
-        formData.append("category", values.category || "");
-        formData.append("transport", values.transport || "");
-
-        // Thumbnail (single file)
-        if (values.thumbnail && values.thumbnail.length > 0) {
-          if (values.thumbnail[0].originFileObj) {
-            formData.append("thumbnail", values.thumbnail[0].originFileObj); // Gửi FILE THẬT
-          } else if (values.thumbnail[0].name) {
-            formData.append("thumbnail", values.thumbnail[0].name); // Gửi cái TÊN ẢNH CŨ
-          }
-        }
-
-        // Images (multiple files)
-        if (values.images && values.images.length > 0) {
-          // 2. GIỮ LẠI ẢNH CŨ: Duyệt qua mảng ảnh cũ (những ảnh KHÔNG có originFileObj) và lấy ra cái Tên/URL
-          const oldImages = values.images
-            .filter((file) => !file.originFileObj)
-            .map((file) => file.name);
-          oldImages.forEach((url) => {
-            formData.append("images", url); // Gửi chuỗi URL
-          });
-
-          // THỦ THUẬT FIX LỖI VALIDATE ARRAY KHI CÓ ĐÚNG 1 ẢNH CŨ
-          // if (oldImages.length === 1) {
-          //   formData.append("images", oldImages[0]);
-          // }
-
-          // 3. THÊM ẢNH MỚI: Duyệt qua mảng ảnh mới (những ảnh CÓ originFileObj)
-          const newFiles = values.images
-            .filter((file) => file.originFileObj)
-            .map((file) => file.originFileObj);
-          newFiles.forEach((file) => {
-            formData.append("images", file); // Gửi đối tượng File vật lý
-          });
-        }
-
-        res = await updateTour(record.key, formData);
+      if (isFormData) {
+        res = await updateTour(record.key, payload);
       } else {
-        // TRƯỜNG HỢP 2: KHÔNG ĐỔI ẢNH -> Gửi JSON thuần
-        const updateData = {
-          name: values.name,
-          slug: values.slug || "",
-          price: String(values.price),
-          quantity: values.quantity,
-          sold: values.sold || 0,
-          departurePlace: values.departurePlace || "",
-          destination: values.destination || "",
-          startDate: formattedStartDate,
-          endDate: formattedEndDate,
-          status: values.status || "ACTIVE",
-          shortDesc: values.shortDesc || "",
-          detailDesc: values.detailDesc || "",
-          category: values.category || "",
-          transport: values.transport || "",
-          thumbnail:
-            values.thumbnail && values.thumbnail.length > 0
-              ? values.thumbnail[0].name
-              : "",
-          images: values.images
-            ? values.images
-                .filter((file) => !file.originFileObj)
-                .map((file) => file.name)
-            : [],
-        };
-
-        res = await patch(updateData, `tours/${record.key}`);
+        res = await patch(payload, `tours/${record.key}`);
       }
 
       if (res && res.success) {
-        messageApi.success("Cập nhật tour thành công!");
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title: "Cập nhật tour thành công!",
+          timer: 1500,
+          showConfirmButton: false,
+        });
         setShowModal(false);
         setCurrentStep(0);
         onReload();
       } else {
-        messageApi.error(
-          res?.message || "Cập nhật không thành công từ máy chủ!",
-        );
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "error",
+          title: res?.message || "Cập nhật không thành công từ máy chủ!",
+          timer: 1500,
+          showConfirmButton: false,
+        });
       }
     } catch (error) {
-      messageApi.error("Lỗi kết nối hệ thống!");
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Lỗi kết nối hệ thống!",
+        timer: 1500,
+        showConfirmButton: false,
+      });
     } finally {
       setLoading(false);
     }
   };
 
-  const modalFooter = (
-    <div
-      className="form-action-footer"
-      style={{
-        display: "flex",
-        justifyContent: "flex-end",
-        gap: "10px",
-        borderTop: "none",
-        paddingTop: 0,
-        marginTop: 0
-      }}
-    >
-      <Button onClick={handleCancel} size="large">
-        Hủy
-      </Button>
-
-      {currentStep > 0 && (
-        <Button onClick={handlePrevStep} size="large">
-          Trở lại
-        </Button>
-      )}
-
-      {currentStep < 2 && (
-        <Button type="primary" onClick={handleNextStep} size="large">
-          Tiếp tục
-        </Button>
-      )}
-
-      {currentStep === 2 && (
-        <Button
-          loading={loading}
-          type="primary"
-          onClick={() => form.submit()}
-          icon={<CheckOutlined />}
-          size="large"
-          className="btn-submit"
-        >
-          Cập nhật tour
-        </Button>
-      )}
-    </div>
-  );
-
   return (
     <>
-      {contextHolder}
-
       {/* Image ẩn để kích hoạt preview lightbox */}
       <div style={{ display: "none" }}>
         {previewSrc && (
@@ -356,7 +225,7 @@ function EditTour(props) {
             src={previewSrc}
             preview={{
               open: previewOpen,
-              onOpenChange: (open) => setPreviewOpen(open),
+              onOpenChange: (open) => setPreviewOpen(open), //truyền true, false
             }}
           />
         )}
@@ -373,7 +242,7 @@ function EditTour(props) {
         open={showModal}
         onCancel={handleCancel}
         footer={modalFooter}
-        destroyOnHidden={true}
+        destroyOnHidden={true} //xóa dữ liệu cũ khi mở hộp thoại
         width={900}
         wrapClassName={previewOpen ? "no-scroll-modal" : ""}
       >
@@ -408,9 +277,8 @@ function EditTour(props) {
             />
           </div>
 
-          <div style={{ display: currentStep === 2 ? "block" : "none" }}>
-            <Step3Detail />
-          </div>
+          {/* Render step 3 SAU khi user navigate tới → TinyEditor mount trong container visible */}
+          {currentStep === 2 && <Step3Detail />}
         </Form>
       </Modal>
     </>

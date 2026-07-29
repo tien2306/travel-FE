@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { Form, Button, Modal, Image, message } from "antd";
+import { Form, Button, Modal, Image } from "antd";
 import { PlusOutlined, CheckOutlined, RedoOutlined } from "@ant-design/icons";
+import Swal from "sweetalert2";
 import { createCarousel } from "../../../services/carousel";
 import FormMainInputs from "./FormMainInputs";
 import FormSideConfigs from "./FormSideConfigs";
-import "../../../styles/AdminModal.scss";
+
 
 function CreateCarouselModal(props) {
   const { onReload } = props;
   const [form] = Form.useForm();
-  const [messageApi, contextHolder] = message.useMessage();
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
@@ -22,9 +22,22 @@ function CreateCarouselModal(props) {
   const handleShowModal = () => setShowModal(true);
 
   const handleCancel = () => {
-    form.resetFields();
-    setFileList([]);
-    setShowModal(false);
+    Swal.fire({
+      title: "Bạn có chắc chắn muốn hủy?",
+      text: "Các thông tin chưa lưu sẽ bị mất!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Đồng ý thoát",
+      cancelButtonText: "Tiếp tục chỉnh sửa",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        form.resetFields();
+        setFileList([]);
+        setShowModal(false);
+      }
+    });
   };
 
   const handleResetAll = () => {
@@ -60,7 +73,7 @@ function CreateCarouselModal(props) {
 
   const handleSubmit = async (values) => {
     if (!values.image || values.image.length === 0) {
-      messageApi.error("Vui lòng chọn một tệp hình ảnh!");
+      Swal.fire({ toast: true, position: "top-end", icon: "error", title: "Vui lòng chọn một tệp hình ảnh!", timer: 1500, showConfirmButton: false });
       return;
     }
 
@@ -77,15 +90,15 @@ function CreateCarouselModal(props) {
       const res = await createCarousel(formData);
 
       if (res && res.success) {
-        messageApi.success("Tạo mới banner thành công!");
+        Swal.fire({ toast: true, position: "top-end", icon: "success", title: "Tạo mới banner thành công!", timer: 1500, showConfirmButton: false });
         handleResetAll();
         setShowModal(false);
         onReload();
       } else {
-        messageApi.error(res?.message || "Tạo mới thất bại từ máy chủ!");
+        Swal.fire({ toast: true, position: "top-end", icon: "error", title: res?.message || "Tạo mới thất bại từ máy chủ!", timer: 1500, showConfirmButton: false });
       }
     } catch (error) {
-      messageApi.error("Lỗi kết nối hệ thống!");
+      Swal.fire({ toast: true, position: "top-end", icon: "error", title: "Lỗi kết nối hệ thống!", timer: 1500, showConfirmButton: false });
     } finally {
       setLoading(false);
     }
@@ -93,7 +106,6 @@ function CreateCarouselModal(props) {
 
   return (
     <>
-      {contextHolder}
       <Button type="primary" icon={<PlusOutlined />} onClick={handleShowModal}>
         Thêm Banner mới
       </Button>

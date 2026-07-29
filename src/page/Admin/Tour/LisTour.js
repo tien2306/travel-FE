@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
-import { Table, Select, message, Input } from "antd";
+import { Table, Select, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import Swal from "sweetalert2";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getToursAdmin, updateTourStatus } from "../../../services/tour";
 import EditTour from "./EditTour";
@@ -39,7 +40,14 @@ function ListTour() {
         setPageSize(res.data.pagination.limit);
       }
     } catch (error) {
-      message.error("Lỗi khi tải danh sách tour!");
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Lỗi khi tải danh sách tour!",
+        timer: 1500,
+        showConfirmButton: false,
+      });
     } finally {
       setLoading(false);
     }
@@ -64,20 +72,42 @@ function ListTour() {
 
   // 6. Xử lý cập nhật trạng thái tour
   const handleStatusChange = async (newStatus, record) => {
+    // console.log(newStatus, record);
     try {
       const res = await updateTourStatus(record.key, { status: newStatus });
       if (res && res.success) {
-        message.success("Cập nhật trạng thái thành công!");
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title: "Cập nhật trạng thái thành công!",
+          timer: 1500,
+          showConfirmButton: false,
+        });
         setData((prevData) =>
           prevData.map((item) =>
             item.key === record.key ? { ...item, status: newStatus } : item,
           ),
         );
       } else {
-        message.error("Cập nhật trạng thái thất bại!");
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "error",
+          title: "Cập nhật trạng thái thất bại!",
+          timer: 1500,
+          showConfirmButton: false,
+        });
       }
     } catch (error) {
-      message.error("Lỗi hệ thống khi cập nhật trạng thái!");
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Lỗi hệ thống khi cập nhật trạng thái!",
+        timer: 1500,
+        showConfirmButton: false,
+      });
     }
   };
 
@@ -186,7 +216,12 @@ function ListTour() {
         </div>
         <div
           className="list-tour-header__actions"
-          style={{ display: "flex", flexWrap: "wrap", gap: "12px", alignItems: "center" }}
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "12px",
+            alignItems: "center",
+          }}
         >
           <Input
             size="large"

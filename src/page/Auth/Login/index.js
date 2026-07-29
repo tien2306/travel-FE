@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, Checkbox, Button, message, Row, Col } from "antd";
+import { Form, Input, Checkbox, Button, Row, Col } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import Swal from "sweetalert2";
 import "./Login.scss";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../../services/user";
 import { checkLogin } from "../../../store/slices/loginSlice";
@@ -13,9 +14,12 @@ const Login = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   const { defaultBgFromApi } = useOutletContext();
   const { t } = useTranslation("auth");
+
+  const from = location.state?.from || "/";
 
   // Xử lí nhớ tài khoản
   useEffect(() => {
@@ -36,7 +40,15 @@ const Login = () => {
     try {
       const res = await login(account);
       if (res && res.success) {
-        message.success(t("login.success"));
+        Swal.fire({
+          icon: "success",
+          title: t("login.success"),
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
 
         const token = res.data.accessToken;
         const userData = res.data.user;
@@ -61,14 +73,28 @@ const Login = () => {
         if (userData.role.name === "ADMIN") {
           navigate("/admin");
         } else {
-          navigate("/");
+          navigate(from);
         }
       } else {
-        message.error(res.message || t("login.fail"));
+        Swal.fire({
+          icon: "error",
+          title: res.message || t("login.fail"),
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+        });
       }
     } catch (error) {
       console.error("Lỗi login:", error);
-      message.error(t("login.noServer"));
+      Swal.fire({
+        icon: "error",
+        title: t("login.noServer"),
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+      });
     } finally {
       setLoading(false);
     }

@@ -61,7 +61,96 @@
     "bookNow": "BOOK NOW",
     "bookSub": "Instant reservation - Secure payment",
     "fullyBookedBtn": "FULLY BOOKED",
-    "contactSub": "Please contact for more details"
+    "contactSub": "Please contact for more details",
+    "notesData": [
+      {
+        "label": "Tour price includes",
+        "content": "Round-trip flight tickets.\n4-star standard hotel.\nMeals as per itinerary.\nSightseeing transfer vehicle.\nEnthusiastic, experienced English-speaking guide.\nTravel insurance."
+      },
+      {
+        "label": "Tour price excludes",
+        "content": "Passport, visa fees (if applicable).\nPersonal expenses: phone, laundry, excess baggage, off-itinerary sightseeing.\nTips for local guide and driver."
+      },
+      {
+        "label": "Visa information",
+        "content": "Passport must be valid for over 6 months from the tour end date.\nPlease provide complete documents as requested by the Consulate to apply for a visa."
+      },
+      {
+        "label": "Children price notes",
+        "content": "Children under 2: 30% of tour price (sharing bed with adult).\nChildren from 2 to under 11: 75% of tour price (sharing bed with adult).\nChildren 11 and older: 100% of adult price."
+      },
+      {
+        "label": "Payment conditions",
+        "content": "Deposit 50% of the total tour value upon registration.\nPay the remaining amount 15 working days before departure."
+      },
+      {
+        "label": "Registration conditions",
+        "content": "Customers must fully complete the registration form.\nProvide a clear copy of Passport/ID card."
+      },
+      {
+        "label": "Transfer or cancellation notes",
+        "content": "Transferring to another tour will incur a fee as regulated.\nTour cancellation must be notified in writing and incurs a cancellation fee."
+      },
+      {
+        "label": "Cancellation conditions for regular days",
+        "content": "Cancel before 30 days: loss of deposit.\nCancel 15-29 days: loss of 50% tour price.\nCancel 07-14 days: loss of 75% tour price.\nCancel within 06 days: loss of 100% tour price."
+      },
+      {
+        "label": "Cancellation conditions for holidays, Tet",
+        "content": "Cancel before 45 days: loss of deposit.\nCancel 30-44 days: loss of 75% tour price.\nCancel within 29 days: loss of 100% tour price."
+      },
+      {
+        "label": "Force majeure",
+        "content": "In case of natural disasters, epidemics, strikes, flight cancellations... The company reserves the right to change the itinerary or cancel the tour and refund the customer after deducting the incurred service costs."
+      },
+      {
+        "label": "Contact",
+        "content": "Support hotline: 1900 xxxx.\nEmail: support@travelaway.vn"
+      }
+    ],
+    "actionFavorite": "Favorite",
+    "actionQA": "Q&A",
+    "actionReview": "Review",
+    "qaTitle": "Ask a question about this tour",
+    "qaPlaceholder": "Leave your question here...",
+    "qaSubmit": "SUBMIT QUESTION",
+    "qaReply": "Reply",
+    "qaReport": "Report",
+    "qaCancel": "Cancel",
+    "qaReplyPlaceholder": "Add a reply...",
+    "qaViewReplies": "View {{count}} replies",
+    "qaHideReplies": "Hide replies",
+    "qaLoginTitle": "Login to participate?",
+    "qaLoginText": "Please login to ask a question or reply.",
+    "qaLoginBtn": "Login",
+    "qaCloseBtn": "Close",
+    "rvBasedOn": "Based on {{count}} reviews",
+    "rvFilterAll": "All reviews",
+    "rvFilterMedia": "With image/video",
+    "rvFilterStar": "{{count}} Star",
+    "rvWriteBtn": "Write a review",
+    "rvCancelBtn": "Cancel",
+    "rvFormTitle": "Submit your review",
+    "rvFormLabel": "Rating:",
+    "rvFormPlaceholder": "Share your experience...",
+    "rvFormUpload": "Upload image/video",
+    "rvFormSubmit": "Submit review",
+    "rvNoReview": "No reviews for this category yet.",
+    "rvLoginTitle": "Login to review?",
+    "rvLoginText": "Please login to share your experience.",
+    "tabReviews": "Reviews",
+    "tabQA": "Q&A",
+    "collapseBtn": "(Collapse)",
+    "expandBtn": "(View More)",
+    "notesTitle": "Important Notes",
+    "reviewsTitle": "Customer Reviews",
+    "qaTitleHeader": "Q&A",
+    "favLoginTitle": "Login to save tour?",
+    "favLoginText": "Please login to save this tour to your favorites.",
+    "favRemoveSuccess": "Removed from favorites",
+    "favAddSuccess": "Added to favorites ❤️",
+    "favRemoveTitle": "Remove favorite",
+    "favAddTitle": "Add to favorites"
   },
   "status": {
     "full": "Fully Booked",
@@ -78,5 +167,13 @@
     "class": "Class:",
     "duration": "Duration:",
     "seatsLeft": "{{count}} seats left"
+  },
+  "related": {
+    "title": "Related Tours",
+    "from": "From",
+    "itinerary": "Itinerary",
+    "departure": "Departure",
+    "transport": "Transport",
+    "viewMore": "View more +"
   }
 }
