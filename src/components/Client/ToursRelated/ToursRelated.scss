@@ -1,113 +1,196 @@
 @use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+// ============================================================
+// TOURS RELATED — Tour tương tự
+// ============================================================
 
 .related-tours-section {
   padding: 0;
-  margin-top: 50px;
+  margin-top: 48px;
   background-color: transparent;
   border: none;
   box-shadow: none;
 
+  // --- Tiêu đề section ---
   .section-title {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 800;
     color: $text-heading;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     margin-top: 0;
+    padding-bottom: 12px;
+    border-bottom: 2px solid $border-color;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 22px;
+      background: $primary-color;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    @include mobile {
+      font-size: 18px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+    }
   }
 
+  // --- Carousel ---
   .related-carousel {
-    padding: 10px 0; 
-    
-    .swiper-slide {
-      height: auto; 
-    }
-    
-    .related-tour-card {
-      border-radius: $radius-lg;
-      overflow: hidden;
-      border: 1px solid $border-color;
-      transition: $transition-fast;
+    padding: 8px 0 28px; // padding để shadow không bị cắt
 
-      &:hover {
-        border-color: $color-cps;
-        box-shadow: 0 4px 12px rgba(215, 0, 24, 0.1);
-        
-        .hero-img {
-          transform: scale(1.05);
-        }
-      }
-      
-      .related-tour-card__hero {
+    .swiper-slide {
+      height: auto;
+    }
+
+    .related-tour-card-new {
+      border: 1px solid #e0e0e0;
+      border-radius: 0;
+      overflow: hidden;
+      background: #fff;
+      transition: all 0.3s ease;
+      cursor: pointer;
+
+      // 1. Phần hình ảnh
+      .tour-hero {
         position: relative;
-        aspect-ratio: 4/3;
+        width: 100%;
+        aspect-ratio: 4/3; // Hoặc set height cứng
         overflow: hidden;
-        border-radius: $radius-lg $radius-lg 0 0;
-        
-        .status-badge {
-          position: absolute;
-          top: 10px;
-          left: 10px;
-          z-index: 2;
-          padding: 4px 10px;
-          border-radius: 4px;
-          font-size: 11px;
-          font-weight: 700;
-          color: #fff;
-          text-transform: uppercase;
-          &.inactive { background-color: #999; }
-          &.full { background-color: $color-cps; }
-          &.available { background-color: #52c41a; }
-        }
-        
-        .hero-img {
+
+        .tour-image {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          transition: transform 0.4s ease;
+          display: block;
+        }
+
+        .tour-badge-bottom {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          background: rgba(0, 0, 0, 0.6);
+          color: #fff;
+          padding: 6px 12px;
+          font-size: 14px;
+          font-weight: 600;
+          z-index: 2;
+        }
+
+        .tour-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.5);
+          color: #fff;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          padding: 16px;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+          z-index: 3;
+
+          .overlay-content {
+            margin-bottom: auto;
+
+            .overlay-desc {
+              font-size: 14px;
+              line-height: 1.5;
+              margin-bottom: 6px;
+              display: -webkit-box;
+              -webkit-line-clamp: 3;
+              line-clamp: 3;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+            }
+
+            .overlay-detail {
+              font-size: 13px;
+              color: #eaeaea;
+              margin-bottom: 4px;
+            }
+          }
+
+          .overlay-more {
+            font-size: 14px;
+            color: #d9d9d9;
+            align-self: flex-start;
+            margin-top: 10px;
+          }
         }
       }
-      
-      .related-tour-card__body {
-        display: flex;
-        flex-direction: column;
-        padding: 16px;
+
+      // 2. Phần box xám chứa title
+      .tour-title-box {
+        background-color: #e9e9e9;
+        padding: 12px 16px;
+        min-height: 70px; // Đảm bảo độ cao đồng đều nếu title ngắn
 
         .title {
           font-size: 15px;
           font-weight: 700;
-          color: $text-heading;
-          margin-top: 0;
-          margin-bottom: 16px;
+          color: #333;
+          margin: 0;
           line-height: 1.4;
+          text-transform: uppercase;
           display: -webkit-box;
           -webkit-line-clamp: 2;
+          line-clamp: 2;
           -webkit-box-orient: vertical;
           overflow: hidden;
         }
-        
-        .info-row {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 8px;
-          font-size: 13px;
-          
-          &:last-child {
-            margin-bottom: 0;
-          }
+      }
 
-          .label {
-            color: $text-muted;
+      // 3. Phần thông tin dưới cùng
+      .tour-info-box {
+        background-color: #fff;
+        padding: 12px 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .info-left {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+
+          .info-item {
+            font-size: 14px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+
+            .icon {
+              font-size: 14px;
+              color: #555;
+            }
           }
-          .value {
-            color: $text-body;
-            font-weight: 600;
-            text-align: right;
-            max-width: 60%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        }
+
+        .info-right {
+          .price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #e50027; // Màu đỏ giống mẫu
           }
+        }
+      }
+
+      // Xử lý hover hiển thị overlay với độ ưu tiên cao
+      &:hover {
+        .tour-hero .tour-overlay {
+          opacity: 1;
         }
       }
     }

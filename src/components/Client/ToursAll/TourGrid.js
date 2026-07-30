@@ -5,6 +5,7 @@ import { StarFilled } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import BG from "../../../images/carousel-1.jpg";
 import { IMAGE_URLS } from "../../../constants/api";
+import { formatDate } from "../../../helpers/formatDate";
 
 export default function TourGrid({ data }) {
   const navigate = useNavigate();
@@ -127,7 +128,8 @@ export default function TourGrid({ data }) {
                         {t("card.departureDate")}
                       </span>
                       <span className="tour-card__date-badge-accent">
-                        {new Date(tour.startDate).toLocaleDateString("vi-VN")}
+                        {" "}
+                        {formatDate(tour.startDate)}
                       </span>
                     </div>
                   </div>

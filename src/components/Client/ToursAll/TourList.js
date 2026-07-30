@@ -10,6 +10,7 @@ import {
 import { useTranslation } from "react-i18next";
 import BG from "../../../images/carousel-2.jpg";
 import { IMAGE_URLS } from "../../../constants/api";
+import { formatDate } from "../../../helpers/formatDate";
 import "./TourList.scss";
 
 export default function TourList({ data }) {
@@ -95,8 +96,8 @@ export default function TourList({ data }) {
                 <div className="tour-list-card__detail-item">
                   <CalendarOutlined className="icon-orange" />
                   <strong>{t("card.duration")}</strong>{" "}
-                  {new Date(tour.startDate).toLocaleDateString("vi-VN")} -{" "}
-                  {new Date(tour.endDate).toLocaleDateString("vi-VN")}
+                  {formatDate(tour.startDate)} -{" "}
+                  {formatDate(tour.endDate)}
                 </div>
               </div>
             </div>

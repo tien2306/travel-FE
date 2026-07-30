@@ -11,6 +11,7 @@ export const ENDPOINTS = {
   USERS: "users",
   ANSWERS: "answers",
   QUESTIONS: "questions",
+  FAVORITES: "favorites",
 };
 
 export const IMAGE_URLS = {

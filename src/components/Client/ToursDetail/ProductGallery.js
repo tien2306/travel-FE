@@ -1,50 +1,121 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Image } from "antd";
-
-// Import Swiper styles
+import {
+  ArrowsAltOutlined,
+  CaretRightFilled,
+  CaretLeftFilled,
+} from "@ant-design/icons";
+import FALLBACK_IMG from "../../../images/carousel-1.jpg";
 import "swiper/css";
 import "./ProductGallery.scss";
 
-const ProductGallery = ({ images, tourName }) => {
-  const [mainImg, setMainImg] = useState(
-    images && images.length > 0 ? images[0] : "",
-  );
+const ProductGallery = ({ thumbnail, images, tourName, urlImage }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [swiperInstance, setSwiperInstance] = useState(null);
 
-  if (!images || images.length === 0) return null;
+  useEffect(() => {
+    if (swiperInstance && swiperInstance.slideTo) {
+      swiperInstance.slideTo(currentIndex);
+    }
+  }, [currentIndex, swiperInstance]);
+
+  useEffect(() => {
+    setCurrentIndex(0);
+  }, [thumbnail, images]);
+
+  const mainImgUrl = images[currentIndex]
+    ? urlImage + images[currentIndex]
+    : FALLBACK_IMG;
+
+  const handlePrev = (e) => {
+    e.stopPropagation();
+    if (currentIndex > 0) setCurrentIndex((prev) => prev - 1);
+  };
+
+  const handleNext = (e) => {
+    e.stopPropagation();
+    if (currentIndex < images.length - 1) setCurrentIndex((prev) => prev + 1);
+  };
 
   return (
     <div className="product-gallery">
-      {/* Ảnh chính to */}
-      <div className="main-image-box">
-        <Image src={mainImg} alt={tourName} className="main-image" />
+      <div className="product-gallery__main">
+        <Image
+          src={mainImgUrl}
+          alt={tourName}
+          className="product-gallery__main-img"
+          fallback={FALLBACK_IMG}
+        />
+
+        {/* Nút Phóng to ở góc phải trên */}
+        <div className="product-gallery__zoom-icon">
+          <ArrowsAltOutlined />
+        </div>
+
+        {/* Nút điều hướng (Chỉ hiện khi có nhiều hơn 1 ảnh) */}
+        {images.length > 1 && (
+          <>
+            {currentIndex > 0 && (
+              <div
+                className="product-gallery__nav product-gallery__nav--prev"
+                onClick={handlePrev}
+              >
+                <CaretLeftFilled />
+              </div>
+            )}
+            {currentIndex < images.length - 1 && (
+              <div
+                className="product-gallery__nav product-gallery__nav--next"
+                onClick={handleNext}
+              >
+                <CaretRightFilled />
+              </div>
+            )}
+          </>
+        )}
       </div>
 
-      {/* Lưới ảnh nhỏ ở dưới (Dạng Carousel dùng Swiper) */}
-      <div className="thumbnail-carousel">
-        <Swiper
-          spaceBetween={10}
-          slidesPerView={4}
-          breakpoints={{
-            // Responsive
-            320: { slidesPerView: 4 },
-            768: { slidesPerView: 5 },
-            1024: { slidesPerView: 6 },
-          }}
-          className="thumbnail-swiper"
-        >
-          {images.map((img, idx) => (
-            <SwiperSlide key={idx}>
-              <div
-                className={`thumbnail-item ${img === mainImg ? "active" : ""}`}
-                onClick={() => setMainImg(img)}
-              >
-                <img src={img} alt={`${tourName} thumb ${idx}`} />
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
+      {images.length > 1 && (
+        <div className="product-gallery__thumbs">
+          <Swiper
+            onSwiper={setSwiperInstance}
+            spaceBetween={8}
+            slidesPerView={4}
+            breakpoints={{
+              320: { slidesPerView: 4 },
+              768: { slidesPerView: 5 },
+              1024: { slidesPerView: 6 },
+            }}
+            className="product-gallery__swiper"
+          >
+            {images.map((img, idx) => {
+              const thumbUrl = img ? urlImage + img : FALLBACK_IMG;
+              return (
+                <SwiperSlide key={idx}>
+                  <div
+                    className={`product-gallery__thumb ${
+                      currentIndex === idx
+                        ? "product-gallery__thumb--active"
+                        : ""
+                    }`}
+                    onClick={() => setCurrentIndex(idx)}
+                  >
+                    <img
+                      src={thumbUrl}
+                      alt={`${tourName} ${idx + 1}`}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = FALLBACK_IMG;
+                      }}
+                    />
+                  </div>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        </div>
+      )}
     </div>
   );
 };

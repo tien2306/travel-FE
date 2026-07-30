@@ -9,7 +9,7 @@ import DeleteTour from "./DeleteTour";
 import CreateTourModal from "../../../components/Admin/CreateTourModal/CreateTourModal";
 
 import "./ListTour.scss";
-import { formatDate, formatPrice } from "../../../helpers/fomatDate";
+import { formatDate, formatPrice } from "../../../helpers/formatDate";
 
 function ListTour() {
   const [data, setData] = useState([]);

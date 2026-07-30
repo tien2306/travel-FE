@@ -1,0 +1,84 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+// ============================================================
+// TOUR NOTES — Những thông tin cần lưu ý
+// ============================================================
+
+.tour-notes-inner {
+  // --- Antd Collapse ---
+  .ant-collapse {
+    background: transparent;
+    border: none;
+
+    .ant-collapse-item {
+      border-bottom: 1px solid $border-subtle;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    .ant-collapse-header {
+      padding: 18px 0 !important;
+      align-items: center;
+      transition: $transition-fast;
+
+      &:hover {
+        .note-panel-title {
+          color: $primary-color;
+        }
+      }
+
+      .ant-collapse-expand-icon {
+        color: $text-muted;
+        font-size: 14px;
+        transition: $transition-fast;
+      }
+    }
+
+    .note-panel-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: $text-heading;
+      transition: $transition-fast;
+
+      @include mobile {
+        font-size: 14px;
+      }
+    }
+
+    .ant-collapse-content-box {
+      padding: 0 0 18px 0 !important;
+    }
+
+    .note-panel-content {
+      p {
+        margin: 0 0 8px;
+        font-size: 14px;
+        line-height: 1.7;
+        color: $text-body;
+        position: relative;
+        padding-left: 16px;
+
+        &::before {
+          content: "•";
+          position: absolute;
+          left: 0;
+          top: 0;
+          color: $primary-color;
+          font-size: 16px;
+          line-height: 1.7;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        @include mobile {
+          font-size: 13.5px;
+        }
+      }
+    }
+  }
+}

@@ -1,45 +1,58 @@
 @use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+// ============================================================
+// PRODUCT ACTIONS — Nút tương tác nhanh (Chia sẻ, Lưu, ...)
+// ============================================================
 
 .product-actions {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 8px;
 
-  .action-btn {
+  @include mobile {
+    gap: 6px;
+  }
+
+  &__btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 12px;
     background: $bg-white;
     border: 1px solid $border-color;
-    border-radius: $radius-pill; // Bo tròn dạng viên thuốc cho hiện đại
-    padding: 8px 16px;
-    font-size: $font-size-base;
+    border-radius: $radius-md;
+    font-size: 13px;
     font-weight: 600;
     color: $text-secondary;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: $transition-fast;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-
-    .icon {
-      font-size: 16px;
-      transition: $transition-fast;
-    }
+    transition: $transition-base;
 
     &:hover {
-      background-color: $bg-icon-box; // Chuyển màu nền nhẹ (thường là xanh rất nhạt)
       border-color: $primary-color;
       color: $primary-color;
-      transform: translateY(-2px); // Nẩy nhẹ lên
-      box-shadow: 0 4px 8px rgba(13, 110, 253, 0.08); // Bóng màu primary mờ
-
-      .icon {
-        transform: scale(1.1);
-      }
+      background: $bg-icon-box;
+      transform: translateY(-1px);
     }
 
     &:active {
-      transform: translateY(0); // Lún nhẹ khi click
+      transform: translateY(0);
+    }
+
+    @include mobile {
+      padding: 8px 10px;
+      font-size: 12px;
+      gap: 4px;
+    }
+  }
+
+  &__icon {
+    font-size: 15px;
+    line-height: 1;
+
+    @include mobile {
+      font-size: 13px;
     }
   }
 }

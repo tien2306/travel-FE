@@ -108,15 +108,28 @@
   // --- Tab Nav (sticky — tất cả màn hình) ---
   &__tabs {
     position: sticky;
-    top: 72px;
+    top: 71px; // Trừ hao 1px để không bị khe hở với header trên desktop
     z-index: 100;
-    padding: 0;
-    margin-bottom: 32px;
+    padding: 0 20px;
+    margin: 0 -20px 32px -20px; // Kéo giãn full màn hình để không bị lòi chữ ở 2 bên mép
     background: $bg-page;
-    box-shadow: 0 1px 0 0 $border-color;
+    // Dùng box-shadow hướng lên (-2px) để lấp kín mọi khe hở subpixel do sai lệch hiển thị của điện thoại
+    box-shadow: 0 -2px 0 0 $bg-page, 0 1px 0 0 $border-color;
+    
+    // Ép bật tăng tốc phần cứng (Hardware Acceleration) để chống giật/chớp trên iOS/Safari
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
 
     @include mobile {
-      top: 60px; // Header mobile thường thấp hơn desktop
+      display: none !important; // Ẩn hoàn toàn trên điện thoại để nhường chỗ cho FloatButton
+    }
+  }
+
+  &__float-menu {
+    display: none !important;
+
+    @include mobile {
+      display: block !important; // Chỉ hiện nút nổi trên điện thoại
     }
   }
 
