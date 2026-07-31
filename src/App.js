@@ -5,13 +5,14 @@ import enUS from "antd/locale/en_US";
 import AllRoutes from "./components/Common/Allroute";
 import { useDispatch, useSelector } from "react-redux";
 import { initTheme } from "./store/slices/themeSlice";
+import { fetchUserSession } from "./store/slices/loginSlice";
+import { getCookie } from "./helpers/cookie";
 import ScrollToTop from "./components/Common/ScrollToTop";
 import i18n from "./utils/i18n";
 
 function AppContent() {
   const { theme } = useSelector((state) => state.themeReducer);
   const { currentLanguage } = useSelector((state) => state.languageReducer);
-  // console.log(theme);
 
   useEffect(() => {
     // changeLanguage hàm có sẵn trong i18next
@@ -44,6 +45,17 @@ function App() {
   // Khởi chạy để set attribute data-theme vào thẻ html ngay khi app load
   useEffect(() => {
     dispatch(initTheme());
+
+    // Nếu có token thì fetch thông tin user mới nhất
+    // bản chất redux là bộ nhớ ram của trình duyệt
+    // khi f5 sẽ mất toàn bộ dữ liệu
+    // lúc này chỉ còn mỗi accessToken
+    // dispatch là khi f5 vừa mở mắt kêu thằng này fetchUserSession lấy dữ liệu
+    // render lại cho khách
+    const token = getCookie("accessToken");
+    if (token) {
+      dispatch(fetchUserSession());
+    }
   }, [dispatch]);
 
   return <AppContent />;

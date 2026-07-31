@@ -8,6 +8,7 @@ export const ENDPOINTS = {
   TOURS_ADMIN: "tours/admin",
   AUTH_LOGIN: "auth/login",
   AUTH_REGISTER: "auth/register",
+  AUTH_ME: "auth/me",
   USERS: "users",
   ANSWERS: "answers",
   QUESTIONS: "questions",

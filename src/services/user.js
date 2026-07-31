@@ -3,12 +3,11 @@ import { ENDPOINTS } from "../constants/api";
 
 export const login = async (options) => {
   const result = await post(options, ENDPOINTS.AUTH_LOGIN);
+  return result;
+};
 
-  // const users = result.find(
-  //   (u) => u.email === email && u.password === password,
-  // );
-
-  // return users ? [users] : [];
+export const getAuthMe = async () => {
+  const result = await get(ENDPOINTS.AUTH_ME);
   return result;
 };
 

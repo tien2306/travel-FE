@@ -2,18 +2,126 @@
 
 .user-menu {
   &__trigger {
-    color: $text-white;
-    font-weight: 700;
-    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.15); // Nền sáng nhẹ trên thanh header xanh
+    color: #fff; // Chữ trắng cho nổi
+    padding: 6px 12px 6px 6px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 14px;
     align-items: center;
     justify-content: center;
-    gap: 5px;
+    gap: 8px;
     display: flex;
-    white-space: nowrap; // NGĂN CHẶN XUỐNG DÒNG
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .user-menu__avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: #fff;
+      color: $brand-dark; // Chữ xanh trên nền avatar trắng
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .user-menu__name {
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      @media (max-width: 992px) {
+        display: none; // Ẩn tên trên mobile, chỉ để lại avatar
+      }
+    }
 
     .icons-trigger {
-      font-size: 12px;
+      font-size: 10px;
       display: flex;
+      margin-left: 2px;
+      opacity: 0.8;
+    }
+
+    &--admin {
+      background-color: rgba(24, 144, 255, 0.1); 
+      color: $brand-dark; 
+      border: 1px solid rgba(24, 144, 255, 0.2);
+
+      &:hover {
+        background-color: rgba(24, 144, 255, 0.2);
+      }
+
+      .user-menu__avatar {
+        background-color: $brand-dark;
+        color: #fff;
+      }
+      
+      .icons-trigger {
+        color: $brand-dark;
+      }
+    }
+  }
+}
+
+.notify-dropdown-overlay {
+  .ant-dropdown-menu {
+    border-top: none !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+    padding: 8px !important;
+    min-width: 180px !important;
+    
+    .ant-dropdown-menu-item {
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 4px;
+      
+      .ant-space-item {
+        color: $text-dark;
+        font-weight: 500;
+        
+        .anticon {
+          color: $text-secondary;
+          font-size: 16px;
+        }
+      }
+      
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.04) !important;
+        
+        .ant-space-item {
+          color: $brand-dark;
+          .anticon {
+            color: $brand-dark;
+          }
+        }
+      }
+      
+      &:last-child {
+        margin-bottom: 0;
+        
+        // Nút đăng xuất màu đỏ
+        .ant-space-item {
+          color: $color-danger;
+          .anticon {
+            color: $color-danger;
+          }
+        }
+        
+        &:hover {
+          background-color: rgba(255, 77, 79, 0.1) !important;
+        }
+      }
     }
   }
 }

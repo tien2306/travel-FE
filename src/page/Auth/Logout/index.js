@@ -1,27 +1,33 @@
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-
-import { setCookie } from "../../../helpers/cookie";
-import { checkLogin } from "../../../store/slices/loginSlice";
+import { logout } from "../../../store/slices/loginSlice";
+import { Spin } from "antd";
 
 function Logout() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Xóa cookie trên toàn hệ thống bằng cách ghi đè chuỗi rỗng và ngày hết hạn âm
-    setCookie("accessToken", "", -1);
-    setCookie("user", "", -1);
+    // 1. Dispatch action logout để dọn sạch thông tin trong Redux và xóa Cookie
+    dispatch(logout());
 
-    // Xóa trạng thái đăng nhập và quyền hạn trên Redux Store
-    dispatch(checkLogin({ status: false, role: null }));
-
-    // Đẩy người dùng về trang chủ
+    // 2. Chuyển hướng về trang chủ
     navigate("/");
   }, [dispatch, navigate]);
 
-  return null;
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
+      <Spin size="large" tip="Đang xử lý đăng xuất..." />
+    </div>
+  );
 }
 
 export default Logout;

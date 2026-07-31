@@ -10,9 +10,9 @@ import Error404 from "../page/Auth/Error404";
 import Home from "../page/Client/Home";
 import Login from "../page/Auth/Login";
 import Register from "../page/Auth/Register";
+import Logout from "../page/Auth/Logout";
 import DashBoard from "../page/Admin/DashBoard";
 import ListTour from "../page/Admin/Tour/LisTour";
-import Logout from "../page/Auth/Logout";
 import ListCarousel from "../page/Admin/Carousel/ListCarousel";
 import Tours from "../page/Client/Tours";
 import ToursAll from "../page/Client/Tours/ToursAll";
@@ -83,12 +83,12 @@ export const routes = [
         element: <Login />,
       },
       {
-        path: "logout",
-        element: <Logout />,
-      },
-      {
         path: "register",
         element: <Register />,
+      },
+      {
+        path: "logout",
+        element: <Logout />,
       },
       {
         path: "*",

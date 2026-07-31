@@ -23,6 +23,7 @@
   },
   "notify": {
     "profile": "Profile",
+    "favorites": "Favorites",
     "inbox": "Inbox",
     "notifications": "Notifications",
     "settings": "Settings",

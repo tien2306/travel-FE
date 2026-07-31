@@ -250,7 +250,8 @@
     //   gap: 8px; // Giảm gap trên điện thoại để không bị đẩy nút ra ngoài
     // }
 
-    .header__global-settings-mobile {
+    .header__global-settings-mobile,
+    .header__notify-mobile {
       @media (min-width: 1351px) {
         display: none !important;
       }
@@ -308,22 +309,56 @@
   }
 
   &__auth-mobile {
-    margin-top: 20px;
-    padding-top: 20px;
+    margin-top: 15px;
+    padding-top: 15px;
     border-top: 1px solid $border-color;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 8px;
+    
     a {
       color: $text-dark;
-      font-weight: 600;
+      font-weight: 500;
       text-decoration: none;
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 16px;
-      &:hover {
+      gap: 12px;
+      font-size: 15px;
+      padding: 12px 15px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+
+      .anticon {
+        font-size: 18px;
         color: $text-secondary;
+      }
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+        color: $brand-dark;
+        .anticon {
+          color: $brand-dark;
+        }
+      }
+    }
+
+    .header__auth-divider {
+      height: 1px;
+      background-color: $border-color;
+      margin: 8px 0;
+    }
+
+    .logout-link {
+      color: $color-danger;
+      .anticon {
+        color: $color-danger;
+      }
+      &:hover {
+        background-color: rgba(255, 77, 79, 0.1);
+        color: $color-danger;
+        .anticon {
+          color: $color-danger;
+        }
       }
     }
   }
@@ -361,6 +396,24 @@
         }
       }
     }
+  }
+}
+
+// STYLES CHO COLLAPSE MENU MOBILE
+.mobile-nav-collapse {
+  .ant-collapse-header {
+    padding: 12px 15px !important;
+    color: $text-dark !important;
+    align-items: center !important;
+    border-radius: 8px !important;
+    
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.02) !important;
+    }
+  }
+
+  .ant-collapse-content > .ant-collapse-content-box {
+    padding: 10px 0 10px 15px !important; // Thụt lề vào một chút cho menu con
   }
 }
 

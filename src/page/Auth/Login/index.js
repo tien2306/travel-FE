@@ -54,20 +54,15 @@ const Login = () => {
         const userData = res.data.user;
         const userRole = res.data.user.role.name;
 
-        // 1. Lưu token và data người dùng lên cookie
+        // 1. Lưu token lên cookie
         setCookie("accessToken", token, 1);
-        setCookie("user", JSON.stringify(userData), 1);
 
         // 2. xử lí ghi nhớ
         if (remember) {
           setCookie("remembered_email", account.email, 7);
         }
-        // else {
-        //   setCookie("remembered_email", "", -1);
-        // }
-
         //3. Thay đổi trạng thái để header cập nhật lại giao diện
-        dispatch(checkLogin({ status: true, role: userRole }));
+        dispatch(checkLogin({ status: true, role: userRole, user: userData }));
 
         // 4. Điều hướng dựa theo quyền hạn
         if (userData.role.name === "ADMIN") {
@@ -181,7 +176,8 @@ const Login = () => {
             </Form>
 
             <p className="register-text">
-              {t("login.noAccount")} <a href="/register">{t("login.registerNow")}</a>
+              {t("login.noAccount")}{" "}
+              <a href="/register">{t("login.registerNow")}</a>
             </p>
           </div>
         </Col>
