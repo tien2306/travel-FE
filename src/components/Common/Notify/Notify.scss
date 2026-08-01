@@ -53,21 +53,21 @@
     }
 
     &--admin {
-      background-color: rgba(24, 144, 255, 0.1); 
-      color: $brand-dark; 
-      border: 1px solid rgba(24, 144, 255, 0.2);
+      background-color: $bg-icon-box; 
+      color: $text-heading; 
+      border: 1px solid $border-color;
 
       &:hover {
-        background-color: rgba(24, 144, 255, 0.2);
+        background-color: $bg-selected;
       }
 
       .user-menu__avatar {
-        background-color: $brand-dark;
-        color: #fff;
+        background-color: $primary-color;
+        color: $text-white;
       }
       
       .icons-trigger {
-        color: $brand-dark;
+        color: $text-muted;
       }
     }
   }

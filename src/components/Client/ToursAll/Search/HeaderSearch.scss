@@ -1,43 +1,55 @@
-@use "../../../styles/variables" as *;
-@use "../../../styles/mixins" as *;
+@use "../../../../styles/variables" as *;
+@use "../../../../styles/mixins" as *;
 
 .tour-search {
   display: flex;
   align-items: center;
-  gap: 12px;
-  background-color: transparent;
-  border: none;
-  border-radius: 0;
-  padding: 0;
-  box-shadow: none;
+  gap: 0; 
+  background-color: $bg-input; /* Sử dụng màu nền input chuẩn của hệ thống */
+  border: 1px solid $border-light;
+  border-radius: 10px; /* Trả về 10px chuẩn */
+  padding: 6px 6px 6px 12px; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   width: 100%;
+  transition: box-shadow 0.3s ease;
 
-  /* 🛠️ THÊM MEDIA QUERIES ĐỂ RESPONSIVE CHO MOBILE 500PX */
+  &:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08); 
+  }
+
   @include desktop-sm {
     flex-direction: column;
     align-items: stretch;
-    border-radius: 12px;
-    padding: 0; // Đã nằm trong Drawer nên không cần padding ngoài
+    border-radius: 10px;
+    padding: 0;
     gap: 10px;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
   }
 
   &__section {
     flex: 1;
     display: flex;
     align-items: center;
-    background-color: $bg-input; /* Sử dụng biến hệ thống */
-    border-radius: 100px;
-    padding: 6px 16px 6px 6px;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: transparent; 
+    border-radius: 10px;
+    padding: 6px 16px 6px 12px;
+    transition: background-color 0.2s ease;
+    position: relative;
 
     &:hover {
-      background-color: $bg-page;
+      background-color: $bg-page; 
     }
 
     /* Trên Mobile làm thon gọn lại */
     @include desktop-sm {
+      background-color: var(--bg-input, #f1f5f9);
       border-radius: 12px;
       padding: 8px 12px;
+      &:not(:last-of-type)::after {
+        display: none;
+      }
     }
   }
 
@@ -101,40 +113,7 @@
     }
   }
 
-  .ant-select {
-    width: 100%;
-    .ant-select-selector {
-      padding: 0;
-      height: 24px;
-      background: transparent !important;
-      border: none !important;
-      box-shadow: none !important;
 
-      .ant-select-selection-item {
-        font-size: 15px;
-        font-weight: 700;
-        color: $text-dark;
-        line-height: 24px;
-      }
-      .ant-select-selection-placeholder {
-        font-size: 14px;
-        font-weight: 500;
-        color: $text-light;
-        line-height: 24px;
-      }
-    }
-    .ant-select-arrow {
-      color: $text-light;
-      right: 0;
-    }
-    .ant-select-clear {
-      color: $text-muted;
-      background: transparent;
-      right: 0;
-      font-size: 14px;
-      margin-top: -7px;
-    }
-  }
 
   &__picker {
     width: 100%;
@@ -182,7 +161,7 @@
   &__submit-btn {
     background-color: $color-blue;
     border: none;
-    border-radius: 100px;
+    border-radius: 100px; /* Bo cong viên thuốc như ban đầu */
     height: 100%;
     width: 100%; /* Ép nút chiếm trọn 160px của khung bọc */
     font-size: 16px;
@@ -212,12 +191,4 @@
   }
 }
 
-.tour-search__dropdown {
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
-  .ant-select-item-option-selected {
-    background-color: $bg-selected;
-    color: $color-blue;
-    font-weight: 600;
-  }
-}
+

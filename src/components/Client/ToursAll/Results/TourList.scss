@@ -1,5 +1,5 @@
-@use "../../../styles/variables" as *;
-@use "../../../styles/mixins" as *;
+@use "../../../../styles/variables" as *;
+@use "../../../../styles/mixins" as *;
 
 .tour-list-container {
   display: flex;
@@ -13,14 +13,11 @@
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: box-shadow 0.2s ease;
   cursor: pointer;
   border: 1px solid $border-input;
 
   &:hover {
-    transform: translateY(-2px);
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
   }
 

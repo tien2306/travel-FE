@@ -1,18 +1,19 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { Select, Spin } from "antd";
-import { AppstoreOutlined, MenuOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 import { useTranslation } from "react-i18next";
-import { getToursFilter } from "../../../services/tour";
-import { useFilterParams } from "../../../hooks/useFilterParams";
+import { getToursFilter } from "../../../../services/tour";
+import { useFilterParams } from "../../../../hooks/useFilterParams";
 import TourGrid from "./TourGrid";
 import TourList from "./TourList";
 import TourPagination from "./TourPagination";
-import { useTourListAnimation } from "../../../page/Client/Tours/animations";
+import TourResultsToolbar from "./TourResultsToolbar";
+import { useTourListAnimation } from "../../../../page/Client/Tours/animations";
 import "./TourListResults.scss";
 import "./TourCard.scss";
 
 export default function TourListResults({ onPriceRangeUpdate }) {
   const [viewMode, setViewMode] = useState("grid"); //Lưu chế độ
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // Check mobile
   const [tours, setTours] = useState([]); // Lưu data tour
   const [loading, setLoading] = useState(false); // Chế độ loading
   const [totalItems, setTotalItems] = useState(0); // Tổng số tour
@@ -21,6 +22,12 @@ export default function TourListResults({ onPriceRangeUpdate }) {
   const { t } = useTranslation("tours");
 
   useTourListAnimation(tourListRef, tours, loading);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const { params, updateParams } = useFilterParams();
 
@@ -95,53 +102,21 @@ export default function TourListResults({ onPriceRangeUpdate }) {
 
   return (
     <div ref={tourListRef} className="tour-results">
-      <div className="tour-results__toolbar">
-        <div className="tour-results__count">
-          {t("results.count")}{" "}
-          <span>
-            {totalItems} {t("results.programs")}
-          </span>
-        </div>
-        <div className="tour-results__actions">
-          <span className="tour-results__sort-label">
-            {t("results.sortBy")}
-          </span>
-          <Select
-            value={
-              params.sortBy === "price"
-                ? `price-${params.sortOrder}`
-                : "default"
-            }
-            className="tour-results__sort-select"
-            variant="filled"
-            onChange={handleSortChange}
-          >
-            <Select.Option value="default">{t("results.sortBy")}</Select.Option>
-            <Select.Option value="price-asc">
-              {t("results.sortPriceAsc")}
-            </Select.Option>
-            <Select.Option value="price-desc">
-              {t("results.sortPriceDesc")}
-            </Select.Option>
-          </Select>
-          <div className="tour-results__view-modes">
-            <AppstoreOutlined
-              className={`tour-results__icon ${viewMode === "grid" ? "tour-results__icon--active" : ""}`}
-              onClick={() => setViewMode("grid")}
-            />
-            <MenuOutlined
-              className={`tour-results__icon ${viewMode === "list" ? "tour-results__icon--active" : ""}`}
-              onClick={() => setViewMode("list")}
-            />
-          </div>
-        </div>
-      </div>
+      <TourResultsToolbar
+        t={t}
+        totalItems={totalItems}
+        params={params}
+        handleSortChange={handleSortChange}
+        isMobile={isMobile}
+        viewMode={viewMode}
+        setViewMode={setViewMode}
+      />
 
       {loading ? (
         <div style={{ textAlign: "center", padding: "60px 0" }}>
           <Spin size="large" />
         </div>
-      ) : viewMode === "grid" ? (
+      ) : (!isMobile && viewMode === "grid") ? (
         <TourGrid data={tours} />
       ) : (
         <TourList data={tours} />

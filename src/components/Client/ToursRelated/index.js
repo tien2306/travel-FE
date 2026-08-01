@@ -6,7 +6,7 @@ import { Card } from "antd";
 import "swiper/css";
 import "./ToursRelated.scss";
 // Tái sử dụng style của TourCard
-import "../../../components/Client/ToursAll/TourCard.scss";
+import "../../../components/Client/ToursAll/Results/TourCard.scss";
 import { useTranslation } from "react-i18next";
 
 import { getToursUser } from "../../../services/tour";

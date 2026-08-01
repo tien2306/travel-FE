@@ -1,9 +1,13 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
-import { Checkbox, Slider, Button } from "antd";
+import { Button } from "antd";
 import { SlidersOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
-import { useFilterParams } from "../../../hooks/useFilterParams";
-import { useSidebarAnimation } from "../../../page/Client/Tours/animations";
+import { useFilterParams } from "../../../../hooks/useFilterParams";
+import { useSidebarAnimation } from "../../../../page/Client/Tours/animations";
+import DepartureFilter from "./FilterSections/DepartureFilter";
+import CategoryFilter from "./FilterSections/CategoryFilter";
+import TransportFilter from "./FilterSections/TransportFilter";
+import BudgetFilter from "./FilterSections/BudgetFilter";
 import "./SidebarFilter.scss";
 
 export default function SidebarFilter({ onSearchSubmit, priceRange }) {
@@ -122,81 +126,32 @@ export default function SidebarFilter({ onSearchSubmit, priceRange }) {
         </Button>
       </div>
 
+      {/* Nhóm lọc Điểm khởi hành */}
+      <DepartureFilter params={params} updateParams={updateParams} />
+
       {/* Nhóm lọc Dòng tour */}
-      <div className="tour-filter__section">
-        <span className="tour-filter__label">{t("filter.category")}</span>
-        <div className="tour-filter__checkbox-list">
-          <Checkbox
-            checked={params.category?.includes("STANDARD")}
-            onChange={(e) => handleArrayFilterChange(e, "category", "STANDARD")}
-          >
-            {t("filter.catStandard")}
-          </Checkbox>
-          <Checkbox
-            checked={params.category?.includes("PREMIUM")}
-            onChange={(e) => handleArrayFilterChange(e, "category", "PREMIUM")}
-          >
-            {t("filter.catPremium")}
-          </Checkbox>
-          <Checkbox
-            checked={params.category?.includes("SAVING")}
-            onChange={(e) => handleArrayFilterChange(e, "category", "SAVING")}
-          >
-            {t("filter.catSaving")}
-          </Checkbox>
-          <Checkbox
-            checked={params.category?.includes("ECONOMY")}
-            onChange={(e) => handleArrayFilterChange(e, "category", "ECONOMY")}
-          >
-            {t("filter.catEconomy")}
-          </Checkbox>
-        </div>
-      </div>
+      <CategoryFilter
+        t={t}
+        params={params}
+        handleArrayFilterChange={handleArrayFilterChange}
+      />
 
       {/* Nhóm lọc Phương tiện */}
-      <div className="tour-filter__section">
-        <span className="tour-filter__label">{t("filter.transport")}</span>
-        <div className="tour-filter__checkbox-list">
-          <Checkbox
-            checked={params.transport?.includes("PLANE")}
-            onChange={(e) => handleArrayFilterChange(e, "transport", "PLANE")}
-          >
-            {t("filter.transFlight")}
-          </Checkbox>
-          <Checkbox
-            checked={params.transport?.includes("BUS")}
-            onChange={(e) => handleArrayFilterChange(e, "transport", "BUS")}
-          >
-            {t("filter.transBus")}
-          </Checkbox>
-          <Checkbox
-            checked={params.transport?.includes("MOTORBIKE")}
-            onChange={(e) =>
-              handleArrayFilterChange(e, "transport", "MOTORBIKE")
-            }
-          >
-            {t("filter.transMotorbike")}
-          </Checkbox>
-        </div>
-      </div>
+      <TransportFilter
+        t={t}
+        params={params}
+        handleArrayFilterChange={handleArrayFilterChange}
+      />
 
       {/* Lọc khoảng Ngân sách */}
-      <div className="tour-filter__section">
-        <span className="tour-filter__label">{t("filter.budget")}</span>
-        <Slider
-          range
-          min={minBoundary}
-          max={maxBoundary}
-          value={budget}
-          onChange={(val) => setBudget(val)}
-          onAfterChange={handleBudgetChangeCommitted}
-          tooltip={{ formatter: (v) => `${v.toLocaleString()}đ` }}
-        />
-        <div className="tour-filter__price-range">
-          <span>{budget[0].toLocaleString()}đ</span>
-          <span>{budget[1].toLocaleString()}đ</span>
-        </div>
-      </div>
+      <BudgetFilter
+        t={t}
+        minBoundary={minBoundary}
+        maxBoundary={maxBoundary}
+        budget={budget}
+        setBudget={setBudget}
+        handleBudgetChangeCommitted={handleBudgetChangeCommitted}
+      />
     </div>
   );
 }

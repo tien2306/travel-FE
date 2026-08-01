@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Button, Drawer } from "antd";
+import { Row, Col, Button, Drawer, Collapse } from "antd";
 import Notify from "../../Common/Notify";
 import "./header.scss";
 import {
@@ -13,6 +13,11 @@ import {
   EnvironmentOutlined,
   MenuOutlined,
   LogoutOutlined,
+  HeartOutlined,
+  MessageOutlined,
+  BellOutlined,
+  SettingOutlined,
+  LayoutOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import NavigationMenu from "../NavigationMenu";
@@ -24,7 +29,7 @@ import { useTranslation } from "react-i18next";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
-  const { isLogin } = useSelector((state) => state.loginReducer);
+  const { isLogin, role } = useSelector((state) => state.loginReducer);
   const dispatch = useDispatch();
   const { t } = useTranslation("header");
 
@@ -69,24 +74,25 @@ const Header = () => {
                 </Link>
               </div>
             </Col>
+
             <Col xs={0} lg={14} className="header__auth-col">
               <div className="header__auth">
-                {!isLogin && (
+                <GlobalSettings />
+
+                {!isLogin ? (
                   <>
                     <Link className="header__auth-item" to="register">
                       <UserOutlined />
-                      <span>{t('register')}</span>
+                      <span>{t("register")}</span>
                     </Link>
                     <Link className="header__auth-item" to="login">
                       <LoginOutlined />
-                      <span>{t('login')}</span>
+                      <span>{t("login")}</span>
                     </Link>
                   </>
-                )}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <GlobalSettings />
+                ) : (
                   <Notify />
-                </div>
+                )}
               </div>
             </Col>
           </Row>
@@ -112,7 +118,7 @@ const Header = () => {
 
             {/* Khối Hành động (Nút Book Now + Nút 3 gạch Mobile) */}
             <div className="header__right-actions">
-              <div className="header__global-settings-mobile">
+              <div className="global-settings-wrapper--mobile">
                 <GlobalSettings />
               </div>
               <DarkModeToggle />
@@ -122,7 +128,7 @@ const Header = () => {
                 size="large"
                 className="header__btn-book"
               >
-                {t('bookNow')}
+                {t("bookNow")}
               </Link>
 
               <Button
@@ -140,30 +146,84 @@ const Header = () => {
       {/* được dùng để hiển thị một bảng 
       điều khiển trượt từ các cạnh của màn hình  */}
       <Drawer
-        title="Menu Điều Hướng"
+        title={"Tài khoản"}
         placement="right"
         onClose={() => setIsMenuOpen(false)}
         open={isMenuOpen}
         width={280}
+        rootClassName="header-mobile-drawer"
       >
-        <nav className="header__nav-mobile">
-          <NavigationMenu setIsMenuOpen={setIsMenuOpen} isMobile={true} />
-          <div className="header__auth-mobile">
-            {isLogin ? (
-              <Link to="/logout" onClick={() => setIsMenuOpen(false)}>
-                <LogoutOutlined /> {t('logout')}
+        <div
+          className="header__auth-mobile"
+          style={{
+            marginTop: 0,
+            paddingTop: 0,
+            borderTop: "none",
+            borderBottom: "1px solid #eee",
+            paddingBottom: "15px",
+            marginBottom: "15px",
+          }}
+        >
+          {isLogin ? (
+            <div className="header__user-menu-mobile">
+              <Link to="/profile" onClick={() => setIsMenuOpen(false)}>
+                <UserOutlined /> {t("notify.profile")}
               </Link>
-            ) : (
-              <>
-                <Link to="/register" onClick={() => setIsMenuOpen(false)}>
-                  <UserOutlined /> {t('register')}
+              <Link to="/favorites" onClick={() => setIsMenuOpen(false)}>
+                <HeartOutlined /> {t("notify.favorites")}
+              </Link>
+              <Link to="/inbox" onClick={() => setIsMenuOpen(false)}>
+                <MessageOutlined /> {t("notify.inbox")}
+              </Link>
+              <Link to="/notifications" onClick={() => setIsMenuOpen(false)}>
+                <BellOutlined /> {t("notify.notifications")}
+              </Link>
+              <Link to="/settings" onClick={() => setIsMenuOpen(false)}>
+                <SettingOutlined /> {t("notify.settings")}
+              </Link>
+              {role === "ADMIN" && (
+                <Link to="/admin" onClick={() => setIsMenuOpen(false)}>
+                  <LayoutOutlined /> {t("notify.admin")}
                 </Link>
-                <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                  <LoginOutlined /> {t('login')}
-                </Link>
-              </>
-            )}
-          </div>
+              )}
+              <div className="header__auth-divider"></div>
+              <Link
+                to="/logout"
+                onClick={() => setIsMenuOpen(false)}
+                className="logout-link"
+              >
+                <LogoutOutlined /> {t("logout")}
+              </Link>
+            </div>
+          ) : (
+            <>
+              <Link to="/register" onClick={() => setIsMenuOpen(false)}>
+                <UserOutlined /> {t("register")}
+              </Link>
+              <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+                <LoginOutlined /> {t("login")}
+              </Link>
+            </>
+          )}
+        </div>
+
+        <nav className="header__nav-mobile">
+          <Collapse
+            ghost
+            expandIconPosition="end"
+            className="mobile-nav-collapse"
+          >
+            <Collapse.Panel
+              header={
+                <span style={{ fontWeight: 600, fontSize: 16 }}>
+                  Điều hướng
+                </span>
+              }
+              key="1"
+            >
+              <NavigationMenu setIsMenuOpen={setIsMenuOpen} isMobile={true} />
+            </Collapse.Panel>
+          </Collapse>
         </nav>
       </Drawer>
     </header>

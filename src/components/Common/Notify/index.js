@@ -1,105 +1,93 @@
+import React, { useMemo } from "react";
 import { Dropdown, Space } from "antd";
-import { Link, NavLink, useLocation } from "react-router-dom"; // Thêm useLocation vào đây
+import { Link, useLocation } from "react-router-dom";
 import {
-  HomeOutlined,
   DownOutlined,
   UserOutlined,
-  MessageOutlined,
-  BellOutlined,
-  SettingOutlined,
   LogoutOutlined,
   LayoutOutlined,
+  HeartOutlined,
 } from "@ant-design/icons";
 import "./Notify.scss";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-function Notify(props) {
-  // Lấy đường dẫn URL hiện tại của trình duyệt
+function Notify() {
   const location = useLocation();
   const { t } = useTranslation("header");
 
-  // Lấy dữ liệu đăng nhập và quyền hạn từ Redux Store
   const state = useSelector((state) => state.loginReducer);
-  const isLogin = state?.isLogin;
   const role = state?.role;
+  const user = state?.user;
 
-  // Cấu hình menu cho người dùng chưa đăng nhập
-  const loggedOutMenu = [
-    {
-      id: "profile",
-      title: t("notify.profile"),
-      icon: <UserOutlined />,
-      to: "/profile",
-    },
-    { id: "inbox", title: t("notify.inbox"), icon: <MessageOutlined />, to: "/inbox" },
-    {
-      id: "noti",
-      title: t("notify.notifications"),
-      icon: <BellOutlined />,
-      to: "/notifications",
-    },
-    {
-      id: "setting",
-      title: t("notify.settings"),
-      icon: <SettingOutlined />,
-      to: "/settings",
-    },
-  ];
+  const fullName = user?.fullName || "User";
+  const avatarText = fullName.charAt(0).toUpperCase();
 
-  // Cấu hình menu cơ bản cho người đã đăng nhập
-  const loggedInMenu = [
-    {
-      id: "profile",
-      title: t("notify.profile"),
-      icon: <UserOutlined />,
-      to: "/profile",
-    },
-    { id: "inbox", title: t("notify.inbox"), icon: <MessageOutlined />, to: "/inbox" },
-    {
-      id: "noti",
-      title: t("notify.notifications"),
-      icon: <BellOutlined />,
-      to: "/notifications",
-    },
-    {
-      id: "setting",
-      title: t("notify.settings"),
-      icon: <SettingOutlined />,
-      to: "/settings",
-    },
-  ];
-
-  // Kiểm tra xem người dùng có đang đứng ở các trang admin hay không
   const isAdminPage = location.pathname.startsWith("/admin");
 
-  // Nếu là tài khoản ADMIN và đồng thời KHÔNG PHẢI đang ở trang admin thì mới hiển thị nút này
-  if (role === "ADMIN" && !isAdminPage) {
-    loggedInMenu.push({
-      id: "admin",
-      title: t("notify.admin"),
-      icon: <LayoutOutlined />,
-      to: "/admin",
+  // Dùng useMemo để tránh tạo lại mảng menu sau mỗi lần render
+  const menuItemsData = useMemo(() => {
+    // 1. Menu cơ bản luôn có
+    const baseMenu = [
+      {
+        id: "profile",
+        title: t("notify.profile"),
+        icon: <UserOutlined />,
+        to: "/profile",
+      },
+      {
+        id: "favorites",
+        title: t("notify.favorites"),
+        icon: <HeartOutlined />,
+        to: "/favorites",
+      },
+      // {
+      //   id: "inbox",
+      //   title: t("notify.inbox"),
+      //   icon: <MessageOutlined />,
+      //   to: "/inbox",
+      // },
+      // {
+      //   id: "noti",
+      //   title: t("notify.notifications"),
+      //   icon: <BellOutlined />,
+      //   to: "/notifications",
+      // },
+      // {
+      //   id: "setting",
+      //   title: t("notify.settings"),
+      //   icon: <SettingOutlined />,
+      //   to: "/settings",
+      // },
+    ];
+
+    // 2. Thêm nút Admin nếu là quyền ADMIN và KHÔNG ở trang admin
+    if (role === "ADMIN" && !isAdminPage) {
+      baseMenu.push({
+        id: "admin",
+        title: t("notify.admin"),
+        icon: <LayoutOutlined />,
+        to: "/admin",
+      });
+    }
+
+    // 3. Luôn luôn có nút Đăng xuất ở cuối
+    baseMenu.push({
+      id: "logout",
+      title: t("notify.logout"),
+      icon: <LogoutOutlined />,
+      to: "/logout",
     });
-  }
 
-  // Luôn luôn thêm nút Log Out vào cuối danh sách menu đăng nhập
-  loggedInMenu.push({
-    id: "logout",
-    title: t("notify.logout"),
-    icon: <LogoutOutlined />,
-    to: "/logout",
-  });
+    return baseMenu;
+  }, [t, role, isAdminPage]);
 
-  // Lựa chọn mảng dữ liệu menu dựa trên trạng thái đăng nhập
-  const currentMenuData = isLogin ? loggedInMenu : loggedOutMenu;
-
-  // Chuyển đổi mảng dữ liệu thành cấu trúc items tuân thủ quy định của Ant Design Dropdown
-  const items = currentMenuData.map((item) => ({
+  // Chuyển đổi mảng dữ liệu thành cấu trúc items của Ant Design
+  const items = menuItemsData.map((item) => ({
     key: item.id,
     label: (
       <Link to={item.to} className="user-menu__link">
-        <Space size="middle">
+        <Space size="small">
           {item.icon}
           <span>{item.title}</span>
         </Space>
@@ -108,15 +96,21 @@ function Notify(props) {
   }));
 
   return (
-    <NavLink to="#">
-      <Dropdown menu={{ items }} trigger={["click"]} placement="bottomRight">
-        <div className="user-menu__trigger" style={{ cursor: "pointer" }}>
-          <HomeOutlined className="icons-trigger" />
-          <span>{t("notify.myDashboard")}</span>
-          <DownOutlined className="icons-trigger" />
-        </div>
-      </Dropdown>
-    </NavLink>
+    <Dropdown
+      menu={{ items }}
+      trigger={["click"]}
+      placement="bottomRight"
+      overlayClassName="notify-dropdown-overlay"
+      arrow={true}
+    >
+      <div
+        className={`user-menu__trigger ${isAdminPage ? "user-menu__trigger--admin" : ""}`}
+      >
+        <div className="user-menu__avatar">{avatarText}</div>
+        <span className="user-menu__name">{fullName}</span>
+        <DownOutlined className="icons-trigger" />
+      </div>
+    </Dropdown>
   );
 }
 

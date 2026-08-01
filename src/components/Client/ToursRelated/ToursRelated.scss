@@ -82,6 +82,7 @@
           font-size: 14px;
           font-weight: 600;
           z-index: 2;
+          transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
         .tour-overlay {
@@ -191,6 +192,11 @@
       &:hover {
         .tour-hero .tour-overlay {
           opacity: 1;
+        }
+        
+        .tour-hero .tour-badge-bottom {
+          transform: translateY(100%);
+          opacity: 0;
         }
       }
     }

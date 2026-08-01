@@ -1,9 +1,9 @@
 import { NavLink, useLocation, Link } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown } from "antd";
-// 1. Nhập useSelector để lấy quyền từ Redux
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import "./NavigationMenu.scss";
 
 function NavigationMenu(props) {
   const location = useLocation();
@@ -81,6 +81,7 @@ function NavigationMenu(props) {
         <Dropdown
           menu={{ items: serviceItems, onClick: handleCloseMenu }}
           trigger={["hover"]}
+          overlayClassName="nav-dropdown-overlay"
         >
           <NavLink
             to="/service"
@@ -105,6 +106,7 @@ function NavigationMenu(props) {
         <Dropdown
           menu={{ items: packageItems, onClick: handleCloseMenu }}
           trigger={["hover"]}
+          overlayClassName="nav-dropdown-overlay"
         >
           <NavLink
             to="/package"
@@ -129,6 +131,7 @@ function NavigationMenu(props) {
         <Dropdown
           menu={{ items: blogItems, onClick: handleCloseMenu }}
           trigger={["hover"]}
+          overlayClassName="nav-dropdown-overlay"
         >
           <NavLink
             to="/blog"
@@ -153,6 +156,7 @@ function NavigationMenu(props) {
         <Dropdown
           menu={{ items: pageItems, onClick: handleCloseMenu }}
           trigger={["hover"]}
+          overlayClassName="nav-dropdown-overlay"
         >
           <NavLink
             to="/pages"

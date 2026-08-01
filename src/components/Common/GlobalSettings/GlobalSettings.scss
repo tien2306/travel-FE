@@ -100,3 +100,10 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   }
 }
+
+// Ẩn/Hiện GlobalSettings trên Header tuỳ theo kích thước màn hình
+.global-settings-wrapper--mobile {
+  @media (min-width: 1351px) {
+    display: none !important;
+  }
+}

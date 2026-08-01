@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { DatePicker, Button, Input } from "antd";
-import { useFilterParams } from "../../../hooks/useFilterParams";
+import { useFilterParams } from "../../../../hooks/useFilterParams";
 import {
   SearchOutlined,
   EnvironmentOutlined,
@@ -8,7 +8,7 @@ import {
 } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
-import { useSearchAnimation } from "../../../page/Client/Tours/animations";
+import { useSearchAnimation } from "../../../../page/Client/Tours/animations";
 import "./HeaderSearch.scss";
 
 export default function HeaderSearch({ onSearchSubmit }) {

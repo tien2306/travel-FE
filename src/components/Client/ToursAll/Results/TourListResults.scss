@@ -1,5 +1,5 @@
-@use "../../../styles/variables" as *;
-@use "../../../styles/mixins" as *;
+@use "../../../../styles/variables" as *;
+@use "../../../../styles/mixins" as *;
 
 .tour-results {
   scroll-margin-top: 180px; // Tăng khoảng cách chừa ra cho thanh Menu cố định để không bị che Toolbar
@@ -10,7 +10,7 @@
     align-items: center;
     background: $bg-white;
     padding: 14px 20px;
-    border-radius: $radius-lg;
+    border-radius: 10px;
     margin-bottom: 20px;
     gap: 16px;
     flex-wrap: wrap;

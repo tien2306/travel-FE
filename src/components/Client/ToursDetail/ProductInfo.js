@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { formatPrice, formatDate } from "../../../helpers/formatDate";
 import {
-  getFavorites,
+  getFavoriteStatus,
   addFavorite,
   removeFavorite,
 } from "../../../services/favorite";
@@ -31,16 +31,21 @@ const ProductInfo = ({ tour }) => {
   const location = useLocation();
 
   const [isFav, setIsFav] = useState(false);
+  const [isFavLoading, setIsFavLoading] = useState(false); // Thêm state chống spam
 
   // Kiểm tra trạng thái yêu thích khi load
   useEffect(() => {
     const fetchFav = async () => {
-      const result = await getFavorites();
-      const list = result?.data || [];
-      setIsFav(list.some((f) => f.tourId === tour.id));
+      if (!isLogin) return;
+      try {
+        const result = await getFavoriteStatus(tour.id);
+        setIsFav(result.data?.isFavorite);
+      } catch (error) {
+        console.error("Lỗi khi lấy trạng thái yêu thích", error);
+      }
     };
     fetchFav();
-  }, [tour.id]);
+  }, [tour.id, isLogin]);
 
   // Yêu cầu đăng nhập nếu chưa login (dùng chung cho favorite & booking)
   const requireLogin = (onConfirm) => {
@@ -60,6 +65,8 @@ const ProductInfo = ({ tour }) => {
 
   // Toggle yêu thích
   const handleFavClick = async () => {
+    if (isFavLoading) return; // Nếu đang xử lý API thì không cho bấm tiếp (chống spam)
+
     if (!isLogin) {
       requireLogin(() =>
         navigate("/login", { state: { from: location.pathname } }),
@@ -67,28 +74,35 @@ const ProductInfo = ({ tour }) => {
       return;
     }
 
-    if (isFav) {
-      await removeFavorite(tour.id);
-      setIsFav(false);
-      Swal.fire({
-        icon: "info",
-        title: t("detail.favRemoveSuccess"),
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    } else {
-      await addFavorite(tour.id);
-      setIsFav(true);
-      Swal.fire({
-        icon: "success",
-        title: t("detail.favAddSuccess"),
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 2000,
-      });
+    setIsFavLoading(true); // Bật khiên chống spam
+    try {
+      if (isFav) {
+        await removeFavorite(tour.id);
+        setIsFav(false);
+        Swal.fire({
+          icon: "info",
+          title: t("detail.favRemoveSuccess"),
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      } else {
+        await addFavorite(tour.id);
+        setIsFav(true);
+        Swal.fire({
+          icon: "success",
+          title: t("detail.favAddSuccess"),
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }
+    } catch (error) {
+      console.error("Lỗi thả tim", error);
+    } finally {
+      setIsFavLoading(false); // Tắt khiên khi API gọi xong
     }
   };
 
@@ -115,6 +129,11 @@ const ProductInfo = ({ tour }) => {
         <button
           className={`product-info__fav-btn${isFav ? " product-info__fav-btn--active" : ""}`}
           onClick={handleFavClick}
+          disabled={isFavLoading}
+          style={{
+            opacity: isFavLoading ? 0.5 : 1,
+            cursor: isFavLoading ? "wait" : "pointer",
+          }}
           title={isFav ? t("detail.favRemoveTitle") : t("detail.favAddTitle")}
           aria-label={
             isFav ? t("detail.favRemoveTitle") : t("detail.favAddTitle")

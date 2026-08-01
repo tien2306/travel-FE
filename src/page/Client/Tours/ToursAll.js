@@ -1,10 +1,11 @@
-import { useState, useCallback } from "react";
-import { Row, Col, Drawer, Button } from "antd";
-import { SlidersOutlined, SearchOutlined } from "@ant-design/icons";
+import { useState, useCallback, useEffect, useRef } from "react";
+import { Row, Col } from "antd";
 import { useTranslation } from "react-i18next";
-import SidebarFilter from "../../../components/Client/ToursAll/SidebarFilter";
-import HeaderSearch from "../../../components/Client/ToursAll/HeaderSearch";
-import TourListResults from "../../../components/Client/ToursAll/TourListResults";
+import SidebarFilter from "../../../components/Client/ToursAll/Filters/SidebarFilter";
+import HeaderSearch from "../../../components/Client/ToursAll/Search/HeaderSearch";
+import TourListResults from "../../../components/Client/ToursAll/Results/TourListResults";
+import MobileFilterBar from "../../../components/Client/ToursAll/Mobile/MobileFilterBar";
+import MobileDrawers from "../../../components/Client/ToursAll/Mobile/MobileDrawers";
 import "./ToursAll.scss";
 
 let cachedPriceRange = null;
@@ -19,6 +20,32 @@ function ToursAll() {
   const [priceRange, setPriceRange] = useState(
     cachedPriceRange || { min: 0, max: 200000000 },
   );
+
+  const resultsRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (resultsRef.current) {
+        //getBoundingClientRect: Tính toán khoảng cách p/tử resultsRef tới khung nhìn
+        // getBoundingClientRect có hàm top, bottom
+        // top: khoảng cách cạnh trên p/tử đến khung nhìn
+        // bottom: khoảng cách cạnh dưới p/tử đến khung nhìn
+        const rect = resultsRef.current.getBoundingClientRect();
+
+        if (rect.top <= -200 && rect.bottom > 200) {
+          setIsVisible(true);
+        } else {
+          setIsVisible(false);
+          setMenuOpen(false);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // 2. CÔNG CỤ ĐA NGÔN NGỮ
   // Hook này giúp bạn dịch các chữ trên giao diện sang tiếng Anh/Việt dựa vào file cấu hình "tours".
@@ -51,87 +78,43 @@ function ToursAll() {
       <div className="tour-page__container">
         <Row gutter={[24, 24]}>
           {/* Cột trái: Bộ lọc */}
-          <Col xs={0} lg={6} xl={5} className="tour-page__sidebar-col">
+          <Col xs={0} lg={7} xl={6} className="tour-page__sidebar-col">
             <div className="tour-page__sidebar">
               <SidebarFilter priceRange={priceRange} />
             </div>
           </Col>
 
           {/* Cột phải: Thanh tìm kiếm & Danh sách tour */}
-          <Col xs={24} lg={18} xl={19} className="tour-page__content">
+          <Col xs={24} lg={17} xl={18} className="tour-page__content">
             <div className="tour-page__search">
               <HeaderSearch />
             </div>
-            <div className="tour-page__results">
+            <div className="tour-page__results" ref={resultsRef}>
               <TourListResults onPriceRangeUpdate={handlePriceRangeUpdate} />
             </div>
 
-            {/* Nút hiển thị bộ lọc dạng Drawer trên Mobile/Tablet */}
-            <div className="tour-page__mobile-filter-bar">
-              <div className="tour-page__mobile-filter-btn">
-                <Button
-                  type="text"
-                  icon={<SlidersOutlined />}
-                  onClick={() => setFilterDrawerOpen(true)}
-                  className="tour-page__mobile-fab-action"
-                >
-                  {t("filter.title")}
-                </Button>
-                <div className="tour-page__mobile-fab-divider" />
-                <Button
-                  type="text"
-                  icon={<SearchOutlined />}
-                  onClick={() => setSearchDrawerOpen(true)}
-                  className="tour-page__mobile-fab-action"
-                >
-                  {t("search.button")}
-                </Button>
-              </div>
-            </div>
+            {/* Nút hiển thị bộ lọc, tròn nổi ở góc dưới */}
+            <MobileFilterBar
+              t={t}
+              isVisible={isVisible}
+              menuOpen={menuOpen}
+              setMenuOpen={setMenuOpen}
+              setFilterDrawerOpen={setFilterDrawerOpen}
+              setSearchDrawerOpen={setSearchDrawerOpen}
+            />
           </Col>
         </Row>
       </div>
 
-      {/* Drawer chứa SidebarFilter cho màn hình Tablet/Mobile */}
-      <Drawer
-        title={
-          <span>
-            <SlidersOutlined /> {t("filter.title")}
-          </span>
-        }
-        placement="left"
-        onClose={() => setFilterDrawerOpen(false)}
-        open={filterDrawerOpen}
-        width={250}
-        styles={{ body: { padding: 0 } }}
-      >
-        <div style={{ padding: "20px 24px" }}>
-          <SidebarFilter
-            onSearchSubmit={() => setFilterDrawerOpen(false)}
-            priceRange={priceRange}
-          />
-        </div>
-      </Drawer>
-
-      {/* Drawer chứa HeaderSearch cho màn hình Tablet/Mobile */}
-      <Drawer
-        title={
-          <span>
-            <SearchOutlined /> {t("search.button")}
-          </span>
-        }
-        placement="right"
-        onClose={() => setSearchDrawerOpen(false)}
-        open={searchDrawerOpen}
-        width={250}
-        styles={{ body: { padding: 0 } }}
-      >
-        <div style={{ padding: "20px 24px" }}>
-          <div className="tour-page__drawer-search">
-            <HeaderSearch onSearchSubmit={() => setSearchDrawerOpen(false)} />
-          </div>
-        </div>
-      </Drawer>
+      {/* Cái bảng trượt từ cạnh màn hình ra */}
+      <MobileDrawers
+        t={t}
+        filterDrawerOpen={filterDrawerOpen}
+        setFilterDrawerOpen={setFilterDrawerOpen}
+        searchDrawerOpen={searchDrawerOpen}
+        setSearchDrawerOpen={setSearchDrawerOpen}
+        priceRange={priceRange}
+      />
     </div>
   );
 }

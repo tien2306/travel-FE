@@ -4,7 +4,20 @@
  * @returns {Object} { isFormData: boolean, payload: FormData | Object }
  */
 export const buildTourPayload = (values) => {
-  // console.log(values);
+  // Chuẩn hóa điểm khởi hành: Nếu người dùng nhập bất cứ gì liên quan đến Hồ Chí Minh -> ép về "TP.HCM"
+  let normalizedDeparture = values.departurePlace || "";
+  const cleanText = normalizedDeparture
+    .toLowerCase() // Chuyển chữ thường
+    .normalize("NFD") // Tách dấu
+    .replace(/[\u0300-\u036f]/g, "") // Xóa dấu tiếng Việt
+    .replace(/[^a-z0-9]/g, ""); // Xóa khoảng trắng, dấu chấm, dấu phẩy (ví dụ: tp. hcm -> tphcm)
+
+  const hcmKeywords = ["hochiminh", "hcm", "tphcm", "saigon", "sg"];
+  const isHCM = hcmKeywords.includes(cleanText);
+  if (isHCM) {
+    normalizedDeparture = "TP.HCM";
+  }
+
   // Chuyển đổi ngày
   const formattedStartDate = values.startDate
     ? values.startDate.toISOString()
@@ -35,7 +48,7 @@ export const buildTourPayload = (values) => {
     formData.append("price", String(values.price));
     formData.append("quantity", String(values.quantity));
     formData.append("sold", String(values.sold || 0));
-    formData.append("departurePlace", values.departurePlace || "");
+    formData.append("departurePlace", normalizedDeparture);
     formData.append("destination", values.destination || "");
     formData.append("shortDesc", values.shortDesc || "");
     formData.append("detailDesc", values.detailDesc || "");
@@ -94,7 +107,7 @@ export const buildTourPayload = (values) => {
       price: Number(values.price),
       quantity: Number(values.quantity),
       sold: Number(values.sold || 0),
-      departurePlace: values.departurePlace || "",
+      departurePlace: normalizedDeparture,
       destination: values.destination || "",
       startDate: formattedStartDate,
       endDate: formattedEndDate,

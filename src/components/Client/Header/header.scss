@@ -143,6 +143,28 @@
     gap: 8px;
     text-decoration: none;
     white-space: nowrap;
+    position: relative;
+    padding-bottom: 2px;
+    transition: color 0.3s ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: currentColor;
+      transition: width 0.3s ease;
+    }
+
+    &:hover {
+      color: $text-light;
+    }
+
+    &:hover::after {
+      width: 100%;
+    }
   }
 
   // MAINBAR (logo + menu + nút Book Now + nút mobile)
@@ -236,21 +258,11 @@
     }
   }
 
-  // --- Khối nút bên phải (Book Now + nút 3 gạch mobile) ---
+  // KHỐI NÀY ĐÃ ĐƯỢC CHUYỂN SANG GlobalSettings.scss VÀ Notify.scss
   &__right-actions {
     display: flex;
     align-items: center;
-    // gap: 15px;
 
-    // @media (max-width: 992px) {
-    //   gap: 10px;
-    // }
-
-    // @media (max-width: 576px) {
-    //   gap: 8px; // Giảm gap trên điện thoại để không bị đẩy nút ra ngoài
-    // }
-
-    .header__global-settings-mobile,
     .header__notify-mobile {
       @media (min-width: 1351px) {
         display: none !important;
@@ -399,57 +411,36 @@
   }
 }
 
-// STYLES CHO COLLAPSE MENU MOBILE
-.mobile-nav-collapse {
-  .ant-collapse-header {
-    padding: 12px 15px !important;
-    color: $text-dark !important;
-    align-items: center !important;
-    border-radius: 8px !important;
-    
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.02) !important;
-    }
-  }
-
-  .ant-collapse-content > .ant-collapse-content-box {
-    padding: 10px 0 10px 15px !important; // Thụt lề vào một chút cho menu con
-  }
-}
-
-// ANTD DRAWER (menu mobile trượt từ bên phải)
-.ant-drawer {
+// SCOPED DRAWER (Thay cho .ant-drawer toàn cục)
+.header-mobile-drawer {
   z-index: 1100;
 
-  &-mask {
+  .ant-drawer-mask {
     z-index: 1100;
   }
 
-  &-content-wrapper {
+  .ant-drawer-content-wrapper {
     z-index: 1101;
   }
-}
 
-// ANTD DROPDOWN (menu con của Service/Package/Blog/Pages)
-.ant-dropdown {
-  .ant-dropdown-menu {
-    border-top: 3px solid $brand-dark;
-    border-radius: 0 0 4px 4px;
-    min-width: 160px;
-    .ant-dropdown-menu-item {
-      padding: 10px 20px;
-      a {
-        color: $text-dark;
-        text-decoration: none;
-        font-weight: 500;
-      }
+  // SCOPED COLLAPSE
+  .mobile-nav-collapse {
+    .ant-collapse-header {
+      padding: 12px 15px !important;
+      color: $text-dark !important;
+      align-items: center !important;
+      border-radius: 8px !important;
+      
       &:hover {
-        background-color: $dropdown-hover-bg; // Fix: #f5f5f5 → biến động theo theme
-        a,
-        span {
-          color: $dropdown-hover-text !important; // Fix: hover text biến động theo theme
-        }
+        background-color: rgba(0, 0, 0, 0.02) !important;
       }
+    }
+
+    .ant-collapse-content > .ant-collapse-content-box {
+      padding: 10px 0 10px 15px !important; // Thụt lề vào một chút cho menu con
     }
   }
 }
+
+// KHỐI DROPDOWN TOÀN CỤC (.ant-dropdown) ĐÃ ĐƯỢC CHUYỂN VÀO Notify.scss HOẶC NAVIGATION.SCSS
+

@@ -8,9 +8,9 @@ import {
   StarOutlined,
 } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
-import BG from "../../../images/carousel-2.jpg";
-import { IMAGE_URLS } from "../../../constants/api";
-import { formatDate } from "../../../helpers/formatDate";
+import BG from "../../../../images/carousel-1.jpg";
+import { IMAGE_URLS } from "../../../../constants/api";
+import { formatDate } from "../../../../helpers/formatDate";
 import "./TourList.scss";
 
 export default function TourList({ data }) {

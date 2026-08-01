@@ -2,12 +2,6 @@
 @use "../../../styles/mixins" as *;
 
 // ============================================================
-// FOOTER — Travela-style dark footer
-// Tất cả màu sắc lấy từ _variables.scss → hỗ trợ dark/light mode.
-// Không dùng !important, không hardcode màu trực tiếp.
-// ============================================================
-
-// ============================================================
 // SUBSCRIBE SECTION
 // ============================================================
 .subscribe-section {
@@ -142,7 +136,7 @@
 }
 
 .footer-container {
-  max-width: 1280px;
+  max-width: $container-max-width;
   margin: 0 auto;
   padding: 0 40px;
 
@@ -385,7 +379,7 @@
 }
 
 .footer-copyright-inner {
-  max-width: 1280px;
+  max-width: $container-max-width;
   margin: 0 auto;
   padding: 0 40px;
   display: flex;

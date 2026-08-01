@@ -1,0 +1,28 @@
+@use "../../../styles/variables" as *;
+
+.nav-dropdown-overlay {
+  .ant-dropdown-menu {
+    border-top: 3px solid $brand-dark;
+    border-radius: 0 0 4px 4px;
+    min-width: 160px;
+    
+    .ant-dropdown-menu-item {
+      padding: 10px 20px;
+      
+      a {
+        color: $text-dark;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      
+      &:hover {
+        background-color: $dropdown-hover-bg; // Fix: #f5f5f5 → biến động theo theme
+        
+        a,
+        span {
+          color: $dropdown-hover-text !important; // Fix: hover text biến động theo theme
+        }
+      }
+    }
+  }
+}

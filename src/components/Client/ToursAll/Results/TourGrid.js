@@ -3,9 +3,9 @@ import { Row, Col, Card, Progress } from "antd";
 import { useNavigate } from "react-router-dom";
 import { StarFilled } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
-import BG from "../../../images/carousel-1.jpg";
-import { IMAGE_URLS } from "../../../constants/api";
-import { formatDate } from "../../../helpers/formatDate";
+import BG from "../../../../images/carousel-1.jpg";
+import { IMAGE_URLS } from "../../../../constants/api";
+import { formatDate } from "../../../../helpers/formatDate";
 
 export default function TourGrid({ data }) {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ export default function TourGrid({ data }) {
     >
       {data?.map((tour) => {
         return (
-          <Col key={tour.id || tour._id} xs={12} sm={12} md={12} lg={12} xl={8}>
+          <Col key={tour.id || tour._id} xs={24} sm={12} md={12} lg={12} xl={8}>
             <Card
               hoverable
               className="tour-card"
@@ -48,9 +48,8 @@ export default function TourGrid({ data }) {
                       : t("status.closed")}
                 </span>
 
-                {/* --- [CHỈ PC] Badge Danh mục (Góc phải ảnh) --- */}
                 <div
-                  className={`tour-card__badge-category desktop-only cat-${(tour.category || "Standard").toLowerCase()}`}
+                  className={`tour-card__badge-category cat-${(tour.category || "Standard").toLowerCase()}`}
                 >
                   <StarFilled />
                   <span>{t(`filter.cat${getCategoryKey(tour.category)}`)}</span>
@@ -68,8 +67,8 @@ export default function TourGrid({ data }) {
                   }}
                 />
 
-                {/* --- [CHỈ PC] Lộ trình vắt ngang ảnh --- */}
-                <div className="tour-card__badges-overlay desktop-only">
+                {/* --- Lộ trình vắt ngang ảnh --- */}
+                <div className="tour-card__badges-overlay">
                   <div className="tour-card__badge-route">
                     <span title={tour.departurePlace}>
                       {tour.departurePlace?.toLowerCase() ===
@@ -96,7 +95,7 @@ export default function TourGrid({ data }) {
                     {tour.name}
                   </h3>
 
-                  {/* --- [CHỈ PC] Thanh tiến trình đặt chỗ --- */}
+                  {/* --- Thanh tiến trình đặt chỗ --- */}
                   <div className="tour-card__progress-block">
                     <Progress
                       percent={tour.bookedPercentage}
@@ -114,11 +113,7 @@ export default function TourGrid({ data }) {
                     </span>
                   </div>
 
-                  {/* --- [CHUNG] Mô tả ngắn gọn --- */}
-                  <p className="tour-card__short-desc">
-                    {tour.shortDesc ||
-                      "Trải nghiệm chuyến du lịch tuyệt vời cùng gia đình và người thân."}
-                  </p>
+                  {/* Đã gỡ phần mô tả ngắn theo yêu cầu để giảm chiều cao thẻ */}
 
                   {/* --- [CHUNG] Lịch khởi hành --- */}
                   <div className="tour-card__date-block">
@@ -134,21 +129,7 @@ export default function TourGrid({ data }) {
                     </div>
                   </div>
 
-                  {/* --- [CHỈ MOBILE] Lộ trình dạng văn bản --- */}
-                  <div className="tour-card__route-mobile">
-                    <div className="tour-card__route-info">
-                      <span className="tour-card__icon">📍</span>
-                      <span className="tour-card__route-label">
-                        {t("card.itinerary")}
-                      </span>
-                      <span
-                        className="tour-card__route-value"
-                        title={`${tour.departurePlace} ➔ ${tour.destination}`}
-                      >
-                        {tour.departurePlace} ➔ {tour.destination}
-                      </span>
-                    </div>
-                  </div>
+
 
                   <div className="tour-card__footer">
                     <div className="tour-card__price-section">
