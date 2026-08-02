@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { Layout } from "antd";
 import { Outlet, useLocation } from "react-router-dom";
-
 import "./layoutDefaulat.scss";
 import { getCarouselUser } from "../../services/carousel";
-import Header from "../../components/Client/Header";
+import Header from "../../components/Client/Header/header";
 import { IMAGE_URLS } from "../../constants/api";
 import Footer from "../../components/Client/Footer";
 
@@ -73,7 +72,6 @@ function LayoutDefault() {
     else if (currentPath.includes("tours")) setPageTitle("Us Tour");
     else setPageTitle("");
   }, [location.pathname]);
-
 
   return (
     <Layout className="layout-default">

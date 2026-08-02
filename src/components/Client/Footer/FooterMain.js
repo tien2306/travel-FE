@@ -1,28 +1,42 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
-  IconCompass,
-  IconMapPin,
-  IconMail,
-  IconPhone,
-  IconPrint,
-  IconChevronRight,
-  IconShare,
-  IconFacebook,
-  IconTwitter,
-  IconInstagram,
-  IconLinkedin,
-} from "../../Common/Icons";
-
+  FiCompass,
+  FiMapPin,
+  FiMail,
+  FiPhone,
+  FiPrinter,
+  FiChevronRight,
+  FiShare2,
+} from "react-icons/fi";
+import {
+  FaCcVisa,
+  FaCcMastercard,
+  FaCcPaypal,
+  FaCcAmex,
+  FaCcDiscover,
+  FaCcJcb,
+  FaFacebook,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedin,
+} from "react-icons/fa";
 
 // Dữ liệu tĩnh không cần dịch
-const PAYMENTS = ["VISA", "Mastercard", "PayPal", "AMEX", "Discover", "JCB"];
+const PAYMENTS = [
+  { id: "visa", label: "VISA", Icon: FaCcVisa },
+  { id: "mastercard", label: "Mastercard", Icon: FaCcMastercard },
+  { id: "paypal", label: "PayPal", Icon: FaCcPaypal },
+  { id: "amex", label: "AMEX", Icon: FaCcAmex },
+  { id: "discover", label: "Discover", Icon: FaCcDiscover },
+  { id: "jcb", label: "JCB", Icon: FaCcJcb },
+];
 
 const SOCIALS = [
-  { id: "footer-fb", label: "Facebook", Icon: IconFacebook },
-  { id: "footer-tw", label: "Twitter", Icon: IconTwitter },
-  { id: "footer-ig", label: "Instagram", Icon: IconInstagram },
-  { id: "footer-li", label: "LinkedIn", Icon: IconLinkedin },
+  { id: "footer-fb", label: "Facebook", Icon: FaFacebook, href: "https://facebook.com" },
+  { id: "footer-tw", label: "Twitter", Icon: FaTwitter, href: "https://twitter.com" },
+  { id: "footer-ig", label: "Instagram", Icon: FaInstagram, href: "https://instagram.com" },
+  { id: "footer-li", label: "LinkedIn", Icon: FaLinkedin, href: "https://linkedin.com" },
 ];
 
 // ─── Footer Main ─────────────────────────────────────────────
@@ -54,36 +68,38 @@ function FooterMain() {
           {/* ── Cột 1: Liên hệ ── */}
           <div>
             <div className="footer-brand">
-              <IconCompass size={24} />
+              <FiCompass size={24} />
               <span>TravelAway</span>
             </div>
             <h4 className="footer-col-title">{t("contactTitle")}</h4>
             <div className="footer-contact-list">
               <a href="/" className="footer-contact-item">
-                <IconMapPin size={16} />
+                <FiMapPin size={16} />
                 {t("address")}
               </a>
               <a href="mailto:info@travelgo.vn" className="footer-contact-item">
-                <IconMail size={16} />
+                <FiMail size={16} />
                 info@TravelAway.vn
               </a>
               <a href="tel:+84283822988" className="footer-contact-item">
-                <IconPhone size={16} />
+                <FiPhone size={16} />
                 +84 28 3822 9988
               </a>
               <a href="tel:+84283822989" className="footer-contact-item">
-                <IconPrint size={16} />
+                <FiPrinter size={16} />
                 +84 28 3822 9989
               </a>
             </div>
 
             <div className="footer-socials">
-              <IconShare size={18} className="footer-socials__icon" />
-              {SOCIALS.map(({ id, label, Icon }) => (
+              <FiShare2 size={18} className="footer-socials__icon" />
+              {SOCIALS.map(({ id, label, Icon, href }) => (
                 <a
                   key={id}
-                  href="/"
+                  href={href}
                   id={id}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="footer-social-btn"
                   aria-label={label}
                 >
@@ -103,7 +119,7 @@ function FooterMain() {
                   to={link.to}
                   className="footer-link-item"
                 >
-                  <IconChevronRight size={14} />
+                  <FiChevronRight size={14} />
                   {link.label}
                 </Link>
               ))}
@@ -120,7 +136,7 @@ function FooterMain() {
                   to={link.to}
                   className="footer-link-item"
                 >
-                  <IconChevronRight size={14} />
+                  <FiChevronRight size={14} />
                   {link.label}
                 </Link>
               ))}
@@ -131,9 +147,9 @@ function FooterMain() {
           <div>
             <h4 className="footer-col-title">{t("paymentsTitle")}</h4>
             <div className="footer-payments">
-              {PAYMENTS.map((p) => (
-                <a href="/" key={p} className="payment-badge" aria-label={p}>
-                  {p}
+              {PAYMENTS.map(({ id, label, Icon }) => (
+                <a href="/" key={id} id={`pay-${id}`} className="payment-badge" aria-label={label} title={label}>
+                  <Icon size={32} />
                 </a>
               ))}
             </div>

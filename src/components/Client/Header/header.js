@@ -3,24 +3,27 @@ import { Row, Col, Button, Drawer, Collapse } from "antd";
 import Notify from "../../Common/Notify";
 import "./header.scss";
 import {
-  TwitterOutlined,
-  FacebookOutlined,
-  LinkedinOutlined,
-  InstagramOutlined,
-  YoutubeOutlined,
-  UserOutlined,
-  LoginOutlined,
-  EnvironmentOutlined,
-  MenuOutlined,
-  LogoutOutlined,
-  HeartOutlined,
-  MessageOutlined,
-  BellOutlined,
-  SettingOutlined,
-  LayoutOutlined,
-} from "@ant-design/icons";
+  FaTwitter,
+  FaFacebook,
+  FaLinkedin,
+  FaInstagram,
+  FaYoutube,
+} from "react-icons/fa";
+import {
+  FiUser,
+  FiLogIn,
+  FiMapPin,
+  FiLogOut,
+  FiHeart,
+  FiMessageSquare,
+  FiBell,
+  FiSettings,
+  FiLayout,
+  FiCompass,
+} from "react-icons/fi";
+import { AiOutlineMenu } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import NavigationMenu from "../NavigationMenu";
+import NavigationMenu from "./NavigationMenu";
 import DarkModeToggle from "../../Common/DarkModeToggle";
 import GlobalSettings from "../../Common/GlobalSettings";
 import { useDispatch, useSelector } from "react-redux";
@@ -57,21 +60,21 @@ const Header = () => {
           >
             <Col xs={0} lg={10} className="header__socials-col">
               <div className="header__socials">
-                <Link to="/">
-                  <TwitterOutlined className="header__social-icon" />
-                </Link>
-                <Link to="/">
-                  <FacebookOutlined className="header__social-icon" />
-                </Link>
-                <Link to="/">
-                  <LinkedinOutlined className="header__social-icon" />
-                </Link>
-                <Link to="/">
-                  <InstagramOutlined className="header__social-icon" />
-                </Link>
-                <Link to="/">
-                  <YoutubeOutlined className="header__social-icon" />
-                </Link>
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" id="header-tw">
+                  <FaTwitter className="header__social-icon" />
+                </a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" id="header-fb">
+                  <FaFacebook className="header__social-icon" />
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" id="header-li">
+                  <FaLinkedin className="header__social-icon" />
+                </a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" id="header-ig">
+                  <FaInstagram className="header__social-icon" />
+                </a>
+                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" id="header-yt">
+                  <FaYoutube className="header__social-icon" />
+                </a>
               </div>
             </Col>
 
@@ -82,11 +85,11 @@ const Header = () => {
                 {!isLogin ? (
                   <>
                     <Link className="header__auth-item" to="register">
-                      <UserOutlined />
+                      <FiUser />
                       <span>{t("register")}</span>
                     </Link>
                     <Link className="header__auth-item" to="login">
-                      <LoginOutlined />
+                      <FiLogIn />
                       <span>{t("login")}</span>
                     </Link>
                   </>
@@ -106,7 +109,7 @@ const Header = () => {
             {/* Khối Logo */}
             <div className="header__logo">
               <Link to="/">
-                <EnvironmentOutlined className="header__logo-icon" />
+                <FiMapPin className="header__logo-icon" />
                 <div className="header__logo-text">TravelAWay</div>
               </Link>
             </div>
@@ -134,7 +137,7 @@ const Header = () => {
               <Button
                 type="text"
                 className="header__btn-toggler"
-                icon={<MenuOutlined />}
+                icon={<AiOutlineMenu />}
                 onClick={() => setIsMenuOpen(true)}
               />
             </div>
@@ -167,23 +170,23 @@ const Header = () => {
           {isLogin ? (
             <div className="header__user-menu-mobile">
               <Link to="/profile" onClick={() => setIsMenuOpen(false)}>
-                <UserOutlined /> {t("notify.profile")}
+                <FiUser /> {t("notify.profile")}
               </Link>
               <Link to="/favorites" onClick={() => setIsMenuOpen(false)}>
-                <HeartOutlined /> {t("notify.favorites")}
+                <FiHeart /> {t("notify.favorites")}
               </Link>
               <Link to="/inbox" onClick={() => setIsMenuOpen(false)}>
-                <MessageOutlined /> {t("notify.inbox")}
+                <FiMessageSquare /> {t("notify.inbox")}
               </Link>
               <Link to="/notifications" onClick={() => setIsMenuOpen(false)}>
-                <BellOutlined /> {t("notify.notifications")}
+                <FiBell /> {t("notify.notifications")}
               </Link>
               <Link to="/settings" onClick={() => setIsMenuOpen(false)}>
-                <SettingOutlined /> {t("notify.settings")}
+                <FiSettings /> {t("notify.settings")}
               </Link>
               {role === "ADMIN" && (
-                <Link to="/admin" onClick={() => setIsMenuOpen(false)}>
-                  <LayoutOutlined /> {t("notify.admin")}
+               <Link to="/admin" onClick={() => setIsMenuOpen(false)}>
+                  <FiLayout /> {t("notify.admin")}
                 </Link>
               )}
               <div className="header__auth-divider"></div>
@@ -192,16 +195,16 @@ const Header = () => {
                 onClick={() => setIsMenuOpen(false)}
                 className="logout-link"
               >
-                <LogoutOutlined /> {t("logout")}
+                <FiLogOut /> {t("logout")}
               </Link>
             </div>
           ) : (
             <>
               <Link to="/register" onClick={() => setIsMenuOpen(false)}>
-                <UserOutlined /> {t("register")}
+                <FiUser /> {t("register")}
               </Link>
               <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                <LoginOutlined /> {t("login")}
+                <FiLogIn /> {t("login")}
               </Link>
             </>
           )}
@@ -215,8 +218,8 @@ const Header = () => {
           >
             <Collapse.Panel
               header={
-                <span style={{ fontWeight: 600, fontSize: 16 }}>
-                  Điều hướng
+                <span style={{ fontWeight: 600, fontSize: 16, display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <FiCompass style={{ fontSize: 18, color: '#6c757d' }} /> Điều hướng
                 </span>
               }
               key="1"

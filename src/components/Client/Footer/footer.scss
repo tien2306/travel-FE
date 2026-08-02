@@ -260,29 +260,64 @@
 }
 
 .footer-social-btn {
-  width: 34px;
-  height: 34px;
+  position: relative;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  background: $primary-color;
-  color: $footer-social-color; // fill="currentColor" lấy màu từ đây
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: $footer-text;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  transition:
-    background $transition-base,
-    color $transition-base,
-    transform $transition-fast;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
   svg {
     display: block;
+    font-size: 16px;
+    z-index: 1;
+    transition: transform 0.4s ease, color 0.4s ease;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: $primary-color;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 0;
   }
 
   &:hover {
-    background: $footer-social-hover-bg;
-    color: $primary-color;
     transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    color: $text-white;
+
+    &::before {
+      opacity: 1;
+    }
+
+    svg {
+      transform: scale(1.05);
+    }
   }
+
+  // Dynamic Brand Colors
+  &#footer-fb:hover::before { background: #1877F2; }
+  &#footer-fb:hover { box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), 0 0 10px rgba(24, 119, 242, 0.4); border-color: #1877F2; }
+  
+  &#footer-tw:hover::before { background: #1DA1F2; }
+  &#footer-tw:hover { box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), 0 0 10px rgba(29, 161, 242, 0.4); border-color: #1DA1F2; }
+  
+  &#footer-ig:hover::before { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+  &#footer-ig:hover { box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), 0 0 10px rgba(220, 39, 67, 0.4); border-color: transparent; }
+  
+  &#footer-li:hover::before { background: #0A66C2; }
+  &#footer-li:hover { box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), 0 0 10px rgba(10, 102, 194, 0.4); border-color: #0A66C2; }
 }
 
 // ---- Col 2 & 3: Links ----
@@ -346,22 +381,19 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1.5px solid $footer-badge-border;
-  border-radius: 6px;
-  padding: 4px 10px;
-  height: 32px;
-  color: $footer-badge-text;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-decoration: none;
-  transition:
-    border-color $transition-fast,
-    color $transition-fast;
+  color: rgba(255, 255, 255, 0.95); // Hết nhợt nhạt
+  transition: transform $transition-fast, color $transition-fast, filter $transition-fast;
+  cursor: pointer;
+
+  svg {
+    display: block;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+  }
 
   &:hover {
-    border-color: $primary-color;
-    color: $text-white;
+    color: #ffffff;
+    transform: translateY(-3px) scale(1.05);
+    filter: drop-shadow(0 5px 12px rgba(255, 255, 255, 0.25));
   }
 }
 
