@@ -1,13 +1,7 @@
 import { useState, useRef } from "react";
 import { Form, Input, Button, Row, Col } from "antd";
 import { useTranslation } from "react-i18next";
-import {
-  IconMapPin,
-  IconPhone,
-  IconMail,
-  IconSend,
-  IconCheck,
-} from "../../../components/Common/Icons";
+import { FiMapPin, FiPhone, FiMail, FiSend, FiCheck } from "react-icons/fi";
 
 import "./Contact.scss";
 import { useContactAnimation } from "./animations";
@@ -17,17 +11,17 @@ const { TextArea } = Input;
 // ─── Info blocks data ─────────────────────────────────────────
 const getInfoBlocks = (t) => [
   {
-    Icon: IconMapPin,
+    Icon: FiMapPin,
     title: t("info.addressTitle"),
     lines: ["132 Nguyễn Đình Chiểu,", "Quận 3, TP. Hồ Chí Minh"],
   },
   {
-    Icon: IconPhone,
+    Icon: FiPhone,
     title: t("info.mobileTitle"),
     lines: ["+84 28 3822 9988", "+84 28 3822 9989"],
   },
   {
-    Icon: IconMail,
+    Icon: FiMail,
     title: t("info.emailTitle"),
     lines: ["hotro@travelgo.vn", "booking@travelgo.vn"],
   },
@@ -90,7 +84,7 @@ function Contact() {
             {submitted ? (
               <div className="contact__success">
                 <div className="contact__success-icon">
-                  <IconCheck size={28} />
+                  <FiCheck size={28} />
                 </div>
                 <p className="contact__success-title">{t("success.title")}</p>
                 <p className="contact__success-sub">{t("success.sub")}</p>
@@ -177,7 +171,7 @@ function Contact() {
                       type="primary"
                       htmlType="submit"
                       loading={loading}
-                      icon={!loading ? <IconSend size={16} /> : null}
+                      icon={!loading ? <FiSend size={16} /> : null}
                       className="contact__submit-btn"
                       block
                     >
