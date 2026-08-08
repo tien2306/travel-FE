@@ -1,0 +1,326 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+// ============================================================
+// PRODUCT INFO — Thông tin tour (bên phải)
+// ============================================================
+
+.product-info {
+  background: $bg-white;
+  border: 1px solid $border-color;
+  border-radius: 0;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  @include tablet {
+    padding: 20px;
+  }
+
+  @include mobile {
+    padding: 16px 14px;
+  }
+
+  // --- Header: Tên + nút yêu thích ---
+  &__header {
+    @include flex-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  &__name {
+    flex: 1;
+    font-size: 22px;
+    font-weight: 800;
+    color: $text-heading;
+    line-height: 1.35;
+    margin: 0;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+
+    @include tablet {
+      font-size: 20px;
+    }
+
+    @include mobile {
+      font-size: 17px;
+      line-height: 1.4;
+    }
+  }
+
+  // --- Nút Yêu thích ---
+  &__fav-btn {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1.5px solid $border-color;
+    background: $bg-white;
+    color: $text-muted;
+    font-size: 16px;
+    @include flex-center;
+    cursor: pointer;
+    transition: $transition-base;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    margin-top: 2px;
+
+    &:hover {
+      border-color: #ff4d4f;
+      color: #ff4d4f;
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(255, 77, 79, 0.2);
+    }
+
+    &--active {
+      background: rgba(255, 77, 79, 0.12); // Adaptive: nhạt trên nền tối lẫn sáng
+      border-color: #ff4d4f;
+      color: #ff4d4f;
+      box-shadow: 0 4px 12px rgba(255, 77, 79, 0.25);
+
+      &:hover {
+        background: rgba(255, 77, 79, 0.18);
+        transform: scale(1.1);
+      }
+    }
+
+    @include mobile {
+      width: 34px;
+      height: 34px;
+      font-size: 14px;
+    }
+  }
+
+  // --- Giá + Badge ---
+  &__price-row {
+    @include flex-vcenter;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px dashed $border-color;
+  }
+
+  &__price {
+    font-size: 26px;
+    font-weight: 800;
+    color: $color-cps;
+    letter-spacing: -0.5px;
+
+    @include mobile {
+      font-size: 22px;
+    }
+  }
+
+  &__badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: $radius-pill;
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    &--premium {
+      background: $cat-premium-bg;
+      color: $cat-premium-text;
+    }
+    &--economy {
+      background: $cat-economy-bg;
+      color: $cat-economy-text;
+    }
+    &--saving {
+      background: $cat-saving-bg;
+      color: $cat-saving-text;
+    }
+    &--standard {
+      background: $cat-standard-bg;
+      color: $cat-standard-text;
+    }
+  }
+
+  // --- Mô tả ngắn ---
+  &__short-desc {
+    position: relative;
+    font-size: 13.5px;
+    font-style: italic;
+    color: $text-secondary;
+    line-height: 1.7;
+    margin: 0 0 14px;
+    padding: 10px 14px 10px 20px;
+    background: $bg-icon-box;
+    border-radius: 0;
+    border-left: 3px solid $primary-color;
+
+    &::before {
+      content: '"';
+      position: absolute;
+      top: 2px;
+      left: 6px;
+      font-size: 24px;
+      line-height: 1;
+      color: $primary-color;
+      opacity: 0.22;
+      font-family: Georgia, serif;
+      font-style: normal;
+    }
+  }
+
+  // --- Variants Grid ---
+  &__variants {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 18px;
+
+    @include mobile {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+  }
+
+  &__variant {
+    @include flex-vcenter;
+    align-items: flex-start;
+    gap: 9px;
+    padding: 10px;
+    background: $bg-page;
+    border-radius: 0;
+    border: 1px solid $border-subtle;
+    transition: $transition-fast;
+
+    &:hover {
+      border-color: $border-color;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    // Variant chiếm cả hàng (transport)
+    &--full {
+      grid-column: 1 / -1;
+    }
+  }
+
+  &__variant-icon {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    @include flex-center;
+    background: $bg-icon-box;
+    color: $primary-color;
+    border-radius: 50%;
+    font-size: 14px;
+
+    @include mobile {
+      width: 28px;
+      height: 28px;
+      font-size: 13px;
+    }
+  }
+
+  &__variant-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  &__variant-label {
+    font-size: 10.5px;
+    color: $text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    font-weight: 600;
+  }
+
+  &__variant-value {
+    font-size: 13px;
+    color: $text-heading;
+    font-weight: 600;
+    line-height: 1.4;
+    word-break: break-word;
+  }
+
+  &__available {
+    color: #389e0d;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  &__unavailable {
+    color: $color-danger;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  // --- Booking ---
+  &__booking {
+    margin-top: 2px;
+  }
+
+  &__btn-book {
+    @include flex-center;
+    flex-direction: column;
+    width: 100%;
+    padding: 13px 20px;
+    background: $primary-color;
+    color: #fff;
+    border-radius: 0;
+    text-decoration: none;
+    transition: $transition-base;
+    box-shadow: 0 4px 16px $shadow-primary;
+    border: none;
+    cursor: pointer;
+
+    strong {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+    }
+
+    span {
+      font-size: 12px;
+      opacity: 0.88;
+      margin-top: 2px;
+    }
+
+    &:hover {
+      background: $color-blue-hover;
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px $shadow-primary;
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    &--disabled {
+      background: $text-light;
+      cursor: not-allowed;
+      box-shadow: none;
+
+      &:hover {
+        background: $text-light;
+        transform: none;
+        box-shadow: none;
+        color: #fff;
+      }
+    }
+
+    @include mobile {
+      padding: 12px 16px;
+
+      strong {
+        font-size: 15px;
+      }
+
+      span {
+        font-size: 11.5px;
+      }
+    }
+  }
+}

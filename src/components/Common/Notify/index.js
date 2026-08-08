@@ -11,7 +11,9 @@ import {
 import "./Notify.scss";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-
+import { getAvatarColor } from "../../../helpers/user/avatar";
+import { getAvatarDisplayUrl } from "../../../helpers/user/avatarUrl";
+import { Avatar } from "antd";
 function Notify() {
   const location = useLocation();
   const { t } = useTranslation("header");
@@ -20,8 +22,9 @@ function Notify() {
   const role = state?.role;
   const user = state?.user;
 
-  const fullName = user?.fullName || "User";
+  const fullName = user?.fullName || user?.username || "User";
   const avatarText = fullName.charAt(0).toUpperCase();
+  const avatarColor = getAvatarColor(avatarText);
 
   const isAdminPage = location.pathname.startsWith("/admin");
 
@@ -106,7 +109,18 @@ function Notify() {
       <div
         className={`user-menu__trigger ${isAdminPage ? "user-menu__trigger--admin" : ""}`}
       >
-        <div className="user-menu__avatar">{avatarText}</div>
+        <Avatar 
+          size={28}
+          src={getAvatarDisplayUrl(user?.avatar)}
+          style={{ 
+            backgroundColor: user?.avatar ? 'transparent' : avatarColor.bg, 
+            color: avatarColor.color,
+            fontWeight: 'bold',
+          }}
+          className="user-menu__avatar"
+        >
+          {!user?.avatar && avatarText}
+        </Avatar>
         <span className="user-menu__name">{fullName}</span>
         <DownOutlined className="icons-trigger" />
       </div>

@@ -9,8 +9,8 @@ import Step1Info from "./Step1Info";
 import Step2Images from "./Step2Images";
 import Step3Detail from "./Step3Detail";
 import TourFormFooter from "./TourFormFooter";
-import { handleImagePreview } from "../../../helpers/image";
-import { buildTourPayload } from "../../../helpers/tourForm";
+import { handleImagePreview } from "../../../helpers/review/image";
+import { buildTourPayload } from "../../../helpers/tour/tourForm";
 
 function CreateTourModal(props) {
   const { onReload } = props;

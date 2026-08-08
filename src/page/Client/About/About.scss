@@ -1,4 +1,4 @@
-@import "../../../styles/variables";
+@use "../../../styles/variables" as *;
 
 .about {
   padding: 5rem 0;
@@ -95,11 +95,11 @@
   }
 
   &__title {
-    font-size: 3rem !important;
-    font-weight: 800 !important;
-    color: var(--text-heading) !important;
-    margin-bottom: 1.5rem !important;
-    line-height: 1.2 !important;
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--text-heading);
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
   }
 
   &__highlight {
@@ -110,11 +110,11 @@
     color: var(--text-body);
     font-size: 1.05rem;
     line-height: 1.8;
-    margin-bottom: 1.5rem !important;
+    margin-bottom: 1.5rem;
   }
 
   &__features {
-    margin: 2.5rem 0 3rem 0 !important;
+    margin: 2.5rem 0 3rem 0;
   }
 
   &__feature-item {
@@ -163,8 +163,8 @@
     &:hover {
       transform: translateY(-4px);
       box-shadow: 0 15px 25px var(--shadow-primary);
-      background-color: var(--primary-hover) !important;
-      color: var(--text-white) !important;
+      background-color: var(--primary-hover);
+      color: var(--text-white);
     }
   }
 
@@ -193,13 +193,13 @@
     }
 
     &__title {
-      font-size: 2.5rem !important;
+      font-size: 2.5rem;
     }
   }
 
   @media (max-width: 575px) {
     &__title {
-      font-size: 2rem !important;
+      font-size: 2rem;
     }
 
     &__experience-badge {

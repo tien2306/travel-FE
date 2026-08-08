@@ -148,9 +148,9 @@ function FooterMain() {
             <h4 className="footer-col-title">{t("paymentsTitle")}</h4>
             <div className="footer-payments">
               {PAYMENTS.map(({ id, label, Icon }) => (
-                <a href="/" key={id} id={`pay-${id}`} className="payment-badge" aria-label={label} title={label}>
+                <div key={id} id={`pay-${id}`} className="payment-badge" aria-label={label} title={label}>
                   <Icon size={32} />
-                </a>
+                </div>
               ))}
             </div>
           </div>

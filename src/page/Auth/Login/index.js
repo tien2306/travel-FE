@@ -7,7 +7,7 @@ import { useNavigate, useOutletContext, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../../services/user";
 import { checkLogin } from "../../../store/slices/loginSlice";
-import { getCookie, setCookie } from "../../../helpers/cookie";
+import { getCookie, setCookie } from "../../../helpers/auth/cookie";
 import { useTranslation } from "react-i18next";
 
 const Login = () => {
@@ -100,13 +100,13 @@ const Login = () => {
       className="login-container"
       style={{ backgroundImage: `url(${defaultBgFromApi})` }}
     >
-      <div className="background-overlay"></div>
+      <div className="login-container__overlay"></div>
 
-      <Row justify="center" align="middle" className="login-row">
+      <Row justify="center" align="middle" className="login-container__row">
         <Col xs={22} sm={16} md={12} lg={10} xl={8}>
-          <div className="login-card">
+          <div className="login-container__card">
             <h2>{t("login.welcome")}</h2>
-            <p className="subtitle">{t("login.subtitle")}</p>
+            <p className="login-container__subtitle">{t("login.subtitle")}</p>
 
             {/* Form */}
             <Form
@@ -152,11 +152,11 @@ const Login = () => {
               </Form.Item>
 
               {/* Ghi nhớ */}
-              <div className="form-actions">
+              <div className="login-container__form-actions">
                 <Form.Item name="remember" valuePropName="checked" noStyle>
                   <Checkbox>{t("login.remember")}</Checkbox>
                 </Form.Item>
-                <a href="/forgot" className="forgot-password">
+                <a href="/forgot" className="login-container__forgot">
                   {t("login.forgot")}
                 </a>
               </div>
@@ -166,7 +166,7 @@ const Login = () => {
                 <Button
                   type="primary"
                   htmlType="submit"
-                  className="btn-login"
+                  className="login-container__btn"
                   size="large"
                   loading={loading}
                 >
@@ -175,7 +175,7 @@ const Login = () => {
               </Form.Item>
             </Form>
 
-            <p className="register-text">
+            <p className="login-container__register-text">
               {t("login.noAccount")}{" "}
               <a href="/register">{t("login.registerNow")}</a>
             </p>

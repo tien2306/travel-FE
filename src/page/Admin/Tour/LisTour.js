@@ -9,7 +9,7 @@ import DeleteTour from "./DeleteTour";
 import CreateTourModal from "../../../components/Admin/CreateTourModal/CreateTourModal";
 
 import "./ListTour.scss";
-import { formatDate, formatPrice } from "../../../helpers/formatDate";
+import { formatDate, formatPrice } from "../../../helpers/format/format";
 
 function ListTour() {
   const [data, setData] = useState([]);
@@ -139,7 +139,7 @@ function ListTour() {
       width: 150,
       onCell: () => ({ "data-label": "Giá:" }),
       render: (price) => (
-        <span className="tour-price">{formatPrice(price)}</span>
+        <span className="tour-table__price">{formatPrice(price)}</span>
       ),
     },
     // --- Các cột ẩn dưới 1150px ---
@@ -196,7 +196,7 @@ function ListTour() {
       width: 110,
       align: "center",
       render: (_, record) => (
-        <div className="action-buttons">
+        <div className="tour-table__actions">
           <EditTour record={record} onReload={handleReload} />
           <DeleteTour record={record} onReload={handleReload} />
         </div>
@@ -209,8 +209,8 @@ function ListTour() {
       {/* Header: Tiêu đề + Nút tạo tour */}
       <div className="list-tour-header">
         <div className="list-tour-header__info">
-          <h2 className="list-title">Quản lý Tour</h2>
-          <p className="list-sub">
+          <h2 className="list-tour-header__title">Quản lý Tour</h2>
+          <p className="list-tour-header__sub">
             Thêm mới, chỉnh sửa hoặc xóa các tour du lịch.
           </p>
         </div>

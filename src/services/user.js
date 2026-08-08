@@ -1,4 +1,4 @@
-import { get, post } from "../utils/request";
+import { get, patchWithFile, post } from "../utils/request";
 import { ENDPOINTS } from "../constants/api";
 
 export const login = async (options) => {
@@ -8,6 +8,11 @@ export const login = async (options) => {
 
 export const getAuthMe = async () => {
   const result = await get(ENDPOINTS.AUTH_ME);
+  return result;
+};
+
+export const updateAuthMe = async (formData) => {
+  const result = await patchWithFile(formData, ENDPOINTS.AUTH_ME);
   return result;
 };
 

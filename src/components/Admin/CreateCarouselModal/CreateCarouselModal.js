@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { createCarousel } from "../../../services/carousel";
 import FormMainInputs from "./FormMainInputs";
 import FormSideConfigs from "./FormSideConfigs";
-
+import { handleImagePreview } from "../../../helpers/review/image";
 
 function CreateCarouselModal(props) {
   const { onReload } = props;
@@ -51,29 +51,19 @@ function CreateCarouselModal(props) {
 
   // Xem trước ảnh đã chọn (local file hoặc url)
   const handlePreview = async (file) => {
-    // Nếu đã có url (ảnh từ server) thì dùng luôn
-    if (file.url) {
-      setPreviewSrc(file.url);
-      setPreviewOpen(true);
-      return;
-    }
-
-    // Nếu là ảnh local mới chọn, tạo preview bằng FileReader
-    if (!file.preview) {
-      file.preview = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => resolve(reader.result);
-      });
-    }
-
-    setPreviewSrc(file.preview);
-    setPreviewOpen(true);
+    await handleImagePreview(file, setPreviewSrc, setPreviewOpen);
   };
 
   const handleSubmit = async (values) => {
     if (!values.image || values.image.length === 0) {
-      Swal.fire({ toast: true, position: "top-end", icon: "error", title: "Vui lòng chọn một tệp hình ảnh!", timer: 1500, showConfirmButton: false });
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Vui lòng chọn một tệp hình ảnh!",
+        timer: 1500,
+        showConfirmButton: false,
+      });
       return;
     }
 
@@ -90,15 +80,36 @@ function CreateCarouselModal(props) {
       const res = await createCarousel(formData);
 
       if (res && res.success) {
-        Swal.fire({ toast: true, position: "top-end", icon: "success", title: "Tạo mới banner thành công!", timer: 1500, showConfirmButton: false });
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title: "Tạo mới banner thành công!",
+          timer: 1500,
+          showConfirmButton: false,
+        });
         handleResetAll();
         setShowModal(false);
         onReload();
       } else {
-        Swal.fire({ toast: true, position: "top-end", icon: "error", title: res?.message || "Tạo mới thất bại từ máy chủ!", timer: 1500, showConfirmButton: false });
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "error",
+          title: res?.message || "Tạo mới thất bại từ máy chủ!",
+          timer: 1500,
+          showConfirmButton: false,
+        });
       }
     } catch (error) {
-      Swal.fire({ toast: true, position: "top-end", icon: "error", title: "Lỗi kết nối hệ thống!", timer: 1500, showConfirmButton: false });
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Lỗi kết nối hệ thống!",
+        timer: 1500,
+        showConfirmButton: false,
+      });
     } finally {
       setLoading(false);
     }

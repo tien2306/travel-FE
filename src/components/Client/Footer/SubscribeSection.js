@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./SubscribeSection.scss";
 import { Input, Button } from "antd";
 import { useTranslation } from "react-i18next";
 

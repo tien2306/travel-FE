@@ -45,14 +45,14 @@ const Register = () => {
       className="register-container"
       style={{ backgroundImage: `url(${defaultBgFromApi})` }}
     >
-      <div className="background-overlay"></div>
+      <div className="register-container__overlay"></div>
 
       {/* Dùng Row và Col bao bọc toàn bộ card để quản lý responsive */}
-      <Row justify="center" align="middle" className="register-row">
+      <Row justify="center" align="middle" className="register-container__row">
         <Col xs={22} sm={20} md={16} lg={14} xl={12}>
-          <div className="register-card">
+          <div className="register-container__card">
             <h2>{t("register.title")}</h2>
-            <p className="subtitle">
+            <p className="register-container__subtitle">
               {t("register.subtitle")}
             </p>
 
@@ -217,7 +217,7 @@ const Register = () => {
                     <Button
                       type="primary"
                       htmlType="submit"
-                      className="btn-register"
+                      className="register-container__btn"
                       size="large"
                       loading={loading}
                     >
@@ -228,7 +228,7 @@ const Register = () => {
               </Row>
             </Form>
 
-            <p className="login-text">
+            <p className="register-container__login-text">
               {t("register.hasAccount")} <a href="/login">{t("register.loginNow")}</a>
             </p>
           </div>

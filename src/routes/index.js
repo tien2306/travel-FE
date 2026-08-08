@@ -18,6 +18,10 @@ import Tours from "../page/Client/Tours";
 import ToursAll from "../page/Client/Tours/ToursAll";
 import ToursDetail from "../page/Client/Tours/ToursDetail";
 import ToursRelated from "../page/Client/Tours/ToursRelated";
+import ProfileLayout from "../page/Client/Profile";
+import ProfileInfo from "../page/Client/Profile/ProfileInfo";
+import Favorites from "../page/Client/Favorites";
+import { Navigate } from "react-router-dom";
 
 export const routes = [
   {
@@ -55,6 +59,10 @@ export const routes = [
         element: <Contact />,
       },
       {
+        path: "favorites",
+        element: <Navigate to="/profile/favorites" replace />,
+      },
+      {
         path: "blog",
         element: <Blog />,
         children: [
@@ -68,14 +76,23 @@ export const routes = [
           },
         ],
       },
-
       {
         element: <PrivateRoutes />,
         children: [
-          // {
-          //   path: "info-user",
-          //   element: <InfoUser />,
-          // },
+          {
+            path: "profile",
+            element: <ProfileLayout />,
+            children: [
+              {
+                index: true,
+                element: <ProfileInfo />,
+              },
+              {
+                path: "favorites",
+                element: <Favorites />,
+              }
+            ]
+          },
         ],
       },
       {

@@ -15,6 +15,7 @@ import TextArea from "antd/es/input/TextArea";
 import { updateCarousel } from "../../../services/carousel";
 import { patch } from "../../../utils/request";
 import { IMAGE_URLS } from "../../../constants/api";
+import { handleImagePreview } from "../../../helpers/review/image";
 
 function EditCarousel(props) {
   const { record, onReload } = props;
@@ -72,22 +73,9 @@ function EditCarousel(props) {
     return e && e.fileList;
   };
 
-  // Xem trước ảnh (ảnh server dùng url, ảnh mới dùng FileReader)
+  // Xem trước ảnh bằng helper dùng chung
   const handlePreview = async (file) => {
-    if (file.url) {
-      setPreviewSrc(file.url);
-      setPreviewOpen(true);
-      return;
-    }
-    if (!file.preview) {
-      file.preview = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => resolve(reader.result);
-      });
-    }
-    setPreviewSrc(file.preview);
-    setPreviewOpen(true);
+    await handleImagePreview(file, setPreviewSrc, setPreviewOpen);
   };
 
   const handleSubmit = async (values) => {
@@ -126,14 +114,35 @@ function EditCarousel(props) {
       }
 
       if (res && res.success) {
-        Swal.fire({ toast: true, position: "top-end", icon: "success", title: "Cập nhật banner thành công!", timer: 1500, showConfirmButton: false });
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title: "Cập nhật banner thành công!",
+          timer: 1500,
+          showConfirmButton: false,
+        });
         setShowModal(false);
         onReload();
       } else {
-        Swal.fire({ toast: true, position: "top-end", icon: "error", title: "Cập nhật không thành công từ máy chủ!", timer: 1500, showConfirmButton: false });
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "error",
+          title: "Cập nhật không thành công từ máy chủ!",
+          timer: 1500,
+          showConfirmButton: false,
+        });
       }
     } catch (error) {
-      Swal.fire({ toast: true, position: "top-end", icon: "error", title: "Lỗi kết nối hệ thống!", timer: 1500, showConfirmButton: false });
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Lỗi kết nối hệ thống!",
+        timer: 1500,
+        showConfirmButton: false,
+      });
     } finally {
       setLoading(false);
     }

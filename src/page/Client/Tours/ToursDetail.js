@@ -5,13 +5,13 @@ import { HomeOutlined } from "@ant-design/icons";
 import { getTourBySlug } from "../../../services/tour";
 import { IMAGE_URLS } from "../../../constants/api";
 import { Collapse } from "antd";
-import ProductGallery from "../../../components/Client/ToursDetail/ProductGallery";
-import ProductInfo from "../../../components/Client/ToursDetail/ProductInfo";
-import ProductActions from "../../../components/Client/ToursDetail/ProductActions";
+import Gallery from "../../../components/Client/ToursDetail/Gallery";
+import Info from "../../../components/Client/ToursDetail/Info";
+import Actions from "../../../components/Client/ToursDetail/Actions";
 import ToursRelated from "../../../components/Client/ToursRelated";
-import TourReviews from "../../../components/Client/ToursDetail/TourReviews";
-import TourQA from "../../../components/Client/ToursDetail/TourQA";
-import TourNotes from "../../../components/Client/ToursDetail/TourNotes";
+import Reviews from "../../../components/Client/ToursDetail/Reviews";
+import QA from "../../../components/Client/ToursDetail/QA";
+import Notes from "../../../components/Client/ToursDetail/Notes";
 import { useTranslation } from "react-i18next";
 import "./ToursDetail.scss";
 
@@ -116,7 +116,7 @@ function ToursDetail() {
             {/* Top: Gallery + Info */}
             <div className="tour-detail__top">
               <div className="tour-detail__left">
-                <ProductGallery
+                <Gallery
                   thumbnail={tour.thumbnail || tour.image}
                   images={Images}
                   tourName={tour.name}
@@ -124,12 +124,12 @@ function ToursDetail() {
                 />
               </div>
               <div className="tour-detail__right">
-                <ProductInfo tour={tour} />
+                <Info tour={tour} />
               </div>
             </div>
 
             {/* Tabs */}
-            <ProductActions
+            <Actions
               descRef={descRef}
               reviewsRef={reviewsRef}
               qaRef={qaRef}
@@ -199,7 +199,7 @@ function ToursDetail() {
                         </span>
                       </div>
                     ),
-                    children: <TourNotes tour={tour} />,
+                    children: <Notes tour={tour} />,
                   },
                 ]}
               />
@@ -214,7 +214,7 @@ function ToursDetail() {
               <h2 className="tour-detail__title tour-detail__title--bar">
                 {t("detail.reviewsTitle")}
               </h2>
-              <TourReviews />
+              <Reviews />
             </div>
 
             {/* Hỏi đáp */}
@@ -222,7 +222,7 @@ function ToursDetail() {
               <h2 className="tour-detail__title tour-detail__title--bar">
                 {t("detail.qaTitleHeader")}
               </h2>
-              <TourQA />
+              <QA />
             </div>
 
             {/* Tour liên quan */}

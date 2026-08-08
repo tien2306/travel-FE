@@ -10,8 +10,8 @@ import Step2Images from "../../../components/Admin/CreateTourModal/Step2Images";
 import Step3Detail from "../../../components/Admin/CreateTourModal/Step3Detail";
 import TourFormFooter from "../../../components/Admin/CreateTourModal/TourFormFooter";
 import dayjs from "dayjs";
-import { handleImagePreview } from "../../../helpers/image";
-import { buildTourPayload } from "../../../helpers/tourForm";
+import { handleImagePreview } from "../../../helpers/review/image";
+import { buildTourPayload } from "../../../helpers/tour/tourForm";
 
 function EditTour(props) {
   const { record, onReload } = props;

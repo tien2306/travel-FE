@@ -1,24 +1,26 @@
+import "swiper/css";
+import "./ToursRelated.scss";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { Card } from "antd";
-import "swiper/css";
-import "./ToursRelated.scss";
-// Tái sử dụng style của TourCard
-import "../../../components/Client/ToursAll/Results/TourCard.scss";
 import { useTranslation } from "react-i18next";
-
+import fallbackImage from "../../../assets/images/fallbackImage.jpg";
 import { getToursUser } from "../../../services/tour";
 import { IMAGE_URLS } from "../../../constants/api";
-import BG from "../../../images/carousel-1.jpg";
-import { formatPrice, formatDate } from "../../../helpers/formatDate";
+import {
+  formatPrice,
+  formatDate,
+  getDuration,
+} from "../../../helpers/format/format";
 import { ClockCircleOutlined, CalendarOutlined } from "@ant-design/icons";
+
 const RelatedTours = ({ currentTour }) => {
   const [tours, setTours] = useState([]);
   const navigate = useNavigate();
   const { t } = useTranslation("tours");
-  const fallbackImage = BG;
+
   const urlImage = IMAGE_URLS.TOURS;
 
   useEffect(() => {
@@ -83,9 +85,9 @@ const RelatedTours = ({ currentTour }) => {
   if (!tours || tours.length === 0) return null;
 
   return (
-    <div className="related-tours-section">
-      <h2 className="section-title">{t("related.title")}</h2>
-      <div className="related-carousel">
+    <div className="related-section">
+      <h2 className="related-section__title">{t("related.title")}</h2>
+      <div className="related-section__carousel">
         <Swiper
           spaceBetween={16}
           slidesPerView={1.2}
@@ -105,7 +107,7 @@ const RelatedTours = ({ currentTour }) => {
               <SwiperSlide key={tour.id || tour._id}>
                 <Card
                   hoverable
-                  className="related-tour-card-new"
+                  className="tour-compact-card"
                   onClick={() => navigate(`/tours/${tour.slug}`)}
                   styles={{
                     body: {
@@ -116,7 +118,7 @@ const RelatedTours = ({ currentTour }) => {
                     },
                   }}
                 >
-                  <div className="tour-hero">
+                  <div className="tour-compact-card__hero">
                     <img
                       src={
                         tour.thumbnail
@@ -124,13 +126,13 @@ const RelatedTours = ({ currentTour }) => {
                           : fallbackImage
                       }
                       alt={tour.name}
-                      className="tour-image"
+                      className="tour-compact-card__image"
                       onError={(e) => {
                         e.target.onerror = null;
                         e.target.src = fallbackImage;
                       }}
                     />
-                    <div className="tour-badge-bottom">
+                    <div className="tour-compact-card__badge">
                       {t("related.from")}{" "}
                       {tour.departurePlace === "Ho Chi Minh City" ||
                       tour.departurePlace === "HCM"
@@ -139,50 +141,54 @@ const RelatedTours = ({ currentTour }) => {
                     </div>
 
                     {/* Lớp phủ khi hover */}
-                    <div className="tour-overlay">
-                      <div className="overlay-content">
-                        <p className="overlay-desc">
+                    <div className="tour-compact-card__overlay">
+                      <div className="tour-compact-card__overlay-content">
+                        <p className="tour-compact-card__overlay-desc">
                           {tour.shortDesc || tour.name}
                         </p>
-                        <p className="overlay-detail">
+                        <p className="tour-compact-card__overlay-detail">
                           {t("related.itinerary")}{" "}
-                          {tour.duration || "5 ngày 4 đêm"}
+                          {tour.duration ||
+                            getDuration(tour.startDate, tour.endDate)}
                         </p>
-                        <p className="overlay-detail">
+                        <p className="tour-compact-card__overlay-detail">
                           {t("related.departure")}{" "}
                           {tour.startDate
                             ? formatDate(tour.startDate)
                             : "01/01/2026"}
                         </p>
-                        <p className="overlay-detail">
+                        <p className="tour-compact-card__overlay-detail">
                           {t("related.transport")} {tour.transport || "Xe"}
                         </p>
                       </div>
-                      <span className="overlay-more">
+                      <span className="tour-compact-card__overlay-more">
                         {t("related.viewMore")}
                       </span>
                     </div>
                   </div>
 
-                  <div className="tour-title-box">
-                    <h3 className="title">{tour.name}</h3>
+                  <div className="tour-compact-card__title-box">
+                    <h3 className="tour-compact-card__title">{tour.name}</h3>
                   </div>
 
-                  <div className="tour-info-box">
-                    <div className="info-left">
-                      <div className="info-item">
-                        <ClockCircleOutlined className="icon" />{" "}
-                        {tour.duration || "5 ngày 4 đêm"}
+                  <div className="tour-compact-card__info-box">
+                    <div className="tour-compact-card__info-left">
+                      <div className="tour-compact-card__info-item">
+                        <ClockCircleOutlined className="tour-compact-card__icon" />{" "}
+                        {tour.duration ||
+                          getDuration(tour.startDate, tour.endDate)}
                       </div>
-                      <div className="info-item">
-                        <CalendarOutlined className="icon" />{" "}
+                      <div className="tour-compact-card__info-item">
+                        <CalendarOutlined className="tour-compact-card__icon" />{" "}
                         {tour.startDate
                           ? formatDate(tour.startDate)
                           : "01/01/2026"}
                       </div>
                     </div>
-                    <div className="info-right">
-                      <span className="price">{formatPrice(tour.price)}</span>
+                    <div className="tour-compact-card__info-right">
+                      <span className="tour-compact-card__price">
+                        {formatPrice(tour.price)}
+                      </span>
                     </div>
                   </div>
                 </Card>

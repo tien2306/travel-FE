@@ -27,7 +27,7 @@
 // signal: Dùng để hủy lệnh gọi API (Cancel Request) nếu người dùng đổi ý hoặc chuyển trang đột ngột khi API chưa kịp chạy xong.
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getCookie, setCookie } from "../../helpers/cookie";
+import { getCookie, setCookie } from "../../helpers/auth/cookie";
 import { getAuthMe } from "../../services/user";
 
 const token = getCookie("accessToken");
@@ -36,7 +36,7 @@ const initialState = {
   isLogin: token ? true : false,
   role: null,
   user: null,
-  loading: false,
+  loading: token ? true : false,
 };
 
 export const fetchUserSession = createAsyncThunk(
@@ -48,10 +48,13 @@ export const fetchUserSession = createAsyncThunk(
       if (response && response.success) {
         return response.data;
       } else {
-        return rejectWithValue(response.message || "Failed to fetch user");
+        return rejectWithValue({
+          isNetworkError: false,
+          message: response.message || "Failed to fetch user",
+        });
       }
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue({ isNetworkError: true, message: error.message });
     }
   },
 );
@@ -84,12 +87,16 @@ const loginSlice = createSlice({
         state.user = action.payload;
         state.role = action.payload.role?.name || null;
       })
-      .addCase(fetchUserSession.rejected, (state) => {
+      .addCase(fetchUserSession.rejected, (state, action) => {
         state.loading = false;
-        state.isLogin = false;
-        state.user = null;
-        state.role = null;
-        setCookie("accessToken", "", -1); // Xóa token nếu lỗi/hết hạn
+
+        // Chỉ xóa token và bắt đăng nhập lại nếu đó KHÔNG phải là lỗi mạng/abort
+        if (!action.payload?.isNetworkError) {
+          state.isLogin = false;
+          state.user = null;
+          state.role = null;
+          setCookie("accessToken", "", -1); // Xóa token nếu lỗi/hết hạn
+        }
       });
   },
 });

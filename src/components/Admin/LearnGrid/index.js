@@ -1,5 +1,4 @@
 import { Carousel, Col, Collapse, Image, Rate, Row, Tabs } from "antd";
-import "./learnGrid.scss";
 import CardItem from "../CardItem";
 
 function LearnGrid() {

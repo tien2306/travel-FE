@@ -3,11 +3,11 @@ import { Row, Col, Button, Typography } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { useOutletContext } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { IMAGE_URLS } from "../../../constants/api";
-import "./About.scss";
-
-import fallbackImg from "../../../images/carousel-1.jpg";
 import { useAboutAnimation } from "./animations";
+import "./About.scss";
+import { getRandomBannerImage } from "../../../helpers/ui/banner";
+
+const fallbackImg = "/images/fallbackImage.jpg";
 
 const { Title, Paragraph } = Typography;
 
@@ -21,16 +21,7 @@ function About() {
   useAboutAnimation(containerRef);
 
   useEffect(() => {
-    // Chúng ta dùng biến 'data' ở đây rồi
-    const data = context?.carouselData;
-
-    if (data && data.length > 0) {
-      const randomIndex = Math.floor(Math.random() * data.length);
-      const apiImageName = data[randomIndex]?.image;
-      if (apiImageName) {
-        setCurrentImg(`${IMAGE_URLS.HERO_CAROUSEL}${apiImageName.trim()}`);
-      }
-    }
+    setCurrentImg(getRandomBannerImage(context?.carouselData));
   }, [context?.carouselData]);
 
   const features = [

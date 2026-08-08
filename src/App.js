@@ -6,7 +6,7 @@ import AllRoutes from "./components/Common/Allroute";
 import { useDispatch, useSelector } from "react-redux";
 import { initTheme } from "./store/slices/themeSlice";
 import { fetchUserSession } from "./store/slices/loginSlice";
-import { getCookie } from "./helpers/cookie";
+import { getCookie } from "./helpers/auth/cookie";
 import ScrollToTop from "./components/Common/ScrollToTop";
 import i18n from "./utils/i18n";
 

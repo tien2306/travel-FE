@@ -1,4 +1,4 @@
-import { getCookie } from "../helpers/cookie";
+import { getCookie } from "../helpers/auth/cookie";
 import { API_DOMAIN } from "../constants/api";
 
 const getAuthHeaders = () => {

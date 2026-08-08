@@ -9,7 +9,7 @@
   background-attachment: fixed;
   padding-top: 100px;
 
-  .background-overlay {
+  .login-container__overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -19,14 +19,14 @@
     z-index: 1;
   }
 
-  .login-row {
+  .login-container__row {
     position: relative;
     z-index: 2;
     min-height: calc(100vh - 100px);
     padding: 20px 0;
   }
 
-  .login-card {
+  .login-container__card {
     background: $bg-glass-card;     // Tự động sáng/tối theo theme
     backdrop-filter: blur(15px);
     // -webkit-backdrop-filter: blur(15px);
@@ -43,7 +43,7 @@
       font-weight: 700;
     }
 
-    .subtitle {
+    .login-container__subtitle {
       color: $text-muted;
       font-size: 14px;
       margin-bottom: 25px;
@@ -66,14 +66,14 @@
       background: $bg-white;
     }
 
-    .form-actions {
+    .login-container__form-actions {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 24px;
       font-size: 14px;
 
-      .forgot-password {
+      .login-container__forgot {
         color: $primary-color;
         font-weight: 500;
         &:hover {
@@ -82,7 +82,7 @@
       }
     }
 
-    .btn-login {
+    .login-container__btn {
       width: 100%;
       height: 45px;
       background-color: $primary-color;
@@ -101,7 +101,7 @@
       }
     }
 
-    .register-text {
+    .login-container__register-text {
       margin-top: 20px;
       font-size: 14px;
       color: $text-muted;

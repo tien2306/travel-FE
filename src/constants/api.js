@@ -18,6 +18,7 @@ export const ENDPOINTS = {
 export const IMAGE_URLS = {
   HERO_CAROUSEL: `${API_DOMAIN}hero-carousels/image/`,
   TOURS: `${API_DOMAIN}tours/image/`,
+  AVATARS: `${API_DOMAIN}auth/image/`,
 };
 
 export let params = {

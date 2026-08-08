@@ -1,0 +1,358 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.tour-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tour-list-card {
+  display: flex;
+  background: $bg-white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.2s ease;
+  cursor: pointer;
+  border: 1px solid $border-input;
+
+  &:hover {
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  &__image-col {
+    width: 320px;
+    flex-shrink: 0;
+    position: relative;
+
+    .tour-list-card__img {
+      width: 100%;
+      height: 100%;
+      min-height: 240px;
+      object-fit: cover;
+    }
+  }
+
+  &__status {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+    &.status-full {
+      background: $status-full-bg;
+      color: $status-full-text;
+    }
+    &.status-available {
+      background: $status-available-bg;
+      color: $status-available-text;
+    }
+    &.status-closed {
+      background: $status-closed-bg;
+      color: $status-closed-text;
+    }
+  }
+
+  &__info-col {
+    flex-grow: 1;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    min-width: 0; // Bắt buộc phải có để flex item không bị bung ra bởi chuỗi dài
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 700;
+    color: $text-heading;
+    margin-bottom: 12px;
+    line-height: 1.4;
+    @include text-ellipsis(2);
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  &__tag {
+    background: $cat-standard-bg;
+    color: $cat-standard-text;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    &.cat-premium {
+      background: $cat-premium-bg;
+      color: $cat-premium-text;
+    }
+    &.cat-economy {
+      background: $cat-economy-bg;
+      color: $cat-economy-text;
+    }
+    &.cat-saving {
+      background: $cat-saving-bg;
+      color: $cat-saving-text;
+    }
+    &.cat-standard {
+      background: $cat-standard-bg;
+      color: $cat-standard-text;
+    }
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: auto;
+  }
+
+  &__detail-item {
+    font-size: 14px;
+    color: $text-secondary;
+    display: flex;
+    align-items: flex-start; // Giúp text dài khi xuống dòng không bị lệch icon
+    gap: 10px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+
+    strong {
+      color: $text-body;
+      font-weight: 600;
+      white-space: nowrap; // Chống bẻ chữ cho nhãn (VD: "Lịch trình:")
+      flex-shrink: 0; // Chống bị bóp méo khi text bên cạnh quá dài
+    }
+
+    .icon-blue {
+      color: $color-blue;
+      font-size: 16px;
+    }
+    .icon-orange {
+      color: $color-orange;
+      font-size: 16px;
+    }
+  }
+
+  &__action-col {
+    width: 260px;
+    flex-shrink: 0;
+    padding: 24px;
+    border-left: 1px dashed $border-input;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: transparent; // Fixed for dark mode (inherits bg-white)
+  }
+
+  &__progress-wrapper {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__progress-text {
+    font-size: 13px;
+    color: $text-secondary;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 500;
+
+    .highlight {
+      color: $color-danger;
+      font-weight: 600;
+    }
+  }
+
+  &__price-wrapper {
+    margin-bottom: 20px;
+    text-align: right;
+  }
+
+  &__price-label {
+    font-size: 13px;
+    color: $text-secondary;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  &__price {
+    font-size: 26px;
+    font-weight: 800;
+    color: $color-danger; // Dùng màu đỏ cho giá nổi bật
+    line-height: 1;
+
+    span {
+      font-size: 16px;
+      text-decoration: underline;
+    }
+  }
+
+  &__btn {
+    width: 100%;
+    background: $color-blue;
+    color: $text-white;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 0;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    box-shadow: 0 4px 12px rgba(43, 112, 250, 0.2);
+
+    &:hover {
+      background: $color-blue-hover;
+      transform: translateY(-1px);
+    }
+  }
+
+  // Responsive breakpoints
+  // Màn hình Desktop nhỏ (ví dụ có sidebar làm hẹp không gian)
+  @media (max-width: 1200px) {
+    &__image-col {
+      width: 260px;
+    }
+    &__info-col {
+      padding: 16px 20px;
+    }
+    &__action-col {
+      width: 220px;
+      padding: 16px 20px;
+    }
+    &__title {
+      font-size: 18px;
+    }
+    &__price {
+      font-size: 22px;
+    }
+  }
+
+  // Tablet ngang (dưới 992px)
+  @include desktop-sm {
+    &__image-col {
+      width: 220px;
+    }
+    &__action-col {
+      width: 200px;
+      padding: 16px;
+    }
+  }
+
+  // Tablet dọc (dưới 768px)
+  @include tablet {
+    flex-direction: column;
+
+    &__image-col {
+      width: 100%;
+      height: 240px;
+
+      .tour-list-card__img {
+        min-height: auto;
+      }
+    }
+
+    &__action-col {
+      width: 100%;
+      border-left: none;
+      border-top: 1px dashed $border-input;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 20px;
+    }
+
+    &__progress-wrapper {
+      margin-bottom: 0;
+      flex-grow: 1;
+      max-width: 200px;
+    }
+
+    &__price-wrapper {
+      margin-bottom: 0;
+      text-align: left;
+    }
+
+    &__btn {
+      width: auto;
+      padding: 12px 24px;
+    }
+  }
+
+  // Mobile (dưới 576px)
+  @include mobile {
+    &__image-col {
+      height: 180px; // Giữ đủ độ cao để ảnh không bị bóp dẹt như dải băng
+    }
+
+    &__info-col {
+      padding: 12px 16px;
+    }
+
+    &__title {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    &__tags {
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    &__tag {
+      font-size: 11px;
+      padding: 4px 8px;
+    }
+
+    &__details {
+      gap: 6px;
+    }
+
+    &__detail-item {
+      font-size: 13px;
+    }
+
+    &__action-col {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 16px;
+      gap: 12px;
+    }
+
+    &__progress-wrapper {
+      max-width: 100%;
+    }
+
+    &__price-wrapper {
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &__price-label {
+      margin-bottom: 0;
+    }
+
+    &__price {
+      font-size: 20px;
+    }
+
+    &__btn {
+      width: 100%;
+    }
+  }
+}

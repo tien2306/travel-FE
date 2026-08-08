@@ -24,8 +24,9 @@
 // --- Swiper ---
 .hero-swiper {
   width: 100%;
-  height: 82vh;
-  min-height: 520px;
+  height: 75vh;
+  min-height: 500px;
+  max-height: 750px; /* Khống chế không để ảnh bị giãn quá to (như trên iPad Pro) */
   cursor: grab;
 
   &:active {
@@ -33,15 +34,15 @@
   }
 
   @include desktop-sm {
-    height: 50vh;
-    min-height: 400px;
-    max-height: 480px; // Khống chế chiều cao tối đa trên iPad
+    height: 65vh;
+    min-height: 450px;
+    max-height: 650px; /* Tăng max-height để không bị ép hẹp trên iPad Air */
   }
 
   @include mobile {
-    height: 65vh;
-    min-height: 480px; // Tăng min-height để chứa 2 nút xếp chồng
-    max-height: 600px; 
+    height: 70vh;
+    min-height: 500px; // Tăng min-height để chứa 2 nút xếp chồng
+    max-height: 650px; 
   }
 }
 

@@ -1,0 +1,121 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+// ============================================================
+// SUBSCRIBE SECTION — Newsletter đăng ký nhận tin
+// ============================================================
+.subscribe-section {
+  position: relative;
+  background:
+    linear-gradient($subscribe-overlay, $subscribe-overlay),
+    url("https://images.unsplash.com/photo-1488085061387-422e29b40080?w=1600&q=80")
+      center center / cover no-repeat;
+  background-attachment: fixed;
+  padding: 80px 0;
+
+  @include tablet {
+    padding: 56px 0;
+    background-attachment: scroll;
+  }
+
+  @include mobile {
+    padding: 44px 0;
+  }
+}
+
+.subscribe-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.subscribe-label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: $text-white;
+  margin-bottom: 16px;
+
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+    width: 44px;
+    height: 1.5px;
+    background: $text-white;
+    margin: 0 12px;
+    opacity: 0.7;
+  }
+}
+
+.subscribe-title {
+  font-size: clamp(26px, 4vw, 38px);
+  font-weight: 800;
+  color: $text-white;
+  margin: 0 0 16px;
+  line-height: 1.2;
+}
+
+.subscribe-desc {
+  color: $subscribe-text;
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+// ---- Subscribe form — pill input style ----
+.subscribe-form {
+  position: relative;
+  max-width: 520px;
+  margin: 0 auto;
+
+  // Ant Design Input override — dùng nesting, không !important
+  .ant-input {
+    border-radius: $radius-pill;
+    border: 1.5px solid $primary-color;
+    padding: 12px 155px 12px 22px;
+    font-size: 14px;
+    height: auto;
+    background: $subscribe-input-bg;
+    color: $text-white;
+
+    &::placeholder {
+      color: $subscribe-placeholder;
+    }
+
+    &:focus,
+    &:focus-within {
+      border-color: $text-white;
+      box-shadow: none;
+    }
+  }
+
+  // Ant Design Button
+  .subscribe-btn.ant-btn {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: $radius-pill;
+    padding: 7px 22px;
+    height: auto;
+    font-weight: 600;
+    font-size: 13px;
+    background: $primary-color;
+    border-color: $primary-color;
+    color: $text-white;
+    transition:
+      background $transition-fast,
+      border-color $transition-fast;
+
+    &:hover {
+      background: $primary-hover;
+      border-color: $primary-hover;
+    }
+  }
+}

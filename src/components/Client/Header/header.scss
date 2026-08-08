@@ -188,6 +188,19 @@
     }
   }
 
+  &__auth-loading-wrapper {
+    display: flex;
+    gap: 10px;
+  }
+
+  &__auth-loading-spinner {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    animation: pulse 1.5s infinite;
+  }
+
   // MAINBAR (logo + menu + nút Book Now + nút mobile)
   &__mainbar {
     transition: all 0.4s ease;
@@ -279,6 +292,10 @@
     }
   }
 
+  &__nav-icon {
+    font-size: 10px;
+  }
+
   // KHỐI NÀY ĐÃ ĐƯỢC CHUYỂN SANG GlobalSettings.scss VÀ Notify.scss
   &__right-actions {
     display: flex;
@@ -319,82 +336,7 @@
     justify-content: center;
   }
 
-  // MOBILE DRAWER (menu trượt khi thu nhỏ màn hình)
-  &__nav-mobile {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    .header__nav-link {
-      width: 100%;
-      padding: 12px 15px;
-      justify-content: space-between;
-      color: $text-dark;
-      &--active {
-        color: $text-white;
-        background-color: $brand-dark;
-      }
 
-      &:hover {
-        color: $text-white;
-        background: $brand-dark;
-      }
-    }
-  }
-
-  &__auth-mobile {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid $border-color;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    
-    a {
-      color: $text-dark;
-      font-weight: 500;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 15px;
-      padding: 12px 15px;
-      border-radius: 8px;
-      transition: background-color 0.3s ease;
-
-      svg {
-        font-size: 18px;
-        color: $text-secondary;
-      }
-
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.04);
-        color: $brand-dark;
-        svg {
-          color: $brand-dark;
-        }
-      }
-    }
-
-    .header__auth-divider {
-      height: 1px;
-      background-color: $border-color;
-      margin: 8px 0;
-    }
-
-    .logout-link {
-      color: $color-danger;
-      svg {
-        color: $color-danger;
-      }
-      &:hover {
-        background-color: rgba(255, 77, 79, 0.1);
-        color: $color-danger;
-        svg {
-          color: $color-danger;
-        }
-      }
-    }
-  }
 
   // RESPONSIVE BREAKPOINTS
 
@@ -432,36 +374,7 @@
   }
 }
 
-// SCOPED DRAWER (Thay cho .ant-drawer toàn cục)
-.header-mobile-drawer {
-  z-index: 1100;
 
-  .ant-drawer-mask {
-    z-index: 1100;
-  }
-
-  .ant-drawer-content-wrapper {
-    z-index: 1101;
-  }
-
-  // SCOPED COLLAPSE
-  .mobile-nav-collapse {
-    .ant-collapse-header {
-      padding: 12px 15px !important;
-      color: $text-dark !important;
-      align-items: center !important;
-      border-radius: 8px !important;
-      
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.02) !important;
-      }
-    }
-
-    .ant-collapse-content > .ant-collapse-content-box {
-      padding: 10px 0 10px 15px !important; // Thụt lề vào một chút cho menu con
-    }
-  }
-}
 
 // KHỐI DROPDOWN TOÀN CỤC (.ant-dropdown) ĐÃ ĐƯỢC CHUYỂN VÀO Notify.scss HOẶC NAVIGATION.SCSS
 

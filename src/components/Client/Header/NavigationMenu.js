@@ -88,7 +88,7 @@ function NavigationMenu(props) {
             className={getDropdownNavLinkClass("/service")}
             onClick={handleCloseMenu}
           >
-            {t("menu.service")} <DownOutlined style={{ fontSize: "10px" }} />
+            {t("menu.service")} <DownOutlined className="header__nav-icon" />
           </NavLink>
         </Dropdown>
       )}
@@ -113,7 +113,7 @@ function NavigationMenu(props) {
             className={getDropdownNavLinkClass("/package")}
             onClick={handleCloseMenu}
           >
-            {t("menu.package")} <DownOutlined style={{ fontSize: "10px" }} />
+            {t("menu.package")} <DownOutlined className="header__nav-icon" />
           </NavLink>
         </Dropdown>
       )}
@@ -138,7 +138,7 @@ function NavigationMenu(props) {
             className={getDropdownNavLinkClass("/blog")}
             onClick={handleCloseMenu}
           >
-            {t("menu.blog")} <DownOutlined style={{ fontSize: "10px" }} />
+            {t("menu.blog")} <DownOutlined className="header__nav-icon" />
           </NavLink>
         </Dropdown>
       )}
@@ -163,7 +163,7 @@ function NavigationMenu(props) {
             className={getDropdownNavLinkClass("/pages")}
             onClick={handleCloseMenu}
           >
-            {t("menu.pages")} <DownOutlined style={{ fontSize: "10px" }} />
+            {t("menu.pages")} <DownOutlined className="header__nav-icon" />
           </NavLink>
         </Dropdown>
       )}

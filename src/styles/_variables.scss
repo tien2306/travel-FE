@@ -27,7 +27,8 @@ html[data-theme="light"] {
   --bg-light: #f9fbfd; // Nền sáng nhẹ (admin layout content)
   --bg-page: #f4f6fa; // Nền trang Tour client
   --bg-card-outer: #dbdfe8; // Nền ngoài cùng của card
-  --bg-input: #fafafa; // Nền input hover state
+  --bg-form: #f8f8f8; // Nền form
+  --bg-input: #ffffff; // Nền input trắng
   --bg-icon-box: #f0f5ff; // Nền icon tròn xanh nhạt (HeaderSearch)
   --bg-selected: #e6f7ff; // Nền item được chọn trong dropdown
 
@@ -48,6 +49,10 @@ html[data-theme="light"] {
   --color-timeline: #faad14; // Vàng cam cho Timeline / Hành trình
   --color-cps: #d70018; // Đỏ thương hiệu CellphoneS
   --color-orange: #fa8c16; // Cam nhấn mạnh
+
+  // --- Brand Accent (ngoài hệ thống xanh) ---
+  --color-brand-pink: #c93498; // Màu hồng của Profile
+  --color-brand-pink-hover: #ad2881;
 
   // --- Category Colors (Light Theme - Pastel/Subtle style) ---
   --cat-premium-bg: #fff7e6; // Vàng đồng/Cam nhạt sang trọng
@@ -137,14 +142,15 @@ html[data-theme="dark"] {
   --bg-light: #0f172a; // Nền phụ Slate 900
   --bg-page: #0f172a; // Nền trang chính Slate 900
   --bg-card-outer: #0f172a; // Nền ngoài cùng của card dark mode
+  --bg-form: #1e293b; // Nền form dark mode
   --bg-input: #334155; // Slate 700
   --bg-icon-box: #334155; // Slate 700
   --bg-selected: #334155; // Slate 700
 
   // --- Border & Divider (Dark Theme - Slate Premium) ---
-  --border-color: #1e293b;
-  --border-light: #0f172a;
-  --border-input: #334155;
+  --border-color: #334155; // Slate 700 (để nổi lên trên nền Slate 800 của card)
+  --border-light: #1e293b; // Slate 800
+  --border-input: #475569; // Slate 600
   --border-subtle: #334155;
   --border-divider: #334155;
   --border-gray: #475569; // Slate 600
@@ -156,6 +162,10 @@ html[data-theme="dark"] {
   --color-danger: #f87171; // Đỏ nhẹ dễ chịu hơn
   --color-danger-antd: #f87171;
   --color-orange: #fb923c; // Cam nhạt dễ nhìn trên tối
+
+  // --- Brand Accent (ngoài hệ thống xanh) ---
+  --color-brand-pink: #e05bae; // Sáng hơn trên dark mode để đủ contrast
+  --color-brand-pink-hover: #c93498;
 
   // --- Category Colors (Dark Theme - Pastel/Subtle style) ---
   --cat-premium-bg: #593206; // Bronze/Orange đậm
@@ -189,8 +199,9 @@ html[data-theme="dark"] {
   --shadow-primary: rgba(59, 130, 246, 0.35); // Xanh sáng dark mode
 
   // --- Hover State Overrides (Dark Theme) ---
-  --btn-book-hover-bg: #ffffff;
-  --btn-book-hover-text: #000000;
+  --btn-book-hover-bg: #f1f5f9;
+  --btn-book-hover-text: #0f172a;
+  --btn-book-hover-bd: #f1f5f9;
   --dropdown-hover-bg: #334155;
   --dropdown-hover-text: #ffffff;
 
@@ -255,6 +266,8 @@ $color-danger-antd: var(--color-danger-antd);
 $color-timeline: var(--color-timeline);
 $color-cps: var(--color-cps);
 $color-orange: var(--color-orange);
+$color-brand-pink: var(--color-brand-pink);
+$color-brand-pink-hover: var(--color-brand-pink-hover);
 
 // --- Category Colors ---
 $cat-premium-bg: var(--cat-premium-bg);

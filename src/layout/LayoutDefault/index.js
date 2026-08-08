@@ -4,20 +4,30 @@ import { Outlet, useLocation } from "react-router-dom";
 import "./layoutDefaulat.scss";
 import { getCarouselUser } from "../../services/carousel";
 import Header from "../../components/Client/Header/header";
-import { IMAGE_URLS } from "../../constants/api";
 import Footer from "../../components/Client/Footer";
+import { getRandomBannerImage } from "../../helpers/ui/banner";
+import fallbackImage from "../../assets/images/fallbackImage.jpg";
 
 const { Content } = Layout;
 
 function LayoutDefault() {
   const location = useLocation();
-  const [pageTitle, setPageTitle] = useState("");
-  const [carouselData, setCarouselData] = useState([]);
+  const [pageTitle, setPageTitle] = useState(""); // state lưu tên page
+  const [carouselData, setCarouselData] = useState([]); // state lưu data carousel
+  const [currentBg, setCurrentBg] = useState(fallbackImage); // State lưu ảnh hiện tại
 
-  // State lưu ảnh hiện tại
-  const [currentBg, setCurrentBg] = useState("../../images/carousel-1.jpg");
+  // Trang Home
+  const isHomeBanner =
+    location.pathname === "/" ||
+    location.pathname === "/home" ||
+    location.pathname === "/login" ||
+    location.pathname === "/register";
 
-  // API lấy dữ liệu Carousel khi trang web được tải lần đầu
+  // Footer Trang login register
+  const isFooterBanner =
+    location.pathname === "/login" || location.pathname === "/register";
+
+  // Lấy data ảnh carousel
   useEffect(() => {
     const fetchCarousel = async () => {
       try {
@@ -32,32 +42,17 @@ function LayoutDefault() {
     fetchCarousel();
   }, []);
 
-  // 2. THEO DÕI CHUYỂN TRANG: Mỗi lần URL thay đổi, tự động bốc ngẫu nhiên một ảnh khác
+  // Thay đổi khi pathname thay đổi
+  // http://localhost:5173/products/123?sort=asc
+  // pathname là đường dẫn thuần túy của url: /products/123
+  // không tính phần tên miền, cổng (localhost)
+  // tham số tìm kiếm (?search=abc)
+  // hay mã định danh (#hash).
   useEffect(() => {
-    if (carouselData && carouselData.length > 0) {
-      const randomIndex = Math.floor(Math.random() * carouselData.length);
-      const apiImageName = carouselData[randomIndex]?.image;
-      if (apiImageName) {
-        setCurrentBg(`${IMAGE_URLS.HERO_CAROUSEL}${apiImageName.trim()}`);
-      } else {
-        setCurrentBg("../../images/carousel-1.jpg");
-      }
-    }
+    setCurrentBg(getRandomBannerImage(carouselData));
   }, [location.pathname, carouselData]);
 
-  // Kiểm tra xem trang hiện tại có cần ẩn sub-page-banner phụ không
-  // (Giữ nguyên không cho trang chủ, đăng nhập, đăng ký hiển thị banner)
-  const isHomeBanner =
-    location.pathname === "/" ||
-    location.pathname === "/home" ||
-    location.pathname === "/login" ||
-    location.pathname === "/register";
-
-  // Kiểm tra xem trang hiện tại có phải trang đăng nhập/đăng ký để ẩn footer không
-  const isAuthBanner =
-    location.pathname === "/login" || location.pathname === "/register";
-
-  // Tự động cập nhật tiêu đề (Page Title) bằng cách dùng .includes() dễ hiểu
+  // Tự động cập nhật tiêu đề (Page Title)
   useEffect(() => {
     const currentPath = location.pathname.toLowerCase();
 
@@ -70,6 +65,8 @@ function LayoutDefault() {
     else if (location.pathname.match(/^\/tours\/[^/]+$/))
       setPageTitle("Tour Detail");
     else if (currentPath.includes("tours")) setPageTitle("Us Tour");
+    else if (currentPath.includes("favorites")) setPageTitle("Favorites");
+    else if (currentPath.includes("profile")) setPageTitle("User Profile");
     else setPageTitle("");
   }, [location.pathname]);
 
@@ -98,7 +95,7 @@ function LayoutDefault() {
       </Layout>
 
       {/* Nếu KHÔNG PHẢI trang đăng nhập/đăng ký -> Hiển thị Footer */}
-      {!isAuthBanner && <Footer />}
+      {!isFooterBanner && <Footer />}
     </Layout>
   );
 }

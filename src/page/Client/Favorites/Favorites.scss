@@ -1,0 +1,87 @@
+.favorites-page {
+  width: 100%;
+  background: var(--bg-white);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  padding: 32px;
+  min-height: 400px; /* Giảm để không bị dư khoảng trắng phía dưới khi có ít tour */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+  &__header {
+    text-align: left;
+    margin-bottom: 24px;
+  }
+
+  &__title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0;
+    letter-spacing: -0.5px;
+  }
+
+  &__loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+  }
+
+  &__content {
+    .ant-result {
+      background: var(--bg-light);
+      border-radius: 8px;
+      padding: 48px 32px;
+      border: 1px solid var(--border-light);
+      
+      .ant-result-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--text-dark);
+      }
+      
+      .ant-result-subtitle {
+        font-size: 15px;
+        color: var(--text-muted);
+      }
+    }
+  }
+
+  /* Style cho icon Heart nổi trên góc phải thẻ */
+  .favorites-page__card {
+    position: relative;
+
+    .favorites-page__remove-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      z-index: 10;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.85);
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
+
+      svg {
+        font-size: 14px;
+        color: #ff4d4f;
+        transition: transform 0.3s ease;
+      }
+
+      &:hover {
+        background: #ff4d4f;
+        
+        svg {
+          color: white;
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+}

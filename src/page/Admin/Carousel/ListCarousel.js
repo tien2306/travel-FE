@@ -105,7 +105,7 @@ function ListCarousel() {
           <Image
             src={src}
             alt="Banner"
-            className="banner-thumbnail"
+            className="carousel-table__thumbnail"
             placeholder={true}
           />
         );
@@ -163,7 +163,7 @@ function ListCarousel() {
       width: 110,
       align: "center",
       render: (_, record) => (
-        <div className="action-buttons">
+        <div className="carousel-table__actions">
           <EditCarousel record={record} onReload={handleReload} />
           <DeleteCarousel record={record} onReload={handleReload} />
         </div>
@@ -175,8 +175,8 @@ function ListCarousel() {
     <>
       <div className="list-carousel-header">
         <div className="list-carousel-header__info">
-          <h2 className="list-title">Danh sách banner</h2>
-          <p className="list-sub">
+          <h2 className="list-carousel-header__title">Danh sách banner</h2>
+          <p className="list-carousel-header__sub">
             Quản lý trạng thái hiển thị, chỉnh sửa hoặc gỡ bỏ các banner quảng
             cáo.
           </p>

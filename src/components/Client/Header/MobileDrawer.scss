@@ -1,0 +1,129 @@
+@use "../../../styles/variables" as *;
+
+.header {
+  // MOBILE DRAWER (menu trượt khi thu nhỏ màn hình)
+  &__nav-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .header__nav-link {
+      width: 100%;
+      padding: 12px 15px;
+      justify-content: space-between;
+      color: $text-dark;
+      &--active {
+        color: $dropdown-hover-text;
+        background-color: $dropdown-hover-bg;
+      }
+
+      &:hover {
+        color: $dropdown-hover-text;
+        background-color: $dropdown-hover-bg;
+      }
+    }
+  }
+
+  &__auth-mobile {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    
+    a {
+      color: $text-dark;
+      font-weight: 500;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      padding: 12px 15px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+
+      svg {
+        font-size: 18px;
+        color: $text-secondary;
+      }
+
+      &:hover {
+        background-color: $dropdown-hover-bg;
+        color: $dropdown-hover-text;
+        svg {
+          color: $dropdown-hover-text;
+        }
+      }
+    }
+
+    .header__auth-divider {
+      height: 1px;
+      background-color: $border-color;
+      margin: 8px 0;
+    }
+
+    .logout-link {
+      color: $color-danger;
+      svg {
+        color: $color-danger;
+      }
+      &:hover {
+        background-color: rgba(255, 77, 79, 0.1);
+        color: $color-danger;
+        svg {
+          color: $color-danger;
+        }
+      }
+    }
+  }
+}
+
+// SCOPED DRAWER (Thay cho .ant-drawer toàn cục)
+.header-mobile-drawer {
+  z-index: 1100;
+
+  .ant-drawer-mask {
+    z-index: 1100;
+  }
+
+  .ant-drawer-content-wrapper {
+    z-index: 1101;
+  }
+
+  // SCOPED COLLAPSE
+  .mobile-nav-collapse {
+    .mobile-nav-header-text {
+      font-weight: 600;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mobile-nav-header-icon {
+      font-size: 18px;
+      color: #6c757d;
+    }
+
+    .ant-collapse-header {
+      padding: 12px 15px !important;
+      color: $text-dark !important;
+      align-items: center !important;
+      border-radius: 8px !important;
+      transition: background-color 0.2s ease !important;
+
+      &:hover {
+        background-color: $dropdown-hover-bg !important;
+        color: $dropdown-hover-text !important;
+      }
+    }
+
+    .ant-collapse-content > .ant-collapse-content-box {
+      padding: 10px 0 10px 15px !important; // Thụt lề vào một chút cho menu con
+    }
+  }
+}

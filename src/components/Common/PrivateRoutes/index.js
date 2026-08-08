@@ -1,11 +1,26 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Spin } from "antd";
 
 function PrivateRoutes(props) {
   const state = useSelector((state) => state.loginReducer);
-  const { isLogin, role } = state;
+  const { isLogin, role, loading } = state;
   const { allowedRoles } = props;
-  // console.log(allowedRoles) // ['ADMIN','USER']
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Spin size="large" />
+      </div>
+    );
+  }
 
   // 1. KT đăng nhập
   if (!isLogin) {
