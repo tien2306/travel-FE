@@ -65,10 +65,7 @@ const Favorites = () => {
         );
         Swal.fire({
           icon: "info",
-          title: t(
-            "detail.favRemoveSuccess",
-            "Đã xóa khỏi danh sách yêu thích",
-          ),
+          title: t("detail.favRemoveSuccess"),
           toast: true,
           position: "top-end",
           showConfirmButton: false,
@@ -82,21 +79,21 @@ const Favorites = () => {
 
   return (
     <>
-      <h2 className="profile-page-title">Danh sách yêu thích</h2>
+      <h2 className="profile-page-title">{t("favorites.title")}</h2>
       <div className="favorites-page">
         <div className="favorites-page__content">
           {!isLogin ? (
             <Result
               icon={<HeartOutlined style={{ color: "#d9d9d9" }} />}
-              title="Vui lòng đăng nhập"
-              subTitle="Bạn cần đăng nhập để xem danh sách tour yêu thích của mình."
+              title={t("favorites.loginReqTitle")}
+              subTitle={t("favorites.loginReqSub")}
               extra={
                 <Button
                   type="primary"
                   size="large"
                   onClick={() => navigate("/login")}
                 >
-                  Đăng nhập ngay
+                  {t("favorites.loginBtn")}
                 </Button>
               }
             />
@@ -107,15 +104,15 @@ const Favorites = () => {
           ) : tours.length === 0 ? (
             <Result
               icon={<HeartOutlined style={{ color: "#ff4d4f" }} />}
-              title="Chưa có tour yêu thích nào"
-              subTitle="Hãy khám phá các tour hấp dẫn và thêm chúng vào danh sách yêu thích nhé!"
+              title={t("favorites.emptyTitle")}
+              subTitle={t("favorites.emptySub")}
               extra={
                 <Button
                   type="primary"
                   size="large"
                   onClick={() => navigate("/tours")}
                 >
-                  Khám phá ngay
+                  {t("favorites.exploreBtn")}
                 </Button>
               }
             />
@@ -155,7 +152,7 @@ const Favorites = () => {
                           onClick={(e) =>
                             handleRemoveFavorite(tour.id || tour._id, e)
                           }
-                          title="Bỏ yêu thích"
+                          title={t("detail.favRemoveTitle")}
                         >
                           <HeartFilled />
                         </button>
@@ -188,23 +185,23 @@ const Favorites = () => {
                                 {tour.shortDesc || tour.name}
                               </p>
                               <p className="tour-compact-card__overlay-detail">
-                                {t("related.itinerary", "Lịch trình:")}{" "}
+                                {t("related.itinerary")}{" "}
                                 {tour.duration ||
                                   getDuration(tour.startDate, tour.endDate)}
                               </p>
                               <p className="tour-compact-card__overlay-detail">
-                                {t("related.departure", "Khởi hành:")}{" "}
+                                {t("related.departure")}{" "}
                                 {tour.startDate
                                   ? formatDate(tour.startDate)
-                                  : "Đang cập nhật"}
+                                  : "..."}
                               </p>
                               <p className="tour-compact-card__overlay-detail">
-                                {t("related.transport", "Phương tiện:")}{" "}
-                                {tour.transport || "Xe"}
+                                {t("related.transport")}{" "}
+                                {tour.transport || "..."}
                               </p>
                             </div>
                             <span className="tour-compact-card__overlay-more">
-                              {t("related.viewMore", "Xem chi tiết")}
+                              {t("related.viewMore")}
                             </span>
                           </div>
                         </div>

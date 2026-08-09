@@ -1,0 +1,41 @@
+{
+  "menu": {
+    "profile": "My Profile",
+    "orders": "My Orders",
+    "passengers": "Passengers",
+    "reviews": "My Reviews",
+    "favorites": "Favorites",
+    "logout": "Logout"
+  },
+  "logoutConfirm": {
+    "title": "Confirm Logout",
+    "text": "Are you sure you want to log out?",
+    "confirmBtn": "Logout",
+    "cancelBtn": "Cancel"
+  },
+  "info": {
+    "title": "Account Details",
+    "emailLabel": "Email",
+    "usernameLabel": "Username",
+    "fullNameLabel": "Full Name",
+    "fullNamePlaceholder": "Enter your full name...",
+    "fullNameReq": "Please enter your full name!",
+    "phoneLabel": "Phone Number",
+    "phonePlaceholder": "Enter your phone number...",
+    "phoneReq": "Please enter your phone number!",
+    "phoneInv": "Invalid phone number (must be 10 digits starting with 0)!",
+    "addressLabel": "Address",
+    "addressPlaceholder": "Enter your address...",
+    "saveBtn": "Save Changes",
+    "editBtn": "Edit Profile",
+    "saveSuccess": "Profile updated successfully!",
+    "saveFail": "Update failed: ",
+    "errorAPI": "Connection error or update failed!"
+  },
+  "avatar": {
+    "upload": "Upload",
+    "presetsHint": "Or choose from available presets:",
+    "collapse": "Collapse ▲",
+    "seeMore": "See more ({{count}}+ images) ▼"
+  }
+}

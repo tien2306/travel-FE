@@ -30,11 +30,18 @@
     "transMotorbike": "Motorbike",
     "destEngland": "England",
     "destAustria": "Austria",
-    "destHanoi": "Hanoi",
-    "destDalat": "Dalat",
+    "destHanoi": "Ha Noi",
+    "destDalat": "Da Lat",
     "destHcm": "Ho Chi Minh City",
+    "destDanang": "Da Nang",
+    "destNhatrang": "Nha Trang",
+    "destPhuquoc": "Phu Quoc",
+    "destHalong": "Ha Long",
+    "destSapa": "Sapa",
+    "destQuynhon": "Quy Nhon",
+    "destHue": "Hue",
     "budget": "Budget",
-    "searchFilter": "Search Filter"
+    "searchFilter": "Search Filters"
   },
   "results": {
     "count": "Results:",
@@ -175,5 +182,14 @@
     "departure": "Departure",
     "transport": "Transport",
     "viewMore": "View more +"
+  },
+  "favorites": {
+    "title": "My Favorites",
+    "loginReqTitle": "Please Login",
+    "loginReqSub": "You need to log in to view your favorite tours.",
+    "loginBtn": "Login Now",
+    "emptyTitle": "No favorite tours yet",
+    "emptySub": "Explore amazing tours and add them to your favorites!",
+    "exploreBtn": "Explore Now"
   }
 }

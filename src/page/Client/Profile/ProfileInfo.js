@@ -7,6 +7,7 @@ import { Form, Input, Button, Row, Col, message } from "antd";
 import { SaveOutlined } from "@ant-design/icons";
 import { updateAuthMe } from "../../../services/user";
 import { buildProfilePayload } from "../../../helpers/user/profileForm";
+import { useTranslation } from "react-i18next";
 import "./ProfileInfo.scss";
 
 const ProfileInfo = () => {
@@ -16,6 +17,7 @@ const ProfileInfo = () => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const dispatch = useDispatch();
+  const { t } = useTranslation("profile");
 
   // Load init data
   const initialValues = {
@@ -78,16 +80,16 @@ const ProfileInfo = () => {
           // Cập nhật lại về dạng chuỗi, đỡ phải ôm giá trị object cũ
           form.setFieldValue("avatar", finalAvatar || "");
 
-          message.success("Lưu thông tin thành công!");
+          message.success(t("info.saveSuccess"));
           setIsEditing(false);
         } else {
           message.error(
-            "Cập nhật thất bại: " + (res?.message || "Lỗi không xác định"),
+            t("info.saveFail") + (res?.message || t("info.errorAPI")),
           );
         }
       } catch (error) {
         console.log("Lỗi form hoặc gọi API:", error);
-        message.error("Lỗi kết nối hoặc cập nhật thất bại!");
+        message.error(t("info.errorAPI"));
       } finally {
         setLoading(false);
       }
@@ -99,7 +101,7 @@ const ProfileInfo = () => {
 
   return (
     <div className="p-info">
-      <h2 className="p-info__title">Tài khoản</h2>
+      <h2 className="p-info__title">{t("info.title")}</h2>
       <div className="p-info__card">
         <div className="p-info__form">
           <Form
@@ -110,13 +112,13 @@ const ProfileInfo = () => {
           >
             {/* avatar */}
             <Form.Item name="avatar" style={{ margin: 0 }}>
-              <AvatarSelector isEditing={isEditing} userInfo={userInfo} />
+              <AvatarSelector isEditing={isEditing} userInfo={userInfo} t={t} />
             </Form.Item>
 
             {/* email */}
             <Row gutter={24}>
               <Col xs={24} md={12}>
-                <Form.Item label="Email" name="email">
+                <Form.Item label={t("info.emailLabel")} name="email">
                   <Input
                     readOnly
                     className={!isEditing ? "" : "ant-input-disabled"}
@@ -124,7 +126,7 @@ const ProfileInfo = () => {
                 </Form.Item>
               </Col>
               <Col xs={24} md={12}>
-                <Form.Item label="Tên tài khoản" name="username">
+                <Form.Item label={t("info.usernameLabel")} name="username">
                   <Input
                     readOnly
                     className={!isEditing ? "" : "ant-input-disabled"}
@@ -137,28 +139,27 @@ const ProfileInfo = () => {
             <Row gutter={24}>
               <Col xs={24} md={12}>
                 <Form.Item
-                  label="Họ và tên"
+                  label={t("info.fullNameLabel")}
                   name="fullName"
-                  rules={[{ required: true, message: "Vui lòng nhập họ tên!" }]}
+                  rules={[{ required: true, message: t("info.fullNameReq") }]}
                 >
-                  <Input placeholder="Nhập họ và tên..." />
+                  <Input placeholder={t("info.fullNamePlaceholder")} />
                 </Form.Item>
               </Col>
               <Col xs={24} md={12}>
                 <Form.Item
-                  label="Số điện thoại"
+                  label={t("info.phoneLabel")}
                   name="phone"
                   validateTrigger="onSubmit"
                   rules={[
-                    { required: true, message: "Vui lòng nhập số điện thoại!" },
+                    { required: true, message: t("info.phoneReq") },
                     {
                       pattern: /^0\d{9}$/,
-                      message:
-                        "Số điện thoại không hợp lệ (Gồm 10 số, bắt đầu bằng 0)!",
+                      message: t("info.phoneInv"),
                     },
                   ]}
                 >
-                  <Input placeholder="Nhập số điện thoại..." />
+                  <Input placeholder={t("info.phonePlaceholder")} />
                 </Form.Item>
               </Col>
             </Row>
@@ -166,8 +167,8 @@ const ProfileInfo = () => {
             {/* địa chỉ */}
             <Row gutter={24}>
               <Col xs={24}>
-                <Form.Item label="Địa chỉ" name="address">
-                  <Input placeholder="Nhập địa chỉ của bạn..." />
+                <Form.Item label={t("info.addressLabel")} name="address">
+                  <Input placeholder={t("info.addressPlaceholder")} />
                 </Form.Item>
               </Col>
             </Row>
@@ -185,7 +186,7 @@ const ProfileInfo = () => {
                   disabled={false}
                   loading={loading}
                 >
-                  {isEditing ? "Lưu lại" : "Chỉnh sửa thông tin"}
+                  {isEditing ? t("info.saveBtn") : t("info.editBtn")}
                 </Button>
               </Col>
             </Row>

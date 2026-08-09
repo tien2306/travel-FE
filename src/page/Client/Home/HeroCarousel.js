@@ -161,14 +161,14 @@ function HeroCarousel() {
           <button
             className="hero-controls__nav-btn"
             onClick={() => swiperRef.current?.swiper.slidePrev()}
-            aria-label="Slide trước"
+            aria-label={t("controls.prev")}
           >
             ←
           </button>
           <button
             className="hero-controls__nav-btn"
             onClick={() => swiperRef.current?.swiper.slideNext()}
-            aria-label="Slide tiếp"
+            aria-label={t("controls.next")}
           >
             →
           </button>

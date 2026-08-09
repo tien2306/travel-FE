@@ -10,6 +10,7 @@ import contactEN from "../locales/en/contact.json";
 import toursEN from "../locales/en/tours.json";
 import homeEN from "../locales/en/home.json";
 import authEN from "../locales/en/auth.json";
+import profileEN from "../locales/en/profile.json";
 
 // VI
 import commonVI from "../locales/vi/common.json";
@@ -20,6 +21,7 @@ import contactVI from "../locales/vi/contact.json";
 import toursVI from "../locales/vi/tours.json";
 import homeVI from "../locales/vi/home.json";
 import authVI from "../locales/vi/auth.json";
+import profileVI from "../locales/vi/profile.json";
 
 const resources = {
   en: {
@@ -31,6 +33,7 @@ const resources = {
     tours: toursEN,
     home: homeEN,
     auth: authEN,
+    profile: profileEN,
   },
   vi: {
     common: commonVI,
@@ -41,6 +44,7 @@ const resources = {
     tours: toursVI,
     home: homeVI,
     auth: authVI,
+    profile: profileVI,
   },
 };
 
@@ -61,6 +65,7 @@ i18n
       "tours",
       "home",
       "auth",
+      "profile",
     ], // Khai báo danh sách các file (Namespaces) đang quản lý
     defaultNS: "common", // File mặc định. Nếu trong component bạn gọi hàm t() mà không khai báo dùng file nào, nó tự động tìm trong file common.json
     interpolation: {

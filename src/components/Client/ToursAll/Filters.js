@@ -103,27 +103,27 @@ function Filters({ onSearchSubmit, priceRange }) {
       </div>
 
       <div className="tour-filter__section">
-        <span className="tour-filter__label">Điểm khởi hành</span>
+        <span className="tour-filter__label">{t("search.departure", "Điểm khởi hành")}</span>
         <Select
           className="tour-filter__departure-select"
           popupClassName="tour-filter__departure-dropdown"
-          placeholder="Chọn điểm khởi hành"
+          placeholder={t("filter.selectDeparture", "Chọn điểm khởi hành")}
           allowClear
           value={params.departurePlace || undefined}
           onChange={(value) =>
             updateParams({ departurePlace: value || "", page: 1 })
           }
           options={[
-            { value: "Hà Nội", label: "Hà Nội" },
-            { value: "TP.HCM", label: "TP.HCM" },
-            { value: "Đà Nẵng", label: "Đà Nẵng" },
-            { value: "Nha Trang", label: "Nha Trang" },
-            { value: "Đà Lạt", label: "Đà Lạt" },
-            { value: "Phú Quốc", label: "Phú Quốc" },
-            { value: "Hạ Long", label: "Hạ Long" },
-            { value: "Sapa", label: "Sapa" },
-            { value: "Quy Nhơn", label: "Quy Nhơn" },
-            { value: "Huế", label: "Huế" },
+            { value: "Hà Nội", label: t("filter.destHanoi") },
+            { value: "TP.HCM", label: t("filter.destHcm") },
+            { value: "Đà Nẵng", label: t("filter.destDanang") },
+            { value: "Nha Trang", label: t("filter.destNhatrang") },
+            { value: "Đà Lạt", label: t("filter.destDalat") },
+            { value: "Phú Quốc", label: t("filter.destPhuquoc") },
+            { value: "Hạ Long", label: t("filter.destHalong") },
+            { value: "Sapa", label: t("filter.destSapa") },
+            { value: "Quy Nhơn", label: t("filter.destQuynhon") },
+            { value: "Huế", label: t("filter.destHue") },
           ]}
         />
       </div>

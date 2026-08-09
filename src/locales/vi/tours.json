@@ -33,6 +33,13 @@
     "destHanoi": "Hà Nội",
     "destDalat": "Đà Lạt",
     "destHcm": "TP. Hồ Chí Minh",
+    "destDanang": "Đà Nẵng",
+    "destNhatrang": "Nha Trang",
+    "destPhuquoc": "Phú Quốc",
+    "destHalong": "Hạ Long",
+    "destSapa": "Sapa",
+    "destQuynhon": "Quy Nhơn",
+    "destHue": "Huế",
     "budget": "Ngân sách",
     "searchFilter": "Bộ lọc tìm kiếm"
   },
@@ -175,5 +182,14 @@
     "departure": "Khởi hành",
     "transport": "Phương tiện",
     "viewMore": "Xem thêm +"
+  },
+  "favorites": {
+    "title": "Danh sách yêu thích",
+    "loginReqTitle": "Vui lòng đăng nhập",
+    "loginReqSub": "Bạn cần đăng nhập để xem danh sách tour yêu thích của mình.",
+    "loginBtn": "Đăng nhập ngay",
+    "emptyTitle": "Chưa có tour yêu thích nào",
+    "emptySub": "Hãy khám phá các tour hấp dẫn và thêm chúng vào danh sách yêu thích nhé!",
+    "exploreBtn": "Khám phá ngay"
   }
 }

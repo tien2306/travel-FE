@@ -72,7 +72,7 @@ export default function TourGrid({ data }) {
                       {tour.departurePlace?.toLowerCase() ===
                         "ho chi minh city" ||
                       tour.departurePlace?.toLowerCase() === "hcm"
-                        ? "TP. HCM"
+                        ? t("filter.destHcm")
                         : tour.departurePlace}
                     </span>
                     <span className="route-divider">➔</span>

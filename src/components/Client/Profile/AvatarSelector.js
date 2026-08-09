@@ -42,7 +42,7 @@ const PRESETS = avatarContext.keys().map((key) => ({
 }));
 
 // 2. COMPONENT CHÍNH
-const AvatarSelector = ({ value, onChange, isEditing, userInfo }) => {
+const AvatarSelector = ({ value, onChange, isEditing, userInfo, t }) => {
   // --- STATE ---
   const [isExpanded, setIsExpanded] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -156,7 +156,7 @@ const AvatarSelector = ({ value, onChange, isEditing, userInfo }) => {
               {isEditing && (
                 <div className="av-picker__overlay av-picker__overlay--upload">
                   <PlusOutlined className="av-picker__btn" />
-                  <span className="av-picker__text">Tải ảnh</span>
+                  <span className="av-picker__text">{t ? t("avatar.upload") : "Tải ảnh"}</span>
                 </div>
               )}
             </div>
@@ -167,7 +167,7 @@ const AvatarSelector = ({ value, onChange, isEditing, userInfo }) => {
       {/* Khu vực Chọn Ảnh Mẫu (Presets) */}
       {isEditing && (
         <div className="av-picker__presets">
-          <p className="av-picker__hint">Hoặc chọn ảnh mẫu có sẵn:</p>
+          <p className="av-picker__hint">{t ? t("avatar.presetsHint") : "Hoặc chọn ảnh mẫu có sẵn:"}</p>
 
           <div className="av-picker__preset-list">
             {visiblePresets.map((avatar, index) => (
@@ -194,8 +194,8 @@ const AvatarSelector = ({ value, onChange, isEditing, userInfo }) => {
                 className="av-picker__toggle"
               >
                 {isExpanded
-                  ? "Thu gọn ▲"
-                  : `Xem thêm (${PRESETS.length - 8}+ ảnh) ▼`}
+                  ? (t ? t("avatar.collapse") : "Thu gọn ▲")
+                  : (t ? t("avatar.seeMore", { count: PRESETS.length - 8 }) : `Xem thêm (${PRESETS.length - 8}+ ảnh) ▼`)}
               </div>
             )}
           </div>

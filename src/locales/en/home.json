@@ -1,7 +1,11 @@
 {
   "hero": {
-    "defaultTag": "Explore The World",
+    "defaultTag": "NEW",
     "exploreBtn": "Explore Now",
-    "contactBtn": "Contact for Consultation"
+    "contactBtn": "Contact Us"
+  },
+  "controls": {
+    "prev": "Previous Slide",
+    "next": "Next Slide"
   }
 }

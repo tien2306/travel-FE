@@ -1,0 +1,41 @@
+{
+  "menu": {
+    "profile": "Hồ sơ cá nhân",
+    "orders": "Đơn hàng của tôi",
+    "passengers": "Hành khách đi cùng",
+    "reviews": "Đánh giá chuyến đi",
+    "favorites": "Danh sách yêu thích",
+    "logout": "Thoát"
+  },
+  "logoutConfirm": {
+    "title": "Xác nhận đăng xuất",
+    "text": "Bạn có chắc chắn muốn đăng xuất không?",
+    "confirmBtn": "Đăng xuất",
+    "cancelBtn": "Hủy"
+  },
+  "info": {
+    "title": "Tài khoản",
+    "emailLabel": "Email",
+    "usernameLabel": "Tên tài khoản",
+    "fullNameLabel": "Họ và tên",
+    "fullNamePlaceholder": "Nhập họ và tên...",
+    "fullNameReq": "Vui lòng nhập họ tên!",
+    "phoneLabel": "Số điện thoại",
+    "phonePlaceholder": "Nhập số điện thoại...",
+    "phoneReq": "Vui lòng nhập số điện thoại!",
+    "phoneInv": "Số điện thoại không hợp lệ (Gồm 10 số, bắt đầu bằng 0)!",
+    "addressLabel": "Địa chỉ",
+    "addressPlaceholder": "Nhập địa chỉ của bạn...",
+    "saveBtn": "Lưu lại",
+    "editBtn": "Chỉnh sửa thông tin",
+    "saveSuccess": "Lưu thông tin thành công!",
+    "saveFail": "Cập nhật thất bại: ",
+    "errorAPI": "Lỗi kết nối hoặc cập nhật thất bại!"
+  },
+  "avatar": {
+    "upload": "Tải ảnh",
+    "presetsHint": "Hoặc chọn ảnh mẫu có sẵn:",
+    "collapse": "Thu gọn ▲",
+    "seeMore": "Xem thêm ({{count}}+ ảnh) ▼"
+  }
+}

@@ -1,7 +1,11 @@
 {
   "hero": {
-    "defaultTag": "Khám phá thế giới",
+    "defaultTag": "MỚI",
     "exploreBtn": "Khám phá ngay",
-    "contactBtn": "Liên hệ tư vấn"
+    "contactBtn": "Liên Hệ Ngay"
+  },
+  "controls": {
+    "prev": "Slide trước",
+    "next": "Slide tiếp"
   }
 }

@@ -14,6 +14,7 @@ import { logout } from "../../../store/slices/loginSlice";
 import { getAvatarColor } from "../../../helpers/user/avatar";
 import { getAvatarDisplayUrl } from "../../../helpers/user/avatarUrl";
 import Swal from "sweetalert2";
+import { useTranslation } from "react-i18next";
 import "./ProfileLayout.scss";
 
 const ProfileLayout = () => {
@@ -21,18 +22,19 @@ const ProfileLayout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation("profile");
 
   const handleMenuClick = (e) => {
     if (e.key === "logout") {
       Swal.fire({
-        title: "Xác nhận đăng xuất",
-        text: "Bạn có chắc chắn muốn đăng xuất không?",
+        title: t("logoutConfirm.title"),
+        text: t("logoutConfirm.text"),
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#e50027",
         cancelButtonColor: "#888",
-        confirmButtonText: "Đăng xuất",
-        cancelButtonText: "Hủy",
+        confirmButtonText: t("logoutConfirm.confirmBtn"),
+        cancelButtonText: t("logoutConfirm.cancelBtn"),
       }).then((result) => {
         if (result.isConfirmed) {
           dispatch(logout());
@@ -94,23 +96,23 @@ const ProfileLayout = () => {
             className="profile__menu"
           >
             <Menu.Item key="/profile" icon={<UserOutlined />}>
-              Hồ sơ cá nhân
+              {t("menu.profile")}
             </Menu.Item>
             <Menu.Item key="/profile/orders" icon={<ShoppingOutlined />}>
-              Đơn hàng của tôi
+              {t("menu.orders")}
             </Menu.Item>
             <Menu.Item key="/profile/passengers" icon={<TeamOutlined />}>
-              Hành khách đi cùng
+              {t("menu.passengers")}
             </Menu.Item>
             <Menu.Item key="/profile/reviews" icon={<MessageOutlined />}>
-              Đánh giá chuyến đi
+              {t("menu.reviews")}
             </Menu.Item>
             <Menu.Item
               key="/profile/favorites"
               icon={<HeartOutlined />}
               className="last-main-item"
             >
-              Danh sách yêu thích
+              {t("menu.favorites")}
             </Menu.Item>
 
             <Divider className="profile__divider" />
@@ -120,7 +122,7 @@ const ProfileLayout = () => {
               icon={<LogoutOutlined />}
               className="logout-menu-item"
             >
-              Thoát
+              {t("menu.logout")}
             </Menu.Item>
           </Menu>
         </div>
