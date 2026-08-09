@@ -1,159 +1,150 @@
+// Ghi chú antd
+// Tại sao component này lúc gọi ở file Cha (ProfileInfo) chỉ viết là   <AvatarSelector isEditing={isEditing} userInfo={userInfo} />
+// mà ở đây lại tự nhiên nhận được 2 props { value, onChange } ???
+//
+// Đó là nhờ <Form.Item> của antd:
+// Khi bọc component này bằng <Form.Item name="avatar"> ở file Cha, thằng Form.Item
+// sẽ dùng kỹ thuật "React.cloneElement" để âm thầm nhét 2 ống tiêm vào component con:
+// - value: Lấy dữ liệu từ cái két sắt tổng của Form gán vào đây.
+// - onChange: Một cái bộ đàm. Cứ gọi onChange(dữ_liệu_mới) là két sắt tự động cập nhật.
+//
+// khi gọi onchange ở con thằng cha có hàm hứng sự kiện thay đổi
+// thấy có thay đổi, nó lấy cái name gán cho cái value nghĩa là: avatar = value
+// Chỉ là cập nhật tạm ở Form thôi
+// khi submit nó sẽ kéo hết dữ liệu từ form về
+//
+// SỰ KHÁC BIỆT SO VỚI BÊN TOUR/CAROUSEL (TẠI SAO KHÔNG DÙNG getValueFromEvent?)
+// - Bên Tour ngta xài thẳng thẻ <Upload> của Antd. Khi chọn ảnh, thẻ này trả về 1 mớ rác (Event Object).
+//   Do đó ngta BẮT BUỘC phải dùng getValueFromEvent để làm màng lọc, moi cái fileList ra cất đi.
+// - Còn ở đây, ta tự chế ra AvatarSelector. Ta đã "tự xử" mọi thứ trong hàm beforeUpload / handlePresetClick,
+//   và ta CHỦ ĐỘNG gọi onChange ném ra 1 cục Object sạch tinh tươm. Do đó thằng Cha Form.Item
+//   không cần dùng màng lọc getValueFromEvent nữa! Mọi thứ cực kỳ Explicit (Rõ ràng).
+
 import React, { useState } from "react";
 import { Upload, Image } from "antd";
 import { PlusOutlined, EyeOutlined, DeleteOutlined } from "@ant-design/icons";
 import { getAvatarColor } from "../../../helpers/user/avatar";
 import { getAvatarDisplayUrl } from "../../../helpers/user/avatarUrl";
-import "./AvatarSelector.scss";
 import { getBase64 } from "../../../helpers/review/image";
+import "./AvatarSelector.scss";
 
-// Dùng Webpack require.context để tự động quét toàn bộ file trong thư mục.
-// Phép thuật: Lúc 'npm start', Webpack sẽ tự copy các ảnh này, đổi tên thêm mã hash
-// và lưu vào sổ xố (từ điển) ngầm định của nó.
+// 1. CHUẨN BỊ DỮ LIỆU TĨNH ảnh mặc định
+// Dùng Webpack quét thư mục ảnh mẫu, tự động tạo danh sách URL (vd: /static/media/avatar-1.abc123xyz.svg)
 const avatarContext = require.context(
   "../../../assets/avatars", // Đường dẫn tới thư mục chứa ảnh
   false, // Không tìm trong các thư mục con
   /\.(png|jpe?g|svg)$/, // Chỉ lấy các file ảnh
 );
 
-// avatarContext.keys() trả về mảng các đường dẫn (VD: ["./avatar-1.svg", "./avatar-2.png"])
-const DEFAULT_AVATARS = avatarContext.keys().map((key) => ({
-  // avatarContext(key) đóng vai trò như việc tra từ điển Webpack:
-  // Đưa tên file gốc vào -> Nhận lại đường dẫn Link Web thực sự (VD: "/static/media/avatar-1.abc123xyz.svg")
-  // Dùng link này để gắn vào <img src="..." />
+const PRESETS = avatarContext.keys().map((key) => ({
   url: avatarContext(key),
-
-  // Cắt bỏ chuỗi "./" ở đầu để lấy tên file sạch (VD: "avatar-1.svg")
-  // Tên sạch này dùng để đóng gói thành File object thô gửi cho Backend khi user lưu form
   name: key.replace("./", ""),
 }));
 
+// 2. COMPONENT CHÍNH
 const AvatarSelector = ({ value, onChange, isEditing, userInfo }) => {
-  const avatarText = userInfo?.fullName
-    ? userInfo.fullName.charAt(0).toUpperCase()
-    : userInfo?.username?.charAt(0).toUpperCase();
-
-  const avatarColor = getAvatarColor(avatarText);
-  const [isExpanded, setIsExpanded] = useState(false); // true: mở rộng, false: thu nhỏ
+  // --- STATE ---
+  const [isExpanded, setIsExpanded] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewSrc, setPreviewSrc] = useState("");
 
-  // Upload ảnh từ máy → tạo URL ảo (blob) để preview ngay lập tức
+  // --- DERIVED DATA (Dữ liệu tính toán) ---
+  const avatarText = userInfo?.username
+    ? userInfo?.username?.charAt(0).toUpperCase()
+    : userInfo?.fullName?.charAt(0).toUpperCase();
+
+  const avatarColor = getAvatarColor(avatarText);
+  const displayImageUrl = getAvatarDisplayUrl(value);
+  const visiblePresets = isExpanded ? PRESETS : PRESETS.slice(0, 8);
+  const isPresetSelected = (avatarUrl) => displayImageUrl === avatarUrl;
+
+  // --- EVENT HANDLERS ---
   const beforeUpload = async (file) => {
     const base64 = await getBase64(file);
-    if (onChange) onChange({ file: file, preview: base64 });
-    return false; // Ngăn antd tự động upload
+    if (onChange) onChange({ file, preview: base64 });
+    return false; // Chặn Antd tự động gửi request upload vì upload antd nó tự gửi lên server luôn khi chọn ảnh
   };
 
-  const displayImageUrl = (() => {
-    if (!value) return null; // TH mới tạo tk chưa có ảnh
-    if (typeof value === "object" && value.preview) return value.preview; //TH mới bấm vào upload ảnh
-    if (typeof value === "string") return getAvatarDisplayUrl(value); //TH ảnh cũ từ server
-    return null;
-  })();
+  const handlePreview = (e, src) => {
+    e.stopPropagation();
+    setPreviewSrc(src);
+    setPreviewOpen(true);
+  };
 
-  // Hiển thị ảnh
-  const visiblePresets = isExpanded
-    ? DEFAULT_AVATARS
-    : DEFAULT_AVATARS.slice(0, 8);
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    if (onChange) onChange("");
+  };
 
-  // XỬ LÝ KHI NGƯỜI DÙNG BẤM CHỌN 1 ẢNH MẪU (PRESET)
+  // Xử lí click ảnh mặc định
   const handlePresetClick = async (avatar) => {
     if (!onChange) return;
     try {
-      // 1. Dùng fetch() gọi tới đường dẫn của tấm ảnh để tải dữ liệu ảnh về
+      // 1. Tìm thấy file ảnh, trả về 'Response' chứa luồng dữ liệu ngầm (body: ...)
       const response = await fetch(avatar.url);
-
-      // 2. Chuyển đổi dữ liệu vừa tải về thành dạng Blob (Binary Large Object)
-      // Nói dễ hiểu: Chuyển tấm ảnh thành một cục dữ liệu nhị phân thô (chứa toàn số 0 và 1)
+      // 2. Gom luồng dữ liệu lại thành cục 'Blob' để biết rõ dung lượng (size) và định dạng (type)
       const blob = await response.blob();
-
-      // 3. Đóng gói cục dữ liệu nhị phân đó thành một đối tượng File chuẩn của trình duyệt.
-      // Việc này làm cho tấm ảnh mẫu đóng giả thành một file được upload từ máy tính của User!
+      // 3. Đóng gói cục Blob thành File Object (dán thêm tên file) để nộp lên Server
       const file = new File([blob], avatar.name, { type: blob.type });
-
-      // 4. Báo cho cái Form (Ant Design) biết là:
-      // "Ê form, có File mới rồi nè, cập nhật dữ liệu đi.
-      // Sẵn tiện lưu luôn cái link preview để tôi hiện lên UI cho nhanh nhé!"
       onChange({ file, preview: avatar.url });
     } catch (err) {
-      console.error("Lỗi khi tải ảnh preset:", err);
+      console.error("Lỗi khi tải ảnh mẫu:", err);
     }
   };
 
-  // KIỂM TRA XEM ẢNH MẪU NÀY CÓ ĐANG ĐƯỢC CHỌN HAY KHÔNG
-  // (Để hiển thị cái viền xanh xanh bao quanh ảnh)
-  const isPresetSelected = (avatarUrl) => {
-    if (!value) return false;
-
-    // Thuộc tính 'value' (giá trị hiện tại của form) có thể rơi vào 2 trường hợp:
-
-    // TH1: User vừa chọn ảnh mẫu hoặc vừa upload ảnh. 'value' lúc này là một Object do hàm onChange ở trên tạo ra.
-    // Ta lấy thuộc tính 'preview' của Object đó so sánh với đường dẫn của ảnh mẫu hiện tại.
-    if (typeof value === "object" && value.preview) {
-      return value.preview === avatarUrl;
-    }
-
-    // TH2: User chưa thao tác gì. 'value' là một chuỗi (String) URL do DB trả về lúc vừa load trang.
-    // Ta so sánh trực tiếp cái chuỗi đó với đường dẫn ảnh mẫu.
-    return value === avatarUrl;
-  };
-
+  // --- RENDER ---
   return (
     <div
       className={`p-info__avatar ${isEditing ? "p-info__avatar--editing" : ""}`}
     >
+      {/* Lightbox ẩn để xem trước ảnh to */}
       <div style={{ display: "none" }}>
         {previewSrc && (
           <Image
             src={previewSrc}
             preview={{
               open: previewOpen,
-              onOpenChange: (open) => setPreviewOpen(open),
+              onOpenChange: setPreviewOpen,
             }}
           />
         )}
       </div>
 
-      <div className="avatar-selector__form-item">
+      {/* Khu vực Upload / Hiển thị Avatar hiện tại */}
+      <div className="av-picker__form-item">
         <Upload
           maxCount={1}
           listType="picture-circle"
-          className="avatar-uploader"
-          showUploadList={false}
+          className="av-picker__uploader"
+          showUploadList={false} // Ẩn danh sách các file đã upload phía dưới nút bấm.
           beforeUpload={beforeUpload}
           disabled={!isEditing}
         >
           {displayImageUrl ? (
-            <div className="avatar-selector__image-wrapper">
+            <div className="av-picker__img-wrap">
               <img
                 src={displayImageUrl}
                 alt="avatar"
-                className="avatar-selector__image"
+                className="av-picker__img"
               />
+
               {isEditing && (
-                <div className="avatar-selector__overlay avatar-selector__overlay--actions">
+                <div className="av-picker__overlay av-picker__overlay--actions">
                   <EyeOutlined
-                    className="avatar-selector__action-btn"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setPreviewSrc(displayImageUrl);
-                      setPreviewOpen(true);
-                    }}
+                    className="av-picker__btn"
+                    onClick={(e) => handlePreview(e, displayImageUrl)}
                   />
                   <DeleteOutlined
-                    className="avatar-selector__action-btn avatar-selector__action-btn--delete"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (onChange) onChange("");
-                    }}
+                    className="av-picker__btn av-picker__btn--danger"
+                    onClick={handleDelete}
                   />
                 </div>
               )}
             </div>
           ) : (
-            <div className="avatar-selector__image-wrapper">
+            <div className="av-picker__img-wrap">
               <div
-                className="avatar-selector__placeholder"
+                className="av-picker__placeholder"
                 style={{
                   backgroundColor: avatarColor.bg,
                   color: avatarColor.color,
@@ -161,10 +152,11 @@ const AvatarSelector = ({ value, onChange, isEditing, userInfo }) => {
               >
                 {avatarText}
               </div>
+
               {isEditing && (
-                <div className="avatar-selector__overlay avatar-selector__overlay--upload">
-                  <PlusOutlined className="avatar-selector__action-btn" />
-                  <span className="avatar-selector__action-text">Tải ảnh</span>
+                <div className="av-picker__overlay av-picker__overlay--upload">
+                  <PlusOutlined className="av-picker__btn" />
+                  <span className="av-picker__text">Tải ảnh</span>
                 </div>
               )}
             </div>
@@ -172,37 +164,38 @@ const AvatarSelector = ({ value, onChange, isEditing, userInfo }) => {
         </Upload>
       </div>
 
+      {/* Khu vực Chọn Ảnh Mẫu (Presets) */}
       {isEditing && (
-        <div className="avatar-selector__presets-wrapper">
-          <p className="avatar-selector__hint-text">
-            Hoặc chọn ảnh mẫu có sẵn:
-          </p>
-          <div className="avatar-selector__presets-list">
+        <div className="av-picker__presets">
+          <p className="av-picker__hint">Hoặc chọn ảnh mẫu có sẵn:</p>
+
+          <div className="av-picker__preset-list">
             {visiblePresets.map((avatar, index) => (
               <div
                 key={index}
                 onClick={() => handlePresetClick(avatar)}
-                className={`avatar-selector__preset-item ${
+                className={`av-picker__preset-item ${
                   isPresetSelected(avatar.url)
-                    ? "avatar-selector__preset-item--selected"
+                    ? "av-picker__preset-item--active"
                     : ""
                 }`}
               >
                 <img
                   src={avatar.url}
-                  alt={`avatar-${index}`}
-                  className="avatar-selector__preset-image"
+                  alt={`preset-${index}`}
+                  className="av-picker__preset-img"
                 />
               </div>
             ))}
-            {DEFAULT_AVATARS.length > 8 && (
+
+            {PRESETS.length > 8 && (
               <div
                 onClick={() => setIsExpanded(!isExpanded)}
-                className="avatar-selector__toggle-btn"
+                className="av-picker__toggle"
               >
                 {isExpanded
                   ? "Thu gọn ▲"
-                  : `Xem thêm (${DEFAULT_AVATARS.length - 8}+ ảnh) ▼`}
+                  : `Xem thêm (${PRESETS.length - 8}+ ảnh) ▼`}
               </div>
             )}
           </div>

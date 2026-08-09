@@ -22,8 +22,8 @@ function Notify() {
   const role = state?.role;
   const user = state?.user;
 
-  const fullName = user?.fullName || user?.username || "User";
-  const avatarText = fullName.charAt(0).toUpperCase();
+  const userName = user?.username || user?.fullName || "User";
+  const avatarText = userName.charAt(0).toUpperCase();
   const avatarColor = getAvatarColor(avatarText);
 
   const isAdminPage = location.pathname.startsWith("/admin");
@@ -109,19 +109,19 @@ function Notify() {
       <div
         className={`user-menu__trigger ${isAdminPage ? "user-menu__trigger--admin" : ""}`}
       >
-        <Avatar 
+        <Avatar
           size={28}
           src={getAvatarDisplayUrl(user?.avatar)}
-          style={{ 
-            backgroundColor: user?.avatar ? 'transparent' : avatarColor.bg, 
+          style={{
+            backgroundColor: user?.avatar ? "transparent" : avatarColor.bg,
             color: avatarColor.color,
-            fontWeight: 'bold',
+            fontWeight: "bold",
           }}
           className="user-menu__avatar"
         >
           {!user?.avatar && avatarText}
         </Avatar>
-        <span className="user-menu__name">{fullName}</span>
+        <span className="user-menu__name">{userName}</span>
         <DownOutlined className="icons-trigger" />
       </div>
     </Dropdown>

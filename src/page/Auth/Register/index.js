@@ -74,6 +74,7 @@ const Register = () => {
                         message: t("register.usernameReq"),
                       },
                     ]}
+                    validateTrigger="onSubmit"
                   >
                     <Input
                       prefix={<UserOutlined />}
@@ -91,6 +92,7 @@ const Register = () => {
                     rules={[
                       { required: true, message: t("register.fullNameReq") },
                     ]}
+                    validateTrigger="onSubmit"
                   >
                     <Input
                       prefix={<IdcardOutlined />}
@@ -105,6 +107,7 @@ const Register = () => {
                   <Form.Item
                     label={t("register.emailLabel")}
                     name="email"
+                    validateTrigger="onSubmit"
                     rules={[
                       { required: true, message: t("register.emailReq") },
                       { type: "email", message: t("login.emailInv") },
@@ -134,6 +137,7 @@ const Register = () => {
                         message: t("register.phoneFormat"),
                       },
                     ]}
+                    validateTrigger="onSubmit"
                   >
                     <Input
                       prefix={<PhoneOutlined />}
@@ -151,6 +155,7 @@ const Register = () => {
                     rules={[
                       { required: true, message: t("register.addressReq") },
                     ]}
+                    validateTrigger="onSubmit"
                   >
                     <Input
                       prefix={<HomeOutlined />}
@@ -169,6 +174,7 @@ const Register = () => {
                       { required: true, message: t("register.pwdReq") },
                       { min: 6, message: t("login.pwdMin") },
                     ]}
+                    validateTrigger="onSubmit"
                   >
                     <Input.Password
                       prefix={<LockOutlined />}
@@ -201,6 +207,7 @@ const Register = () => {
                         },
                       }),
                     ]}
+                    validateTrigger="onSubmit"
                   >
                     <Input.Password
                       prefix={<LockOutlined />}
@@ -229,7 +236,8 @@ const Register = () => {
             </Form>
 
             <p className="register-container__login-text">
-              {t("register.hasAccount")} <a href="/login">{t("register.loginNow")}</a>
+              {t("register.hasAccount")}{" "}
+              <a href="/login">{t("register.loginNow")}</a>
             </p>
           </div>
         </Col>

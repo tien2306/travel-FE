@@ -46,18 +46,19 @@ const ProfileLayout = () => {
 
   if (!userInfo) return null;
 
-  // Lấy chữ cái đầu của tên để làm Avatar (nếu ko có avatar image)
-  const avatarText = userInfo.fullName
-    ? userInfo.fullName.charAt(0).toUpperCase()
-    : userInfo.username?.charAt(0).toUpperCase();
+  // Lấy chữ cái đầu của tên để làm Avatar
+  const avatarText = userInfo.username
+    ? userInfo.username?.charAt(0).toUpperCase()
+    : userInfo.fullName?.charAt(0).toUpperCase();
 
+  // Xử lí màu avatar
   const avatarColor = getAvatarColor(avatarText);
+
+  // Xử lí hiển thị avatar
+  const avatarSrc = getAvatarDisplayUrl(userInfo.avatar);
 
   // Highlight menu hiện tại
   const selectedKey = location.pathname;
-
-  // Chuyển avatar file ID thành URL hiển thị được
-  const avatarSrc = getAvatarDisplayUrl(userInfo.avatar);
 
   return (
     <div className="profile">

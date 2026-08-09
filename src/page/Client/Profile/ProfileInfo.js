@@ -44,27 +44,27 @@ const ProfileInfo = () => {
       try {
         const values = await form.validateFields();
         setLoading(true);
-
-        const { formData, newAvatarUrl } = buildProfilePayload(values, userInfo);
-
+        // console.log(values);
+        const { formData, newAvatarUrl } = buildProfilePayload(
+          values,
+          userInfo,
+        );
         const res = await updateAuthMe(formData);
-
         if (res && res.success) {
           const serverAvatar = res.data?.avatar;
-          // Nếu user xóa avatar (newAvatarUrl === null) → ưu tiên ý định xóa
-          // Nếu user upload/chọn ảnh → dùng avatar từ server, fallback preview
           const finalAvatar =
             newAvatarUrl === null ? null : serverAvatar || newAvatarUrl;
 
-          // Loại bỏ avatar khỏi values (vì có thể là object { file, preview })
+          // Loại bỏ avatar khỏi values | nghĩa là giá trị của form
+          // Để lưu cái avater mới vào (finalAvatar)
           const { avatar: _discardAvatar, ...safeValues } = values;
 
           // Cập nhật Redux store
           const updatedUser = {
-            ...userInfo,
-            ...safeValues,
-            ...res.data,
-            avatar: finalAvatar,
+            ...userInfo, // thông tin cũ
+            ...safeValues, // thông tin mới (ghi đè thông tin cũ)
+            ...res.data, // thông tin mới từ server (ghi đè thông tin cũ)
+            avatar: finalAvatar, // avatar mới
           };
 
           dispatch(
@@ -75,7 +75,7 @@ const ProfileInfo = () => {
             }),
           );
 
-          // Reset form avatar value về string từ server
+          // Cập nhật lại về dạng chuỗi, đỡ phải ôm giá trị object cũ
           form.setFieldValue("avatar", finalAvatar || "");
 
           message.success("Lưu thông tin thành công!");
@@ -124,7 +124,7 @@ const ProfileInfo = () => {
                 </Form.Item>
               </Col>
               <Col xs={24} md={12}>
-                <Form.Item label="Tên đăng nhập" name="username">
+                <Form.Item label="Tên tài khoản" name="username">
                   <Input
                     readOnly
                     className={!isEditing ? "" : "ant-input-disabled"}
@@ -148,8 +148,14 @@ const ProfileInfo = () => {
                 <Form.Item
                   label="Số điện thoại"
                   name="phone"
+                  validateTrigger="onSubmit"
                   rules={[
                     { required: true, message: "Vui lòng nhập số điện thoại!" },
+                    {
+                      pattern: /^0\d{9}$/,
+                      message:
+                        "Số điện thoại không hợp lệ (Gồm 10 số, bắt đầu bằng 0)!",
+                    },
                   ]}
                 >
                   <Input placeholder="Nhập số điện thoại..." />

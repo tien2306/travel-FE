@@ -6,32 +6,37 @@
  */
 export const buildProfilePayload = (values, userInfo) => {
   const formData = new FormData();
-  
-  formData.append("fullName", values.fullName);
-  formData.append("phone", values.phone || "");
-  formData.append("address", values.address || "");
 
-  // Xử lý Avatar:
-  // - Có thể là string (ảnh giữ nguyên / chọn từ preset)
-  // - Có thể là object { file, preview } (ảnh mới upload)
-  // - Có thể là empty/null (user đã xóa ảnh)
-  const avatarVal = values.avatar;
-  let newAvatarUrl = userInfo?.avatar;
+  // Chỉ gửi những gì bị thay đổi!
+  if (values.fullName !== userInfo?.fullName) {
+    formData.append("fullName", values.fullName);
+  }
+  if (values.phone !== userInfo?.phone) {
+    formData.append("phone", values.phone || "");
+  }
+  if (values.address !== userInfo?.address) {
+    formData.append("address", values.address || "");
+  }
 
-  if (avatarVal) {
-    if (typeof avatarVal === "string") {
-      // Ảnh có sẵn từ server hoặc url preset
+  // XỬ LÝ AVATAR
+  const avatarVal = values.avatar; // Gía trị ảnh mới
+  let newAvatarUrl = userInfo?.avatar; // Gía trị ảnh cũ
+
+  // Nếu avatar có sự thay đổi so với cái đang lưu trong Database
+  if (avatarVal !== userInfo?.avatar) {
+    if (!avatarVal) {
+      // TH1: Bấm xóa ảnh (avatarVal rỗng)
+      formData.append("avatar", "");
+      newAvatarUrl = null;
+    } else if (typeof avatarVal === "string") {
+      // TH2: Chọn ảnh mẫu (preset) -> dạng string
       formData.append("avatar", avatarVal);
       newAvatarUrl = avatarVal;
     } else if (avatarVal.file) {
-      // File ảnh upload mới
+      // TH3: Tải ảnh từ máy tính -> dạng Object { file, preview }
       formData.append("avatar", avatarVal.file);
       newAvatarUrl = avatarVal.preview;
     }
-  } else {
-    // Xóa ảnh
-    formData.append("avatar", "");
-    newAvatarUrl = null;
   }
 
   return { formData, newAvatarUrl };
