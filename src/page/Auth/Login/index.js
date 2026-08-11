@@ -97,16 +97,16 @@ const Login = () => {
 
   return (
     <div
-      className="login-container"
+      className="login"
       style={{ backgroundImage: `url(${defaultBgFromApi})` }}
     >
-      <div className="login-container__overlay"></div>
+      <div className="login__overlay"></div>
 
-      <Row justify="center" align="middle" className="login-container__row">
-        <Col xs={22} sm={16} md={12} lg={10} xl={8}>
-          <div className="login-container__card">
+      <Row justify="center" align="middle" className="login__row">
+        <Col xs={22} sm={18} md={14} lg={12} xl={8}>
+          <div className="login__card">
             <h2>{t("login.welcome")}</h2>
-            <p className="login-container__subtitle">{t("login.subtitle")}</p>
+            <p className="login__subtitle">{t("login.subtitle")}</p>
 
             {/* Form */}
             <Form
@@ -127,6 +127,8 @@ const Login = () => {
                 ]}
               >
                 <Input
+                  name="email"
+                  id="email"
                   prefix={<UserOutlined />}
                   placeholder={t("login.emailPlh")}
                   size="large"
@@ -145,6 +147,8 @@ const Login = () => {
                 ]}
               >
                 <Input.Password
+                  name="password"
+                  id="password"
                   prefix={<LockOutlined />}
                   placeholder={t("login.pwdPlh")}
                   size="large"
@@ -153,11 +157,11 @@ const Login = () => {
               </Form.Item>
 
               {/* Ghi nhớ */}
-              <div className="login-container__form-actions">
+              <div className="login__actions">
                 <Form.Item name="remember" valuePropName="checked" noStyle>
                   <Checkbox>{t("login.remember")}</Checkbox>
                 </Form.Item>
-                <a href="/forgot" className="login-container__forgot">
+                <a href="/forgot" className="login__forgot">
                   {t("login.forgot")}
                 </a>
               </div>
@@ -167,7 +171,7 @@ const Login = () => {
                 <Button
                   type="primary"
                   htmlType="submit"
-                  className="login-container__btn"
+                  className="login__btn"
                   size="large"
                   loading={loading}
                 >
@@ -176,7 +180,7 @@ const Login = () => {
               </Form.Item>
             </Form>
 
-            <p className="login-container__register-text">
+            <p className="login__register-text">
               {t("login.noAccount")}{" "}
               <a href="/register">{t("login.registerNow")}</a>
             </p>

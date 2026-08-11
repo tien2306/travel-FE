@@ -42,17 +42,17 @@ const Register = () => {
 
   return (
     <div
-      className="register-container"
+      className="register"
       style={{ backgroundImage: `url(${defaultBgFromApi})` }}
     >
-      <div className="register-container__overlay"></div>
+      <div className="register__overlay"></div>
 
       {/* Dùng Row và Col bao bọc toàn bộ card để quản lý responsive */}
-      <Row justify="center" align="middle" className="register-container__row">
-        <Col xs={22} sm={20} md={16} lg={14} xl={12}>
-          <div className="register-container__card">
+      <Row justify="center" align="middle" className="register__row">
+        <Col xs={22} sm={22} md={18} lg={16} xl={12}>
+          <div className="register__card">
             <h2>{t("register.title")}</h2>
-            <p className="register-container__subtitle">
+            <p className="register__subtitle">
               {t("register.subtitle")}
             </p>
 
@@ -77,9 +77,12 @@ const Register = () => {
                     validateTrigger="onSubmit"
                   >
                     <Input
+                      name="username"
+                      id="username"
                       prefix={<UserOutlined />}
                       placeholder="nguyenvana"
                       size="large"
+                      autoComplete="username"
                     />
                   </Form.Item>
                 </Col>
@@ -95,9 +98,12 @@ const Register = () => {
                     validateTrigger="onSubmit"
                   >
                     <Input
+                      name="fullName"
+                      id="fullName"
                       prefix={<IdcardOutlined />}
                       placeholder="Nguyen Van Huy"
                       size="large"
+                      autoComplete="name"
                     />
                   </Form.Item>
                 </Col>
@@ -114,6 +120,8 @@ const Register = () => {
                     ]}
                   >
                     <Input
+                      name="email"
+                      id="email"
                       prefix={<MailOutlined />}
                       placeholder="abc@gmail.com"
                       size="large"
@@ -140,9 +148,12 @@ const Register = () => {
                     validateTrigger="onSubmit"
                   >
                     <Input
+                      name="phone"
+                      id="phone"
                       prefix={<PhoneOutlined />}
                       placeholder="0912312312"
                       size="large"
+                      autoComplete="tel"
                     />
                   </Form.Item>
                 </Col>
@@ -158,9 +169,12 @@ const Register = () => {
                     validateTrigger="onSubmit"
                   >
                     <Input
+                      name="address"
+                      id="address"
                       prefix={<HomeOutlined />}
                       placeholder={t("register.addressPlh")}
                       size="large"
+                      autoComplete="street-address"
                     />
                   </Form.Item>
                 </Col>
@@ -177,6 +191,8 @@ const Register = () => {
                     validateTrigger="onSubmit"
                   >
                     <Input.Password
+                      name="password"
+                      id="password"
                       prefix={<LockOutlined />}
                       placeholder={t("login.pwdPlh")}
                       size="large"
@@ -210,6 +226,8 @@ const Register = () => {
                     validateTrigger="onSubmit"
                   >
                     <Input.Password
+                      name="confirmPassword"
+                      id="confirmPassword"
                       prefix={<LockOutlined />}
                       placeholder={t("register.pwdConfirmPlh")}
                       size="large"
@@ -224,7 +242,7 @@ const Register = () => {
                     <Button
                       type="primary"
                       htmlType="submit"
-                      className="register-container__btn"
+                      className="register__btn"
                       size="large"
                       loading={loading}
                     >
@@ -235,7 +253,7 @@ const Register = () => {
               </Row>
             </Form>
 
-            <p className="register-container__login-text">
+            <p className="register__login-text">
               {t("register.hasAccount")}{" "}
               <a href="/login">{t("register.loginNow")}</a>
             </p>

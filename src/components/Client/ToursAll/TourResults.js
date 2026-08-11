@@ -7,30 +7,26 @@ import { useFilterParams } from "../../../hooks/useFilterParams";
 import TourGrid from "./TourGrid";
 import TourList from "./TourList";
 import { useTourListAnimation } from "../../../page/Client/Tours/animations";
+import { useResponsive } from "../../../hooks/useResponsive";
 import "./TourResults.scss";
 
 function TourResults({ onPriceRangeUpdate }) {
   const { t } = useTranslation("tours");
   const [viewMode, setViewMode] = useState("grid");
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); //dùng để kt màn đth nhỏ hơn 768 -> true
+  
+  const windowWidth = useResponsive();
+  const isMobile = windowWidth <= 768; //dùng để kt màn đth nhỏ hơn 768 -> true
 
   const [tours, setTours] = useState([]);
   const [loading, setLoading] = useState(false);
   const [totalItems, setTotalItems] = useState(0);
   const [pageSize, setPageSize] = useState(10);
-
   const tourListRef = useRef(null);
+
   useTourListAnimation(tourListRef, tours, loading);
 
   const { params, updateParams } = useFilterParams();
   const currentPage = params.page || 1;
-
-  //Đăng ký sự kiện co màn hình
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const handlePageChange = (page) => {
     updateParams({ page: page });

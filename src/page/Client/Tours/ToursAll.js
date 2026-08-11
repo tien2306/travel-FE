@@ -8,6 +8,7 @@ import {
   MobileFilterBar,
   MobileDrawers,
 } from "../../../components/Client/ToursAll/MobileFilter";
+import { useScroll } from "../../../hooks/useScroll";
 import "./ToursAll.scss";
 
 let cachedPriceRange = null;
@@ -23,27 +24,24 @@ function ToursAll() {
     cachedPriceRange || { min: 0, max: 200000000 },
   );
 
+  const scrollY = useScroll();
+
   useEffect(() => {
-    const handleScroll = () => {
-      if (resultsRef.current) {
-        //getBoundingClientRect: Tính toán khoảng cách p/tử resultsRef tới khung nhìn
-        // getBoundingClientRect có hàm top, bottom
-        // top: khoảng cách cạnh trên p/tử đến khung nhìn
-        // bottom: khoảng cách cạnh dưới p/tử đến khung nhìn
-        const rect = resultsRef.current.getBoundingClientRect();
+    if (resultsRef.current) {
+      //getBoundingClientRect: Tính toán khoảng cách p/tử resultsRef tới khung nhìn
+      // getBoundingClientRect có hàm top, bottom
+      // top: khoảng cách cạnh trên p/tử đến khung nhìn
+      // bottom: khoảng cách cạnh dưới p/tử đến khung nhìn
+      const rect = resultsRef.current.getBoundingClientRect();
 
-        if (rect.top <= -200 && rect.bottom > 200) {
-          setIsVisible(true);
-        } else {
-          setIsVisible(false);
-          setMenuOpen(false);
-        }
+      if (rect.top <= -200 && rect.bottom > 200) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+        setMenuOpen(false);
       }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    }
+  }, [scrollY]);
 
   // HÀM CẬP NHẬT KHOẢNG GIÁ MỚI
   const handlePriceRangeUpdate = useCallback((newRange) => {
@@ -63,6 +61,12 @@ function ToursAll() {
   return (
     <div className="tour-page">
       <div className="tour-page__container">
+        {/* ---- Section Header ---- */}
+        <div className="tour-page__header">
+          <p className="tour-page__label">{t("header.label")}</p>
+          <h1 className="tour-page__title">{t("header.title")}</h1>
+        </div>
+
         <Row gutter={[24, 24]}>
           {/* Cột trái: Bộ lọc */}
           <Col xs={0} lg={7} xl={6} className="tour-page__sidebar-col">

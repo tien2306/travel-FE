@@ -7,6 +7,7 @@ import {
   CommentOutlined,
   QuestionCircleOutlined,
 } from "@ant-design/icons";
+import { useScroll } from "../../../hooks/useScroll";
 
 const ProductActions = ({ descRef, reviewsRef, qaRef, tour }) => {
   const { t } = useTranslation("tours");
@@ -39,43 +40,40 @@ const ProductActions = ({ descRef, reviewsRef, qaRef, tour }) => {
     [t, descRef, reviewsRef, qaRef],
   );
 
+  const scrollY = useScroll();
+
   // LOGIC THEO DÕI CUỘN TRANG
   useEffect(() => {
     if (!tour) return;
 
-    const handleScroll = () => {
-      // 1. Logic đổi màu Tab: Cứ mục nào cách mép trên màn hình dưới 250px thì lấy mục đó
-      let currentActive = "description"; // 1. Mặc định ban đầu chọn Tab Mô tả
-      tabs.forEach((tab) => {
-        if (tab.ref.current) {
-          // 2. Đo khoảng cách từ đỉnh khối đó tới mép trên màn hình bạn đang nhìn
-          const topPosition = tab.ref.current.getBoundingClientRect().top;
-          // 3. Nếu đỉnh khối đó đã cuộn lên cao và cách mép trên nhỏ hơn 250px
-          if (topPosition <= 250) {
-            currentActive = tab.key; // Ghi đè tab đang kích hoạt bằng khối này
-          }
-        }
-      });
-      setActiveTab(currentActive); // 4. Cập nhật lại màu sắc cho thanh Tab ngoài giao diện
-
-      // 2. Logic hiện/ẩn nút FloatButton trên Mobile: Khi cuộn tới mục mô tả thì hiện nút lên
-      if (descRef?.current) {
-        // khoảng cách từ khung nhìn tới mô tả
-        const rect = descRef.current.getBoundingClientRect();
-        // window.innerHeight: ciều cao toàn bộ màn hình điện thoại
-        // vd: 800 - 200 = 600
-        if (rect.top <= window.innerHeight - 200) {
-          setIsVisible(true); // Nếu lọt vào rồi -> Hiện nút Menu tròn lên
-        } else {
-          setIsVisible(false); // Nếu đang ở trên cùng trang web -> Ẩn nút đi
-          setOpen(false); // Nếu menu đang mở cũng tự động đóng lại
+    // 1. Logic đổi màu Tab: Cứ mục nào cách mép trên màn hình dưới 250px thì lấy mục đó
+    let currentActive = "description"; // 1. Mặc định ban đầu chọn Tab Mô tả
+    tabs.forEach((tab) => {
+      if (tab.ref.current) {
+        // 2. Đo khoảng cách từ đỉnh khối đó tới mép trên màn hình bạn đang nhìn
+        const topPosition = tab.ref.current.getBoundingClientRect().top;
+        // 3. Nếu đỉnh khối đó đã cuộn lên cao và cách mép trên nhỏ hơn 250px
+        if (topPosition <= 250) {
+          currentActive = tab.key; // Ghi đè tab đang kích hoạt bằng khối này
         }
       }
-    };
+    });
+    setActiveTab(currentActive); // 4. Cập nhật lại màu sắc cho thanh Tab ngoài giao diện
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [tour, descRef, tabs]);
+    // 2. Logic hiện/ẩn nút FloatButton trên Mobile: Khi cuộn tới mục mô tả thì hiện nút lên
+    if (descRef?.current) {
+      // khoảng cách từ khung nhìn tới mô tả
+      const rect = descRef.current.getBoundingClientRect();
+      // window.innerHeight: chiều cao toàn bộ màn hình điện thoại
+      // vd: 800 - 200 = 600
+      if (rect.top <= window.innerHeight - 200) {
+        setIsVisible(true); // Nếu lọt vào rồi -> Hiện nút Menu tròn lên
+      } else {
+        setIsVisible(false); // Nếu đang ở trên cùng trang web -> Ẩn nút đi
+        setOpen(false); // Nếu menu đang mở cũng tự động đóng lại
+      }
+    }
+  }, [tour, descRef, tabs, scrollY]);
 
   // HÀM XỬ LÝ CLICK CUỘN TRANG MƯỢT MÀ
   const handleScrollToSection = (tabKey, targetRef) => {

@@ -27,6 +27,10 @@ function AppContent() {
           theme === "dark"
             ? antdTheme.darkAlgorithm
             : antdTheme.defaultAlgorithm,
+        token: {
+          fontFamily:
+            '"Segoe UI", "Roboto", -apple-system, BlinkMacSystemFont, sans-serif',
+        },
       }}
     >
       <ScrollToTop />

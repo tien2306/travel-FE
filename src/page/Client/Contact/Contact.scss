@@ -8,11 +8,10 @@
 // ============================================================
 
 .contact {
+  padding: $section-padding-pc;
   background-color: var(--bg-page);
-  padding: 72px 0 80px;
-
-  @include tablet { padding: 52px 0 60px; }
-  @include mobile { padding: 36px 0 48px; }
+  @include tablet { padding: $section-padding-mb; }
+  @include mobile { padding: $section-padding-mb; }
 
   &__container {
     max-width: $container-max-width;

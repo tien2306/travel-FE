@@ -11,6 +11,11 @@ import Home from "../page/Client/Home";
 import Login from "../page/Auth/Login";
 import Register from "../page/Auth/Register";
 import Logout from "../page/Auth/Logout";
+import MapQuizWrapper from "../page/Client/MapQuiz";
+import Topic from "../page/Client/MapQuiz/Topic";
+import MapQuizGame from "../page/Client/MapQuiz/MapQuizGame";
+import Quiz from "../page/Client/MapQuiz/Quiz";
+import Result from "../page/Client/MapQuiz/Result";
 import DashBoard from "../page/Admin/DashBoard";
 import ListTour from "../page/Admin/Tour/LisTour";
 import ListCarousel from "../page/Admin/Carousel/ListCarousel";
@@ -59,6 +64,29 @@ export const routes = [
         element: <Contact />,
       },
       {
+        path: "map",
+        element: <MapQuizWrapper />,
+        children: [
+          {
+            index: true,
+            element: <Topic />,
+          },
+          {
+            path: "play",
+            element: <MapQuizGame />,
+          },
+          {
+            path: "quiz/:id",
+            element: <Quiz />,
+          },
+          {
+            path: "result/:id",
+            element: <Result />,
+          },
+        ],
+      },
+
+      {
         path: "favorites",
         element: <Navigate to="/profile/favorites" replace />,
       },
@@ -90,8 +118,8 @@ export const routes = [
               {
                 path: "favorites",
                 element: <Favorites />,
-              }
-            ]
+              },
+            ],
           },
         ],
       },

@@ -1,4 +1,8 @@
 {
+  "header": {
+    "label": "FIND YOUR JOURNEY",
+    "title": "Your Dream Trip"
+  },
   "search": {
     "departure": "Departure",
     "all": "All",

@@ -9,7 +9,7 @@ import { getRandomBannerImage } from "../../../helpers/ui/banner";
 
 const fallbackImg = "/images/fallbackImage.jpg";
 
-const { Title, Paragraph } = Typography;
+const { Paragraph } = Typography;
 
 function About() {
   const context = useOutletContext();
@@ -57,10 +57,10 @@ function About() {
           <Col xs={24} lg={13}>
             <div className="about__content">
               <h5 className="about__subtitle">{t("subtitle")}</h5>
-              <Title level={1} className="about__title">
+              <h1 className="about__title">
                 {t("title")}&nbsp;
                 <span className="about__highlight">TravelAway</span>
-              </Title>
+              </h1>
 
               <Paragraph className="about__description">{t("desc1")}</Paragraph>
 

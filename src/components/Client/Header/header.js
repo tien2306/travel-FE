@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { Row, Col, Button } from "antd";
 import Notify from "../../Common/Notify";
 import "./header.scss";
@@ -18,25 +18,54 @@ import DarkModeToggle from "../../Common/DarkModeToggle";
 import GlobalSettings from "../../Common/GlobalSettings";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { useScroll } from "../../../hooks/useScroll";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
+
   const { isLogin, loading, user } = useSelector((state) => state.loginReducer);
   const dispatch = useDispatch();
   const { t } = useTranslation("header");
 
+  const scrollY = useScroll();
+
+  // Cập nhật trạng thái sticky khi scrollY thay đổi
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY >= 60) {
-        setIsSticky(true);
-      } else {
-        setIsSticky(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [dispatch]);
+    setIsSticky(scrollY >= 60);
+  }, [scrollY, dispatch]);
+
+  // Dùng useCallback cho hàm đóng/mở menu để tránh tạo lại hàm khi re-render
+  const handleOpenMenu = useCallback(() => setIsMenuOpen(true), []);
+  const handleCloseMenu = useCallback(() => setIsMenuOpen(false), []);
+
+  // Dùng useMemo để gom cụm logic render Auth nhằm tăng độ đọc hiểu và hiệu năng
+  const renderAuthContent = useMemo(() => {
+    if (loading || (isLogin && !user)) {
+      return (
+        <div className="header__auth-loading-wrapper">
+          <div className="header__auth-loading-spinner"></div>
+        </div>
+      );
+    }
+
+    if (!isLogin) {
+      return (
+        <>
+          <Link className="header__auth-item" to="/register">
+            <FiUser />
+            <span>{t("register")}</span>
+          </Link>
+          <Link className="header__auth-item" to="/login">
+            <FiLogIn />
+            <span>{t("login")}</span>
+          </Link>
+        </>
+      );
+    }
+
+    return <Notify />;
+  }, [loading, isLogin, user, t]);
 
   return (
     <header className={`header ${isSticky ? "header--sticky" : ""}`}>
@@ -96,25 +125,7 @@ const Header = () => {
             <Col xs={0} lg={14} className="header__auth-col">
               <div className="header__auth">
                 <GlobalSettings />
-
-                {loading || (isLogin && !user) ? (
-                  <div className="header__auth-loading-wrapper">
-                    <div className="header__auth-loading-spinner"></div>
-                  </div>
-                ) : !isLogin ? (
-                  <>
-                    <Link className="header__auth-item" to="register">
-                      <FiUser />
-                      <span>{t("register")}</span>
-                    </Link>
-                    <Link className="header__auth-item" to="login">
-                      <FiLogIn />
-                      <span>{t("login")}</span>
-                    </Link>
-                  </>
-                ) : (
-                  <Notify />
-                )}
+                {renderAuthContent}
               </div>
             </Col>
           </Row>
@@ -138,36 +149,29 @@ const Header = () => {
               <NavigationMenu isMobile={false} />
             </nav>
 
-            {/* Khối Hành động (Nút Book Now + Nút 3 gạch Mobile) */}
+            {/* Khối Hành động */}
             <div className="header__right-actions">
               <div className="global-settings-wrapper--mobile">
                 <GlobalSettings />
               </div>
               <DarkModeToggle />
-              <Link
-                type="primary"
-                shape="round"
-                size="large"
-                className="header__btn-book"
-              >
-                {t("bookNow")}
-              </Link>
 
-              <Button
-                type="text"
-                className="header__btn-toggler"
-                icon={<AiOutlineMenu />}
-                onClick={() => setIsMenuOpen(true)}
-              />
+              <Link className="header__btn-book">
+                {t("bookNow")}
+                <Button
+                  type="text"
+                  className="header__btn-toggler"
+                  icon={<AiOutlineMenu />}
+                  onClick={handleOpenMenu}
+                />
+              </Link>
             </div>
           </div>
         </div>
       </div>
 
       {/* MOBILE DRAWER */}
-      {/* được dùng để hiển thị một bảng 
-      điều khiển trượt từ các cạnh của màn hình  */}
-      <MobileDrawer isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+      <MobileDrawer isMenuOpen={isMenuOpen} setIsMenuOpen={handleCloseMenu} />
     </header>
   );
 };

@@ -1,4 +1,3 @@
-// useAboutAnimation.js
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -9,13 +8,14 @@ gsap.registerPlugin(ScrollTrigger);
 export function useAboutAnimation(containerRef) {
   useGSAP(
     () => {
-      // Gallery animation (Khung ảnh & Huy hiệu bên trái)
+      // gsap.fromTo( Vật_thể, {Trạng_thái_Bắt_đầu}, {Trạng_thái_Kết_thúc} ).
+      // Khung ảnh bên trái
       gsap.fromTo(
         ".about__gallery",
-        { x: -50, opacity: 0 }, //  Từ bên trái bay qua (-50px) và mờ ẩn
+        { x: -50, opacity: 0 }, //  ẩn bên trái 50
         {
-          x: 0, //  Về lại vị trí chuẩn ban đầu
-          opacity: 1,
+          x: 0, //  Về lại ban đầu
+          opacity: 1, // hiện
           duration: 1, //  Chạy trong vòng 1 giây
           ease: "power3.out", //  Bay ra nhanh rồi hãm phanh chậm dần cực mượt
           scrollTrigger: {
@@ -25,10 +25,10 @@ export function useAboutAnimation(containerRef) {
         },
       );
 
-      // Content Text stagger animation (Khối chữ tiêu đề và mô tả)
+      // Khối chữ tiêu đề và mô tả
       gsap.fromTo(
         [".about__subtitle", ".about__title", ".about__description"], //  Truyền một mảng để gom cả 3 nhóm chữ chạy chung hiệu ứng
-        { y: 30, opacity: 0 }, //  Từ dưới trồi lên (30px) và mờ ẩn
+        { y: 30, opacity: 0 }, //  ẩn dưới 30px
         {
           y: 0,
           opacity: 1,
@@ -42,15 +42,15 @@ export function useAboutAnimation(containerRef) {
         },
       );
 
-      // Features stagger animation (Danh sách các tiện ích đi kèm)
+      // Danh sách các tiện ích đi kèm
       gsap.fromTo(
         ".about__feature-item",
-        { x: -20, opacity: 0 }, //  Từ bên trái nhích nhẹ qua (-20px) và mờ ẩn
+        { x: -20, opacity: 0 },
         {
           x: 0,
           opacity: 1,
           duration: 0.5,
-          stagger: 0.1, //  Hiệu ứng gợn sóng nhanh! Các dòng tiện ích lần lượt xuất hiện cách nhau 0.1 giây
+          stagger: 0.2,
           ease: "power2.out",
           scrollTrigger: {
             trigger: ".about__features", //  Vật làm mốc là vùng chứa danh sách tiện ích
@@ -59,10 +59,10 @@ export function useAboutAnimation(containerRef) {
         },
       );
 
-      // Button animation (Nút bấm hành động)
+      // Nút bấm hành động
       gsap.fromTo(
         ".about__action",
-        { y: 20, opacity: 0 }, //  Từ dưới trồi lên (20px) và mờ ẩn
+        { y: 20, opacity: 0 }, //  ẩn dưới 20
         {
           y: 0,
           opacity: 1,

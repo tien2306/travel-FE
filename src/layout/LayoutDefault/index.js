@@ -25,7 +25,9 @@ function LayoutDefault() {
 
   // Footer Trang login register
   const isFooterBanner =
-    location.pathname === "/login" || location.pathname === "/register";
+    location.pathname === "/login" ||
+    location.pathname === "/register" ||
+    location.pathname.includes("map");
 
   // Lấy data ảnh carousel
   useEffect(() => {
@@ -67,6 +69,7 @@ function LayoutDefault() {
     else if (currentPath.includes("tours")) setPageTitle("Us Tour");
     else if (currentPath.includes("favorites")) setPageTitle("Favorites");
     else if (currentPath.includes("profile")) setPageTitle("User Profile");
+    else if (currentPath.includes("map")) setPageTitle("Discovery Quiz");
     else setPageTitle("");
   }, [location.pathname]);
 

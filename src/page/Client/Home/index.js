@@ -3,6 +3,8 @@ import HeroCarousel from "./HeroCarousel";
 import ToursAll from "../Tours/ToursAll";
 import Contact from "../Contact";
 import About from "../About";
+import ExploreVietnam from "../ExploreVietnam";
+import MapQuizPromo from "./MapQuizPromo";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 function Home() {
@@ -34,6 +36,10 @@ function Home() {
       <HeroCarousel />
 
       <ToursAll />
+
+      <MapQuizPromo />
+
+      <ExploreVietnam />
 
       <About />
 

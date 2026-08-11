@@ -1,7 +1,7 @@
 @use "../../../styles/variables" as *;
 @use "../../../styles/mixins" as *;
 
-.login-container {
+.login {
   position: relative;
   width: 100%;
   min-height: 100vh;
@@ -9,7 +9,7 @@
   background-attachment: fixed;
   padding-top: 100px;
 
-  .login-container__overlay {
+  &__overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -19,34 +19,30 @@
     z-index: 1;
   }
 
-  .login-container__row {
+  &__row {
     position: relative;
     z-index: 2;
     min-height: calc(100vh - 100px);
     padding: 20px 0;
   }
 
-  .login-container__card {
-    background: $bg-glass-card;     // Tự động sáng/tối theo theme
+  &__card {
+    background: $bg-glass-card;
     backdrop-filter: blur(15px);
-    // -webkit-backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid $bg-glass-border;
+    position: relative;
+    z-index: 1;
     padding: 40px 30px;
-    border-radius: $radius-lg;
+    border-radius: 10px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
     text-align: center;
-    border: 1px solid $bg-glass-border;   // Tự động sáng/tối theo theme
 
     h2 {
       color: $text-dark;
       font-size: 26px;
       margin-bottom: 4px;
       font-weight: 700;
-    }
-
-    .login-container__subtitle {
-      color: $text-muted;
-      font-size: 14px;
-      margin-bottom: 25px;
     }
 
     .ant-form-item {
@@ -62,56 +58,62 @@
 
     .ant-input-affix-wrapper-large {
       padding: 10px 14px;
-      border-radius: $radius-md;
+      border-radius: 10px;
       background: $bg-white;
     }
+  }
 
-    .login-container__form-actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-      font-size: 14px;
+  &__subtitle {
+    color: $text-muted;
+    font-size: 14px;
+    margin-bottom: 25px;
+  }
 
-      .login-container__forgot {
-        color: $primary-color;
-        font-weight: 500;
-        &:hover {
-          text-decoration: underline;
-        }
-      }
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    font-size: 14px;
+  }
+
+  &__forgot {
+    color: $primary-color;
+    font-weight: 500;
+    &:hover {
+      text-decoration: underline;
     }
+  }
 
-    .login-container__btn {
-      width: 100%;
-      height: 45px;
-      background-color: $primary-color;
-      border-color: $primary-color;
+  &__btn {
+    width: 100%;
+    height: 45px;
+    background-color: $primary-color;
+    border-color: $primary-color;
+    font-weight: 600;
+    font-size: 16px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px $shadow-primary;
+    transition: $transition-base;
+
+    &:hover,
+    &:focus {
+      background-color: $color-blue-hover !important;
+      border-color: $color-blue-hover !important;
+      transform: translateY(-1px);
+    }
+  }
+
+  &__register-text {
+    margin-top: 20px;
+    font-size: 14px;
+    color: $text-muted;
+
+    a {
+      color: $primary-color;
       font-weight: 600;
-      font-size: 16px;
-      border-radius: $radius-md;
-      box-shadow: 0 4px 12px $shadow-primary;   // Fix: dùng CSS var thay rgba($primary-color)
-      transition: $transition-base;
-
-      &:hover,
-      &:focus {
-        background-color: $color-blue-hover !important;
-        border-color: $color-blue-hover !important;
-        transform: translateY(-1px);
-      }
-    }
-
-    .login-container__register-text {
-      margin-top: 20px;
-      font-size: 14px;
-      color: $text-muted;
-
-      a {
-        color: $primary-color;
-        font-weight: 600;
-        &:hover {
-          text-decoration: underline;
-        }
+      &:hover {
+        text-decoration: underline;
       }
     }
   }
