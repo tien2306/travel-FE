@@ -8,7 +8,7 @@ import { useContactAnimation } from "./animations";
 
 const { TextArea } = Input;
 
-// ─── Info blocks data ─────────────────────────────────────────
+// ─── Info blocks data ────────────────────────────────────────
 const getInfoBlocks = (t) => [
   {
     Icon: FiMapPin,
