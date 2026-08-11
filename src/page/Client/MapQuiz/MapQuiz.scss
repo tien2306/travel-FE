@@ -1,0 +1,932 @@
+@use "../../../styles/variables" as *;
+
+$bp-md: 768px;
+
+// ============================================================
+// MAP GAME  —  .mq
+// ============================================================
+.mq {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 80px);
+  overflow: hidden;
+  background: var(--bg-page);
+
+  .mq-container {
+    display: flex;
+    height: calc(100vh - 80px);
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    background: var(--bg-white);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+  }
+
+  // Không cần tab bar nữa
+  &__tabs {
+    display: none;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: row; // panel trái, map phải
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+
+  // Panel — luôn bên TRÁI trên desktop
+  &__panel-wrap {
+    flex-shrink: 0;
+    display: flex;
+
+    @media (max-width: $bp-md) {
+      // Mobile: Full overlay, xuyên click
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      pointer-events: none;
+    }
+  }
+
+  // Map — luôn bên TRÁI, chiếm phần còn lại
+  &__map-wrap {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    display: flex;
+
+    > div,
+    svg {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    @media (max-width: $bp-md) {
+      position: absolute;
+      inset: 0;
+    }
+  }
+}
+
+// ---- Map background ----
+.mq-map {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-page);
+}
+
+// ---- Panel (sidebar) ----
+.mq-panel {
+  width: 270px;
+  height: 100%;
+  background: var(--bg-white);
+  border-right: 1px solid var(--border-color);
+  color: var(--text-body);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 0.85rem;
+  overflow-y: auto;
+
+  // =============================================
+  // MOBILE: Floating Glass UI
+  // =============================================
+  @media (max-width: $bp-md) {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    overflow: hidden;
+    position: relative;
+    pointer-events: none;
+    display: block;
+  }
+
+  // Bút back — mobile: icon nhỏ
+  &__back {
+    background: var(--bg-light);
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    text-align: left;
+    white-space: nowrap;
+    transition: 0.2s;
+    flex-shrink: 0;
+    &:hover {
+      color: var(--primary-color);
+    }
+
+    @media (max-width: $bp-md) {
+      pointer-events: auto;
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      html[data-theme="dark"] & {
+        background: rgba(30, 41, 59, 0.9);
+        border-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+
+  // Score — mobile: compact
+  &__score {
+    text-align: center;
+    padding: 0.9rem;
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.18);
+    border-radius: 4px;
+    flex-shrink: 0;
+
+    &-val {
+      display: block;
+      font-size: 2rem;
+      font-weight: 900;
+      color: #10b981;
+    }
+    &-lbl {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: $bp-md) {
+      pointer-events: auto;
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      padding: 6px 14px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+
+      &-val {
+        font-size: 1.1rem;
+      }
+      &-lbl {
+        display: inline;
+        margin-left: 2px;
+      }
+      html[data-theme="dark"] & {
+        background: rgba(15, 23, 42, 0.9);
+      }
+    }
+  }
+
+  // Progress — ẩn hết trên mobile
+  &__progress {
+    span {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    @media (max-width: $bp-md) {
+      display: none;
+    }
+  }
+
+  &__bar {
+    height: 5px;
+    background: var(--border-color);
+    border-radius: 99px;
+    overflow: hidden;
+    margin-bottom: 4px;
+
+    &-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-color), #10b981);
+      border-radius: 99px;
+      transition: width 0.5s;
+    }
+  }
+
+  &__bottom-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+
+    @media (max-width: $bp-md) {
+      pointer-events: auto;
+      position: absolute;
+      bottom: 1.5rem;
+      left: 1rem;
+      right: 1rem;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 4px;
+      padding: 0.85rem 1rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      gap: 0.5rem;
+
+      html[data-theme="dark"] & {
+        background: rgba(15, 23, 42, 0.85);
+        border-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+
+  &__q-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+
+    @media (max-width: $bp-md) {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+  }
+
+  // Câu hỏi — mobile: hiển thị rõ tên tỉnh
+  &__question {
+    background: var(--bg-icon-box);
+    border: 1px solid var(--border-input);
+    border-radius: 4px;
+    padding: 0.9rem;
+    flex-shrink: 0;
+
+    &-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+    &-name {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      line-height: 1.25;
+    }
+
+    @media (max-width: $bp-md) {
+      flex: 1;
+      min-width: 0;
+      background: transparent;
+      border: none;
+      padding: 0;
+
+      &-label {
+        display: block;
+        font-size: 0.85rem;
+        text-align: left;
+        margin-bottom: 2px;
+        font-weight: 600;
+      }
+      &-name {
+        font-size: 1.65rem;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  // Sai — ẩn trên mobile (không đủ chỗ), nhưng giờ đã trong card thì cho hiện
+  &__wrong {
+    background: rgba(239, 68, 68, 0.07);
+    border: 1px solid rgba(239, 68, 68, 0.18);
+    border-radius: 4px;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.85rem;
+    color: var(--color-danger);
+    animation: mq-shake 0.35s;
+
+    @media (max-width: $bp-md) {
+      display: block;
+      text-align: left;
+      font-size: 0.85rem;
+      padding: 0.6rem 0.8rem;
+    }
+  }
+
+  // Hint
+  &__hint {
+    @media (max-width: $bp-md) {
+      flex-shrink: 0;
+    }
+  }
+
+  &__hint-btn {
+    width: 100%;
+    background: rgba(245, 158, 11, 0.07);
+    border: 1px solid rgba(245, 158, 11, 0.28);
+    color: #d97706;
+    border-radius: 4px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    transition: 0.2s;
+
+    &:hover {
+      background: rgba(245, 158, 11, 0.14);
+    }
+
+    html[data-theme="dark"] & {
+      color: #fbbf24;
+    }
+
+    @media (max-width: $bp-md) {
+      width: auto;
+      padding: 8px 14px;
+      font-size: 0.95rem;
+      border-radius: 8px;
+    }
+  }
+
+  &__hint-text {
+    background: rgba(245, 158, 11, 0.07);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: 4px;
+    padding: 0.75rem 0.9rem;
+    color: #b45309;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin: 0;
+
+    html[data-theme="dark"] & {
+      color: #fcd34d;
+    }
+
+    @media (max-width: $bp-md) {
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      border-radius: 4px;
+      text-align: left;
+    }
+  }
+
+  &__legend {
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+
+    @media (max-width: $bp-md) {
+      margin-top: 0;
+      padding-top: 0.4rem;
+      border-top: none;
+      overflow-x: auto;
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+
+  &__legend-grid {
+    @media (max-width: $bp-md) {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 16px;
+      justify-content: flex-start;
+      padding-bottom: 2px;
+    }
+  }
+
+  &__legend-title {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+
+    @media (max-width: $bp-md) {
+      display: none; // Ẩn chữ "Chú thích vùng miền" trên mobile cho gọn
+    }
+  }
+
+  &__legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+
+    @media (max-width: $bp-md) {
+      font-size: 0.85rem;
+      margin-bottom: 0;
+      white-space: nowrap;
+      gap: 5px;
+    }
+  }
+
+  &__legend-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+}
+
+// ---- Finish screen ----
+.mq-finish {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-page);
+  padding: 1rem;
+
+  &__card {
+    background: var(--bg-white);
+    border-radius: 20px;
+    padding: 2.5rem;
+    text-align: center;
+    max-width: 440px;
+    width: 100%;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--text-heading);
+    }
+    p {
+      color: var(--text-muted);
+      margin: 0.75rem 0;
+    }
+  }
+
+  &__icon {
+    font-size: 3.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  &__score {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #10b981 !important;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+
+    button {
+      border: none;
+      padding: 11px 26px;
+      border-radius: 8px; /* Tối đa 10px */
+      font-weight: 700;
+      cursor: pointer;
+      background: var(--bg-light);
+      color: var(--text-body);
+      transition: 0.2s;
+      &:hover {
+        background: var(--border-color);
+      }
+    }
+
+    &--primary {
+      background: #10b981 !important;
+      color: #fff !important;
+      &:hover {
+        background: #059669 !important;
+      }
+    }
+  }
+}
+
+// ============================================================
+// QUIZ PAGE  —  .quiz-page
+// ============================================================
+.quiz-page {
+  padding: 3rem 1rem;
+  background: #f8fafc; /* Màu nền nhẹ nhàng, match tổng thể */
+  min-height: 80vh;
+
+  html[data-theme="dark"] & {
+    background: #0f172a;
+  }
+}
+
+.quiz {
+  &__container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    
+    h2 {
+      font-size: clamp(2rem, 5vw, 2.5rem);
+      font-weight: 800;
+      color: #1e3a8a; /* Xanh đậm, match logo TravelAWay */
+      margin-bottom: 0.5rem;
+    }
+    
+    p {
+      color: #64748b;
+      font-size: 1rem;
+      
+      html[data-theme="dark"] & {
+        color: #94a3b8;
+      }
+    }
+  }
+
+  &__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    padding: 8px 16px;
+    border-radius: 8px; /* Tối đa 10px */
+    transition: 0.2s;
+    
+    &:hover {
+      color: #1d4ed8;
+      border-color: #1d4ed8;
+      background: #eff6ff;
+    }
+    
+    html[data-theme="dark"] & {
+      background: #1e293b;
+      border-color: #334155;
+      color: #cbd5e1;
+      
+      &:hover {
+        background: #334155;
+      }
+    }
+  }
+
+  &__loading {
+    text-align: center;
+    padding: 5rem 0;
+    color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 1.1rem;
+  }
+
+  &__item {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px; /* Tối đa 10px */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    border: 1px solid #f1f5f9;
+    margin-bottom: 1.5rem;
+    transition: 0.2s;
+
+    &:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+    }
+
+    html[data-theme="dark"] & {
+      background: #1e293b;
+      border-color: #334155;
+      box-shadow: none;
+    }
+
+    @media (max-width: 768px) {
+      padding: 1.5rem 1rem;
+    }
+
+    .quiz__question-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.15rem;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+      color: #334155;
+
+      html[data-theme="dark"] & {
+        color: #f1f5f9;
+      }
+
+      .q-num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #2563eb;
+        color: #fff;
+        padding: 4px 12px;
+        border-radius: 6px; /* Tối đa 10px */
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  &__answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__answer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px; /* Tối đa 10px */
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    transition: 0.2s;
+
+    html[data-theme="dark"] & {
+      background: #0f172a;
+      border-color: #1e293b;
+    }
+
+    &:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      
+      html[data-theme="dark"] & {
+        background: #1e293b;
+        border-color: #334155;
+      }
+    }
+
+    input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+    
+    .radio-custom {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #94a3b8;
+      border-radius: 50%;
+      margin-right: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s;
+      flex-shrink: 0;
+      background: #fff;
+      
+      html[data-theme="dark"] & {
+        background: transparent;
+        border-color: #475569;
+      }
+      
+      &::after {
+        content: '';
+        width: 10px;
+        height: 10px;
+        background: #2563eb;
+        border-radius: 50%;
+        opacity: 0;
+        transform: scale(0);
+        transition: 0.2s;
+      }
+    }
+
+    .answer-text {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #475569;
+      transition: 0.2s;
+      
+      html[data-theme="dark"] & {
+        color: #94a3b8;
+      }
+    }
+
+    &:has(input:checked) {
+      background: #eff6ff;
+      border-color: #2563eb;
+      
+      html[data-theme="dark"] & {
+        background: rgba(37, 99, 235, 0.1);
+      }
+      
+      .radio-custom {
+        border-color: #2563eb;
+        &::after {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      
+      .answer-text {
+        color: #1d4ed8;
+        font-weight: 600;
+        
+        html[data-theme="dark"] & {
+          color: #60a5fa;
+        }
+      }
+    }
+  }
+
+  &__submit {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 16px 40px;
+    border-radius: 8px; /* Tối đa 10px */
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: block;
+    margin: 3rem auto 2rem;
+    transition: 0.2s;
+    width: 100%;
+    max-width: 300px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    
+    &:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+// ============================================================
+// RESULT PAGE  —  .result
+// ============================================================
+.result-page {
+  padding: 3rem 1rem;
+  background: var(--bg-page);
+  min-height: 80vh;
+}
+
+.result {
+  &__container {
+    max-width: 780px;
+    margin: 0 auto;
+    background: var(--bg-white);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+
+    h2 {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &__summary {
+    text-align: center;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    p {
+      color: var(--text-muted);
+    }
+  }
+
+  &__circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    background: var(--bg-icon-box);
+
+    span {
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--primary-color);
+      line-height: 1;
+    }
+    small {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+  }
+
+  &__item {
+    padding: 0.9rem 1rem;
+    margin-bottom: 0.7rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-page);
+
+    &--wrong {
+      background: rgba(239, 68, 68, 0.04);
+    }
+  }
+
+  &__q-title {
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+    font-size: 0.95rem;
+    color: var(--text-heading);
+  }
+  &__badge {
+    font-size: 0.72rem;
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-left: 7px;
+    color: #fff;
+    font-weight: 700;
+    &--correct {
+      background: #10b981;
+    }
+    &--wrong {
+      background: #ef4444;
+    }
+  }
+
+  &__answer-info {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+  &__correct-ans {
+    color: #10b981;
+    font-weight: 600;
+  }
+
+  &__retry {
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 11px 28px;
+    border-radius: 8px; /* Tối đa 10px */
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    display: block;
+    margin: 1.75rem auto 0;
+    transition: 0.2s;
+    &:hover {
+      transform: scale(1.04);
+    }
+  }
+}
+
+// ============================================================
+// ANIMATIONS
+// ============================================================
+@keyframes mq-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}

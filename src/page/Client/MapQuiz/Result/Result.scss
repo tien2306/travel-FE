@@ -1,0 +1,117 @@
+.result-page {
+  padding: 3rem 1rem;
+  background: var(--bg-page);
+  min-height: 80vh;
+}
+
+.result {
+  &__container {
+    max-width: 780px;
+    margin: 0 auto;
+    background: var(--bg-white);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+
+    h2 {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &__summary {
+    text-align: center;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    p {
+      color: var(--text-muted);
+    }
+  }
+
+  &__circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    background: var(--bg-icon-box);
+
+    span {
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--primary-color);
+      line-height: 1;
+    }
+    small {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+  }
+
+  &__item {
+    padding: 0.9rem 1rem;
+    margin-bottom: 0.7rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-page);
+
+    &--wrong {
+      background: rgba(239, 68, 68, 0.04);
+    }
+  }
+
+  &__q-title {
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+    font-size: 0.95rem;
+    color: var(--text-heading);
+  }
+  &__badge {
+    font-size: 0.72rem;
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-left: 7px;
+    color: #fff;
+    font-weight: 700;
+    &--correct {
+      background: #10b981;
+    }
+    &--wrong {
+      background: #ef4444;
+    }
+  }
+
+  &__answer-info {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+  &__correct-ans {
+    color: #10b981;
+    font-weight: 600;
+  }
+
+  &__retry {
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 11px 28px;
+    border-radius: 8px; /* Tối đa 10px */
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    display: block;
+    margin: 1.75rem auto 0;
+    transition: 0.2s;
+    &:hover {
+      transform: scale(1.04);
+    }
+  }
+}
