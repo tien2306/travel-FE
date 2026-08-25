@@ -1,12 +1,12 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { Table, Select, Input } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+
 import Swal from "sweetalert2";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getToursAdmin, updateTourStatus } from "../../../services/tour";
 import EditTour from "./EditTour";
 import DeleteTour from "./DeleteTour";
-import CreateTourModal from "../../../components/Admin/CreateTourModal/CreateTourModal";
+import CreateTourModal from "../../../components/Admin/Tour/CreateTourModal";
 
 import "./ListTour.scss";
 import { formatDate, formatPrice } from "../../../helpers/format/format";
@@ -21,14 +21,18 @@ function ListTour() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
+  const keyword = searchParams.get("keyword") || "";
+  const [searchText, setSearchText] = useState(keyword);
+  const searchTimeoutRef = useRef(null);
+
   // 1. Đọc số trang hiện tại từ URL
   const currentPage = parseInt(searchParams.get("page")) || 1;
 
   // 2. Hàm gọi API lấy danh sách tour
-  const fetchApi = useCallback(async (page) => {
+  const fetchApi = useCallback(async (page, search = "") => {
     setLoading(true);
     try {
-      const res = await getToursAdmin(page);
+      const res = await getToursAdmin(page, search);
       if (res && res.success) {
         const formattedData = res.data.items.map((item) => ({
           ...item,
@@ -55,12 +59,12 @@ function ListTour() {
 
   // 3. Lắng nghe URL: mỗi khi page thay đổi thì reload dữ liệu
   useEffect(() => {
-    fetchApi(currentPage);
-  }, [currentPage, fetchApi]);
+    fetchApi(currentPage, keyword);
+  }, [currentPage, fetchApi, keyword]);
 
   // 4. Hàm reload cho Edit và Delete
   const handleReload = () => {
-    fetchApi(currentPage);
+    fetchApi(currentPage, keyword);
   };
 
   // 5. Xử lý chuyển trang Antd Table
@@ -68,6 +72,26 @@ function ListTour() {
     const newParams = new URLSearchParams(searchParams);
     newParams.set("page", page.current.toString());
     navigate(`?${newParams.toString()}`);
+  };
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchText(value);
+
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+    }
+
+    searchTimeoutRef.current = setTimeout(() => {
+      const newParams = new URLSearchParams(searchParams);
+      newParams.set("page", "1");
+      if (value) {
+        newParams.set("keyword", value);
+      } else {
+        newParams.delete("keyword");
+      }
+      navigate(`?${newParams.toString()}`);
+    }, 500);
   };
 
   // 6. Xử lý cập nhật trạng thái tour
@@ -119,8 +143,8 @@ function ListTour() {
   // thì cái render: (isActive, record) => (...)
   // console.log(isActive) // là một boolean
 
-  // oncell: ở màn nhỏ thay vì chỉ hiện giá trị dataIndex: "subtitle",
-  // thì nó sẽ hiển thị | Tiêu đề phụ:  giá trị của subtitle
+  // oncell: có tác dụng khi co màn thành dth nó sẽ ẩn cột title vì v oncell sẽ gán 1 thuộc tính data-label= "..."
+  // nhiệm vụ mình là scss lại nó để hiển thị
 
   // 7. Toàn bộ cột bảng
   const columns = [
@@ -223,11 +247,12 @@ function ListTour() {
             alignItems: "center",
           }}
         >
-          <Input
-            size="large"
-            placeholder="Tìm kiếm tour..."
-            prefix={<SearchOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
+          <Input.Search
+            placeholder="Tìm kiếm theo tên tour..."
             style={{ width: "250px", borderRadius: "8px" }}
+            onChange={handleSearchChange}
+            value={searchText}
+            allowClear
           />
           <CreateTourModal onReload={handleReload} />
         </div>

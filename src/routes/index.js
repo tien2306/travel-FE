@@ -19,6 +19,7 @@ import Result from "../page/Client/MapQuiz/Result";
 import DashBoard from "../page/Admin/DashBoard";
 import ListTour from "../page/Admin/Tour/LisTour";
 import ListCarousel from "../page/Admin/Carousel/ListCarousel";
+import ListUser from "../page/Admin/User/ListUser";
 import Tours from "../page/Client/Tours";
 import ToursAll from "../page/Client/Tours/ToursAll";
 import ToursDetail from "../page/Client/Tours/ToursDetail";
@@ -159,6 +160,10 @@ export const routes = [
           {
             path: "list-carousel",
             element: <ListCarousel />,
+          },
+          {
+            path: "list-user",
+            element: <ListUser />,
           },
         ],
       },

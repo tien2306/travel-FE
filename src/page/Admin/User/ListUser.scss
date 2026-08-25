@@ -1,0 +1,104 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.user-list {
+  &__header {
+    @include flex-between;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 16px 24px;
+    background: $bg-white;
+    border-radius: $radius-lg;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  }
+
+  &__info {
+    flex: 1;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
+    color: $text-dark;
+    letter-spacing: -0.5px;
+  }
+
+  &__sub {
+    color: $text-sub;
+    margin: 4px 0 0;
+    font-size: 15px;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+
+    .ant-btn-primary {
+      border-radius: $radius-md;
+      height: 40px;
+      font-weight: 600;
+      box-shadow: 0 4px 12px $shadow-primary;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px $shadow-primary;
+      }
+    }
+  }
+
+  &__table {
+    background: $bg-white;
+    border-radius: $radius-lg;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    padding: 12px;
+
+    .ant-table-thead > tr > th {
+      background: $bg-light;
+      color: $text-dark;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid $border-color;
+    }
+
+    .ant-table-tbody > tr.ant-table-row {
+      transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+  
+      &:hover {
+        background-color: $bg-selected !important;
+      }
+    }
+  }
+
+  &__table-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+    .ant-btn {
+      border-radius: $radius-sm;
+      transition: all 0.2s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+    }
+  }
+}
+
+@media (max-width: 1190px) {
+  .user-list__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+

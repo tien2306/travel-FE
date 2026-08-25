@@ -3,6 +3,7 @@ import {
   LayoutOutlined,
   FlagOutlined,
   SlidersOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { Link, useLocation } from "react-router-dom";
 
@@ -13,6 +14,7 @@ function MenuSider() {
     const path = location.pathname;
     if (path.includes("list-tour")) return "list-tour";
     if (path.includes("list-carousel")) return "list-carousel";
+    if (path.includes("list-user")) return "list-user";
     if (path === "/admin" || path === "/admin/") return "home";
     return "home";
   };
@@ -32,6 +34,11 @@ function MenuSider() {
       key: "list-carousel",
       label: <Link to="/admin/list-carousel">Carousel</Link>,
       icon: <SlidersOutlined />,
+    },
+    {
+      key: "list-user",
+      label: <Link to="/admin/list-user">User</Link>,
+      icon: <UserOutlined />,
     },
   ];
 

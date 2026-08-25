@@ -1,15 +1,14 @@
-import { useEffect, useState, useCallback } from "react";
-import { Table, Switch, Image } from "antd";
+import { useEffect, useState, useCallback, useRef } from "react";
+import { Table, Switch, Image, Input } from "antd";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getCarousel, updateCarouselStatus } from "../../../services/carousel";
 import Swal from "sweetalert2";
-
 import EditCarousel from "./EditCarousel";
 import DeleteCarousel from "./DeleteCarousel";
-import CreateCarouselModal from "../../../components/Admin/CreateCarouselModal/CreateCarouselModal";
 import { IMAGE_URLS } from "../../../constants/api";
 
 import "./ListCarousel.scss";
+import CreateCarouselModal from "../../../components/Admin/Carousel/CreateCarouselModal";
 
 function ListCarousel() {
   const [data, setData] = useState([]);
@@ -21,14 +20,18 @@ function ListCarousel() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
+  const keyword = searchParams.get("keyword") || "";
+  const [searchText, setSearchText] = useState(keyword);
+  const searchTimeoutRef = useRef(null);
+
   // 1. Đọc trực tiếp số trang hiện tại từ thanh URL trình duyệt
   const currentPage = parseInt(searchParams.get("page")) || 1;
 
   // 2. Giữ nguyên function giữa các lần render.
-  const fetchApi = useCallback(async (page) => {
+  const fetchApi = useCallback(async (page, search = "") => {
     setLoading(true);
     try {
-      const res = await getCarousel(page);
+      const res = await getCarousel(page, search);
       if (res && res.success) {
         const formattedData = res.data.items.map((item) => ({
           ...item,
@@ -40,29 +43,54 @@ function ListCarousel() {
         setPageSize(res.data.pagination.limit);
       }
     } catch (error) {
-      Swal.fire({ toast: true, position: "top-end", icon: "error", title: "Lỗi khi tải danh sách banner!", timer: 1500, showConfirmButton: false });
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Lỗi khi tải danh sách banner!",
+        timer: 1500,
+        showConfirmButton: false,
+      });
     } finally {
       setLoading(false);
     }
   }, []);
 
-  // 3. Lắng nghe URL: Cứ hễ số trang trên thanh URL thay đổi là tự reload dữ liệu mới
+  // 3. Lắng nghe URL: Cứ hễ số trang hoặc keyword trên thanh URL thay đổi là tự reload dữ liệu mới
   useEffect(() => {
-    fetchApi(currentPage);
-  }, [currentPage, fetchApi]);
+    fetchApi(currentPage, keyword);
+  }, [currentPage, fetchApi, keyword]);
 
   // 4. Hàm load lại trang cho Edit và Delete
   const handleReload = () => {
-    fetchApi(currentPage);
+    fetchApi(currentPage, keyword);
   };
 
   // 5. Xử lý khi người dùng bấm chuyển trang trên Antd Table
   const handlePageChange = (page) => {
     const newParams = new URLSearchParams(searchParams);
     newParams.set("page", page.current.toString());
-
-    // Đổi hướng URL (Trình duyệt tự hiểu không cần tải lại toàn bộ trang admin)
     navigate(`?${newParams.toString()}`);
+  };
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchText(value);
+
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+    }
+
+    searchTimeoutRef.current = setTimeout(() => {
+      const newParams = new URLSearchParams(searchParams);
+      newParams.set("page", "1");
+      if (value) {
+        newParams.set("keyword", value);
+      } else {
+        newParams.delete("keyword");
+      }
+      navigate(`?${newParams.toString()}`);
+    }, 500);
   };
 
   //6. Xử lý trạng thái hiện ảnh
@@ -70,7 +98,14 @@ function ListCarousel() {
     try {
       const res = await updateCarouselStatus(record.key, { isActive: checked });
       if (res && res.success) {
-        Swal.fire({ toast: true, position: "top-end", icon: "success", title: "Cập nhật trạng thái thành công!", timer: 1500, showConfirmButton: false });
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title: "Cập nhật trạng thái thành công!",
+          timer: 1500,
+          showConfirmButton: false,
+        });
         setData((prevData) =>
           prevData.map((item) =>
             item.key === record.key ? { ...item, isActive: checked } : item,
@@ -78,7 +113,14 @@ function ListCarousel() {
         );
       }
     } catch (error) {
-      Swal.fire({ toast: true, position: "top-end", icon: "error", title: "Lỗi hệ thống khi cập nhật trạng thái!", timer: 1500, showConfirmButton: false });
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Lỗi hệ thống khi cập nhật trạng thái!",
+        timer: 1500,
+        showConfirmButton: false,
+      });
     }
   };
 
@@ -90,8 +132,8 @@ function ListCarousel() {
   // thì cái render: (isActive, record) => (...)
   // console.log(isActive) // là một boolean
 
-  // oncell: ở màn nhỏ thay vì chỉ hiện giá trị dataIndex: "subtitle",
-  // thì nó sẽ hiển thị | Tiêu đề phụ:  giá trị của subtitle
+  // oncell: có tác dụng khi co màn thành dth nó sẽ ẩn cột title vì v oncell sẽ gán 1 thuộc tính data-label= "..."
+  // nhiệm vụ mình là scss lại nó để hiển thị
 
   const columns = [
     {
@@ -181,7 +223,24 @@ function ListCarousel() {
             cáo.
           </p>
         </div>
-        <CreateCarouselModal onReload={handleReload} />
+        <div
+          className="list-carousel-header__actions"
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "12px",
+            alignItems: "center",
+          }}
+        >
+          <Input.Search
+            placeholder="Tìm kiếm theo tiêu đề..."
+            style={{ width: "250px", borderRadius: "8px" }}
+            onChange={handleSearchChange}
+            value={searchText}
+            allowClear
+          />
+          <CreateCarouselModal onReload={handleReload} />
+        </div>
       </div>
 
       <Table

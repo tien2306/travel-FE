@@ -1,13 +1,19 @@
 import { del, get, patch, patchWithFile, postWithFile } from "../utils/request";
 import { ENDPOINTS } from "../constants/api";
 
+// CLIENT SERVICES
 export const getCarouselUser = async () => {
   const result = await get(ENDPOINTS.HERO_CAROUSEL);
   return result;
 };
 
-export const getCarousel = async (page = 1) => {
-  const result = await get(`${ENDPOINTS.HERO_CAROUSEL_ADMIN}?page=${page}`);
+// ADMIN SERVICES
+export const getCarousel = async (page = 1, search = "") => {
+  let url = `${ENDPOINTS.HERO_CAROUSEL_ADMIN}?page=${page}`;
+  if (search) {
+    url += `&keyword=${encodeURIComponent(search)}`;
+  }
+  const result = await get(url);
   return result;
 };
 
@@ -17,7 +23,10 @@ export const createCarousel = async (formData) => {
 };
 
 export const updateCarousel = async (id, formData) => {
-  const result = await patchWithFile(formData, `${ENDPOINTS.HERO_CAROUSEL}${id}`);
+  const result = await patchWithFile(
+    formData,
+    `${ENDPOINTS.HERO_CAROUSEL}${id}`,
+  );
   return result;
 };
 
