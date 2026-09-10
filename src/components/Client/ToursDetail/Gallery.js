@@ -8,8 +8,9 @@ import {
 } from "@ant-design/icons";
 import "swiper/css";
 import "./Gallery.scss";
+import fallbackImage from "../../../assets/images/fallbackImage.jpg";
 
-const FALLBACK_IMG = "/images/fallbackImage.jpg";
+const FALLBACK_IMG = fallbackImage;
 
 const ProductGallery = ({ thumbnail, images, tourName, urlImage }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -27,6 +28,8 @@ const ProductGallery = ({ thumbnail, images, tourName, urlImage }) => {
 
   const mainImgUrl = images[currentIndex]
     ? urlImage + images[currentIndex]
+    : thumbnail
+    ? urlImage + thumbnail
     : FALLBACK_IMG;
 
   const handlePrev = (e) => {
