@@ -27,7 +27,7 @@ export function MobileDrawers({
         placement="left"
         onClose={() => setFilterDrawerOpen(false)}
         open={filterDrawerOpen}
-        width={250}
+        size={250}
         styles={{ body: { padding: 0 } }}
         rootClassName="tour-filter-drawer"
       >
@@ -48,7 +48,7 @@ export function MobileDrawers({
         placement="right"
         onClose={() => setSearchDrawerOpen(false)}
         open={searchDrawerOpen}
-        width={250}
+        size={250}
         styles={{ body: { padding: 0 } }}
         rootClassName="tour-search-drawer"
       >

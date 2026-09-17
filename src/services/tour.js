@@ -12,6 +12,11 @@ export const getTourBySlug = async (slug) => {
   return result;
 };
 
+export const getTourById = async (id) => {
+  const result = await get(`${ENDPOINTS.TOURS}/${id}`);
+  return result;
+};
+
 export const getToursFilter = async (filterParams = {}) => {
   let keywordStr =
     filterParams.keyword && filterParams.keyword !== ""

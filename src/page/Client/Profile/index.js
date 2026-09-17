@@ -4,7 +4,6 @@ import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import {
   UserOutlined,
   ShoppingOutlined,
-  TeamOutlined,
   MessageOutlined,
   HeartOutlined,
   LogoutOutlined,
@@ -60,7 +59,14 @@ const ProfileLayout = () => {
   const avatarSrc = getAvatarDisplayUrl(userInfo.avatar);
 
   // Highlight menu hiện tại
-  const selectedKey = location.pathname;
+  let selectedKey = location.pathname;
+  if (selectedKey.startsWith("/profile/orders")) {
+    selectedKey = "/profile/orders";
+  } else if (selectedKey.startsWith("/profile/reviews")) {
+    selectedKey = "/profile/reviews";
+  } else if (selectedKey.startsWith("/profile/favorites")) {
+    selectedKey = "/profile/favorites";
+  }
 
   return (
     <div className="profile">
@@ -95,18 +101,22 @@ const ProfileLayout = () => {
             onClick={handleMenuClick}
             className="profile__menu"
           >
+            {/* Hồ sơ cá nhân */}
             <Menu.Item key="/profile" icon={<UserOutlined />}>
               {t("menu.profile")}
             </Menu.Item>
+
+            {/* đơn hàng của tôi */}
             <Menu.Item key="/profile/orders" icon={<ShoppingOutlined />}>
               {t("menu.orders")}
             </Menu.Item>
-            <Menu.Item key="/profile/passengers" icon={<TeamOutlined />}>
-              {t("menu.passengers")}
-            </Menu.Item>
+
+            {/* Đánh giá */}
             <Menu.Item key="/profile/reviews" icon={<MessageOutlined />}>
               {t("menu.reviews")}
             </Menu.Item>
+
+            {/* Tour yêu thích */}
             <Menu.Item
               key="/profile/favorites"
               icon={<HeartOutlined />}
@@ -117,6 +127,7 @@ const ProfileLayout = () => {
 
             <Divider className="profile__divider" />
 
+            {/* Nút thoát */}
             <Menu.Item
               key="logout"
               icon={<LogoutOutlined />}

@@ -27,15 +27,22 @@ import ToursRelated from "../page/Client/Tours/ToursRelated";
 import ProfileLayout from "../page/Client/Profile";
 import ProfileInfo from "../page/Client/Profile/ProfileInfo";
 import Favorites from "../page/Client/Favorites";
+import Orders from "../page/Client/Profile/Orders";
+import OrderDetail from "../page/Client/Profile/Orders/OrderDetail";
 import { Navigate } from "react-router-dom";
+import OrderBooking from "../page/Client/OrderBooking";
+import Team from "../page/Client/Team";
+import Pages from "../page/Client/pages";
+import Reviews from "../page/Client/Profile/Review";
 
 export const routes = [
+  // 1. CỤM GIAO DIỆN CLIENT CHUNG (PUBLIC ROUTES)
   {
     path: "/",
     element: <LayoutDefault />,
     children: [
       {
-        path: "/",
+        index: true,
         element: <Home />,
       },
       {
@@ -59,6 +66,19 @@ export const routes = [
       {
         path: "about",
         element: <About />,
+      },
+      {
+        path: "pages",
+        children: [
+          {
+            index: true,
+            element: <Pages />,
+          },
+          {
+            path: "team",
+            element: <Team />,
+          },
+        ],
       },
       {
         path: "contact",
@@ -86,7 +106,6 @@ export const routes = [
           },
         ],
       },
-
       {
         path: "favorites",
         element: <Navigate to="/profile/favorites" replace />,
@@ -105,9 +124,15 @@ export const routes = [
           },
         ],
       },
+
+      // 2. CỤM GIAO DIỆN PHẢI ĐĂNG NHẬP (PRIVATE ROUTES FOR CLIENT)
       {
         element: <PrivateRoutes />,
         children: [
+          {
+            path: "order-booking/:id",
+            element: <OrderBooking />,
+          },
           {
             path: "profile",
             element: <ProfileLayout />,
@@ -120,10 +145,24 @@ export const routes = [
                 path: "favorites",
                 element: <Favorites />,
               },
+              {
+                path: "orders",
+                element: <Orders />,
+              },
+              {
+                path: "orders/:id",
+                element: <OrderDetail />,
+              },
+              {
+                path: "reviews",
+                element: <Reviews />,
+              },
             ],
           },
         ],
       },
+
+      // 3. CỤM XÁC THỰC
       {
         path: "login",
         element: <Login />,
@@ -142,6 +181,8 @@ export const routes = [
       },
     ],
   },
+
+  // 4. CỤM GIAO DIỆN ADMIN
   {
     path: "/admin",
     element: <PrivateRoutes allowedRoles={["ADMIN"]} />,

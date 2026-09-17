@@ -1,5 +1,5 @@
-@use "../../../styles/variables" as *;
-@use "../../../styles/mixins" as *;
+@use "../../../../styles/variables" as *;
+@use "../../../../styles/mixins" as *;
 
 // ============================================================
 // TOUR QA — Hỏi đáp  (BEM: tour-qa + qa-item)
@@ -13,8 +13,12 @@
   padding: 28px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
 
-  @include tablet { padding: 22px; }
-  @include mobile { padding: 16px 14px; }
+  @include tablet {
+    padding: 22px;
+  }
+  @include mobile {
+    padding: 16px 14px;
+  }
 
   // ── Form đặt câu hỏi ──────────────────────────────────────
   &__form {
@@ -24,7 +28,10 @@
     padding: 18px 20px;
     margin-bottom: 28px;
 
-    @include mobile { padding: 14px 16px; margin-bottom: 20px; }
+    @include mobile {
+      padding: 14px 16px;
+      margin-bottom: 20px;
+    }
   }
 
   &__form-label {
@@ -54,7 +61,9 @@
       box-shadow: 0 6px 16px $shadow-primary;
     }
 
-    &:active { transform: translateY(0); }
+    &:active {
+      transform: translateY(0);
+    }
   }
 
   // ── Danh sách ────────────────────────────────────────────
@@ -149,7 +158,9 @@
     align-items: center;
     gap: 6px;
 
-    @include mobile { font-size: 13px; }
+    @include mobile {
+      font-size: 13px;
+    }
   }
 
   &__time {
@@ -172,9 +183,16 @@
     line-height: 1.5;
     margin-bottom: 4px;
 
-    p { margin: 0 0 4px; &:last-child { margin-bottom: 0; } }
+    p {
+      margin: 0 0 4px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
 
-    @include mobile { font-size: 13.5px; }
+    @include mobile {
+      font-size: 13.5px;
+    }
   }
 
   // ── Actions (Phản hồi / Báo cáo) ─────────────────────────
@@ -195,7 +213,9 @@
     transition: background 0.2s;
     margin-left: -12px;
 
-    &:hover { background: #f2f2f2; }
+    &:hover {
+      background: #f2f2f2;
+    }
 
     &--report {
       color: #606060;
@@ -204,7 +224,10 @@
       padding: 6px 8px;
       border-radius: 4px;
 
-      &:hover { background: none; text-decoration: underline; }
+      &:hover {
+        background: none;
+        text-decoration: underline;
+      }
     }
   }
 
@@ -218,8 +241,14 @@
   }
 
   @keyframes qa-fade-in {
-    from { opacity: 0; transform: translateY(-8px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   &__input-wrap {
@@ -235,7 +264,9 @@
       resize: none;
 
       &:focus,
-      &:hover { border-bottom: 2px solid #0f0f0f; }
+      &:hover {
+        border-bottom: 2px solid #0f0f0f;
+      }
     }
   }
 
@@ -256,7 +287,9 @@
     color: #0f0f0f;
     transition: background 0.2s;
 
-    &:hover { background: #f2f2f2; }
+    &:hover {
+      background: #f2f2f2;
+    }
   }
 
   &__btn-send {
@@ -274,7 +307,9 @@
       color: #fff;
       cursor: pointer;
 
-      &:hover { background: #0056b3; }
+      &:hover {
+        background: #0056b3;
+      }
     }
   }
 
@@ -283,7 +318,9 @@
     padding-left: 56px; // 40px avatar + 16px gap
     margin-top: 8px;
 
-    @include mobile { padding-left: 44px; }
+    @include mobile {
+      padding-left: 44px;
+    }
   }
 
   &__reply {
@@ -313,7 +350,9 @@
     margin-left: -16px;
     transition: background 0.2s;
 
-    &:hover { background: #def1ff; }
+    &:hover {
+      background: #def1ff;
+    }
   }
 
   &__toggle-icon {

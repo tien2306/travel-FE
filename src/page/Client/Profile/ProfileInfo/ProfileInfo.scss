@@ -1,4 +1,4 @@
-@use "../../../styles/variables" as *;
+@use "../../../../styles/variables" as *;
 
 .p-info {
   background: var(--bg-form);
@@ -48,7 +48,8 @@
       border: 1px solid var(--border-input);
       transition: all 0.2s ease;
 
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         border-color: var(--primary-color);
         box-shadow: 0 0 0 2px var(--shadow-focus-primary);
       }
@@ -80,14 +81,14 @@
         gap: 16px;
       }
     }
-    
+
     .ant-upload.ant-upload-select-picture-circle {
       width: 120px;
       height: 120px;
       margin: 0;
       background-color: var(--bg-white);
       border: 2px dashed var(--border-color);
-      
+
       &:hover {
         border-color: var(--primary-color);
       }

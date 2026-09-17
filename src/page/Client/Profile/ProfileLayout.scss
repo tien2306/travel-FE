@@ -96,7 +96,7 @@
       padding: 12px 24px !important;
       height: auto !important;
       position: relative;
-      
+
       &::before {
         content: "";
         position: absolute;
@@ -106,7 +106,7 @@
         height: 1px;
         background-color: var(--border-color);
       }
-      
+
       &:hover {
         color: $primary-color;
         background-color: $bg-selected;
@@ -116,7 +116,7 @@
         background-color: transparent !important;
         color: $primary-color;
         font-weight: 600;
-        
+
         .anticon {
           color: $primary-color;
         }
@@ -131,16 +131,17 @@
       }
     }
 
-    .logout-menu-item, .last-main-item {
+    .logout-menu-item,
+    .last-main-item {
       color: var(--text-body);
       &::before {
         display: none;
       }
-      
+
       &:hover {
         color: var(--color-danger) !important;
         background-color: transparent !important;
-        
+
         .anticon {
           color: var(--color-danger) !important;
         }

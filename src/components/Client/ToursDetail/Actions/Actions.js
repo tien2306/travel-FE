@@ -7,7 +7,7 @@ import {
   CommentOutlined,
   QuestionCircleOutlined,
 } from "@ant-design/icons";
-import { useScroll } from "../../../hooks/useScroll";
+import { useScroll } from "../../../../hooks/useScroll";
 
 const ProductActions = ({ descRef, reviewsRef, qaRef, tour }) => {
   const { t } = useTranslation("tours");

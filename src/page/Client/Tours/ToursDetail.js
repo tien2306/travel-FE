@@ -5,13 +5,13 @@ import { HomeOutlined } from "@ant-design/icons";
 import { getTourBySlug } from "../../../services/tour";
 import { IMAGE_URLS } from "../../../constants/api";
 import { Collapse } from "antd";
-import Gallery from "../../../components/Client/ToursDetail/Gallery";
-import Info from "../../../components/Client/ToursDetail/Info";
-import Actions from "../../../components/Client/ToursDetail/Actions";
+import Gallery from "../../../components/Client/ToursDetail/Gallery/Gallery";
+import Info from "../../../components/Client/ToursDetail/Info/Info";
+import Actions from "../../../components/Client/ToursDetail/Actions/Actions";
 import ToursRelated from "../../../components/Client/ToursRelated";
-import Reviews from "../../../components/Client/ToursDetail/Reviews";
-import QA from "../../../components/Client/ToursDetail/QA";
-import Notes from "../../../components/Client/ToursDetail/Notes";
+import Reviews from "../../../components/Client/ToursDetail/Review/Reviews";
+import QA from "../../../components/Client/ToursDetail/QA/QA";
+import Notes from "../../../components/Client/ToursDetail/Notes/Notes";
 import { useTranslation } from "react-i18next";
 import "./ToursDetail.scss";
 
@@ -35,7 +35,7 @@ function ToursDetail() {
         const res = await getTourBySlug(id);
         if (res?.success) {
           setTour(res.data);
-          window.scrollTo({ top: 0, behavior: "instant" }); // Cuộn lên đầu sau khi data load xong 
+          window.scrollTo({ top: 0, behavior: "instant" }); // Cuộn lên đầu sau khi data load xong
         }
       } catch (err) {
         console.error("Lỗi lấy chi tiết tour:", err);

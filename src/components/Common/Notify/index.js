@@ -103,7 +103,8 @@ function Notify() {
       menu={{ items }}
       trigger={["click"]}
       placement="bottomRight"
-      overlayClassName="notify-dropdown-overlay"
+      // overlayClassName="notify-dropdown-overlay"
+      classNames={{ root: "notify-dropdown-overlay" }}
       arrow={true}
     >
       <div

@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import { formatPrice, formatDate } from "../../../helpers/format/format";
+import { formatPrice, formatDate } from "../../../../helpers/format/format";
 import {
   getFavoriteStatus,
   addFavorite,
   removeFavorite,
-} from "../../../services/favorite";
+} from "../../../../services/favorite";
 import {
   CalendarOutlined,
   EnvironmentOutlined,
@@ -33,19 +33,45 @@ const ProductInfo = ({ tour }) => {
   const [isFav, setIsFav] = useState(false);
   const [isFavLoading, setIsFavLoading] = useState(false); // Thêm state chống spam
 
+  const handleBookNow = () => {
+    if (!isLogin) {
+      requireLogin(() =>
+        navigate("/login", { state: { from: location.pathname } }),
+      );
+      return;
+    }
+
+    Swal.fire({
+      title: "Đang xử lý...",
+      html: "Vui lòng đợi trong giây lát",
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+    setTimeout(() => {
+      Swal.close();
+      navigate(`/order-booking/${tour.id}`);
+    }, 1500);
+  };
+
   // Kiểm tra trạng thái yêu thích khi load
   useEffect(() => {
-    const fetchFav = async () => {
-      if (!isLogin) return;
+    const fetchData = async () => {
+      if (!isLogin || !(tour?.id || tour?._id)) {
+        return;
+      }
       try {
-        const result = await getFavoriteStatus(tour.id);
-        setIsFav(result.data?.isFavorite);
+        // 1. Lấy trạng thái yêu thích
+        const favResult = await getFavoriteStatus(tour.id);
+        setIsFav(favResult.data?.isFavorite);
       } catch (error) {
-        console.error("Lỗi khi lấy trạng thái yêu thích", error);
+        console.error("Lỗi khi lấy dữ liệu", error);
       }
     };
-    fetchFav();
-  }, [tour.id, isLogin]);
+    fetchData();
+  }, [tour?.id, tour?._id, isLogin]);
 
   // Yêu cầu đăng nhập nếu chưa login (dùng chung cho favorite & booking)
   const requireLogin = (onConfirm) => {
@@ -245,20 +271,17 @@ const ProductInfo = ({ tour }) => {
       {/* Nút đặt tour */}
       <div className="product-info__booking">
         {tour.isAvailable ? (
-          <Link
-            to={`/order-booking/${tour.id}`}
-            className="product-info__btn-book"
-          >
+          <button onClick={handleBookNow} className="product-info__btn-book">
             <strong>{t("detail.bookNow")}</strong>
             <span>{t("detail.bookSub")}</span>
-          </Link>
+          </button>
         ) : (
           <button
             className="product-info__btn-book product-info__btn-book--disabled"
             disabled
           >
-            <strong>{t("detail.fullyBookedBtn")}</strong>
-            <span>{t("detail.contactSub")}</span>
+            <strong>NGƯNG NHẬN / HẾT CHỖ</strong>
+            <span>Vui lòng liên hệ để biết thêm chi tiết</span>
           </button>
         )}
       </div>

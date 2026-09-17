@@ -1,5 +1,5 @@
-@use "../../../styles/variables" as *;
-@use "../../../styles/mixins" as *;
+@use "../../../../styles/variables" as *;
+@use "../../../../styles/mixins" as *;
 
 // ============================================================
 // TOUR REVIEWS — Đánh giá khách hàng  (BEM: tour-reviews)
@@ -12,11 +12,17 @@
   padding: 28px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
 
-  @include tablet { padding: 22px; }
-  @include mobile { padding: 16px 14px; }
+  @include tablet {
+    padding: 22px;
+  }
+  @include mobile {
+    padding: 16px 14px;
+  }
 
   // Ant Rate SVG reset
-  .ant-rate svg { fill: currentColor !important; }
+  .ant-rate svg {
+    fill: currentColor !important;
+  }
 
   // ── Header ──────────────────────────────────────────────
   &__header {
@@ -82,7 +88,9 @@
       transform: translateY(-2px);
     }
 
-    &:active { transform: scale(0.98); }
+    &:active {
+      transform: scale(0.98);
+    }
   }
 
   // ── Form đánh giá ────────────────────────────────────────
@@ -129,12 +137,20 @@
     font-weight: 600;
     transition: $transition-fast;
 
-    &:hover { background: $color-blue-hover; }
+    &:hover {
+      background: $color-blue-hover;
+    }
   }
 
   @keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   // ── Danh sách ────────────────────────────────────────────
@@ -151,8 +167,13 @@
     grid-template-columns: 44px 1fr;
     gap: 14px;
 
-    &:first-child { padding-top: 0; }
-    &:last-child  { border-bottom: none; padding-bottom: 0; }
+    &:first-child {
+      padding-top: 0;
+    }
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
 
     @include mobile {
       grid-template-columns: 38px 1fr;
@@ -199,7 +220,9 @@
     font-weight: 700;
     color: $text-heading;
 
-    @include mobile { font-size: 13.5px; }
+    @include mobile {
+      font-size: 13.5px;
+    }
   }
 
   &__date {
@@ -217,7 +240,9 @@
     color: $text-body;
     margin: 0;
 
-    @include mobile { font-size: 13.5px; }
+    @include mobile {
+      font-size: 13.5px;
+    }
   }
 
   &__images {

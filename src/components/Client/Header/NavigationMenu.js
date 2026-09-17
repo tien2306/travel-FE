@@ -37,14 +37,22 @@ function NavigationMenu(props) {
   };
 
   const serviceItems = [
-    { key: "s1", label: <Link to="/service/services">{t("menu.travelServices")}</Link> },
+    {
+      key: "s1",
+      label: <Link to="/service/services">{t("menu.travelServices")}</Link>,
+    },
     {
       key: "s2",
-      label: <Link to="/service/service-detail">{t("menu.travelInsurance")}</Link>,
+      label: (
+        <Link to="/service/service-detail">{t("menu.travelInsurance")}</Link>
+      ),
     },
   ];
   const packageItems = [
-    { key: "p1", label: <Link to="/package/family">{t("menu.familyPackages")}</Link> },
+    {
+      key: "p1",
+      label: <Link to="/package/family">{t("menu.familyPackages")}</Link>,
+    },
     {
       key: "p2",
       label: <Link to="/package/honeymoon">{t("menu.honeymoonPackages")}</Link>,
@@ -53,10 +61,6 @@ function NavigationMenu(props) {
   const blogItems = [
     { key: "b1", label: <Link to="/blog/grid">{t("menu.blogGrid")}</Link> },
     { key: "b2", label: <Link to="/blog/detail">{t("menu.blogDetail")}</Link> },
-  ];
-  const pageItems = [
-    { key: "pg1", label: <Link to="/pages/team">{t("menu.ourTeam")}</Link> },
-    { key: "pg2", label: <Link to="/pages/testimonial">{t("menu.testimonial")}</Link> },
   ];
 
   return (
@@ -81,7 +85,8 @@ function NavigationMenu(props) {
         <Dropdown
           menu={{ items: serviceItems, onClick: handleCloseMenu }}
           trigger={["hover"]}
-          overlayClassName="nav-dropdown-overlay"
+          // overlayClassName="nav-dropdown-overlay"
+          classNames={{ root: "nav-dropdown-overlay" }}
         >
           <NavLink
             to="/service"
@@ -106,7 +111,8 @@ function NavigationMenu(props) {
         <Dropdown
           menu={{ items: packageItems, onClick: handleCloseMenu }}
           trigger={["hover"]}
-          overlayClassName="nav-dropdown-overlay"
+          // overlayClassName="nav-dropdown-overlay"
+          classNames={{ root: "nav-dropdown-overlay" }}
         >
           <NavLink
             to="/package"
@@ -120,18 +126,15 @@ function NavigationMenu(props) {
 
       {/* BLOG */}
       {isMobile ? (
-        <NavLink
-          to="/blog"
-          className={navLinkActive}
-          onClick={handleCloseMenu}
-        >
+        <NavLink to="/blog" className={navLinkActive} onClick={handleCloseMenu}>
           {t("menu.blog")}
         </NavLink>
       ) : (
         <Dropdown
           menu={{ items: blogItems, onClick: handleCloseMenu }}
           trigger={["hover"]}
-          overlayClassName="nav-dropdown-overlay"
+          // overlayClassName="nav-dropdown-overlay"
+          classNames={{ root: "nav-dropdown-overlay" }}
         >
           <NavLink
             to="/blog"
@@ -144,29 +147,9 @@ function NavigationMenu(props) {
       )}
 
       {/* PAGES */}
-      {isMobile ? (
-        <NavLink
-          to="/pages"
-          className={navLinkActive}
-          onClick={handleCloseMenu}
-        >
-          {t("menu.pages")}
-        </NavLink>
-      ) : (
-        <Dropdown
-          menu={{ items: pageItems, onClick: handleCloseMenu }}
-          trigger={["hover"]}
-          overlayClassName="nav-dropdown-overlay"
-        >
-          <NavLink
-            to="/pages"
-            className={getDropdownNavLinkClass("/pages")}
-            onClick={handleCloseMenu}
-          >
-            {t("menu.pages")} <DownOutlined className="header__nav-icon" />
-          </NavLink>
-        </Dropdown>
-      )}
+      <NavLink to="/pages" className={navLinkActive} onClick={handleCloseMenu}>
+        {t("menu.pages")}
+      </NavLink>
 
       <NavLink
         to="/contact"

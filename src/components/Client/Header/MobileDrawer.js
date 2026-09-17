@@ -27,7 +27,7 @@ const MobileDrawer = ({ isMenuOpen, setIsMenuOpen }) => {
       placement="right"
       onClose={() => setIsMenuOpen(false)}
       open={isMenuOpen}
-      width={280}
+      size={280}
       rootClassName="header-mobile-drawer"
     >
       <div className="header__auth-mobile">
@@ -77,14 +77,13 @@ const MobileDrawer = ({ isMenuOpen, setIsMenuOpen }) => {
       <nav className="header__nav-mobile">
         <Collapse
           ghost
-          expandIconPosition="end"
+          expandIconPlacement="end"
           className="mobile-nav-collapse"
         >
           <Collapse.Panel
             header={
               <span className="mobile-nav-header-text">
-                <FiCompass className="mobile-nav-header-icon" /> Điều
-                hướng
+                <FiCompass className="mobile-nav-header-icon" /> Điều hướng
               </span>
             }
             key="1"

@@ -1,5 +1,5 @@
-@use "../../../styles/variables" as *;
-@use "../../../styles/mixins" as *;
+@use "../../../../styles/variables" as *;
+@use "../../../../styles/mixins" as *;
 
 .av-picker {
   &__form-item {
@@ -61,12 +61,14 @@
     color: white;
     font-size: 20px;
     cursor: pointer;
-    transition: transform 0.2s ease, color 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      color 0.2s ease;
 
     &:hover {
       transform: scale(1.2);
     }
-    
+
     &--danger:hover {
       color: var(--color-danger);
     }

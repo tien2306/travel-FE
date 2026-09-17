@@ -156,15 +156,15 @@ const Header = () => {
               </div>
               <DarkModeToggle />
 
-              <Link className="header__btn-book">
+              <Link to={"/"} className="header__btn-book">
                 {t("bookNow")}
-                <Button
-                  type="text"
-                  className="header__btn-toggler"
-                  icon={<AiOutlineMenu />}
-                  onClick={handleOpenMenu}
-                />
               </Link>
+              <Button
+                type="text"
+                className="header__btn-toggler"
+                icon={<AiOutlineMenu />}
+                onClick={handleOpenMenu}
+              />
             </div>
           </div>
         </div>

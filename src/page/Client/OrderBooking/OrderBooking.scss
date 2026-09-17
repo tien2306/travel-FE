@@ -1,0 +1,19 @@
+@use "../../../styles/variables" as *;
+
+.order-booking-page {
+  background-color: var(--bg-page);
+  padding: 40px 0 60px;
+
+  .container {
+    max-width: $container-max-width;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  
+  .booking-loading-full {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+  }
+}

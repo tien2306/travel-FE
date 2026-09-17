@@ -116,6 +116,7 @@ const Login = () => {
               onFinish={onFinish}
               requiredMark={false}
               initialValues={{ remember: true }}
+              validateTrigger="onSubmit"
             >
               {/* Tài khoản Email */}
               <Form.Item
@@ -140,7 +141,6 @@ const Login = () => {
               <Form.Item
                 label={t("login.pwdLabel")}
                 name="password"
-                validateTrigger="onSubmit"
                 rules={[
                   { required: true, message: t("login.pwdReq") },
                   { min: 6, message: t("login.pwdMin") },

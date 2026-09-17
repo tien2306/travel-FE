@@ -93,7 +93,8 @@ function GlobalSettings() {
       placement="bottomRight"
       open={isOpen}
       onOpenChange={setIsOpen}
-      overlayClassName="global-settings-overlay"
+      // overlayClassName="global-settings-overlay"
+      classNames={{ root: "global-settings-overlay" }}
     >
       <div className="global-settings__trigger">
         {currentLanguage === "vi" ? (

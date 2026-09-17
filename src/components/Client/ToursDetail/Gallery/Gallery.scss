@@ -1,5 +1,5 @@
-@use "../../../styles/variables" as *;
-@use "../../../styles/mixins" as *;
+@use "../../../../styles/variables" as *;
+@use "../../../../styles/mixins" as *;
 
 // ============================================================
 // PRODUCT GALLERY — Ảnh tour (bên trái)
@@ -11,7 +11,7 @@
   user-select: none; // Ngăn chặn việc bôi đen/chọn (highlight) khi click nhanh
   -webkit-user-select: none; // Cho các trình duyệt nền WebKit (Chrome, Safari, Edge)
 
-  // Khi hover vào bất kỳ vị trí nào trong gallery (kể cả ảnh con), 
+  // Khi hover vào bất kỳ vị trí nào trong gallery (kể cả ảnh con),
   // sẽ hiển thị mũi tên điều hướng trên ảnh lớn
   &:hover {
     .product-gallery__zoom-icon,
@@ -30,7 +30,12 @@
     position: relative;
     cursor: pointer;
 
-    .product-gallery__carousel, .ant-carousel, .slick-slider, .slick-list, .slick-track, .product-gallery__slide-wrap {
+    .product-gallery__carousel,
+    .ant-carousel,
+    .slick-slider,
+    .slick-list,
+    .slick-track,
+    .product-gallery__slide-wrap {
       height: 100%;
     }
 
@@ -61,7 +66,7 @@
     opacity: 0;
     transition: all 0.3s ease;
     z-index: 2;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
   }
 
   &__nav {
@@ -74,7 +79,7 @@
     opacity: 0;
     transition: all 0.2s ease;
     z-index: 3;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 
     &:hover {
       opacity: 1 !important;

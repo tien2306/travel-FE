@@ -9,6 +9,7 @@ import { IMAGE_URLS } from "../../../constants/api";
 import "./TourGrid.scss";
 
 export default function TourGrid({ data }) {
+  console.log("DEBUG TOUR GRID DATA:", data);
   const navigate = useNavigate();
   const { t } = useTranslation("tours");
   const urlImage = IMAGE_URLS.TOURS;
@@ -96,18 +97,43 @@ export default function TourGrid({ data }) {
                   {/* --- Thanh tiến trình đặt chỗ --- */}
                   <div className="tour-card__progress-block">
                     <Progress
-                      percent={tour.bookedPercentage}
+                      percent={(() => {
+                        const sold = tour.sold || 0;
+                        const available = tour.availableSeats || 0;
+                        const total = tour.quantity || available + sold || 0;
+                        return total > 0
+                          ? sold > 0
+                            ? Math.ceil((sold / total) * 100)
+                            : 0
+                          : 0;
+                      })()}
                       size="small"
                       status="active"
                       showInfo={false}
-                      strokeColor={
-                        tour.bookedPercentage > 74
+                      strokeColor={(() => {
+                        const sold = tour.sold || 0;
+                        const available = tour.availableSeats || 0;
+                        const total = tour.quantity || available + sold || 0;
+                        return (total > 0 ? (sold / total) * 100 : 0) > 74
                           ? { "0%": "#fa8c16", "100%": "#ff4d4f" }
-                          : { "0%": "#108ee9", "100%": "#87d068" }
-                      }
+                          : { "0%": "#108ee9", "100%": "#87d068" };
+                      })()}
                     />
+
+                    {/* Tổng phần trăm đã đặt */}
                     <span className="tour-card__progress-text">
-                      {t("card.booked", { percent: tour.bookedPercentage })}
+                      {t("card.booked", {
+                        percent: (() => {
+                          const sold = tour.sold || 0;
+                          const available = tour.availableSeats || 0;
+                          const total = tour.quantity || available + sold || 0;
+                          return total > 0
+                            ? sold > 0
+                              ? Math.ceil((sold / total) * 100)
+                              : 0
+                            : 0;
+                        })(),
+                      })}
                     </span>
                   </div>
 

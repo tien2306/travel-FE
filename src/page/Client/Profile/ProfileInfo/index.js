@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { checkLogin } from "../../../store/slices/loginSlice";
-import AvatarSelector from "../../../components/Client/Profile/AvatarSelector";
+import { checkLogin } from "../../../../store/slices/loginSlice";
+import Avatar from "../../../../components/Client/Profile/Avatar/Avatar";
 import { Form, Input, Button, Row, Col, message } from "antd";
 import { SaveOutlined } from "@ant-design/icons";
-import { updateAuthMe } from "../../../services/user";
-import { buildProfilePayload } from "../../../helpers/user/profileForm";
+import { updateAuthMe } from "../../../../services/user";
+import { buildProfilePayload } from "../../../../helpers/user/profileForm";
 import { useTranslation } from "react-i18next";
 import "./ProfileInfo.scss";
 
@@ -40,6 +40,8 @@ const ProfileInfo = () => {
       });
     }
   }, [userInfo, form]);
+  // avatar ở đây sẽ có 3 dạng
+  // nếu từ Server thì là 1 chuỗi "Aiofjwoej1jJDIJiohOUG"
 
   const handleEditToggle = async () => {
     if (isEditing) {
@@ -112,7 +114,7 @@ const ProfileInfo = () => {
           >
             {/* avatar */}
             <Form.Item name="avatar" style={{ margin: 0 }}>
-              <AvatarSelector isEditing={isEditing} userInfo={userInfo} t={t} />
+              <Avatar isEditing={isEditing} userInfo={userInfo} t={t} />
             </Form.Item>
 
             {/* email */}

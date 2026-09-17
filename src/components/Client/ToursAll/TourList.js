@@ -27,6 +27,10 @@ export default function TourList({ data }) {
   return (
     <div className="tour-list-container">
       {data?.map((tour) => {
+        const sold = tour.sold || 0;
+        const available = tour.availableSeats || 0;
+        const totalSeats = tour.quantity || (available + sold) || 0;
+        const bookedPercentage = tour.bookedPercentage || (totalSeats > 0 ? (sold > 0 ? Math.ceil((sold / totalSeats) * 100) : 0) : 0);
         return (
           <div
             key={tour.id || tour._id}
@@ -105,19 +109,19 @@ export default function TourList({ data }) {
               <div className="tour-list-card__progress-wrapper">
                 <div className="tour-list-card__progress-text">
                   <span>
-                    {t("card.booked", { percent: tour.bookedPercentage })}
+                    {t("card.booked", { percent: bookedPercentage })}
                   </span>
                   <span className="highlight">
                     {t("card.seatsLeft", { count: tour.availableSeats })}
                   </span>
                 </div>
                 <Progress
-                  percent={tour.bookedPercentage}
+                  percent={bookedPercentage}
                   size="small"
                   status="active"
                   showInfo={false}
                   strokeColor={
-                    tour.bookedPercentage > 74
+                    bookedPercentage > 74
                       ? { "0%": "#fa8c16", "100%": "#ff4d4f" }
                       : { "0%": "#108ee9", "100%": "#87d068" }
                   }

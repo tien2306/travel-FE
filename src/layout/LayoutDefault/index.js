@@ -63,6 +63,7 @@ function LayoutDefault() {
     else if (currentPath.includes("blog")) setPageTitle("Our Blog");
     else if (currentPath.includes("contact")) setPageTitle("Contact Us");
     else if (currentPath.includes("package")) setPageTitle("Package Us");
+    else if (currentPath.includes("team")) setPageTitle("Our Team");
     else if (currentPath.includes("pages")) setPageTitle("Pages Us");
     else if (location.pathname.match(/^\/tours\/[^/]+$/))
       setPageTitle("Tour Detail");
@@ -70,6 +71,8 @@ function LayoutDefault() {
     else if (currentPath.includes("favorites")) setPageTitle("Favorites");
     else if (currentPath.includes("profile")) setPageTitle("User Profile");
     else if (currentPath.includes("map")) setPageTitle("Discovery Quiz");
+    else if (currentPath.includes("order-booking"))
+      setPageTitle("Order booking");
     else setPageTitle("");
   }, [location.pathname]);
 

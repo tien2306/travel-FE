@@ -61,6 +61,7 @@ const Register = () => {
               layout="vertical"
               onFinish={onFinish}
               requiredMark={false}
+              validateTrigger="onSubmit"
             >
               <Row gutter={[20, 0]}>
                 {/* Tên tài khoản */}
@@ -74,7 +75,7 @@ const Register = () => {
                         message: t("register.usernameReq"),
                       },
                     ]}
-                    validateTrigger="onSubmit"
+                    
                   >
                     <Input
                       name="username"
@@ -95,7 +96,7 @@ const Register = () => {
                     rules={[
                       { required: true, message: t("register.fullNameReq") },
                     ]}
-                    validateTrigger="onSubmit"
+                    
                   >
                     <Input
                       name="fullName"
@@ -113,7 +114,7 @@ const Register = () => {
                   <Form.Item
                     label={t("register.emailLabel")}
                     name="email"
-                    validateTrigger="onSubmit"
+                    
                     rules={[
                       { required: true, message: t("register.emailReq") },
                       { type: "email", message: t("login.emailInv") },
@@ -145,7 +146,7 @@ const Register = () => {
                         message: t("register.phoneFormat"),
                       },
                     ]}
-                    validateTrigger="onSubmit"
+                    
                   >
                     <Input
                       name="phone"
@@ -166,7 +167,7 @@ const Register = () => {
                     rules={[
                       { required: true, message: t("register.addressReq") },
                     ]}
-                    validateTrigger="onSubmit"
+                    
                   >
                     <Input
                       name="address"
@@ -188,7 +189,7 @@ const Register = () => {
                       { required: true, message: t("register.pwdReq") },
                       { min: 6, message: t("login.pwdMin") },
                     ]}
-                    validateTrigger="onSubmit"
+                    
                   >
                     <Input.Password
                       name="password"
@@ -223,7 +224,7 @@ const Register = () => {
                         },
                       }),
                     ]}
-                    validateTrigger="onSubmit"
+                    
                   >
                     <Input.Password
                       name="confirmPassword"

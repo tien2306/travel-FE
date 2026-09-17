@@ -28,3 +28,5 @@ yarn-error.log*
 # Taste Skill & AI Tools
 .agents/
 skills-lock.json
+
+text.md

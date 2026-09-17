@@ -1,0 +1,48 @@
+@use "../../../../styles/variables" as *;
+
+.step-indicator-wrapper {
+  background-color: var(--bg-white);
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 32px;
+
+  .custom-steps {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 16px;
+
+    .ant-steps-item-finish .ant-steps-item-icon {
+      background: var(--bg-light);
+      border-color: var(--primary-color);
+      .ant-steps-icon {
+        color: var(--primary-color);
+      }
+    }
+    .ant-steps-item-finish .ant-steps-item-title {
+      color: var(--text-heading);
+    }
+    .ant-steps-item-finish::after {
+      background-color: var(--primary-color) !important;
+    }
+
+    .ant-steps-item-process .ant-steps-item-icon {
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+    .ant-steps-item-process .ant-steps-item-title {
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    .ant-steps-item-wait .ant-steps-item-icon {
+      background: var(--bg-light);
+      border-color: var(--border-color);
+      .ant-steps-icon {
+        color: var(--text-muted);
+      }
+    }
+    .ant-steps-item-wait .ant-steps-item-title {
+      color: var(--text-muted);
+    }
+  }
+}

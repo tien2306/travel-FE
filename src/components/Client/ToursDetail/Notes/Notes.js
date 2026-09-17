@@ -27,8 +27,8 @@ const TourNotes = ({ tour }) => {
   return (
     <div className="tour-notes-inner">
       {/* ghost: thuộc tính xóa css của antd */}
-      {/* expandIconPosition="end": Vị trí mũi tên */}
-      <Collapse ghost expandIconPosition="end" items={items} />
+      {/* expandIconPlacement="end": Vị trí mũi tên */}
+      <Collapse ghost expandIconPlacement="end" items={items} />
     </div>
   );
 };
