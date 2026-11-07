@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# EasyTour
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Ứng dụng web đặt tour và khám phá du lịch Việt Nam, gồm phân hệ người dùng và trang quản trị.
 
-## Available Scripts
+> Dự án phục vụ mục đích học tập và nghiên cứu cá nhân, không nhằm mục đích thương mại.
 
-In the project directory, you can run:
+## Tính năng
 
-### `npm start`
+**Người dùng**
+- Tìm kiếm, lọc tour theo địa điểm, giá, thời gian
+- Đặt tour và quản lý đơn đặt chỗ
+- Bản đồ tương tác các tỉnh thành (Explore Vietnam)
+- Minigame đố vui địa lý (Map Quiz)
+- Danh sách tour yêu thích
+- Đa ngôn ngữ (Tiếng Việt / English)
+- Trang cá nhân, bộ sưu tập avatar SVG
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**Quản trị viên**
+- Dashboard thống kê doanh thu, lượt đặt tour
+- Quản lý tour, banner, người dùng
+- Soạn nội dung bằng TinyMCE
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Công nghệ
 
-### `npm test`
+| Lĩnh vực | Công nghệ |
+| --- | --- |
+| Core | React 18 |
+| Routing | React Router DOM v7 |
+| State | Redux Toolkit |
+| UI | Ant Design 6, React Icons |
+| Biểu đồ & bản đồ | @ant-design/charts, react-simple-maps |
+| Styling | Sass (SCSS) |
+| Animation | GSAP, Swiper |
+| i18n | i18next, react-i18next |
+| Khác | TinyMCE, SweetAlert2 |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Cấu trúc thư mục
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```text
+src/
+├── assets/        # Hình ảnh, icon, avatar SVG
+├── components/    # Component dùng chung
+├── constants/     # Hằng số toàn cục
+├── helpers/       # Hàm phụ trợ
+├── hooks/         # Custom hooks
+├── layout/        # Layout client và admin
+├── locales/       # File ngôn ngữ (vi, en)
+├── page/          # Admin, Auth, Client
+├── routes/        # Cấu hình routing
+├── services/      # Gọi API
+├── store/         # Redux store và slices
+├── styles/        # SCSS dùng chung
+├── utils/         # Tiện ích
+├── App.js
+└── index.js
+```
